@@ -1,0 +1,41 @@
+<h2 class="mb-3">{{title}} <i class="bi bi-info-circle info-icon" data-bs-toggle="modal" data-bs-target="#infoModal"></i></h2>
+<p class="mb-3">{{slogan}}</p>
+
+<div class="alert alert-info" role="alert">
+    <p class="mb-0">{{definition}}</p>
+</div>
+
+<div class="row justify-content-center mb-3">
+    <div class="col-md-8">
+        <form id="myForm" method="POST">
+            {{ form.hidden_tag() }}
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="form-group">
+                        {{ form.domain.label }}
+                        {{ form.domain(class="form-control") }}
+                        {% for error in form.domain.errors %}
+                        <small class="form-text text-danger">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-md-3 d-flex align-items-end">
+                    <button id="submitButton" type="submit" class="btn btn-primary w-100">
+                        <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                        <span class="sr-only">Loading...</span>
+                        Enviar
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Capturar el evento de envío del formulario
+    document.getElementById('myForm').addEventListener('submit', function() {
+        // Mostrar el spinner al hacer clic en Enviar
+        document.getElementById('submitButton').querySelector('.spinner-border').classList.remove('d-none');
+        document.getElementById('submitButton').disabled = true; // Deshabilitar el botón para evitar envíos duplicados
+    });
+</script>

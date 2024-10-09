@@ -1,0 +1,274 @@
+<h4 class="mb-3">Report</h4>
+
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card border-info">
+            <div class="card-body text-center">
+                <div class="card-icon text-info"><i class="fas fa-stopwatch"></i></div>
+                <h5 class="card-title">First Contentful Paint (FCP)</h5>
+                <p class="card-text">2.1 seconds</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-warning">
+            <div class="card-body text-center">
+                <div class="card-icon text-warning"><i class="fas fa-image"></i></div>
+                <h5 class="card-title">Largest Contentful Paint (LCP)</h5>
+                <p class="card-text">2.94 seconds</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-danger">
+            <div class="card-body text-center">
+                <div class="card-icon text-danger"><i class="fas fa-hand-pointer"></i></div>
+                <h5 class="card-title">First Input Delay (FID)</h5>
+                <p class="card-text">553 milliseconds</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-primary">
+            <div class="card-body text-center">
+                <div class="card-icon text-primary"><i class="fas fa-ruler-combined"></i></div>
+                <h5 class="card-title">Cumulative Layout Shift (CLS)</h5>
+                <p class="card-text">0.7813</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <canvas id="fcpEvolution"></canvas>
+    </div>
+    <div class="col-md-6">
+        <canvas id="lcpEvolution"></canvas>
+    </div>
+</div>
+<div class="row mb-4">
+    <div class="col-md-6">
+        <canvas id="fidEvolution"></canvas>
+    </div>
+    <div class="col-md-6">
+        <canvas id="clsEvolution"></canvas>
+    </div>
+</div>
+
+<h4 class="mb-3">SEO's Data</h4>
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card border-info">
+            <div class="card-body text-center">
+                <div class="card-icon text-info"><i class="fas fa-stopwatch"></i></div>
+                <h5 class="card-title">First Contentful Paint (FCP)</h5>
+                <p class="card-text">2.64 seconds</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-warning">
+            <div class="card-body text-center">
+                <div class="card-icon text-warning"><i class="fas fa-image"></i></div>
+                <h5 class="card-title">Largest Contentful Paint (LCP)</h5>
+                <p class="card-text">3.03 seconds</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-danger">
+            <div class="card-body text-center">
+                <div class="card-icon text-danger"><i class="fas fa-hand-pointer"></i></div>
+                <h5 class="card-title">First Input Delay (FID)</h5>
+                <p class="card-text">597 milliseconds</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-primary">
+            <div class="card-body text-center">
+                <div class="card-icon text-primary"><i class="fas fa-ruler-combined"></i></div>
+                <h5 class="card-title">Cumulative Layout Shift (CLS)</h5>
+                <p class="card-text">0.0005</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h4 class="mb-3">Web Vitals by PageType</h4>
+<table id="webVitalsPageType" class="table table-striped">
+    <thead>
+        <tr>
+            <th>Pagetype</th>
+            <th>Section</th>
+            <th>Level</th>
+            <th>FCP</th>
+            <th>LCP</th>
+            <th>FID</th>
+            <th>CLS</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Posts</td>
+            <td>General</td>
+            <td>Level 16</td>
+            <td><span class="text-danger">●</span></td>
+            <td><span class="text-warning">●</span></td>
+            <td><span class="text-success">●</span></td>
+            <td><span class="text-danger">●</span></td>
+        </tr>
+        <tr>
+            <td>Home</td>
+            <td>General</td>
+            <td>Level 0</td>
+            <td><span class="text-warning">●</span></td>
+            <td><span class="text-success">●</span></td>
+            <td><span class="text-danger">●</span></td>
+            <td><span class="text-danger">●</span></td>
+        </tr>
+        <tr>
+            <td>Category</td>
+            <td>General</td>
+            <td>Level 16</td>
+            <td><span class="text-danger">●</span></td>
+            <td><span class="text-warning">●</span></td>
+            <td><span class="text-success">●</span></td>
+            <td><span class="text-danger">●</span></td>
+        </tr>
+        <!-- Add more rows as needed -->
+    </tbody>
+</table>
+
+<h4 class="mb-3">Web Vitals by Pages</h4>
+<table id="webVitalsPages" class="table table-striped">
+    <thead>
+        <tr>
+            <th>Page URL</th>
+            <th>FCP</th>
+            <th>LCP</th>
+            <th>FID</th>
+            <th>CLS</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>/resultados-bonoloto-jueves-26-de-noviembre-1618</td>
+            <td><span class="text-warning">●</span></td>
+            <td><span class="text-warning">●</span></td>
+            <td><span class="text-danger">●</span></td>
+            <td><span class="text-danger">●</span></td>
+        </tr>
+        <tr>
+            <td>/resultados-bonoloto-sabado-2-de-abril-2057</td>
+            <td><span class="text-warning">●</span></td>
+            <td><span class="text-warning">●</span></td>
+            <td><span class="text-danger">●</span></td>
+            <td><span class="text-danger">●</span></td>
+        </tr>
+        <tr>
+            <td>/resultados-primitiva-jueves-21-de-enero-1798</td>
+            <td><span class="text-warning">●</span></td>
+            <td><span class="text-warning">●</span></td>
+            <td><span class="text-danger">●</span></td>
+            <td><span class="text-danger">●</span></td>
+        </tr>
+        <!-- Add more rows as needed -->
+    </tbody>
+</table>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var ctx = document.getElementById('duration-chart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Duración del scan'],
+                datasets: [{
+                    label: 'Tiempo (segundos)',
+                    data: [{{ duration }}],
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+            options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+            });
+    });
+
+
+    const fcpCtx = document.getElementById('fcpEvolution').getContext('2d');
+    const lcpCtx = document.getElementById('lcpEvolution').getContext('2d');
+    const fidCtx = document.getElementById('fidEvolution').getContext('2d');
+    const clsCtx = document.getElementById('clsEvolution').getContext('2d');
+
+    const fcpChart = new Chart(fcpCtx, {
+        type: 'line',
+        data: {
+            labels: ['January', 'February', 'March', 'April', 'May'],
+            datasets: [{
+                label: 'FCP Evolution',
+                data: [2.5, 2.2, 2.3, 2.1, 2.4],
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 2,
+                fill: false
+            }]
+        }
+    });
+
+    const lcpChart = new Chart(lcpCtx, {
+        type: 'line',
+        data: {
+            labels: ['January', 'February', 'March', 'April', 'May'],
+            datasets: [{
+                label: 'LCP Evolution',
+                data: [3.0, 3.2, 3.1, 2.9, 3.3],
+                borderColor: 'rgba(255, 206, 86, 1)',
+                borderWidth: 2,
+                fill: false
+            }]
+        }
+    });
+
+    const fidChart = new Chart(fidCtx, {
+        type: 'line',
+        data: {
+            labels: ['January', 'February', 'March', 'April', 'May'],
+            datasets: [{
+                label: 'FID Evolution',
+                data: [600, 580, 590, 570, 610],
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 2,
+                fill: false
+            }]
+        }
+    });
+
+    const clsChart = new Chart(clsCtx, {
+        type: 'line',
+        data: {
+            labels: ['January', 'February', 'March', 'April', 'May'],
+            datasets: [{
+                label: 'CLS Evolution',
+                data: [0.08, 0.09, 0.07, 0.06, 0.1],
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 2,
+                fill: false
+            }]
+        }
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#webVitalsPageType').DataTable();
+        $('#webVitalsPages').DataTable();
+    });
+</script>
+

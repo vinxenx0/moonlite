@@ -1,0 +1,103 @@
+<!-- app/templates/tools/domains/cname.html -->
+
+{% extends "base.html" %}
+
+{% block title %}{{title}} | {{slogan}}{% endblock %}
+{% block description %}{{slogan}}{% endblock %}
+{% block keywords %}{{keywords}}{% endblock %}
+
+
+{% block content %}
+
+
+{% include 'tools/styles.html' %}
+
+{% include 'inc/breadcrumbs.html' %}
+
+<style>
+    .traceroute-result {
+        white-space: pre-wrap;
+        /* Preserve whitespace and line breaks */
+        font-family: monospace;
+        /* Monospaced font for better readability */
+        background-color: #f8f9fa;
+        /* Light gray background */
+        padding: 1rem;
+        border-radius: 0.5rem;
+        margin-top: 1rem;
+    }
+
+    .hop-table {
+        margin-top: 1rem;
+    }
+</style>
+
+<h2 class="mb-3">{{title}} <i class="bi bi-info-circle info-icon" data-bs-toggle="modal"
+        data-bs-target="#infoModal"></i></h2>
+<p class="mb-3">{{ slogan }}</p>
+
+<div class="alert alert-info" role="alert">
+    <p class="mb-0">{{ definition }}</p>
+</div>
+
+{% include 'tools/quick_form.html' %}
+
+<hr>
+{% if results %}
+<h3>Resultados de {{ title }}:</h3>
+
+<div class="row">
+    <div class="col-md-6">
+        <p class="duration">Duración del scan: {{ duration }} segundos</p>
+        <div id="duration-chart-container">
+            <canvas id="duration-chart"></canvas>
+        </div>
+    </div>
+    <div class="col-md-6 text-center">
+        {% if is_results_valid %}
+        <i class="fas fa-check-circle status-icon valid"></i>
+        <p class="text-success">Resultados válidos</p>
+        {% else %}
+        <i class="fas fa-exclamation-circle status-icon invalid"></i>
+        <p class="text-danger">Resultados no válidos</p>
+        {% endif %}
+    </div>
+</div>
+
+{% if is_results_valid %}
+<h2>Results</h2>
+<div class="traceroute-result">
+    <table class="table table-striped hop-table">
+        <thead>
+            <tr>
+                <th scope="col">PORT</th>
+                <th scope="col">STATE</th>
+                <th scope="col">SERVICE</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for line in results['nmap']['stdout'].split('\n')[1:] %}
+            {% if line %}
+            {% set hop_data = line.split() %}
+            <tr>
+                <td>{{ hop_data[0] }}</td>
+                <td>{{ hop_data[1] }}</td>
+                <td>{{ ' '.join(hop_data[2:]) }}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% elif results is not none %}
+<div class="alert alert-danger" role="alert">
+    An error occurred: {{ results['traceroute_lookup']['stderr'] }}
+</div>
+{% endif %}
+{% include 'tools/buzz_report.html' %}
+
+{% endif %}
+
+{% include 'tools/help_modal.html' %}
+
+{% endblock %}

@@ -1,0 +1,75 @@
+/* Estilos para el modo oscuro */
+.dark-mode {
+    /* Define los colores y estilos para el modo oscuro */
+    background-color: #333;
+    color: #fff;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container-fluid {
+    flex: 1;
+}
+
+.footer {
+    margin-top: auto;
+
+}
+
+/*
+ #sidebar {
+    transition: all 0.3s;
+    margin-top: 60px;
+} 
+*/
+
+#main-content {
+    margin-top: 60px;
+    /* Ajusta este valor según sea necesario */
+}
+
+
+/*
+.navbar {
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+
+.nav-options {
+    display: flex;
+    align-items: center;
+}
+
+.nav-item {
+    margin-right: 20px;
+    font-size: 18px;
+}
+
+
+.nav-options .nav-item a {
+    display: inline-block;
+    padding: 8px 16px;
+    margin: 4px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #fff;
+
+    background-color: #007bff !important;
+  
+}
+
+.nav-options .nav-item a:hover {
+    background-color: #0056b3 !important;
+   
+}
+*/

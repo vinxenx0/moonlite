@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lateral Opening Bootstrap Navbar</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    @media(max-width:767px){
+      .navbar .navbar-collapse.collapsing{ 
+        height:auto !important;
+      }
+      .navbar .lateral-left{
+        left:-100%; 
+        animation: slide-out-left 200ms forwards;
+      }
+      .navbar .lateral-left.open{ 
+        animation: slide-in-left 200ms forwards;
+      }
+      .navbar .lateral-right{
+        right:-100%;
+        animation: slide-out-right 200ms forwards;
+      }
+      .navbar .lateral-right.open{ 
+        animation: slide-in-right 200ms forwards;
+      }
+      .navbar .navbar-collapse{ 
+        top:0px; bottom:0px; 
+        position:fixed; 
+        width:80%; width:calc(100% - 60px); 
+        max-width:320px; 
+        height:auto !important;
+    
+        /* Optional styling */
+        background:#f8f8f8;
+        padding:30px;
+        top: 56px;
+      }
+      .navbar .lateral-left.open,
+      .navbar .lateral-right.open{
+        display:block !important;
+        overflow-y:auto;
+      }
+    }
+    
+    @keyframes slide-in-left{ 
+      0%		{ left:-100%; }
+      100%	{ left:0px; }
+    }
+    @keyframes slide-out-left{
+      0%		{ left:0px; }
+      100%	{ left:-100%; }
+    }
+    @keyframes slide-in-right{ 
+      0%		{ right:-100%; }
+      100%	{ right:0px; }
+    }
+    @keyframes slide-out-right{
+      0%		{ right:0px; }
+      100%	{ right:-100%; }
+    }
+  </style>
+</head>
+<body>
+    
+<!-- Default Bootstrap navbar example -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="#">Brand</a>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Link</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Dropdown
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Separated link</a></li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Dropdown
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Separated link</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+  <!-- /Default Bootstrap navbar example -->
+  
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Menu side toggle
+  document.addEventListener('DOMContentLoaded', function () {
+    var toggler = document.querySelector('.navbar-toggler');
+    var navbarCollapse = document.querySelector('.navbar-collapse');
+
+    toggler.addEventListener('click', function () {
+      navbarCollapse.classList.toggle('open');
+    });
+  });
+</script>
+
+</body>
+</html>

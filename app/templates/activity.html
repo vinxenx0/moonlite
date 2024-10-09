@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>User Usage Records</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Username</th>
+                <th>email</th>
+                <th>Target</th>
+                <th>IP Address</th>
+                <th>User Agent</th>
+                <th>Country</th>
+                <th>Language</th>
+                <th>Timestamp</th>
+                <th>Page URL</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in records %}
+                <tr>
+                    <td>{{ record.id }}</td>
+                    <td>{{ record.username }}</td>
+                    <td>{{ record.email }}</td>
+                    <td>{{ record.target }}</td>
+                    <td>{{ record.ip_address }}</td>
+                    <td>{{ record.user_agent }}</td>
+                    <td>{{ record.country }}</td>
+                    <td>{{ record.language }}</td>
+                    <td>{{ record.timestamp }}</td>
+                    <td>{{ record.page_url }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

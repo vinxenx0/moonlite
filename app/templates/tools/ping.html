@@ -1,0 +1,25 @@
+<!-- app/templates/tools/ping.html -->
+
+{% extends "base.html" %}
+
+{% block title %}PING{% endblock %}
+
+{% block content %}
+    <h2>PING</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.domain.label }}
+            {{ form.domain(class="form-control") }}
+            {% for error in form.domain.errors %}
+                <small class="form-text text-danger">{{ error }}</small>
+            {% endfor %}
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
+    <hr>
+    {% if ping_result %}
+        <h3>Resultado del ping:</h3>
+        <blockquote>{{ ping_result }}</blockquote>
+    {% endif %}
+{% endblock %}

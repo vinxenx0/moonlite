@@ -1,0 +1,62 @@
+<!-- app/templates/tools/domains/cname.html -->
+ 
+{% extends "base.html" %}
+
+{% block title %}{{title}} | {{slogan}}{% endblock %}
+{% block description %}{{slogan}}{% endblock %}
+{% block keywords %}{{keywords}}{% endblock %}
+
+
+{% block content %}
+
+
+{% include 'tools/styles.html' %}
+
+    {% include 'inc/breadcrumbs.html' %}
+
+    <h2  class="mb-3">{{title}} <i class="bi bi-info-circle info-icon" data-bs-toggle="modal" data-bs-target="#infoModal"></i></h2>
+    <p  class="mb-3">{{ slogan }}</p>
+
+    <div class="alert alert-info" role="alert">
+        <p class="mb-0">{{ definition }}</p>
+    </div>
+
+    {% include 'tools/quick_form.html' %}
+
+    <hr>
+    {% if results %}
+        <h3>Resultados de {{ title }}:</h3>
+
+        <div class="row">
+            <div class="col-md-6">
+                <p class="duration">Duración del scan: {{ duration }} segundos</p>
+                <div id="duration-chart-container">
+                    <canvas id="duration-chart"></canvas>
+                </div>
+            </div>
+            <div class="col-md-6 text-center">
+                {% if is_results_valid %}
+                <i class="fas fa-check-circle status-icon valid"></i>
+                <p class="text-success">Resultados válidos</p>
+                {% else %}
+                <i class="fas fa-exclamation-circle status-icon invalid"></i>
+                <p class="text-danger">Resultados no válidos</p>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if is_results_valid %}
+            <h1>
+                {{ results['mta_sts_lookup'] }}
+            </h1>
+        {% else %}
+            <p>No se encontraron resultados válidos.</p>
+        {% endif %}
+
+        {% include 'tools/buzz_report.html' %}
+
+    {% endif %}
+
+    {% include 'tools/help_modal.html' %}
+
+{% endblock %}

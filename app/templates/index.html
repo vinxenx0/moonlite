@@ -1,0 +1,27 @@
+<!-- app/templates/index.html -->
+
+{% extends "base.html" %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+    {% if not current_user.is_authenticated %}
+        <div class="jumbotron">
+            <h1 class="display-4">¡Bienvenido a nuestra aplicación!</h1>
+            <p class="lead">Regístrate ahora para comenzar a disfrutar de todas las funcionalidades.</p>
+            <hr class="my-4">
+            <p>Puedes acceder a características exclusivas al registrarte en nuestra plataforma.</p>
+            <a class="btn btn-primary btn-lg" href="{{ url_for('register') }}" role="button">Registrarse</a>
+        </div>
+    {% else %}
+    <div class="jumbotron">
+        <h1 class="display-4">¡Bienvenido a nuestra aplicación!</h1>
+        <p class="lead">HAZTE PRO ahora para comenzar a disfrutar de todas las funcionalidades.</p>
+        <hr class="my-4">
+        <p>Puedes acceder a características exclusivas al registrarte en nuestra plataforma.</p>
+        <a class="btn btn-primary btn-lg" href="{{ url_for('index') }}" role="button">PRO</a>
+    </div>
+    {% endif %}
+
+
+{% endblock %}

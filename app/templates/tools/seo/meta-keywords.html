@@ -1,0 +1,280 @@
+<!-- app/templates/tools/seo/meta-keywords.html -->
+ 
+{% extends "base.html" %}
+
+{% block title %}{{title}} | {{slogan}}{% endblock %}
+{% block description %}{{slogan}}{% endblock %}
+{% block keywords %}{{keywords}}{% endblock %}
+
+
+{% block content %}
+
+
+{% include 'tools/styles.html' %}
+
+    {% include 'inc/breadcrumbs.html' %}
+
+    <h2  class="mb-3">{{title}} <i class="bi bi-info-circle info-icon" data-bs-toggle="modal" data-bs-target="#infoModal"></i></h2>
+    <p  class="mb-3">{{ slogan }}</p>
+
+    <div class="alert alert-info" role="alert">
+        <p class="mb-0">{{ definition }}</p>
+    </div>
+
+    {% include 'tools/quick_form.html' %}
+
+    <hr>
+    {% if results %}
+        <h3>Resultados de {{ title }}:</h3>
+     
+        {% include 'tools/tool_stats.html' %}
+
+
+
+        {% if is_results_valid %}
+            <h2 class="section-title">Meta Keywords URL Issues</h2>
+            <div class="accordion" id="resultsAccordion">
+                
+                             <!-- Missing -->
+                              <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading-Multiple">
+                                    <button class="accordion-button collapsed {% if results['Missing'] %}bg-success{% else %}bg-danger{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-Multiple" aria-expanded="false" aria-controls="collapse-Multiple">
+                                        <div class="row w-100">
+                                            <div class="col-md-1">
+                                                <i class="fas fa-clone"></i>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <strong>Missing:</strong>
+                                            </div>
+                                            <div class="col-md-4">
+                                                {% if results['Missing'] %}
+                                                    <span class="badge bg-black text-success"><i class="fas fa-check"></i> True</span>
+                                                {% else %}
+                                                    <span class="badge bg-black text-danger"><i class="fas fa-times"></i> False</span>
+                                                {% endif %}
+                                            </div>
+                                            <div class="col-md-4 text-end">
+                                                <i class="fas fa-info-circle"></i> More Info
+                                            </div>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="collapse-Multiple" class="accordion-collapse collapse" aria-labelledby="heading-Multiple" data-bs-parent="#resultsAccordion">
+                                    <div class="accordion-body">
+                                        <p>Additional information about the Multiple test.</p>
+                                    </div>
+                                </div>
+                            </div>
+            
+                            <!-- Duplicate -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading-Outside-head">
+                                    <button class="accordion-button collapsed {% if results['Duplicate'] %}bg-success{% else %}bg-danger{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-Outside-head" aria-expanded="false" aria-controls="collapse-Outside-head">
+                                        <div class="row w-100">
+                                            <div class="col-md-1">
+                                                <i class="fas fa-code"></i>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <strong>Duplicate:</strong>
+                                            </div>
+                                            <div class="col-md-4">
+                                                {% if results['Duplicate'] %}
+                                                    <span class="badge bg-black text-success"><i class="fas fa-check"></i> True</span>
+                                                {% else %}
+                                                    <span class="badge bg-black text-danger"><i class="fas fa-times"></i> False</span>
+                                                {% endif %}
+                                            </div>
+                                            <div class="col-md-4 text-end">
+                                                <i class="fas fa-info-circle"></i> More Info
+                                            </div>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="collapse-Outside-head" class="accordion-collapse collapse" aria-labelledby="heading-Outside-head" data-bs-parent="#resultsAccordion">
+                                    <div class="accordion-body">
+                                        <p>Additional information about the Outside &lt;head&gt; test.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                <!-- Multiples -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading-Over-60-Characters">
+                        <button class="accordion-button collapsed {% if results['Over_60_characters'] %}bg-success{% else %}bg-danger{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-Over-60-Characters" aria-expanded="false" aria-controls="collapse-Over-60-Characters">
+                            <div class="row w-100">
+                                <div class="col-md-1">
+                                    <i class="fas fa-font"></i>
+                                </div>
+                                <div class="col-md-3">
+                                    <strong>Multiple:</strong>
+                                </div>
+                                <div class="col-md-4">
+                                    {% if results['Over_60_characters'] %}
+                                        <span class="badge bg-black text-success"><i class="fas fa-check"></i> True</span>
+                                    {% else %}
+                                        <span class="badge bg-black text-danger"><i class="fas fa-times"></i> False</span>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-4 text-end">
+                                    <i class="fas fa-info-circle"></i> More Info
+                                </div>
+                            </div>
+                        </button>
+                    </h2>
+                    <div id="collapse-Over-60-Characters" class="accordion-collapse collapse" aria-labelledby="heading-Over-60-Characters" data-bs-parent="#resultsAccordion">
+                        <div class="accordion-body">
+                            <p>Additional information about the Over 60 Characters test.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        {% else %}
+            <p>No results found.</p>
+        {% endif %}
+
+    {% endif %}
+
+    {% include 'tools/help_modal.html' %}
+
+
+<script>
+    const durationCtx = document.getElementById('durationChart').getContext('2d');
+    const durationChart = new Chart(durationCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Duración'],
+            datasets: [{
+                label: 'Tiempo (segundos)',
+                data: [1.5785455703735352],
+                backgroundColor: 'rgba(54, 162, 235, 1)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        display: false
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+
+    const validResultsCtx = document.getElementById('validResultsChart').getContext('2d');
+    const validResultsChart = new Chart(validResultsCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Success Checks', 'Danger Checks'],
+            datasets: [{
+                data: [2, 8],
+                backgroundColor: [
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(255, 99, 132, 1)'
+                ],
+                borderColor: [
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(255, 99, 132, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+
+    const totalChecksCtx = document.getElementById('totalChecksChart').getContext('2d');
+    const totalChecksChart = new Chart(totalChecksCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Total Checks', 'Success Checks', 'Danger Checks'],
+            datasets: [{
+                label: 'Número de Checks',
+                data: [10, 2, 8],
+                backgroundColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(255, 99, 132, 1)'
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(255, 99, 132, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        display: false
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+
+    const dangerPercentageCtx = document.getElementById('dangerPercentageChart').getContext('2d');
+    const dangerPercentageChart = new Chart(dangerPercentageCtx, {
+        type: 'pie',
+        data: {
+            labels: ['Danger Percentage', 'Safe Percentage'],
+            datasets: [{
+                data: [80, 20],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(75, 192, 192, 1)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(75, 192, 192, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+</script>
+
+
+{% endblock %}

@@ -1,0 +1,161 @@
+<div class="p-1">
+  <nav class="accordion" id="sidebar-menu">
+    {% if current_user.is_authenticated %}
+    <div class="accordion-item p-2">
+      <h2 class="accordion-header" id="headingProfile">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapseProfile" aria-expanded="false" aria-controls="collapseProfile">
+          <i class="fa-solid fa-crown"></i>&nbsp;<span class="item-responsive">Hi {{ current_user.username }}</span>
+        </button>
+      </h2>
+      <div id="collapseProfile" class="accordion-collapse collapse" aria-labelledby="headingProfile"
+        data-bs-parent="#sidebar-menu">
+        <div class="accordion-body">
+          <ul class="list-unstyled">
+            <li><a class="" href="{{ url_for('profile') }}">Mi perfil</a></li>
+            <li><a class="" href="{{ url_for('configuracion') }}"> Configuración</a></li>
+            <li><a class="" href="{{ url_for('change_password') }}"> Seguridad</a></li>
+            <li>
+              <hr class="">
+            </li> <!-- Separador -->
+            <li><a class="" href="#"><i class="fa-solid fa-crown"></i> Soporte</a></li>
+            <li><a class="" href="{{ url_for('logout') }}"> Cerrar sesión</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    {% if current_user.is_authenticated and current_user.role == 'usuario' %}
+    <div class="accordion-item p-2">
+      <h2 class="accordion-header" id="headingMisSitios">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapseMisSitios" aria-expanded="false" aria-controls="collapseMisSitios">
+          <i class="fa-solid fa-crown"></i>&nbsp;<span class="item-responsive">Mis Sitios</span>
+        </button>
+      </h2>
+      <div id="collapseMisSitios" class="accordion-collapse collapse" aria-labelledby="headingMisSitios"
+        data-bs-parent="#sidebar-menu">
+        <div class="accordion-body">
+          <nav class="sb-sidenav-menu-nested nav">
+            <ul class="list-unstyled">
+              <li><a class="" href="#">Sitio 1</a></li>
+              <li><a class="" href="#">Sitio 2</a></li>
+              <li><a class="" href="#">Sitio 3</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    {% if is_admin %}
+    <div class="accordion-item p-2">
+      <h2 class="accordion-header" id="headingAdmin">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapseAdmin" aria-expanded="false" aria-controls="collapseAdmin">
+          <i class="fa-solid fa-gear"></i>&nbsp;<span class="item-responsive">Admin</span>
+        </button>
+      </h2>
+      <div id="collapseAdmin" class="accordion-collapse collapse" aria-labelledby="headingAdmin"
+        data-bs-parent="#sidebar-menu">
+        <div class="accordion-body">
+          <nav class="sb-sidenav-menu-nested nav">
+            <ul class="list-unstyled">
+              <li><a class="" href="{{ url_for('admin_stats') }}">Estadisticas</a></li>
+              <li><a class="" href="{{ url_for('admin_register') }}">Nuevos Usuarios</a></li>
+              <li><a class="" href="{{ url_for('configuracion') }}">Config</a></li>
+              <li><a class="" href="{{ url_for('logs') }}">Logs</a></li>
+              <li><a class="" href="{{ url_for('usuarios') }}">Sistema</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    <div class="accordion-item p-2">
+      <h2 class="accordion-header" id="headingItem1">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapseItem1" aria-expanded="false" aria-controls="collapseItem1">
+          <i class="fa-solid fa-crown"></i>&nbsp;<span class="item-responsive">Item 1</span>
+        </button>
+      </h2>
+      <div id="collapseItem1" class="accordion-collapse collapse" aria-labelledby="headingItem1"
+        data-bs-parent="#sidebar-menu">
+        <div class="accordion-body">
+          <ul class="list-unstyled">
+            <li><a href="#">Subitem 1.1</a></li>
+            <li><a href="#">Subitem 1.2</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item p-2">
+      <h2 class="accordion-header" id="headingItem2">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapseItem2" aria-expanded="false" aria-controls="collapseItem2">
+          <i class="fa-solid fa-crown"></i>&nbsp;<span class="item-responsive">Item 2</span>
+        </button>
+      </h2>
+      <div id="collapseItem2" class="accordion-collapse collapse" aria-labelledby="headingItem2"
+        data-bs-parent="#sidebar-menu">
+        <div class="accordion-body">
+          <ul class="list-unstyled">
+            <li><a href="#">Subitem 2.1</a></li>
+            <li><a href="#">Subitem 2.2</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item p-2">
+      <h2 class="accordion-header" id="headingItem3">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapseItem3" aria-expanded="false" aria-controls="collapseItem3">
+          <i class="fa-solid fa-crown"></i>&nbsp;<span class="item-responsive">Item 3</span>
+        </button>
+      </h2>
+      <div id="collapseItem3" class="accordion-collapse collapse" aria-labelledby="headingItem3"
+        data-bs-parent="#sidebar-menu">
+        <div class="accordion-body">
+          <ul class="list-unstyled">
+            <li><a href="#">Subitem 2.1</a></li>
+            <li><a href="#">Subitem 2.2</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item p-2">
+      <h2 class="accordion-header" id="headingItem4">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapseItem4" aria-expanded="false" aria-controls="collapseItem4">
+          <i class="fa-solid fa-crown"></i>&nbsp;<span class="item-responsive">Item 4</span>
+        </button>
+      </h2>
+      <div id="collapseItem4" class="accordion-collapse collapse" aria-labelledby="headingItem4"
+        data-bs-parent="#sidebar-menu">
+        <div class="accordion-body">
+          <ul class="list-unstyled">
+            <li><a href="#">Subitem 2.1</a></li>
+            <li><a href="#">Subitem 2.2</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item p-2">
+      <h2 class="accordion-header" id="headingItem5">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapseItem5" aria-expanded="false" aria-controls="collapseItem5">
+          <i class="fa-solid fa-crown"></i>&nbsp;<span class="item-responsive">Item 5</span>
+        </button>
+      </h2>
+      <div id="collapseItem5" class="accordion-collapse collapse" aria-labelledby="headingItem5"
+        data-bs-parent="#sidebar-menu">
+        <div class="accordion-body">
+          <ul class="list-unstyled">
+            <li><a href="#">Subitem 2.1</a></li>
+            <li><a href="#">Subitem 2.2</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </nav>
+</div>

@@ -1,0 +1,145 @@
+==============
+Website Security
+==============
+To protect user data, your website needs to run on HTTPS, which is a secure encryption protocol. This section contains errors related to HTTPS not functioning properly and to the usage of HTTP links.
+==============
+
+==============
+Crawling
+============
+All your SEO efforts won’t yield any results if crawlers fail to properly scan your website. This section contains errors that can prevent search engine crawlers from scanning and indexing your site.
+===================
+
+==============
+Duplicate Content
+==========
+Duplicate content negatively impacts website SEO and leads to ranking problems with some website pages. By fixing the errors listed in this section, you’ll be able to solve duplicate content issues
+==========
+
+
+=============
+HTTP Status Code
+=============
+If your website pages, links or files that are supposed to return the 200 status code return other status codes, your website can experience ranking problems and your website pages may fall out of the index
+============
+
+
+=========
+Title
+==============
+The <title> tag helps search engines understand which aspect the page focuses on. In addition, the <title> tag is also usually displayed in the page’s search snippet. This section features recommendations that will help you optimize your title tags
+======================
+
+
+
+======
+Description
+========
+The description meta tag summarizes the page’s content and helps search engines understand which aspect the page focuses on. In most cases, search engines use the description meta tag in search snippets. This section features recommendations that will help you optimize your description meta tags
+========
+
+
+
+============
+Usability
+=============
+Your website needs to be user-friendly and intuitive. This section provides recommendations aimed at helping you improve website usability
+==========
+
+
+
+=====================
+Website Speed
+==================
+Website speed impacts user behavior. The slower the website loads up, the more people will leave it, which will ultimately increase your bounce rate. This section provides recommendations aimed at helping you improve the website speed
+============
+
+
+
+
+=================
+Textual Content
+=================
+Quality textual content is one of the cornerstones of SEO. By fixing errors featured in this section, you’ll be able to improve some formal content quality metrics. We highly recommend you carefully read your content to make sure it brings value to users and meets your quality standards
+====================
+
+
+
+===============
+Redirects
+=============
+Setting up redirects is a handy SEO technique that helps guide website visitors to proper web pages whenever a website/URL changes. Redirects also help you retain link juice of the removed website. This section features errors related to redirects not functioning properly.
+=============
+
+
+
+=============
+Internal Links
+===========
+Internal links help search engines scan websites because crawlers are able to discover new web pages by following such links. Internal links also allow the distribution of link equity across the website. By fixing errors featured in this section, you’ll be able to improve your internal linking
+============
+
+
+
+==============
+External Links
+==============
+External links help us support ideas expressed in content with authoritative data. When such links do not function properly, the website SEO is negatively affected. This section features recommendations that will help you fix external link errors
+===============
+
+
+
+================
+Localization
+===============
+If your website targets people from different countries and regions, you can’t do without the hreflang and HTML lang attributes. By fixing errors featured in this section, you’ll be able to make your hreflang and HTML lang attributes function properly.
+=================
+
+
+
+===========
+Images
+=========
+Images give websites a more appealing look and make it easier for users to grasp information. At the same time, using too many unoptimized images can lead to website speed issues. Besides, it is important to add alt tags to every image to get the most out of them SEO-wise.
+===============
+Image too big: This issue is triggered if the images you use on your website are too large. Images are usually the "heaviest" page elements in terms of size, and if the page loads slowly, in most cases, it is because of the size of the images.
+Alt text missing The alt attribute describes the content of the image. It helps search engine robots understand what is depicted in the image. Plus, the alt text is displayed on the page if the browser could not load the image.
+
+
+
+==============
+JavaScript
+================
+By using JavaScript, web developers can create dynamic and interactive websites. At the same time, JavaScript files are usually rather heavy and can significantly slow down your website if they are not optimized. Fix the errors listed in this section so that JavaScript files won’t hinder your website’s blazing fast loading speed
+=====
+
+
+=========
+CSS
+=========
+No website can do without CSS files since they make sites visually appealing. At the same time, when used unoptimized, CSS files can slow down your website. Fix the errors listed in this section so that CSS files won’t hinder your website’s blazing fast loading speed.
+========
+
+
+
+=============
+Mobile Optimization
+=================
+This section contains issues and recommendations on adapting websites for mobile devices. If the website is user-friendly for smartphones and tablets, it will have better behavioral factors that can affect search engine rankings, improve user experience and increase the number of conversions.
+================
+
+
+
+
+==============
+Performance
+==============
+This section contains a set of website quality metrics that are based on the user experience. Among them you will find Core Web Vitals that are considered by Google when measuring website satisfaction, and include LCP (Largest Contentful Paint) that measures the main content loading speed, FID (First Input Delay) that measures how long it takes for the website to respond when a user clicks on something, and CLS (Cumulative Layout Shift) that measures visual stability during page loading.
+===================
+
+
+==========
+AMP
+==========
+This section contains issues and recommendations on the technical implementation of AMP pages (Accelerated Mobile Pages) on the site. If AMP pages work properly, they load faster on mobile devices and, accordingly, help improve the user experience.
+==========

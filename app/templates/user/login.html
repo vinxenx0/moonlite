@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Iniciar Sesión{% endblock %}
+
+{% block content %}
+<div id="row" class="col-md-4">
+    <h2>Iniciar Sesión</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.username.label }}
+            {{ form.username(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.password.label }}
+            {{ form.password(class="form-control") }}
+        </div>
+        <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+        <div class="form-group">
+            <a class="nav-link" href="{{ url_for('reset_password_request') }}">He olvidado la contraseña</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

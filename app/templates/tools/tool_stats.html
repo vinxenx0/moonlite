@@ -1,0 +1,40 @@
+<div class="row">
+    <div class="col-md-3 chart-container">
+        <canvas id="totalChecksChart"></canvas>
+    </div>
+    <div class="col-md-3 chart-container">
+        <canvas id="durationChart"></canvas>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3 chart-container">
+        <canvas id="validResultsChart"></canvas>
+    </div>
+    <div class="col-md-3 chart-container">     
+        <canvas id="dangerPercentageChart"></canvas>
+    </div>
+   
+</div>
+
+<div class="row text-center  mt-4">
+    <div class="col-md-3">
+        <h5>Results</h5>
+        <span class="badge badge-custom bg-info">{{ total_checks }}</span>
+    </div>
+    <div class="col-md-3">
+        <h5>Duration</h5>
+        <span class="badge badge-custom bg-info">{{ duration }}</span>
+    </div>
+</div>
+<div class="row text-center mt-4">
+    <div class="col-md-3">
+        <h5>Success Checks</h5>
+        <span class="badge badge-custom bg-success">{{ success_count }}</span>
+    </div>
+    <div class="col-md-3">
+        <h5>Danger Checks</h5>
+        <span class="badge badge-custom bg-danger">{{ danger_percentage }}%</span>
+    </div>
+
+</div>

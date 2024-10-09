@@ -1,0 +1,66 @@
+<!-- app/templates/tools/accesibility/wcag.html -->
+ 
+{% extends "base.html" %}
+
+{% block title %}{{title}} | {{slogan}}{% endblock %}
+{% block description %}{{slogan}}{% endblock %}
+{% block keywords %}{{keywords}}{% endblock %}
+
+
+{% block content %}
+
+
+{% include 'tools/styles.html' %}
+
+    {% include 'inc/breadcrumbs.html' %}
+
+    <h2  class="mb-3">{{title}} <i class="bi bi-info-circle info-icon" data-bs-toggle="modal" data-bs-target="#infoModal"></i></h2>
+    <p  class="mb-3">{{ slogan }}</p>
+
+    <div class="alert alert-info" role="alert">
+        <p class="mb-0">{{ definition }}</p>
+    </div>
+
+    {% include 'tools/quick_form.html' %}
+
+    <hr>
+
+
+    {% if results %}
+
+    <h2 class="section-title">WCAG</h2>
+    <div class="row">
+        {% for consejo in results %}
+        {% set is_fail = 'Fail' in consejo.code %}
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div
+                    class="card-header  {% if is_fail %}bg-danger text-white{% else %}bg-warning text-dark{% endif %}">
+                    {{ consejo.code }}</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ consejo.type }}</h5>
+                    <p class="card-text">{{ consejo.message }}</p>
+                    <p class="card-text"><strong>Contexto:</strong>
+                    <blockquote>{{ consejo.context }}</blockquote>
+                    </p>
+                    <p class="card-text"><strong>Selector:</strong>
+                    <blockquote>{{ consejo.selector }}</blockquote>
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+
+{% else %}
+<p>No se encontraron resultados válidos.</p>
+{% endif %}
+
+{% include 'tools/buzz_report.html' %}
+
+
+{% include 'tools/help_modal.html' %}
+
+{% endblock %}
+

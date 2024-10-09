@@ -1,0 +1,128 @@
+<!-- app/templates/admin/stats.html -->
+
+{% extends "base.html" %}
+
+{% block title %}Estadísticas de Usuarios{% endblock %}
+
+{% block content %}
+<div class="container mb-3">
+    <h1>Estadísticas de Usuarios</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <canvas id="usersLastMonthChart"></canvas>
+        </div>
+        <div class="col-md-4">
+            <canvas id="totalUsersChart"></canvas>
+        </div>
+        <div class="col-md-4">
+            <canvas id="activeUsersChart"></canvas>
+        </div>
+    </div>
+
+</div>
+
+<!-- Tabla de usuarios -->
+<div class="table-responsive mt-2">
+    <table id="userTable" class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Correo Electrónico</th>
+                <!-- Agrega más columnas según sea necesario -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <!-- Agrega más columnas según sea necesario -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- SimpleDatatables JS -->
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest"></script>
+
+<!-- Inicialización de SimpleDatatables -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        new simpleDatatables.DataTable('#userTable');
+    });
+</script>
+
+<script>
+
+    // Datos de los gráficos
+    var usersLastMonthData = 2; // Cantidad de usuarios registrados el último mes
+    var totalUsersData = 2; // Cantidad total de usuarios
+    var activeUsersData = 2; // Cantidad de usuarios activos
+
+    // Obtener contexto de los gráficos
+    var usersLastMonthCtx = document.getElementById('usersLastMonthChart').getContext('2d');
+    var totalUsersCtx = document.getElementById('totalUsersChart').getContext('2d');
+    var activeUsersCtx = document.getElementById('activeUsersChart').getContext('2d');
+
+
+
+    // Crear gráficos
+    var usersLastMonthChart = new Chart(usersLastMonthCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Usuarios Registrados Último Mes'],
+            datasets: [{
+                label: 'Usuarios Registrados',
+                data: [usersLastMonthData],
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    var totalUsersChart = new Chart(totalUsersCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Usuarios Activos', 'Usuarios Inactivos'],
+            datasets: [{
+                label: 'Usuarios Activos',
+                data: [activeUsersData, totalUsersData - activeUsersData],
+                backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(255, 99, 132, 0.2)'],
+                borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 99, 132, 1)'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
+
+    var activeUsersChart = new Chart(activeUsersCtx, {
+        type: 'pie',
+        data: {
+            labels: ['Usuarios Activos', 'Usuarios Inactivos'],
+            datasets: [{
+                label: 'Total de Usuarios',
+                data: [activeUsersData, totalUsersData - activeUsersData],
+                backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)'],
+                borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
+</script>
+{% endblock %}

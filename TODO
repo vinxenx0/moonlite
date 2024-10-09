@@ -1,0 +1,92 @@
+
+
+- modal cookies
+- db user
+- internal messaging
+- firefox toggles sidebar
+
+----
+
+updates to revision
+
+para todos -> gestionar cuando devuelve error q no muestre el dashboard de resultados
+
+DOMINIOS
+
+/tools/domains/whois -> hay que gesiontar mejor el dato que devuelve en este caso especial
+/tools/domains/reverse -> que solo acepte IP
+/tools/domains/traceroute -> formatear mejor la salida
+/tools/domains/nmap -> formatear salida mejor
+/tools/domains/soa -> formatear mejor
+/tools/domains/asn -> terminar la herramienta
+/tools/domains/arin -> solo IP o IP6, formatear salida 
+/tools/domains/srv -> ajustar el script, ¿requiere un campo mas?
+
+
+ACCESIBILIDAD
+
+/tools/accesibility/wcag -> falta la info de la tool y actualizar la parte del dashboard
+/tools/accesibility/ortografia -> controlar si el usuario no mete el http, mejorar el formato de resultados y dashboard
+
+velocidad -> no esta hecho
+core web vitals ->no esta hecho
+responsive -> no esta hecho
+images ->no esta hecho
+lazy loading -> no esta hecho
+amp valid ->no esta hecho
+mobile audit -> no esta hecho
+
+/tools/usability/missing-favicon -> revisar la herramienta da error
+/tools/usability/flash-used -> no pinta los resultados devueltos cuando son correctos
+/tools/usability/x-card-missing -> no pinta los resultados devueltos cuando son correctos
+
+google search display -> no esta hecho
+content-optimization -> no esta hecho
+redirection management -> no esta hecho
+
+SEO
+
+- hay que comprobar los resultados cuando sean falses que no sean positivos 
+- gestionar el error cuando no se introduce http o https
+- afinar el dashboard de resultados
+- hay que ampliar la info extra en los acordeones
+
+
+images -> falta por hacer
+opengraph -> por hacer
+duplicante-content -> por hacer
+robots -> por hacer
+sitemap -> por hacer
+enlaces rotos -> por hacer
+enlaces salientes -> por hacer
+backlinks -> por hacer
+external links -> por hacer
+internal links -> por hacer
+
+
+
+/tools/seo/shema-org -> revisar los checks false / true
+/tools/seo/hreflang -> revisar los checks false / true
+/tools/seo/css -> revisar tool no esta bien planteada
+/tools/seo/deprecated-html -> no pinta los resultados cuando son buenos
+/tools/seo/gzip -> revisar lo que devuelve
+
+x-tags -> por hacer
+header-info -> por hacer
+http ssl -> por hacer
+server response -> por hacer
+security info ->por hacer
+canonical https ->por hacer 
+https redirect ->por hacer
+invalidad hlang atribute -> por hacer
+multiple lang codes -> por hacer
+invalid html lang ->por hacer
+lang duplicate ->por hacer
+html lang missing ->por hacer
+x-defaulta -> por hacer
+
+
+
+AFINAR VERSION WEB:
+- Fuera opcion informes
+- Delimitar las opciones del login user

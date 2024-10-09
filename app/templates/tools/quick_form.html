@@ -1,0 +1,89 @@
+<div class="container-fluid">
+    <div class="row">
+        <!-- Title and Description -->
+        <div class="col-12">
+            <div class="_card border-1 mb-3">
+                <div class="_card-body">
+                    <h2 class="mb-3 d-flex align-items-center">{{title}}</h2>
+                    <p class="mb-4 text-muted">{{slogan}} 
+                        <i class="bi bi-info-circle ms-2" data-bs-toggle="modal" data-bs-target="#infoModal" aria-label="More Information"></i>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-7 mb-4">
+            <div class="card alert-info">
+                <div class="card-body">
+                    <form id="myForm" method="POST" novalidate>
+                        {{ form.hidden_tag() }}
+                        <div class="mb-3">
+                            <div class="form-group">
+                                <label for="domainInput" class="form-label">{{ form.domain.label.text }} 
+                                    <span class="text-muted">(Required)</span>
+                                </label>
+                                {{ form.domain(class_="form-control", id="domainInput", aria_describedby="domainHelp") }}
+                                {% for error in form.domain.errors %}
+                                <small id="domainError" class="form-text text-danger">{{ error }}</small>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="form-group">
+                                <button id="submitButton" type="submit" class="btn btn-outline-primary w-100" title="Click to submit the form">
+                                    <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                                    <span class="sr-only">Loading...</span>
+                                    Enviar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="card alert-info speech-bubble">
+                <div class="card-body">
+                    <p class="mb-0">{{definition}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Custom CSS for the speech bubble */
+    .speech-bubble {
+        position: relative;
+        background-color: #d1ecf1;
+        border-radius: .4em;
+        padding: 1rem;
+    }
+
+    #myForm  {
+        position: relative;
+    
+        border-radius: .4em;
+  
+    }
+
+</style>
+
+<script>
+    // Initialize tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+
+    // Capturar el evento de envío del formulario
+    document.getElementById('myForm').addEventListener('submit', function () {
+        // Mostrar el spinner al hacer clic en Enviar
+        var submitButton = document.getElementById('submitButton');
+        submitButton.querySelector('.spinner-border').classList.remove('d-none');
+        submitButton.querySelector('.button-text').textContent = "Loading...";
+        submitButton.disabled = true; // Deshabilitar el botón para evitar envíos duplicados
+    });
+</script>

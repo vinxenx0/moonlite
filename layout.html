@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- DataTables CSS -->
+    <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        .card {
+            margin-bottom: 1rem;
+        }
+        .card-header {
+            font-weight: bold;
+        }
+        .metric {
+            font-size: 2rem;
+            text-align: center;
+        }
+        .chart-container {
+            position: relative;
+            height: 200px;
+            width: 100%;
+        }
+        .pie-chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+    <h1 class="mt-4">www.mytravelsite.com Title & Meta Description</h1>
+    <p>Make your Website stand out in search results! Boost your CTR!</p>
+
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="alert alert-info">
+                <ul>
+                    <li>Detect empty titles and meta descriptions and avoid duplicates.</li>
+                    <li>Check the length of your titles and meta descriptions to find opportunities for improvement.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4 text-center">
+        <div class="col-md-3 col-sm-6">
+            <div class="card">
+                <div class="card-header">Pages with titles</div>
+                <div class="card-body metric">1,544</div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="card">
+                <div class="card-header">Empty Titles</div>
+                <div class="card-body metric">0</div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="card">
+                <div class="card-header">Short Titles</div>
+                <div class="card-body metric">1,379</div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="card">
+                <div class="card-header">Duplicated Titles</div>
+                <div class="card-body metric">202</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Title length by Level</div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="titleLengthChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Title Status</div>
+                <div class="card-body">
+                    <div class="pie-chart-container">
+                        <canvas id="titleStatusChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4 text-center">
+        <div class="col-md-3 col-sm-6">
+            <div class="card">
+                <div class="card-header">Pages with Meta Description</div>
+                <div class="card-body metric">105</div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="card">
+                <div class="card-header">Empty Meta Description</div>
+                <div class="card-body metric">1,439</div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="card">
+                <div class="card-header">Short Meta Description</div>
+                <div class="card-body metric">35</div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="card">
+                <div class="card-header">Duplicated Meta Description</div>
+                <div class="card-body metric">12</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Meta Description length by Level</div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="metaDescLengthChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Meta Description Status</div>
+                <div class="card-body">
+                    <div class="pie-chart-container">
+                        <canvas id="metaDescStatusChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4 text-center">
+        <div class="col-md-3 col-sm-6">
+            <div class="card">
+                <div class="card-header">Total Errors</div>
+                <div class="card-body metric">0</div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="card">
+                <div class="card-header">Not Found</div>
+                <div class="card-body metric">0</div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="card">
+                <div class="card-header">HTTP Status Code</div>
+                <div class="card-body">
+                    <div class="pie-chart-container">
+                        <canvas id="httpStatusCodeChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">Log Metrics</div>
+                <div class="card-body">
+                    <table id="logMetricsTable" class="display">
+                        <thead>
+                        <tr>
+                            <th>Metrics</th>
+                            <th>04-30-2023</th>
+                            <th>04-29-2023</th>
+                            <th>CHANGE</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>200 Code Status Hits</td>
+                            <td>1267</td>
+                            <td>1420</td>
+                            <td class="text-danger">-10.77%</td>
+                        </tr>
+                        <tr>
+                            <td>301 Code Status Hits</td>
+                            <td>24</td>
+                            <td>76</td>
+                            <td class="text-danger">-68.42%</td>
+                        </tr>
+                        <tr>
+                            <td>304 Code Status Hits</td>
+                            <td>209</td>
+                            <td>242</td>
+                            <td class="text-danger">-13.64%</td>
+                        </tr>
+                        <tr>
+                            <td>404 Code Status Hits</td>
+                            <td>26</td>
+                            <td>10</td>
+                            <td class="text-danger">160.00%</td>
+                        </tr>
+                        <tr>
+                            <td>Crawled Pages Hits</td>
+                            <td>56</td>
+                            <td>110</td>
+                            <td class="text-danger">-49.09%</td>
+                        </tr>
+                        <tr>
+                            <td>Static Files Hits</td>
+                            <td>225</td>
+                            <td>257</td>
+                            <td class="text-danger">-12.45%</td>
+                        </tr>
+                        <tr>
+                            <td>Orphan pages Hits</td>
+                            <td>478</td>
+                            <td>634</td>
+                            <td class="text-danger">-24.61%</td>
+                        </tr>
+                        <tr>
+                            <td>% Mobile Hits</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>0.00%</td>
+                        </tr>
+                        <tr>
+                            <td>% Desktop Hits</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>0.00%</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Google Search Console</div>
+                <div class="card-body">
+                    <table id="googleSearchConsoleTable" class="display">
+                        <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Clicks</th>
+                            <th>Impressions</th>
+                            <th>CTR</th>
+                            <th>Avg. Position</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>06-23-2019</td>
+                            <td>5</td>
+                            <td>1027</td>
+                            <td>0.0048655</td>
+                            <td>42.3272</td>
+                        </tr>
+                        <tr>
+                            <td>02-17-2019</td>
+                            <td>6</td>
+                            <td>725</td>
+                            <td>0.00827586</td>
+                            <td>37.6855</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Google Analytics</div>
+                <div class="card-body">
+                    <table id="googleAnalyticsTable" class="display">
+                        <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Organic Sessions</th>
+                            <th>Organic Pageviews</th>
+                            <th>Average Bounce Rate</th>
+                            <th>Avg. time on page</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>06-16-2019</td>
+                            <td>18</td>
+                            <td>20</td>
+                            <td>94.4444</td>
+                            <td>33.5</td>
+                        </tr>
+                        <tr>
+                            <td>02-17-2019</td>
+                            <td>38</td>
+                            <td>49</td>
+                            <td>86.8421</td>
+                            <td>50.6364</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#logMetricsTable').DataTable();
+        $('#googleSearchConsoleTable').DataTable();
+        $('#googleAnalyticsTable').DataTable();
+
+        const titleLengthCtx = document.getElementById('titleLengthChart').getContext('2d');
+        new Chart(titleLengthCtx, {
+            type: 'bar',
+            data: {
+                labels: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15'],
+                datasets: [{
+                    label: 'Title length by level',
+                    data: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 45, 40, 35, 30, 25, 20],
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const titleStatusCtx = document.getElementById('titleStatusChart').getContext('2d');
+        new Chart(titleStatusCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Title', 'Empty Title', 'Short Title', 'Duplicated Title'],
+                datasets: [{
+                    data: [49, 6, 44, 1],
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+
+        const metaDescLengthCtx = document.getElementById('metaDescLengthChart').getContext('2d');
+        new Chart(metaDescLengthCtx, {
+            type: 'bar',
+            data: {
+                labels: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15'],
+                datasets: [{
+                    label: 'Meta desc length by level',
+                    data: [20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 100, 90, 80, 70, 60, 50],
+                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const metaDescStatusCtx = document.getElementById('metaDescStatusChart').getContext('2d');
+        new Chart(metaDescStatusCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Description', 'Empty Desc', 'Short Desc', 'Duplicated Desc'],
+                datasets: [{
+                    data: [7, 90, 2, 1],
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(54, 162, 235, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(54, 162, 235, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+
+        const httpStatusCodeCtx = document.getElementById('httpStatusCodeChart').getContext('2d');
+        new Chart(httpStatusCodeCtx, {
+            type: 'pie',
+            data: {
+                labels: ['200', '404', '301', '500'],
+                datasets: [{
+                    data: [100, 0, 0, 0],
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(54, 162, 235, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(54, 162, 235, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+    });
+</script>
+</body>
+</html>

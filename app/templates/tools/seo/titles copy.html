@@ -1,0 +1,807 @@
+<!-- app/templates/tools/seo/titles.html -->
+ 
+{% extends "base.html" %}
+
+{% block title %}{{title}} | {{slogan}}{% endblock %}
+{% block description %}{{slogan}}{% endblock %}
+{% block keywords %}{{keywords}}{% endblock %}
+
+
+{% block content %}
+
+<style>
+    .chart-container {
+        position: relative;
+        margin: auto;
+        height: 150px;
+        width: 150px;
+    }
+
+    .bg-success {
+        background-color: green !important;
+    }
+
+    .bg-danger {
+        background-color: red !important;
+    }
+
+    .badge.bg-black {
+        background-color: black;
+        color: white;
+    }
+
+    .badge.text-success {
+        color: green;
+    }
+
+    .badge.text-danger {
+        color: red;
+    }
+
+    .accordion-button.collapsed .row .text-end {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    .dashboard-header {
+        margin-bottom: 30px;
+    }
+
+    .percentage {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .badge-custom {
+        font-size: 1.25rem;
+    }
+
+    .status-icon {
+        font-size: 2.5rem;
+    }
+
+    .valid {
+        color: green;
+    }
+
+    .invalid {
+        color: red;
+    }
+</style>
+
+{% include 'tools/styles.html' %}
+
+    {% include 'inc/breadcrumbs.html' %}
+
+    <h2  class="mb-3">{{title}} <i class="bi bi-info-circle info-icon" data-bs-toggle="modal" data-bs-target="#infoModal"></i></h2>
+    <p  class="mb-3">{{ slogan }}</p>
+
+    <div class="alert alert-info" role="alert">
+        <p class="mb-0">{{ definition }}</p>
+    </div>
+
+    {% include 'tools/quick_form.html' %}
+
+    <hr>
+    {% if results %}
+        <h3>Resultados de {{ title }}:</h3>
+
+    <div class="row">
+        <div class="col-md-3 chart-container">
+            <canvas id="durationChart"></canvas>
+        </div>
+        <div class="col-md-3 chart-container">
+            <canvas id="validResultsChart"></canvas>
+        </div>
+        <div class="col-md-3 chart-container">
+            <canvas id="totalChecksChart"></canvas>
+        </div>
+        <div class="col-md-3 chart-container">
+            <canvas id="dangerPercentageChart"></canvas>
+        </div>
+    </div>
+
+    <div class="row text-center mt-4">
+        <div class="col-md-3">
+            <h5>Total Checks</h5>
+            <span class="badge badge-custom bg-info">{{ total_checks }}</span>
+        </div>
+        <div class="col-md-3">
+            <h5>Success Checks</h5>
+            <span class="badge badge-custom bg-success">{{ success_count }}</span>
+        </div>
+        <div class="col-md-3">
+            <h5>Danger Checks</h5>
+            <span class="badge badge-custom bg-danger">{{ danger_count }}</span>
+        </div>
+        <div class="col-md-3">
+            <h5>Danger Percentage</h5>
+            <span class="percentage">{{ danger_percentage }}%</span>
+        </div>
+    </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <p class="duration">Duración del scan: {{ duration }} segundos</p>
+                <div id="duration-chart-container">
+                    <canvas id="duration-chart"></canvas>
+                </div>
+            </div>
+            <div class="col-md-6 text-center">
+                {% if is_results_valid %}
+                <i class="fas fa-check-circle status-icon valid"></i>
+                <p class="text-success">Resultados válidos</p>
+                {% else %}
+                <i class="fas fa-exclamation-circle status-icon invalid"></i>
+                <p class="text-danger">Resultados no válidos</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="dashboard-header row text-center">
+            <div class="col-md-3">
+                <div class="col-md-3 chart-container">
+                    <canvas id="totalChecksChart"></canvas>
+                </div>
+                <h5>Total Checks</h5>
+                <span class="badge badge-custom bg-info">{{ total_checks }}</span>
+            </div>
+            <div class="col-md-3">
+                <div class="chart-container">
+                    <canvas id="successChart"></canvas>
+                </div>
+                <h5>Success Checks</h5>
+                <span class="badge badge-custom bg-success">{{ success_count }}</span>
+            </div>
+            <div class="col-md-3">
+                <div class="chart-container">
+                    <canvas id="dangerChart"></canvas>
+                </div>
+                <h5>Danger Checks</h5>
+                <span class="badge badge-custom bg-danger">{{ danger_count }}</span>
+            </div>
+            <div class="col-md-3">
+                <div class="col-md-3 chart-container">
+                    <canvas id="durationChart"></canvas>
+                </div>
+                <h5>Duration</h5>
+                <span class="percentage">{{ danger_percentage }}%</span>
+            </div>
+        </div>
+
+        {% if is_results_valid %}
+           
+            <h2 class="section-title">Page Title Issues</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip"
+                        data-bs-placement="right" title="Missing"
+                        data-bs-html="true">
+                        <strong>Title:</strong> {{ results['Title_1']}} 
+                    </p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip"
+                    data-bs-placement="right" title="Missing"
+                    data-bs-html="true">
+                    <strong>Title lenght:</strong>{{ results['Title_1_Length']}}
+                    </p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip"
+                        data-bs-placement="right" title="Missing"
+                        data-bs-html="true">
+                        <strong>Missing:</strong> {% if
+                        results['Missing'] %}<span
+                            class="badge bg-success"><i class="fas fa-check"></i>
+                            True</span>{% else
+                        %}<span class="badge bg-danger"><i class="fas fa-times"></i>
+                            False</span>{% endif
+                        %}
+                    </p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip"
+                        data-bs-placement="right" title="Duplicate"
+                        data-bs-html="true">
+                        <strong>Duplicate:</strong> {% if
+                            results['Duplicate'] %}<span
+                            class="badge bg-success"><i class="fas fa-check"></i>
+                            True</span>{% else
+                        %}<span class="badge bg-danger"><i class="fas fa-times"></i>
+                            False</span>{% endif
+                        %}
+                    </p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip"
+                        data-bs-placement="right" title="Over 60 characters"
+                        data-bs-html="true">
+                        <strong>Over 60 characters:</strong> {% if
+                            results['Over_60_characters'] %}<span
+                            class="badge bg-success"><i class="fas fa-check"></i>
+                            True</span>{% else
+                        %}<span class="badge bg-danger"><i class="fas fa-times"></i>
+                            False</span>{% endif
+                        %}
+                    </p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip"
+                        data-bs-placement="right" title="Below 30 characters"
+                        data-bs-html="true">
+                        <strong>Below 30 characters:</strong> {% if
+                            results['Below_30_characters'] %}<span
+                            class="badge bg-success"><i class="fas fa-check"></i>
+                            True</span>{% else
+                        %}<span class="badge bg-danger"><i class="fas fa-times"></i>
+                            False</span>{% endif
+                        %}
+                    </p>
+                
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip"
+                        data-bs-placement="right" title="Same as h1"
+                        data-bs-html="true"><strong>Same as
+                            h1:</strong> {% if
+                                results['Same_as_h1'] %}<span
+                            class="badge bg-success"><i class="fas fa-check"></i>
+                            True</span>{% else
+                        %}<span class="badge bg-danger"><i class="fas fa-times"></i>
+                            False</span>{% endif
+                        %}</p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip"
+                        data-bs-placement="right" title="Multiple"
+                        data-bs-html="true">
+                        <strong>Multiple:</strong> {% if
+                            results['Multiple'] %}<span
+                            class="badge bg-success"><i class="fas fa-check"></i>
+                            True</span>{% else
+                        %}<span class="badge bg-danger"><i class="fas fa-times"></i>
+                            False</span>{% endif
+                        %}
+                    </p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip"
+                        data-bs-placement="right" title="Outside &lt;head&gt;"
+                        data-bs-html="true">
+                        <strong>Outside &lt;head&gt;:</strong> {% if
+                            results['Outside_head'] %}<span class="badge bg-success"><i
+                                    class="fas fa-check"></i> True</span>{% else
+                            %}<span class="badge bg-danger"><i
+                                    class="fas fa-times"></i> False</span>{%
+                            endif %}
+                    </p>
+                </div>
+            </div>
+        {% else %}
+            <p>No se encontraron resultados válidos.</p>
+        {% endif %}
+
+        {% if is_results_valid %}
+            <h2 class="section-title">Page Title Issues</h2>
+            <div class="accordion" id="resultsAccordion">
+                {% for key, value in results.items() %}
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading-{{ key }}">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ key }}" aria-expanded="false" aria-controls="collapse-{{ key }}">
+                                <div class="row w-100">
+                                    <div class="col-md-4">
+                                        <strong>{{ key.replace('_', ' ').title() }}:</strong>
+                                    </div>
+                                    <div class="col-md-4">
+                                        {% if value is boolean %}
+                                            {% if value %}
+                                                <span class="badge bg-success"><i class="fas fa-check"></i> True</span>
+                                            {% else %}
+                                                <span class="badge bg-danger"><i class="fas fa-times"></i> False</span>
+                                            {% endif %}
+                                        {% else %}
+                                            {{ value }}
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-4">
+                                        <i class="fas fa-info-circle"></i> More Info
+                                    </div>
+                                </div>
+                            </button>
+                        </h2>
+                        <div id="collapse-{{ key }}" class="accordion-collapse collapse" aria-labelledby="heading-{{ key }}" data-bs-parent="#resultsAccordion">
+                            <div class="accordion-body">
+                                <p>Additional information about {{ key.replace('_', ' ').title() }}.</p>
+                                <!-- You can add more detailed information here if available -->
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No se encontraron resultados válidos.</p>
+        {% endif %}
+
+        {% if is_results_valid %}
+            <h2 class="section-title">Page Title Issues</h2>
+            <div class="accordion" id="resultsAccordion">
+
+                <!-- Title -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading-Title">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-Title" aria-expanded="false" aria-controls="collapse-Title">
+                            <div class="row w-100">
+                                <div class="col-md-1">
+                                    <i class="fas fa-heading"></i>
+                                </div>
+                                <div class="col-md-3">
+                                    <strong>Title:</strong>
+                                </div>
+                                <div class="col-md-4">
+                                    {{ results['Title_1'] }}
+                                </div>
+                                <div class="col-md-4 text-end">
+                                    <i class="fas fa-info-circle"></i> More Info
+                                </div>
+                            </div>
+                        </button>
+                    </h2>
+                    <div id="collapse-Title" class="accordion-collapse collapse" aria-labelledby="heading-Title" data-bs-parent="#resultsAccordion">
+                        <div class="accordion-body">
+                            <p>Additional information about the Title.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Title Length -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading-Title-Length">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-Title-Length" aria-expanded="false" aria-controls="collapse-Title-Length">
+                            <div class="row w-100">
+                                <div class="col-md-1">
+                                    <i class="fas fa-text-width"></i>
+                                </div>
+                                <div class="col-md-3">
+                                    <strong>Title Length:</strong>
+                                </div>
+                                <div class="col-md-4">
+                                    {{ results['Title_1_Length'] }}
+                                </div>
+                                <div class="col-md-4 text-end">
+                                    <i class="fas fa-info-circle"></i> More Info
+                                </div>
+                            </div>
+                        </button>
+                    </h2>
+                    <div id="collapse-Title-Length" class="accordion-collapse collapse" aria-labelledby="heading-Title-Length" data-bs-parent="#resultsAccordion">
+                        <div class="accordion-body">
+                            <p>Additional information about the Title Length.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Missing -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading-Missing">
+                        <button class="accordion-button collapsed {% if results['Missing'] %}bg-success{% else %}bg-danger{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-Missing" aria-expanded="false" aria-controls="collapse-Missing">
+                            <div class="row w-100">
+                                <div class="col-md-1">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </div>
+                                <div class="col-md-3">
+                                    <strong>Missing:</strong>
+                                </div>
+                                <div class="col-md-4">
+                                    {% if results['Missing'] %}
+                                        <span class="badge bg-black text-success"><i class="fas fa-check"></i> True</span>
+                                    {% else %}
+                                        <span class="badge bg-black text-danger"><i class="fas fa-times"></i> False</span>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-4 text-end">
+                                    <i class="fas fa-info-circle"></i> More Info
+                                </div>
+                            </div>
+                        </button>
+                    </h2>
+                    <div id="collapse-Missing" class="accordion-collapse collapse" aria-labelledby="heading-Missing" data-bs-parent="#resultsAccordion">
+                        <div class="accordion-body">
+                            <p>Additional information about the Missing test.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Duplicate -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading-Duplicate">
+                        <button class="accordion-button collapsed {% if results['Duplicate'] %}bg-success{% else %}bg-danger{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-Duplicate" aria-expanded="false" aria-controls="collapse-Duplicate">
+                            <div class="row w-100">
+                                <div class="col-md-1">
+                                    <i class="fas fa-copy"></i>
+                                </div>
+                                <div class="col-md-3">
+                                    <strong>Duplicate:</strong>
+                                </div>
+                                <div class="col-md-4">
+                                    {% if results['Duplicate'] %}
+                                        <span class="badge bg-black text-success"><i class="fas fa-check"></i> True</span>
+                                    {% else %}
+                                        <span class="badge bg-black text-danger"><i class="fas fa-times"></i> False</span>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-4 text-end">
+                                    <i class="fas fa-info-circle"></i> More Info
+                                </div>
+                            </div>
+                        </button>
+                    </h2>
+                    <div id="collapse-Duplicate" class="accordion-collapse collapse" aria-labelledby="heading-Duplicate" data-bs-parent="#resultsAccordion">
+                        <div class="accordion-body">
+                            <p>Additional information about the Duplicate test.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Over 60 Characters -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading-Over-60-Characters">
+                        <button class="accordion-button collapsed {% if results['Over_60_characters'] %}bg-success{% else %}bg-danger{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-Over-60-Characters" aria-expanded="false" aria-controls="collapse-Over-60-Characters">
+                            <div class="row w-100">
+                                <div class="col-md-1">
+                                    <i class="fas fa-font"></i>
+                                </div>
+                                <div class="col-md-3">
+                                    <strong>Over 60 Characters:</strong>
+                                </div>
+                                <div class="col-md-4">
+                                    {% if results['Over_60_characters'] %}
+                                        <span class="badge bg-black text-success"><i class="fas fa-check"></i> True</span>
+                                    {% else %}
+                                        <span class="badge bg-black text-danger"><i class="fas fa-times"></i> False</span>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-4 text-end">
+                                    <i class="fas fa-info-circle"></i> More Info
+                                </div>
+                            </div>
+                        </button>
+                    </h2>
+                    <div id="collapse-Over-60-Characters" class="accordion-collapse collapse" aria-labelledby="heading-Over-60-Characters" data-bs-parent="#resultsAccordion">
+                        <div class="accordion-body">
+                            <p>Additional information about the Over 60 Characters test.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Below 30 Characters -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading-Below-30-Characters">
+                        <button class="accordion-button collapsed {% if results['Below_30_characters'] %}bg-success{% else %}bg-danger{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-Below-30-Characters" aria-expanded="false" aria-controls="collapse-Below-30-Characters">
+                            <div class="row w-100">
+                                <div class="col-md-1">
+                                    <i class="fas fa-font"></i>
+                                </div>
+                                <div class="col-md-3">
+                                    <strong>Below 30 Characters:</strong>
+                                </div>
+                                <div class="col-md-4">
+                                    {% if results['Below_30_characters'] %}
+                                        <span class="badge bg-black text-success"><i class="fas fa-check"></i> True</span>
+                                    {% else %}
+                                        <span class="badge bg-black text-danger"><i class="fas fa-times"></i> False</span>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-4 text-end">
+                                    <i class="fas fa-info-circle"></i> More Info
+                                </div>
+                            </div>
+                        </button>
+                    </h2>
+                    <div id="collapse-Below-30-Characters" class="accordion-collapse collapse" aria-labelledby="heading-Below-30-Characters" data-bs-parent="#resultsAccordion">
+                        <div class="accordion-body">
+                            <p>Additional information about the Below 30 Characters test.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Same as H1 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading-Same-as-H1">
+                        <button class="accordion-button collapsed {% if results['Same_as_H1'] %}bg-success{% else %}bg-danger{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-Same-as-H1" aria-expanded="false" aria-controls="collapse-Same-as-H1">
+                            <div class="row w-100">
+                                <div class="col-md-1">
+                                    <i class="fas fa-heading"></i>
+                                </div>
+                                <div class="col-md-3">
+                                    <strong>Same as H1:</strong>
+                                </div>
+                                <div class="col-md-4">
+                                    {% if results['Same_as_H1'] %}
+                                        <span class="badge bg-black text-success"><i class="fas fa-check"></i> True</span>
+                                    {% else %}
+                                        <span class="badge bg-black text-danger"><i class="fas fa-times"></i> False</span>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-4 text-end">
+                                    <i class="fas fa-info-circle"></i> More Info
+                                </div>
+                            </div>
+                        </button>
+                    </h2>
+                    <div id="collapse-Same-as-H1" class="accordion-collapse collapse" aria-labelledby="heading-Same-as-H1" data-bs-parent="#resultsAccordion">
+                        <div class="accordion-body">
+                            <p>Additional information about the Same as H1 test.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Multiple -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading-Multiple">
+                        <button class="accordion-button collapsed {% if results['Multiple'] %}bg-success{% else %}bg-danger{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-Multiple" aria-expanded="false" aria-controls="collapse-Multiple">
+                            <div class="row w-100">
+                                <div class="col-md-1">
+                                    <i class="fas fa-clone"></i>
+                                </div>
+                                <div class="col-md-3">
+                                    <strong>Multiple:</strong>
+                                </div>
+                                <div class="col-md-4">
+                                    {% if results['Multiple'] %}
+                                        <span class="badge bg-black text-success"><i class="fas fa-check"></i> True</span>
+                                    {% else %}
+                                        <span class="badge bg-black text-danger"><i class="fas fa-times"></i> False</span>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-4 text-end">
+                                    <i class="fas fa-info-circle"></i> More Info
+                                </div>
+                            </div>
+                        </button>
+                    </h2>
+                    <div id="collapse-Multiple" class="accordion-collapse collapse" aria-labelledby="heading-Multiple" data-bs-parent="#resultsAccordion">
+                        <div class="accordion-body">
+                            <p>Additional information about the Multiple test.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Outside <head> -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading-Outside-head">
+                        <button class="accordion-button collapsed {% if results['Outside_head'] %}bg-success{% else %}bg-danger{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-Outside-head" aria-expanded="false" aria-controls="collapse-Outside-head">
+                            <div class="row w-100">
+                                <div class="col-md-1">
+                                    <i class="fas fa-code"></i>
+                                </div>
+                                <div class="col-md-3">
+                                    <strong>Outside &lt;head&gt;:</strong>
+                                </div>
+                                <div class="col-md-4">
+                                    {% if results['Outside_head'] %}
+                                        <span class="badge bg-black text-success"><i class="fas fa-check"></i> True</span>
+                                    {% else %}
+                                        <span class="badge bg-black text-danger"><i class="fas fa-times"></i> False</span>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-4 text-end">
+                                    <i class="fas fa-info-circle"></i> More Info
+                                </div>
+                            </div>
+                        </button>
+                    </h2>
+                    <div id="collapse-Outside-head" class="accordion-collapse collapse" aria-labelledby="heading-Outside-head" data-bs-parent="#resultsAccordion">
+                        <div class="accordion-body">
+                            <p>Additional information about the Outside &lt;head&gt; test.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p>No results found.</p>
+        {% endif %}
+
+
+        {% include 'tools/buzz_report.html' %}
+
+    {% endif %}
+
+    {% include 'tools/help_modal.html' %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Calculate data for the charts
+            const successCount = {{ success_count }};
+            const dangerCount = {{ danger_count }};
+            const totalCount = successCount + dangerCount;
+    
+            // Success Chart
+            const successCtx = document.getElementById('successChart').getContext('2d');
+            const successChart = new Chart(successCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Success'],
+                    datasets: [{
+                        label: 'Success Checks',
+                        data: [successCount, totalCount - successCount],
+                        backgroundColor: ['#28a745', '#e9ecef'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (tooltipItem) {
+                                    return `${tooltipItem.label}: ${tooltipItem.raw}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+    
+            // Danger Chart
+            const dangerCtx = document.getElementById('dangerChart').getContext('2d');
+            const dangerChart = new Chart(dangerCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Danger'],
+                    datasets: [{
+                        label: 'Danger Checks',
+                        data: [dangerCount, totalCount - dangerCount],
+                        backgroundColor: ['#dc3545', '#e9ecef'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (tooltipItem) {
+                                    return `${tooltipItem.label}: ${tooltipItem.raw}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+    
+<script>
+    const durationCtx = document.getElementById('durationChart').getContext('2d');
+    const durationChart = new Chart(durationCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Duración'],
+            datasets: [{
+                label: 'Tiempo (segundos)',
+                data: [1.5785455703735352],
+                backgroundColor: 'rgba(54, 162, 235, 1)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        display: false
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+
+    const validResultsCtx = document.getElementById('validResultsChart').getContext('2d');
+    const validResultsChart = new Chart(validResultsCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Success Checks', 'Danger Checks'],
+            datasets: [{
+                data: [2, 8],
+                backgroundColor: [
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(255, 99, 132, 1)'
+                ],
+                borderColor: [
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(255, 99, 132, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+
+    const totalChecksCtx = document.getElementById('totalChecksChart').getContext('2d');
+    const totalChecksChart = new Chart(totalChecksCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Total Checks', 'Success Checks', 'Danger Checks'],
+            datasets: [{
+                label: 'Número de Checks',
+                data: [10, 2, 8],
+                backgroundColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(255, 99, 132, 1)'
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(255, 99, 132, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        display: false
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+
+    const dangerPercentageCtx = document.getElementById('dangerPercentageChart').getContext('2d');
+    const dangerPercentageChart = new Chart(dangerPercentageCtx, {
+        type: 'pie',
+        data: {
+            labels: ['Danger Percentage', 'Safe Percentage'],
+            datasets: [{
+                data: [80, 20],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(75, 192, 192, 1)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(75, 192, 192, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+</script>
+
+
+{% endblock %}

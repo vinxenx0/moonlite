@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Agrega otros enlaces CSS si es necesario -->
+
+  <!-- Agrega otros enlaces CSS si es necesario 
+  
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+  -->
+
+  <!-- SimpleDatatables CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* Agrega tus estilos normales aquí */
+  
+    /* Estilos para el modo oscuro */
+    .dark-mode {
+      /* Define los colores y estilos para el modo oscuro */
+      background-color: #333;
+      color: #fff;
+    }
+  </style>
+  
+  <style>
+    
+    #sidebar {
+      transition: all 0.3s;
+      margin-top: 100px;
+      /* Ajusta este valor según sea necesario */
+    }
+
+    #main-content {
+      margin-top: 100px;
+      /* Ajusta este valor según sea necesario */
+    }
+
+    .navbar {
+      background-color: #f8f9fa;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 777;
+    }
+
+    #dropdownMenuProfile {
+      z-index: 1000;
+
+    }
+
+    .nav-options {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-item {
+      margin-right: 20px;
+      font-size: 18px;
+    }
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const sidebar = document.getElementById('sidebar');
+      const mainContent = document.getElementById('main-content');
+      const toggleSidebarBtn = document.getElementById('toggle-sidebar');
+      const collapseStates = JSON.parse(localStorage.getItem('collapseStates')) || {};
+
+      // Set initial collapse states
+      for (const collapseId in collapseStates) {
+        const collapse = document.getElementById(collapseId);
+        if (collapseStates[collapseId]) {
+          collapse.classList.add('show');
+        }
+      }
+
+      // Toggle sidebar visibility
+      toggleSidebarBtn.addEventListener('click', function () {
+        if (sidebar.classList.contains('d-none')) {
+          sidebar.classList.remove('d-none');
+          mainContent.classList.remove('col-12');
+          mainContent.classList.add('col');
+        } else {
+          sidebar.classList.add('d-none');
+          mainContent.classList.remove('col');
+          mainContent.classList.add('col-12');
+        }
+      });
+
+      // Save collapse states on toggle
+      const accordionItems = document.querySelectorAll('.accordion-item');
+      accordionItems.forEach(item => {
+        item.addEventListener('click', function () {
+          const collapseId = this.querySelector('.accordion-collapse').id;
+          const isExpanded = this.querySelector('.accordion-collapse').classList.contains('show');
+          collapseStates[collapseId] = isExpanded;
+          localStorage.setItem('collapseStates', JSON.stringify(collapseStates));
+        });
+      });
+
+      // Toggle dark mode
+      const darkModeToggleBtn = document.getElementById('dark-mode-toggle');
+      const body = document.body;
+
+      darkModeToggleBtn.addEventListener('click', function () {
+        body.classList.toggle('dark-mode');
+      });
+    });
+  </script>
+</head>
+
+<body>
+
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container-fluid">
+      <button class="btn btn-primary me-2" id="toggle-sidebar"><i class="fas fa-bars"></i></button>
+      <a class="navbar-brand me-auto" href="#"><img src="{{ url_for('static', filename='logo.png') }}" alt="Logo"
+          height="30"></a>
+      <div class="nav-options">
+
+        <a class="nav-item" href="{{ url_for('dashboard') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+        <a class="nav-item" href="#"><i class="fas fa-newspaper"></i> Novedades</a>
+        {% if current_user.is_authenticated %}
+        <a class="nav-item" href="{{ url_for('index') }}"><i class="fas fa-user-plus"></i><span class="d-lg-inline">
+            Premium</span></a>
+        {% else %}
+        <a class="nav-item" href="{{ url_for('register') }}"><i class="fas fa-user-plus"></i><span class="d-lg-inline">
+            Registrarse</span></a>
+        {% endif %}
+        {% if not current_user.is_authenticated %}
+        <a class="btn btn-outline-secondary" href="{{ url_for('login') }}"><i class="fa-solid fa-key"></i> Login</a>
+        {% else %}
+        <a class="btn btn-outline-secondary" href="{{ url_for('logout') }}"><i class="fa-solid fa-key"></i> Logout</a>
+        {% endif %}
+
+      </div>
+    </div>
+  </nav>
+  <!-- /Navbar -->
+
+
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-3 bg-light" id="sidebar">
+        <div class="p-3">
+          <nav class="accordion" id="sidebar-menu">
+            {% if current_user.is_authenticated and current_user.role == 'usuario' %}
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingMisSitios">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#collapseMisSitios" aria-expanded="false" aria-controls="collapseMisSitios">
+                  <i class="fa-solid fa-crown"></i>&nbsp; Mis Sitios
+                </button>
+              </h2>
+              <div id="collapseMisSitios" class="accordion-collapse collapse" aria-labelledby="headingMisSitios"
+                data-bs-parent="#sidebar-menu">
+                <div class="accordion-body">
+                  <nav class="sb-sidenav-menu-nested nav">
+                    <ul class="list-unstyled">
+                      <li><a class="" href="{{ url_for('admin_stats') }}">Estadisticas</a></a></li>
+                      <li><a class="" href="{{ url_for('admin_register') }}">Nuevos Usuarios</a></li>
+                      <li><a class="" href="{{ url_for('configuracion') }}">Config</a></a></li>
+                      <li><a class="" href="{{ url_for('usuarios') }}">Sistema</a></a></li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+            {% if is_admin %}
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingAdmin">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#collapseAdmin" aria-expanded="false" aria-controls="collapseAdmin">
+                  <i class="fa-solid fa-gear"></i>&nbsp;Administrador
+                </button>
+              </h2>
+              <div id="collapseAdmin" class="accordion-collapse collapse" aria-labelledby="headingAdmin"
+                data-bs-parent="#sidebar-menu">
+                <div class="accordion-body">
+                  <nav class="sb-sidenav-menu-nested nav">
+                    <ul>
+                      <li><a class="dropdown-item" href="{{ url_for('admin_stats') }}">Estadisticas</a></a></li>
+                      <li><a class="dropdown-item" href="{{ url_for('admin_register') }}">Nuevos Usuarios</a></li>
+                      <li><a class="dropdown-item" href="{{ url_for('configuracion') }}">Config</a></a></li>
+                      <li><a class="dropdown-item" href="{{ url_for('usuarios') }}">Sistema</a></a></li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingItem1">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#collapseItem1" aria-expanded="false" aria-controls="collapseItem1">
+                  Item 1
+                </button>
+              </h2>
+              <div id="collapseItem1" class="accordion-collapse collapse" aria-labelledby="headingItem1"
+                data-bs-parent="#sidebar-menu">
+                <div class="accordion-body">
+                  <ul class="list-unstyled">
+                    <li><a href="#">Subitem 1.1</a></li>
+                    <li><a href="#">Subitem 1.2</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingItem2">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#collapseItem2" aria-expanded="false" aria-controls="collapseItem2">
+                  Item 2
+                </button>
+              </h2>
+              <div id="collapseItem2" class="accordion-collapse collapse" aria-labelledby="headingItem2"
+                data-bs-parent="#sidebar-menu">
+                <div class="accordion-body">
+                  <ul class="list-unstyled">
+                    <li><a href="#">Subitem 2.1</a></li>
+                    <li><a href="#">Subitem 2.2</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            {% if current_user.is_authenticated and current_user.role == 'usuario' %}
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingProfile">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#collapseProfile" aria-expanded="false" aria-controls="collapseProfile">
+                  Mi Perfil
+                </button>
+              </h2>
+              <div id="collapseProfile" class="accordion-collapse collapse" aria-labelledby="headingProfile"
+                data-bs-parent="#sidebar-menu">
+                <div class="accordion-body">
+                  <ul class="list-unstyled">
+                    <li><a class="" href="{{ url_for('profile') }}">Mi perfil</a></li>
+                    <li><a class="" href="{{ url_for('configuracion') }}"> Configuración</a></li>
+                    <li><a class="" href="{{ url_for('change_password') }}"> Seguridad</a></li>
+                    <li>
+                      <hr class="">
+                    </li> <!-- Separador -->
+                    <li><a class="" href="#"><i class="fa-solid fa-crown"></i> Soporte</a></li>
+                    <li><a class="" href="{{ url_for('logout') }}"> Cerrar sesión</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+          </nav>
+        </div>
+      </div>
+      <!-- /Sidebar -->
+
+
+      <!-- Main Content -->
+      <div class="col" id="main-content">
+        <div class="p-3">
+          <!-- Contenido principal aquí -->
+        </div>
+      </div>
+      <!-- /Main Content -->
+    </div>
+  </div>
+
+  <!-- Botón para alternar el modo oscuro y claro -->
+  <button id="dark-mode-toggle">Toggle Dark Mode</button>
+
+</body>
+
+</html>

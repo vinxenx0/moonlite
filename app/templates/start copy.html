@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Data Rendering</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Custom CSS styles */
+        .section-title {
+            margin-top: 20px;
+        }
+
+        /* Hover effect */
+        .list-item {
+            transition: background-color 0.3s ease; /* Smooth transition */
+            padding: 5px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+        }
+
+        .list-item:hover {
+            background-color: #f0f0f0; /* Change background color on hover */
+        }
+
+        /* Highlight border */
+        .list-item-border {
+            border: 1px solid transparent; /* Transparent border by default */
+            transition: border-color 0.3s ease; /* Smooth transition for border color */
+            border-radius: 5px; /* Rounded corners */
+        }
+
+        .list-item-border:hover {
+            border-color: #ced4da; /* Change border color on hover */
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <!-- 
+    <h1 class="text-center">Page Info</h1>
+    <div class="card mt-4">
+        <div class="card-body">
+            <form action="/tool" method="post" id="pageInfoForm">
+                <div class="mb-3">
+                    <label for="url" class="form-label">URL:</label>
+                    <input type="text" class="form-control" id="url" name="url" required>
+                </div>
+                <button type="submit" class="btn btn-primary" id="analizarBtn">
+                    <span id="btnText">Comprobar webL</span>
+                    <span id="loadingSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                </button>
+            </form>
+        </div>
+    </div>
+    -->
+
+    <h1 class="text-center">Page Info</h1>
+    <div class="card mt-4">
+        <div class="card-body">
+            <form action="/start" method="post" id="pageInfoForm">
+                {{ form.csrf_token }}
+                <div class="mb-3">
+                    {{ form.url.label(class="form-label") }}
+                    {{ form.url(class="form-control", id="url") }}
+                    {% for error in form.url.errors %}
+                        <small class="form-text text-danger">{{ error }}</small>
+                    {% endfor %}
+                </div>
+                <button type="submit" class="btn btn-primary" id="analizarBtn">
+                    <span id="btnText">ANALIZAR URL</span>
+                    <span id="loadingSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+{% if data %}
+<div class="container mt-5">
+    <h1 class="text-center">Resultados</h1>
+    <div class="accordion mt-4" id="accordionExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <span class="badge bg-primary">Canonical Info</span>
+                    <span class="ms-auto">Canonical URL and more details</span>
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                     <div class="tab-content mt-4" id="jsonTabsContent">
+                <div class="col">
+            <ul class="nav nav-tabs" id="jsonTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="canonical-tab" data-bs-toggle="tab" data-bs-target="#canonical" type="button" role="tab" aria-controls="canonical" aria-selected="true">Canonical Info</button>
+                </li>
+		<li class="nav-item" role="presentation">
+                    <button class="nav-link" id="security-tab" data-bs-toggle="tab" data-bs-target="#security" type="button" role="tab" aria-controls="security" aria-selected="false">Security Info</button>
+                </li>
+		<li class="nav-item" role="presentation">
+		    <button class="nav-link" id="common-url-issues-tab" data-bs-toggle="tab" data-bs-target="#common-url-issues" type="button" role="tab" aria-controls="common-url-issues" aria-selected="false">Common URL Issues</button>
+		</li>
+		<li class="nav-item" role="presentation">
+		    <button class="nav-link" id="page-title-issues-tab" data-bs-toggle="tab" data-bs-target="#page-title-issues" type="button" role="tab" aria-controls="page-title-issues" aria-selected="false">Page Title Issues</button>
+		</li>
+                <!-- Add more tabs for each section -->
+            </ul>
+            <div class="tab-content mt-4" id="jsonTabsContent">
+                <div class="tab-pane fade show active" id="canonical" role="tabpanel" aria-labelledby="canonical-tab">
+                    <!-- Render Canonical Info section here -->
+                    <h2 class="section-title">Canonical Info</h2>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Contains Canonical" data-bs-html="true"><strong>Contains Canonical:</strong> {% if data['Canonical Info']['Contains Canonical'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Self Referencing" data-bs-html="true"><strong>Self Referencing:</strong> {% if data['Canonical Info']['Self Referencing'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Canonicalised" data-bs-html="true"><strong>Canonicalised:</strong> {% if data['Canonical Info']['Canonicalised'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Canonical Absolute" data-bs-html="true"><strong>Canonical Absolute:</strong> {% if data['Canonical Info']['Canonical Absolute'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Canonical Relative" data-bs-html="true"><strong>Canonical Relative:</strong> {% if data['Canonical Info']['Canonical Relative'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Canonical HTTP Present" data-bs-html="true"><strong>Canonical HTTP Present:</strong> {% if data['Canonical Info']['Canonical HTTP Present'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Canonical HTTP Absolute" data-bs-html="true"><strong>Canonical HTTP Absolute:</strong> {% if data['Canonical Info']['Canonical HTTP Absolute'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Canonical HTTP Relative" data-bs-html="true"><strong>Canonical HTTP Relative:</strong> {% if data['Canonical Info']['Canonical HTTP Relative'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Canonical Multiple" data-bs-html="true"><strong>Canonical Multiple:</strong> {% if data['Canonical Info']['Canonical Multiple'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Canonical Multiple Conflicting" data-bs-html="true"><strong>Canonical Multiple Conflicting:</strong> {% if data['Canonical Info']['Canonical Multiple Conflicting'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="security" role="tabpanel" aria-labelledby="security-tab">
+                    <!-- Render Security Info section here -->
+                    <h2 class="section-title">Security Info</h2>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="HTTP URLs" data-bs-html="true"><strong>HTTP URLs:</strong> {% if data['Security Info']['HTTP URLs'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="HTTPS URLs" data-bs-html="true"><strong>HTTPS URLs:</strong> {% if data['Security Info']['HTTPS URLs'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Mixed Content" data-bs-html="true"><strong>Mixed Content:</strong> {% if data['Security Info']['Mixed Content'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Form URL Insecure" data-bs-html="true"><strong>Form URL Insecure:</strong> {% if data['Security Info']['Form URL Insecure'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Form on HTTP URL" data-bs-html="true"><strong>Form on HTTP URL:</strong> {% if data['Security Info']['Form on HTTP URL'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Unsafe Cross-Origin Links" data-bs-html="true"><strong>Unsafe Cross-Origin Links:</strong> {% if data['Security Info']['Unsafe Cross-Origin Links'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Protocol-Relative Resource Links" data-bs-html="true"><strong>Protocol-Relative Resource Links:</strong> {% if data['Security Info']['Protocol-Relative Resource Links'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Missing HSTS Header" data-bs-html="true"><strong>Missing HSTS Header:</strong> {% if data['Security Info']['Missing HSTS Header'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Missing Content-Security-Policy Header" data-bs-html="true"><strong>Missing Content-Security-Policy Header:</strong> {% if data['Security Info']['Missing Content-Security-Policy Header'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Missing X-Content-Type-Options Header" data-bs-html="true"><strong>Missing X-Content-Type-Options Header:</strong> {% if data['Security Info']['Missing X-Content-Type-Options Header'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Missing X-Frame-Options Header" data-bs-html="true"><strong>Missing X-Frame-Options Header:</strong> {% if data['Security Info']['Missing X-Frame-Options Header'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Missing Secure Referrer-Policy Header" data-bs-html="true"><strong>Missing Secure Referrer-Policy Header:</strong> {% if data['Security Info']['Missing Secure Referrer-Policy Header'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Bad Content Type" data-bs-html="true"><strong>Bad Content Type:</strong> {% if data['Security Info']['Bad Content Type'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                        </div>
+                    </div>
+                </div>
+		<div class="tab-pane fade" id="common-url-issues" role="tabpanel" aria-labelledby="common-url-issues-tab">
+		    <!-- Render Common URL Issues section here -->
+		    <h2 class="section-title">Common URL Issues</h2>
+		    <div class="row">
+			<div class="col-md-6">
+			    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Non ASCII Characters" data-bs-html="true"><strong>Non ASCII Characters:</strong> {% if data['Common URL Issues']['Non ASCII Characters'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+			    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Underscores" data-bs-html="true"><strong>Underscores:</strong> {% if data['Common URL Issues']['Underscores'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+			    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Uppercase" data-bs-html="true"><strong>Uppercase:</strong> {% if data['Common URL Issues']['Uppercase'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+			    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Multiple Slashes" data-bs-html="true"><strong>Multiple Slashes:</strong> {% if data['Common URL Issues']['Multiple Slashes'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+			    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Repetitive Path" data-bs-html="true"><strong>Repetitive Path:</strong> {% if data['Common URL Issues']['Repetitive Path'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+			</div>
+			<div class="col-md-6">
+			    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Contains A Space" data-bs-html="true"><strong>Contains A Space:</strong> {% if data['Common URL Issues']['Contains A Space'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+			    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Internal Search" data-bs-html="true"><strong>Internal Search:</strong> {% if data['Common URL Issues']['Internal Search'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+			    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Parameters" data-bs-html="true"><strong>Parameters:</strong> {% if data['Common URL Issues']['Parameters'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+			    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Broken Bookmark" data-bs-html="true"><strong>Broken Bookmark:</strong> {% if data['Common URL Issues']['Broken Bookmark'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+			    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="GA Tracking Parameters" data-bs-html="true"><strong>GA Tracking Parameters:</strong> {% if data['Common URL Issues']['GA Tracking Parameters'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+			    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Over 115 characters" data-bs-html="true"><strong>Over 115 characters:</strong> {% if data['Common URL Issues']['Over 115 characters'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+			</div>
+		    </div>
+		</div>
+		<div class="tab-pane fade" id="page-title-issues" role="tabpanel" aria-labelledby="page-title-issues-tab">
+		    <!-- Render Page Title Issues section here -->
+		    <h2 class="section-title">Page Title Issues</h2>
+		    <div class="row">
+			<div class="col-md-6">
+			    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Missing" data-bs-html="true"><strong>Missing:</strong> {% if data['Page Title Issues']['Missing'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+			    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Duplicate" data-bs-html="true"><strong>Duplicate:</strong> {% if data['Page Title Issues']['Duplicate'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+			    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Over 60 characters" data-bs-html="true"><strong>Over 60 characters:</strong> {% if data['Page Title Issues']['Over 60 characters'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+			    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Below 30 characters" data-bs-html="true"><strong>Below 30 characters:</strong> {% if data['Page Title Issues']['Below 30 characters'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+			</div>
+			<div class="col-md-6">
+			    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Same as h1" data-bs-html="true"><strong>Same as h1:</strong> {% if data['Page Title Issues']['Same as h1'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+			    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Multiple" data-bs-html="true"><strong>Multiple:</strong> {% if data['Page Title Issues']['Multiple'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+			    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Outside &lt;head&gt;" data-bs-html="true"><strong>Outside &lt;head&gt;:</strong> {% if data['Page Title Issues']['Outside <head>'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+			</div>
+		    </div>
+		</div>
+                <!-- Add more tab content for each section -->
+            </div>
+        </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    BLoque 2
+                </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <div class="tab-content mt-4" id="jsonTabsContent">
+                        <div class="col">
+                <ul class="nav nav-tabs" id="jsonTabsSecond" role="tablist">
+                    <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="meta-description-issues-tab" data-bs-toggle="tab" data-bs-target="#meta-description-issues" type="button" role="tab" aria-controls="meta-description-issues" aria-selected="true">Meta Description Issues</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="meta-keywords-issues-tab" data-bs-toggle="tab" data-bs-target="#meta-keywords-issues" type="button" role="tab" aria-controls="meta-keywords-issues" aria-selected="false">Meta Keywords Issues</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="h1-issues-tab" data-bs-toggle="tab" data-bs-target="#h1-issues" type="button" role="tab" aria-controls="h1-issues" aria-selected="false">H1 Issues</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="h2-issues-tab" data-bs-toggle="tab" data-bs-target="#h2-issues" type="button" role="tab" aria-controls="h2-issues" aria-selected="false">H2 Issues</button>
+            </li>
+                    <!-- Add more tabs for each section -->
+                </ul>
+                <div class="tab-content mt-4 " id="jsonTabsSecondContent">
+                    <div class="tab-pane fade show active" id="meta-description-issues" role="tabpanel" aria-labelledby="meta-description-issues-tab">
+                <!-- Render Meta Description Issues section here -->
+                <h2 class="section-title">Meta Description Issues</h2>
+                <div class="row">
+                <div class="col-md-6">
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Missing" data-bs-html="true"><strong>Missing:</strong> {% if data['Meta Description Issues']['Missing'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Duplicate" data-bs-html="true"><strong>Duplicate:</strong> {% if data['Meta Description Issues']['Duplicate'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Over 155 characters" data-bs-html="true"><strong>Over 155 characters:</strong> {% if data['Meta Description Issues']['Over 155 characters'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                </div>
+                <div class="col-md-6">
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Below 70 characters" data-bs-html="true"><strong>Below 70 characters:</strong> {% if data['Meta Description Issues']['Below 70 characters'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Multiple" data-bs-html="true"><strong>Multiple:</strong> {% if data['Meta Description Issues']['Multiple'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Outside <head>" data-bs-html="true"><strong>Outside &lt;head&gt;:</strong> {% if data['Meta Description Issues']['Outside <head>'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                </div>
+                </div>
+            </div>
+
+                    <div class="tab-pane fade" id="meta-keywords-issues" role="tabpanel" aria-labelledby="meta-keywords-issues-tab">
+                <!-- Render Meta Keywords Issues section here -->
+                <h2 class="section-title">Meta Keywords Issues</h2>
+                <div class="row">
+                <div class="col-md-6">
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Missing" data-bs-html="true"><strong>Missing:</strong> {% if data['Meta Keywords Issues']['Missing'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                </div>
+                <div class="col-md-6">
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Duplicate" data-bs-html="true"><strong>Duplicate:</strong> {% if data['Meta Keywords Issues']['Duplicate'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Multiple" data-bs-html="true"><strong>Multiple:</strong> {% if data['Meta Keywords Issues']['Multiple'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="h1-issues" role="tabpanel" aria-labelledby="h1-issues-tab">
+                <!-- Render H1 Issues section here -->
+                <h2 class="section-title">H1 Issues</h2>
+                <div class="row">
+                <div class="col-md-6">
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Missing" data-bs-html="true"><strong>Missing:</strong> {% if data['H1 Issues']['Missing'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Duplicate" data-bs-html="true"><strong>Duplicate:</strong> {% if data['H1 Issues']['Duplicate'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Over 70 characters" data-bs-html="true"><strong>Over 70 characters:</strong> {% if data['H1 Issues']['Over 70 characters'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                </div>
+                <div class="col-md-6">
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Multiple" data-bs-html="true"><strong>Multiple:</strong> {% if data['H1 Issues']['Multiple'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Alt Text in h1" data-bs-html="true"><strong>Alt Text in h1:</strong> {% if data['H1 Issues']['Alt Text in h1'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Non-sequential" data-bs-html="true"><strong>Non-sequential:</strong> {% if data['H1 Issues']['Non-sequential'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                </div>
+                </div>
+            </div>
+
+
+            <div class="tab-pane fade" id="h2-issues" role="tabpanel" aria-labelledby="h2-issues-tab">
+                <!-- Render H2 Issues section here -->
+                <h2 class="section-title">H2 Issues</h2>
+                <div class="row">
+                <div class="col-md-6">
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Missing" data-bs-html="true"><strong>Missing:</strong> {% if data['H2 Issues']['Missing'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Duplicate" data-bs-html="true"><strong>Duplicate:</strong> {% if data['H2 Issues']['Duplicate'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Over 70 characters" data-bs-html="true"><strong>Over 70 characters:</strong> {% if data['H2 Issues']['Over 70 characters'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                </div>
+                <div class="col-md-6">
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Multiple" data-bs-html="true"><strong>Multiple:</strong> {% if data['H2 Issues']['Multiple'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Non-sequential" data-bs-html="true"><strong>Non-sequential:</strong> {% if data['H2 Issues']['Non-sequential'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                </div>
+                </div>
+            </div>
+                    <!-- Add more tab content for each section -->
+                </div>
+            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    Bloque 3
+                </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <div class="tab-content mt-4" id="jsonTabsContent">
+                        <div class="col">
+                <ul class="nav nav-tabs" id="jsonTabsThird" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="directives-issues-tab" data-bs-toggle="tab" data-bs-target="#directives-issues" type="button" role="tab" aria-controls="directives-issues" aria-selected="true">Directives Issues</button>
+            </li>
+
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="hflang-ref-issues-tab" data-bs-toggle="tab" data-bs-target="#hflang-ref-issues" type="button" role="tab" aria-controls="hflang-ref-issues" aria-selected="false">HFLang Ref Issues</button>
+            </li>
+
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="schema-org-issues-tab" data-bs-toggle="tab" data-bs-target="#schema-org-issues" type="button" role="tab" aria-controls="schema-org-issues" aria-selected="false">Schema ORG Issues</button>
+            </li>
+
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="header-info-tab" data-bs-toggle="tab" data-bs-target="#header-info" type="button" role="tab" aria-controls="header-info" aria-selected="false">Header Info</button>
+            </li>
+                    <!-- Add more tabs for each section -->
+                </ul>
+            <div class="tab-content mt-4" id="jsonTabsThirdContent">
+                    <div class="tab-pane fade show active" id="directives-issues" role="tabpanel" aria-labelledby="directives-issues-tab">
+                <!-- Render Directives Issues section here -->
+                <h2 class="section-title">Directives Issues</h2>
+                <div class="row">
+                <div class="col-md-6">
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Index" data-bs-html="true"><strong>Index:</strong> {% if data['Directives Issues']['Index'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Noindex" data-bs-html="true"><strong>Noindex:</strong> {% if data['Directives Issues']['Noindex'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Follow" data-bs-html="true"><strong>Follow:</strong> {% if data['Directives Issues']['Follow'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Nofollow" data-bs-html="true"><strong>Nofollow:</strong> {% if data['Directives Issues']['Nofollow'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="None" data-bs-html="true"><strong>None:</strong> {% if data['Directives Issues']['None'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                </div>
+                <div class="col-md-6">
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="NoArchive" data-bs-html="true"><strong>NoArchive:</strong> {% if data['Directives Issues']['NoArchive'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="NoSnippet" data-bs-html="true"><strong>NoSnippet:</strong> {% if data['Directives Issues']['NoSnippet'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Max-Snippet" data-bs-html="true"><strong>Max-Snippet:</strong> {% if data['Directives Issues']['Max-Snippet'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Max-Image-Preview" data-bs-html="true"><strong>Max-Image-Preview:</strong> {% if data['Directives Issues']['Max-Image-Preview'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Max-Video-Preview" data-bs-html="true"><strong>Max-Video-Preview:</strong> {% if data['Directives Issues']['Max-Video-Preview'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                </div>
+                </div>
+            </div>
+
+                    <div class="tab-pane fade" id="hflang-ref-issues" role="tabpanel" aria-labelledby="hflang-ref-issues-tab">
+                <!-- Render HFLang Ref Issues section here -->
+                <h2 class="section-title">HFLang Ref Issues</h2>
+                <div class="row">
+                <div class="col-md-6">
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Contains Hreflang" data-bs-html="true"><strong>Contains Hreflang:</strong> {% if data['HFLang Ref Issues']['Contains Hreflang'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Non-200 Hreflang URLs" data-bs-html="true"><strong>Non-200 Hreflang URLs:</strong> {{ data['HFLang Ref Issues']['Non-200 Hreflang URLs'] }}</p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Unlinked Hreflang URLs" data-bs-html="true"><strong>Unlinked Hreflang URLs:</strong> {{ data['HFLang Ref Issues']['Unlinked Hreflang URLs'] }}</p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Missing Return Links" data-bs-html="true"><strong>Missing Return Links:</strong> {{ data['HFLang Ref Issues']['Missing Return Links'] }}</p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Inconsistent Language & Region Return Links" data-bs-html="true"><strong>Inconsistent Language & Region Return Links:</strong> {{ data['HFLang Ref Issues']['Inconsistent Language & Region Return Links'] }}</p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Non-Canonical Return Links" data-bs-html="true"><strong>Non-Canonical Return Links:</strong> {{ data['HFLang Ref Issues']['Non-Canonical Return Links'] }}</p>
+                </div>
+                <div class="col-md-6">
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Noindex Return Links" data-bs-html="true"><strong>Noindex Return Links:</strong> {{ data['HFLang Ref Issues']['Noindex Return Links'] }}</p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Incorrect Language & Region Codes" data-bs-html="true"><strong>Incorrect Language & Region Codes:</strong> {{ data['HFLang Ref Issues']['Incorrect Language & Region Codes'] }}</p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Multiple Entries" data-bs-html="true"><strong>Multiple Entries:</strong> {{ data['HFLang Ref Issues']['Multiple Entries'] }}</p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Missing Self Reference" data-bs-html="true"><strong>Missing Self Reference:</strong> {{ data['HFLang Ref Issues']['Missing Self Reference'] }}</p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Not Using Canonical" data-bs-html="true"><strong>Not Using Canonical:</strong> {{ data['HFLang Ref Issues']['Not Using Canonical'] }}</p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Missing X-Default" data-bs-html="true"><strong>Missing X-Default:</strong> {{ data['HFLang Ref Issues']['Missing X-Default'] }}</p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Missing" data-bs-html="true"><strong>Missing:</strong> {{ data['HFLang Ref Issues']['Missing'] }}</p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Outside &lt;head&gt;" data-bs-html="true"><strong>Outside &lt;head&gt;:</strong> {{ data['HFLang Ref Issues']['Outside <head>'] }}</p>
+                </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="schema-org-issues" role="tabpanel" aria-labelledby="schema-org-issues-tab">
+                <!-- Render Schema ORG Issues section here -->
+                <h2 class="section-title">Schema ORG Issues</h2>
+                <div class="row">
+                <div class="col-md-6">
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Contains Structured Data" data-bs-html="true"><strong>Contains Structured Data:</strong> {% if data['Schema ORG Issues']['Contains Structured Data'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Missing Structured Data" data-bs-html="true"><strong>Missing Structured Data:</strong> {% if data['Schema ORG Issues']['Missing Structured Data'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+                    <!-- Add more items as needed -->
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Validation Errors" data-bs-html="true"><strong>Validation Errors:</strong> {% if data['Schema ORG Issues']['Validation Errors'] %}<span class="badge bg-danger">{{ data['Schema ORG Issues']['Validation Errors'] }}</span>{% else %}<span class="badge bg-success">None</span>{% endif %}</p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Validation Warnings" data-bs-html="true"><strong>Validation Warnings:</strong> {% if data['Schema ORG Issues']['Validation Warnings'] %}<span class="badge bg-danger">{{ data['Schema ORG Issues']['Validation Warnings'] }}</span>{% else %}<span class="badge bg-success">None</span>{% endif %}</p>
+                    <!-- Add more items as needed -->
+                </div>
+                <div class="col-md-6">
+                    <!-- Add more items as needed -->
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="JSON-LD URLs" data-bs-html="true"><strong>JSON-LD URLs:</strong> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#json-ld-modal">Show Content</button></p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Parse Errors" data-bs-html="true"><strong>Parse Errors:</strong> {% if data['Schema ORG Issues']['Parse Errors'] %}<span class="badge bg-danger">{{ data['Schema ORG Issues']['Parse Errors'] }}</span>{% else %}<span class="badge bg-success">None</span>{% endif %}</p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Microdata URLs" data-bs-html="true"><strong>Microdata URLs:</strong> {% if data['Schema ORG Issues']['Microdata URLs'] %}<span class="badge bg-danger">{{ data['Schema ORG Issues']['Microdata URLs'] }}</span>{% else %}<span class="badge bg-success">None</span>{% endif %}</p>
+                    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="RDFa URLs" data-bs-html="true"><strong>RDFa URLs:</strong> {% if data['Schema ORG Issues']['RDFa URLs'] %}<span class="badge bg-danger">{{ data['Schema ORG Issues']['RDFa URLs'] }}</span>{% else %}<span class="badge bg-success">None</span>{% endif %}</p>
+                
+                </div>
+                </div>
+                <!-- Modal for JSON-LD URLs -->
+                <div class="modal fade" id="json-ld-modal" tabindex="-1" aria-labelledby="json-ld-modal-label" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="json-ld-modal-label">JSON-LD URLs</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                        <!-- Render JSON-LD URLs content here -->
+                        <pre>{{ data['Schema ORG Issues']['JSON-LD URLs'] | safe }}</pre>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="tab-pane fade" id="header-info" role="tabpanel" aria-labelledby="header-info-tab">
+                <!-- Render Header Info section here -->
+                <h2 class="section-title">Header Info</h2>
+                <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#headerInfoModal">View Header Info</button>
+                </div>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="headerInfoModal" tabindex="-1" aria-labelledby="headerInfoModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="headerInfoModalLabel">Header Info</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Header Name</th>
+                                <th scope="col">Header Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for index in range(data['Header info']['Header Name']|length) %}
+                            <tr>
+                                <td>{{ data['Header info']['Header Name'][index] }}</td>
+                                <td>{{ data['Header info']['Header Value'][index] }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+                </div>
+            </div>
+                    <!-- Add more tab content for each section -->
+                </div>
+            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingFour">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                    Bloque 4
+                </button>
+            </h2>
+            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <div class="tab-content mt-4" id="jsonTabsContent">
+                        <div class="col">
+                <ul class="nav nav-tabs" id="jsonTabsFour" role="tablist">
+			<li class="nav-item" role="presentation">
+			    <button class="nav-link active" id="internal-details-tab" data-bs-toggle="tab" data-bs-target="#internal-details" type="button" role="tab" aria-controls="internal-details" aria-selected="true">Internal Details</button>
+			</li>
+
+		<li class="nav-item" role="presentation">
+		        <button class="nav-link" id="validation-issues-tab" data-bs-toggle="tab" data-bs-target="#validation-issues" type="button" role="tab" aria-controls="validation-issues" aria-selected="false">Validation Issues</button>
+		    </li>
+
+		    <li class="nav-item" role="presentation">
+		        <button class="nav-link" id="mobile-audit-results-tab" data-bs-toggle="tab" data-bs-target="#mobile-audit-results" type="button" role="tab" aria-controls="mobile-audit-results" aria-selected="false">Mobile audit Results</button>
+		    </li>
+
+		    
+		            <!-- Add more tabs for each section -->
+                </ul>
+ <div class="tab-content mt-4" id="jsonTabsFourContent">
+<div class="tab-pane fade show active" id="internal-details" role="tabpanel" aria-labelledby="internal-details-tab">
+    <!-- Render Internal Details section here -->
+    <h2 class="section-title">Internal Details</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Header Name" data-bs-html="true"><strong>Header Name:</strong> {{ data['Internal Details']['Header Name'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Header Value" data-bs-html="true"><strong>Header Value:</strong> {{ data['Internal Details']['Header Value'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="URL" data-bs-html="true"><strong>URL:</strong> {{ data['Internal Details']['URL'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Status Code" data-bs-html="true"><strong>Status Code:</strong> {{ data['Internal Details']['Status Code'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Status" data-bs-html="true"><strong>Status:</strong> {{ data['Internal Details']['Status'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Content" data-bs-html="true"><strong>Content:</strong> {{ data['Internal Details']['Content'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Size" data-bs-html="true"><strong>Size:</strong> {{ data['Internal Details']['Size'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Transferred" data-bs-html="true"><strong>Transferred:</strong> {{ data['Internal Details']['Transferred'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Title 1" data-bs-html="true"><strong>Title 1:</strong> {{ data['Internal Details']['Title 1'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Title 1 Length" data-bs-html="true"><strong>Title 1 Length:</strong> {{ data['Internal Details']['Title 1 Length'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="h1 - 1" data-bs-html="true"><strong>h1 - 1:</strong> {{ data['Internal Details']['h1 - 1'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="h1 - Len-1" data-bs-html="true"><strong>h1 - Len-1:</strong> {{ data['Internal Details']['h1 - Len-1'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="h2 - 1" data-bs-html="true"><strong>h2 - 1:</strong> {{ data['Internal Details']['h2 - 1'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="h2 - Len-1" data-bs-html="true"><strong>h2 - Len-1:</strong> {{ data['Internal Details']['h2 - Len-1'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Meta Description 1" data-bs-html="true"><strong>Meta Description 1:</strong> {{ data['Internal Details']['Meta Description 1'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Meta Description Length 1" data-bs-html="true"><strong>Meta Description Length 1:</strong> {{ data['Internal Details']['Meta Description Length 1'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Meta Description Pixel Width" data-bs-html="true"><strong>Meta Description Pixel Width:</strong> {{ data['Internal Details']['Meta Description Pixel Width'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Meta Keyword 1" data-bs-html="true"><strong>Meta Keyword 1:</strong> {{ data['Internal Details']['Meta Keyword 1'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Meta Keywords Length" data-bs-html="true"><strong>Meta Keywords Length:</strong> {{ data['Internal Details']['Meta Keywords Length'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Meta Robots 1" data-bs-html="true"><strong>Meta Robots 1:</strong> {{ data['Internal Details']['Meta Robots 1'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="X-Robots-Tag 1" data-bs-html="true"><strong>X-Robots-Tag 1:</strong> {{ data['Internal Details']['X-Robots-Tag 1'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Meta Refresh 1" data-bs-html="true"><strong>Meta Refresh 1:</strong> {{ data['Internal Details']['Meta Refresh 1'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Canonical Link Element" data-bs-html="true"><strong>Canonical Link Element:</strong> {{ data['Internal Details']['Canonical Link Element'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="rel=&quot;next&quot; 1" data-bs-html="true"><strong>rel=&quot;next&quot; 1:</strong> {{ data['Internal Details']['rel=\"next\" 1'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="rel=&quot;prev&quot; 1" data-bs-html="true"><strong>rel=&quot;prev&quot; 1:</strong> {{ data['Internal Details']['rel=\"prev\" 1'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="HTTP rel=&quot;next&quot; 1" data-bs-html="true"><strong>HTTP rel=&quot;next&quot; 1:</strong> {{ data['Internal Details']['HTTP rel=\"next\" 1'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="HTTP rel=&quot;prev&quot; 1" data-bs-html="true"><strong>HTTP rel=&quot;prev&quot; 1:</strong> {{ data['Internal Details']['HTTP rel=\"prev\" 1'] }}</p>
+        </div>
+        <div class="col-md-6">
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Word Count" data-bs-html="true"><strong>Word Count:</strong> {{ data['Internal Details']['Word Count'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Response Time" data-bs-html="true"><strong>Response Time:</strong> {{ data['Internal Details']['Response Time'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="h2 Occurrences" data-bs-html="true"><strong>h2 Occurrences:</strong> {{ data['Internal Details']['h2 Occurrences'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="h2-1" data-bs-html="true"><strong>h2-1:</strong> {{ data['Internal Details']['h2-1'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="h2-1 length" data-bs-html="true"><strong>h2-1 length:</strong> {{ data['Internal Details']['h2-1 length'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="h1 Occurrences" data-bs-html="true"><strong>h1 Occurrences:</strong> {{ data['Internal Details']['h1 Occurrences'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="h1-1" data-bs-html="true"><strong>h1-1:</strong> {{ data['Internal Details']['h1-1'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="h1-1 length" data-bs-html="true"><strong>h1-1 length:</strong> {{ data['Internal Details']['h1-1 length'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="meat keywords Occurrences" data-bs-html="true"><strong>meat keywords Occurrences:</strong> {{ data['Internal Details']['meat keywords Occurrences'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Meta Keyword 2" data-bs-html="true"><strong>Meta Keyword 2:</strong> {{ data['Internal Details']['Meta Keyword 2'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Meta Keyword 2 length" data-bs-html="true"><strong>Meta Keyword 2 length:</strong> {{ data['Internal Details']['Meta Keyword 2 length'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Description Occurrences" data-bs-html="true"><strong>Description Occurrences:</strong> {{ data['Internal Details']['Description Occurrences'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Meta Description 2" data-bs-html="true"><strong>Meta Description 2:</strong> {{ data['Internal Details']['Meta Description 2'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Meta Description 2 length" data-bs-html="true"><strong>Meta Description 2 length:</strong> {{ data['Internal Details']['Meta Description 2 length'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="title Occurrences" data-bs-html="true"><strong>Title Occurrences:</strong> {{ data['Internal Details']['title Occurrences'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Title 2" data-bs-html="true"><strong>Title 2:</strong> {{ data['Internal Details']['Title 2'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Title 2 length" data-bs-html="true"><strong>Title 2 length:</strong> {{ data['Internal Details']['Title 2 length'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="URL Length" data-bs-html="true"><strong>URL Length:</strong> {{ data['Internal Details']['URL Length'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Last-Modified" data-bs-html="true"><strong>Last-Modified:</strong> {{ data['Internal Details']['Last-Modified'] }}</p>
+            <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Address" data-bs-html="true"><strong>Address:</strong> {{ data['Internal Details']['Address'] }}</p>
+        </div>
+    </div>
+</div>
+          
+                <div class="tab-pane fade" id="validation-issues" role="tabpanel" aria-labelledby="validation-issues-tab">
+		        <!-- Render Validation Issues section here -->
+		        <h2 class="section-title">Validation Issues</h2>
+		        <div class="row">
+				<div class="col-md-6">
+				    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Invalid HTML Elements In <head>" data-bs-html="true"><strong>Invalid HTML Elements In &lt;head&gt;:</strong> {% if data['Validation Issues']['Invalid HTML Elements In <head>'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+				    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Body Element Preceding &lt;html&gt;" data-bs-html="true"><strong>Body Element Preceding &lt;html&gt;:</strong> {% if data['Validation Issues']['Body Element Preceding <html>'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+				    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Head Not First In &lt;html&gt; Element" data-bs-html="true"><strong>Head Not First In &lt;html&gt; Element:</strong> {% if data['Validation Issues']['Head Not First In <html> Element'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+				    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Missing &lt;head&gt; Tag" data-bs-html="true"><strong>Missing &lt;head&gt; Tag:</strong> {% if data['Validation Issues']['Missing <head> Tag'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+				</div>
+				<div class="col-md-6">
+				    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Multiple &lt;head&gt; Tags" data-bs-html="true"><strong>Multiple &lt;head&gt; Tags:</strong> {% if data['Validation Issues']['Multiple <head> Tags'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+				    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Missing &lt;body&gt; Tag" data-bs-html="true"><strong>Missing &lt;body&gt; Tag:</strong> {% if data['Validation Issues']['Missing <body> Tag'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+				    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Multiple &lt;body&gt; Tags" data-bs-html="true"><strong>Multiple &lt;body&gt; Tags:</strong> {% if data['Validation Issues']['Multiple <body> Tags'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+				    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="HTML Document Over 15MB" data-bs-html="true"><strong>HTML Document Over 15MB:</strong> {% if data['Validation Issues']['HTML Document Over 15MB'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+				</div>
+                	</div>
+            	</div>
+
+
+                <div class="tab-pane fade" id="mobile-audit-results" role="tabpanel" aria-labelledby="mobile-audit-results-tab">
+		        <!-- Render Mobile audit Results section here -->
+		        <h2 class="section-title">Mobile audit Results</h2>
+		        <div class="row">
+				<div class="col-md-6">
+				    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="URL" data-bs-html="true"><strong>URL:</strong> https://4glsp.com/productos/gestion-erp/</p>
+				    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Viewport Not Set" data-bs-html="true"><strong>Viewport Not Set:</strong> {% if data['Mobile audit Results']['Viewport Not Set'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+				    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Target Size" data-bs-html="true"><strong>Target Size:</strong> {{ data['Mobile audit Results']['Target Size'] }}</p>
+				    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Content Not Sized Correctly" data-bs-html="true"><strong>Content Not Sized Correctly:</strong> {% if data['Mobile audit Results']['Content Not Sized Correctly'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+				</div>
+				<div class="col-md-6">
+				    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Illegible Font Size" data-bs-html="true"><strong>Illegible Font Size:</strong> {{ data['Mobile audit Results']['Illegible Font Size'] }}</p>
+				    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Unsupported Plugins" data-bs-html="true"><strong>Unsupported Plugins:</strong> {{ data['Mobile audit Results']['Unsupported Plugins'] }}</p>
+				    <p class="list-item list-item-border" data-bs-toggle="tooltip" data-bs-placement="right" title="Mobile Alternate Link" data-bs-html="true"><strong>Mobile Alternate Link:</strong> {% if data['Mobile audit Results']['Mobile Alternate Link'] %}<span class="badge bg-success"><i class="fas fa-check"></i> True</span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i> False</span>{% endif %}</p>
+				</div>
+                	</div>
+            	</div>
+		</div>
+	</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Add more accordion items for each section -->
+    </div>
+</div>
+
+{% else %}
+<p> Esperando datos</p>
+{% endif %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+<script>
+    // Activate tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl, {
+            html: true // Enable HTML content in tooltips
+        });
+    });
+</script>
+<script>
+    // Añadir evento submit al formulario para mostrar el spinner en el botón
+    document.getElementById('pageInfoForm').addEventListener('submit', function () {
+        document.getElementById('btnText').classList.add('d-none');
+        document.getElementById('loadingSpinner').classList.remove('d-none');
+    });
+</script>
+</body>
+</html>

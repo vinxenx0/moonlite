@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+  <h1 class="my-4">Perfil de Usuario</h1>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Información Personal</h5>
+      <p class="card-text">Nombre de usuario: {{ user.username }}</p>
+      <p class="card-text">Correo electrónico: {{ user.email }}</p>
+      <p class="card-text">Rol: {{ user.role }}</p>
+      <p class="card-text">Fecha de registro: {{ user.registered_on.strftime('%Y-%m-%d') }}</p>
+      <p class="card-text">Activo: {% if user.active %} Sí {% else %} No {% endif %}</p>
+      <h5 class="card-title">Configuración</h5>
+      <p class="card-text">{{ user.config }}</p>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

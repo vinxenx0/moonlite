@@ -1,0 +1,206 @@
+### Domain and DNS
+- **WHOIS and Domain Information**
+  - WHOIS
+  - Reverse Domain
+- **DNS Lookup**
+  - CNAME
+  - IP Lookup
+  - AAAA Lookup
+  - SOA Lookup
+  - Traceroute
+  - Nmap
+- **IP Management**
+  - ASN Lookup
+  - ARIN Lookup
+
+### Email
+- **Mail Server Configuration**
+  - MX Discover
+  - DMARC
+  - SPF Lookup
+  - DKIM Lookup
+  - TXT Lookup
+  - DNS Key
+  - LOC Entry
+  - IP Sec Key
+- **DNS Security**
+  - RRSIG Lookup
+  - NSEC Lookup
+  - MTA STS
+  - NSEC3PARAM
+  - SRV Lookup
+- **SpamLists Check**
+  - Blacklist
+
+### Accessibility
+- **Accessibility**
+  - WCAG-AA/AAA
+  - Ortografia
+  - Velocidad (Speed)
+  - Core Web Vitals
+  - Responsive
+- **Image Optimization**
+  - Images
+  - Lazy Loading Images
+- **Mobile Optimization**
+  - AMP Valid Page
+  - Mobile Audit
+  - Mobile_audit_Results
+
+### SEO / Optimization
+- **On-Page SEO**
+  - Títulos (Titles)
+    - Page_Title_Issues
+    - URLs with Duplicate Page Titles
+    - Multiple Title Tags
+    - Title Tag Missing
+    - Title Length
+  - Meta Description
+    - Meta_Description_Issues
+    - Description Missing
+    - Duplicate Description
+    - Description Too Long
+  - Meta Keywords
+    - Meta_Keywords_Issues
+  - Encabezados (Headings)
+    - H1_Issues
+    - H2_Issues
+  - Imágenes (Images)
+    - Over 100kb
+    - Missing Alt Text
+    - Missing Alt Attribute
+    - Alt Text Over 100 Characters
+    - Background Images
+    - Missing Size Attributes
+    - Incorrectly Sized Images
+  - Canonicals
+    - Canonical_Info
+    - Multiple Canonical Tags
+    - Canonical HTTP to HTTPS
+    - Canonical HTTPS to HTTP
+    - Canonical Chain
+  - Directives
+    - Directives_Issues
+    - Noindex in HTML and HTTP
+    - Nofollow in HTML and HTTP
+    - Blocked by Noindex
+    - Blocked by Nofollow
+    - Blocked by X-Robots-Tag
+  - Schema.org
+    - Schema_ORG_Issues
+  - OpenGraph
+  - Hreflang
+    - HFLang_Ref_Issues
+    - Invalid language code in hreflang attribute
+    - Hreflang page {href} does not link out to itself
+    - Hreflang {href} points to a non-canonical version
+    - Hreflang and HTML lang do not match: hreflang={hreflang}, html lang={html_lang}
+    - Confirmation link missing for hreflang={hreflang} on page {href}
+  - URLs
+    - Common_URL_Issues
+    - Long URL
+    - Friendly URL
+    - Timed Out
+  - Duplicate Content
+    - No WWW Redirect
+    - Multiple Canonical Tags
+    - Duplicate Content
+    - URLs with Double Slash
+    - No Trailing Slash
+
+- **Link BUilding**
+  - Enlaces Rotos (Broken Links)
+  - Enlaces Salientes (Outgoing Links)
+  - Backlinks
+  - External Links
+    - External link missing anchor
+    - External link with empty anchor
+    - External link with naked URL anchor
+    - External link with anchor containing only symbols
+    - Nofollow external link
+    - External link timed out
+  - Internal Links
+    - Internal links missing anchor
+    - Nofollow internal links
+    - One inbound internal link
+    - Too many links
+
+- **Crawling / Site structure**
+  - robots.txt
+    - Blocked by Robots.txt
+  - Sitemap
+    - Missing Sitemap
+    - Sitemap in Robots.txt
+    - Sitemap Issues
+    - HTTP URLs in Sitemap
+    - Large Sitemap
+    - Non-Canonical Pages in Sitemap
+    - Noindex Pages in Sitemap
+
+### Security and Compliance
+- **Website Security**
+  - X-Tags
+  - Header Info
+    - Header_info
+  - HTTPS/SSL
+    - Days to SSL Expiry
+    - Outdated SSL/TLS
+    - Certificate Name Match
+    - Deprecated Encryption Algorithm
+    - Mixed Content
+    - HTTP to HTTPS Redirect
+    - HTTPS to HTTP Redirect
+  - Server Response
+  - Security_Info
+  - Canonical HTTPS to HTTP
+  - HTTP to HTTPS Redirect
+
+- **HTML/CSS Compliance**
+  - CSS not minified
+  - CSS not cached
+  - CSS not compressed
+  - CSS too big
+  - Deprecated HTML Tags
+  - Gzip Compression
+
+- **CMS Security**
+  - CMS Audit
+  - HTTP/SSL Check
+
+### Usability
+- **User Experience**
+  - Favicon Missing
+  - Flash Used
+  - X Card Tag Missing
+  - Google Search Display
+- **Content Management**
+  - Content Optimization
+    - JavaScript Issues
+    - Too many JavaScript files
+    - Error analyzing JS
+    - JavaScript too big
+    - JavaScript not compressed
+    - JavaScript not cached
+    - JavaScript not minified
+    - Total JavaScript size exceeds 2 MB
+  - Redirection Management
+    - Redirects
+    - Redirect Chain
+    - Redirect Loop
+    - Redirect to 4xx or 5xx
+    - Meta Refresh Redirect
+    - Temporary Redirects
+    - No WWW Redirect
+    - WWW Redirect
+    - Canonical Chain
+    - URLs with Double Slash
+    - No Trailing Slash
+
+### Localization / Internationalization (i18)
+- **Language Management**
+  - Invalid language code in hreflang attribute
+  - Multiple language codes specified for a single URL
+  - Invalid HTML lang attribute: {html_lang}
+  - Language duplicate in hreflang attribute
+  - HTML lang attribute is missing
+  - x-default hreflang attribute is missing

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Core Web Vitals Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+    <style>
+        .card-icon {
+            font-size: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h2 class="mb-3">Core Web Vitals <i class="bi bi-info-circle"></i></h2>
+        <p class="mb-4">Monitor your website's Core Web Vitals performance</p>
+
+        <div class="alert alert-info" role="alert">
+            <p class="mb-0">Check your pages' performance based on Google's Core Web Vitals.</p>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <label for="pagetypes" class="form-label">Pagetypes</label>
+                <select class="form-select" id="pagetypes">
+                    <option selected>All</option>
+                    <option value="1">Posts</option>
+                    <option value="2">Home</option>
+                    <option value="3">Category</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="sections" class="form-label">Sections</label>
+                <select class="form-select" id="sections">
+                    <option selected>All</option>
+                    <option value="1">General</option>
+                    <option value="2">Header</option>
+                    <option value="3">Footer</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="depthLevel" class="form-label">Depth Level</label>
+                <select class="form-select" id="depthLevel">
+                    <option selected>All</option>
+                    <option value="1">Level 1</option>
+                    <option value="2">Level 2</option>
+                    <option value="3">Level 3</option>
+                </select>
+            </div>
+            <div class="col-md-3 d-flex align-items-end">
+                <button class="btn btn-primary w-100">Filter</button>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card border-info">
+                    <div class="card-body text-center">
+                        <div class="card-icon text-info"><i class="fas fa-stopwatch"></i></div>
+                        <h5 class="card-title">First Contentful Paint (FCP)</h5>
+                        <p class="card-text">2.1 seconds</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-warning">
+                    <div class="card-body text-center">
+                        <div class="card-icon text-warning"><i class="fas fa-image"></i></div>
+                        <h5 class="card-title">Largest Contentful Paint (LCP)</h5>
+                        <p class="card-text">2.94 seconds</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-danger">
+                    <div class="card-body text-center">
+                        <div class="card-icon text-danger"><i class="fas fa-hand-pointer"></i></div>
+                        <h5 class="card-title">First Input Delay (FID)</h5>
+                        <p class="card-text">553 milliseconds</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-primary">
+                    <div class="card-body text-center">
+                        <div class="card-icon text-primary"><i class="fas fa-ruler-combined"></i></div>
+                        <h5 class="card-title">Cumulative Layout Shift (CLS)</h5>
+                        <p class="card-text">0.7813</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <canvas id="fcpEvolution"></canvas>
+            </div>
+            <div class="col-md-6">
+                <canvas id="lcpEvolution"></canvas>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <canvas id="fidEvolution"></canvas>
+            </div>
+            <div class="col-md-6">
+                <canvas id="clsEvolution"></canvas>
+            </div>
+        </div>
+
+        <h4 class="mb-3">FandangoSEO's Data</h4>
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card border-info">
+                    <div class="card-body text-center">
+                        <div class="card-icon text-info"><i class="fas fa-stopwatch"></i></div>
+                        <h5 class="card-title">First Contentful Paint (FCP)</h5>
+                        <p class="card-text">2.64 seconds</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-warning">
+                    <div class="card-body text-center">
+                        <div class="card-icon text-warning"><i class="fas fa-image"></i></div>
+                        <h5 class="card-title">Largest Contentful Paint (LCP)</h5>
+                        <p class="card-text">3.03 seconds</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-danger">
+                    <div class="card-body text-center">
+                        <div class="card-icon text-danger"><i class="fas fa-hand-pointer"></i></div>
+                        <h5 class="card-title">First Input Delay (FID)</h5>
+                        <p class="card-text">597 milliseconds</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-primary">
+                    <div class="card-body text-center">
+                        <div class="card-icon text-primary"><i class="fas fa-ruler-combined"></i></div>
+                        <h5 class="card-title">Cumulative Layout Shift (CLS)</h5>
+                        <p class="card-text">0.0005</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h4 class="mb-3">Web Vitals by PageType</h4>
+        <table id="webVitalsPageType" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Pagetype</th>
+                    <th>Section</th>
+                    <th>Level</th>
+                    <th>FCP</th>
+                    <th>LCP</th>
+                    <th>FID</th>
+                    <th>CLS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Posts</td>
+                    <td>General</td>
+                    <td>Level 16</td>
+                    <td><span class="text-danger">●</span></td>
+                    <td><span class="text-warning">●</span></td>
+                    <td><span class="text-success">●</span></td>
+                    <td><span class="text-danger">●</span></td>
+                </tr>
+                <tr>
+                    <td>Home</td>
+                    <td>General</td>
+                    <td>Level 0</td>
+                    <td><span class="text-warning">●</span></td>
+                    <td><span class="text-success">●</span></td>
+                    <td><span class="text-danger">●</span></td>
+                    <td><span class="text-danger">●</span></td>
+                </tr>
+                <tr>
+                    <td>Category</td>
+                    <td>General</td>
+                    <td>Level 16</td>
+                    <td><span class="text-danger">●</span></td>
+                    <td><span class="text-warning">●</span></td>
+                    <td><span class="text-success">●</span></td>
+                    <td><span class="text-danger">●</span></td>
+                </tr>
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+
+        <h4 class="mb-3">Web Vitals by Pages</h4>
+        <table id="webVitalsPages" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Page URL</th>
+                    <th>FCP</th>
+                    <th>LCP</th>
+                    <th>FID</th>
+                    <th>CLS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>/resultados-bonoloto-jueves-26-de-noviembre-1618</td>
+                    <td><span class="text-warning">●</span></td>
+                    <td><span class="text-warning">●</span></td>
+                    <td><span class="text-danger">●</span></td>
+                    <td><span class="text-danger">●</span></td>
+                </tr>
+                <tr>
+                    <td>/resultados-bonoloto-sabado-2-de-abril-2057</td>
+                    <td><span class="text-warning">●</span></td>
+                    <td><span class="text-warning">●</span></td>
+                    <td><span class="text-danger">●</span></td>
+                    <td><span class="text-danger">●</span></td>
+                </tr>
+                <tr>
+                    <td>/resultados-primitiva-jueves-21-de-enero-1798</td>
+                    <td><span class="text-warning">●</span></td>
+                    <td><span class="text-warning">●</span></td>
+                    <td><span class="text-danger">●</span></td>
+                    <td><span class="text-danger">●</span></td>
+                </tr>
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#webVitalsPageType').DataTable();
+            $('#webVitalsPages').DataTable();
+        });
+
+        const fcpCtx = document.getElementById('fcpEvolution').getContext('2d');
+        const lcpCtx = document.getElementById('lcpEvolution').getContext('2d');
+        const fidCtx = document.getElementById('fidEvolution').getContext('2d');
+        const clsCtx = document.getElementById('clsEvolution').getContext('2d');
+
+        const fcpChart = new Chart(fcpCtx, {
+            type: 'line',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May'],
+                datasets: [{
+                    label: 'FCP Evolution',
+                    data: [2.5, 2.2, 2.3, 2.1, 2.4],
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 2,
+                    fill: false
+                }]
+            }
+        });
+
+        const lcpChart = new Chart(lcpCtx, {
+            type: 'line',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May'],
+                datasets: [{
+                    label: 'LCP Evolution',
+                    data: [3.0, 3.2, 3.1, 2.9, 3.3],
+                    borderColor: 'rgba(255, 206, 86, 1)',
+                    borderWidth: 2,
+                    fill: false
+                }]
+            }
+        });
+
+        const fidChart = new Chart(fidCtx, {
+            type: 'line',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May'],
+                datasets: [{
+                    label: 'FID Evolution',
+                    data: [600, 580, 590, 570, 610],
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 2,
+                    fill: false
+                }]
+            }
+        });
+
+        const clsChart = new Chart(clsCtx, {
+            type: 'line',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May'],
+                datasets: [{
+                    label: 'CLS Evolution',
+                    data: [0.08, 0.09, 0.07, 0.06, 0.1],
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 2,
+                    fill: false
+                }]
+            }
+        });
+    </script>
+</body>
+
+</html>

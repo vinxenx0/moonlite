@@ -5,6 +5,7 @@ updates to revision
 
 - el token le añade b' al token
 - pagina front cuando haces login
+- revisar lo que devuelve el speller check de la ortografia
 
 para todos -> gestionar cuando devuelve error q no muestre el dashboard de resultados
 

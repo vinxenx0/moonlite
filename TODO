@@ -1,13 +1,10 @@
 
-
-- modal cookies
-- db user
-- internal messaging
-- firefox toggles sidebar
-
 ----
 
 updates to revision
+
+- el token le añade b' al token
+- pagina front cuando haces login
 
 para todos -> gestionar cuando devuelve error q no muestre el dashboard de resultados
 

@@ -31,6 +31,7 @@
 
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
+  <!--
   <style>
     :root {
       --primary-color: #007bff;
@@ -350,6 +351,130 @@
       cursor: pointer;
     }
   </style>
+-->
+
+<!-- pink css -->
+
+<style>
+  :root {
+      --primary-color: #ff00aa; /* Neon pink */
+      --secondary-color: #000000; /* Black */
+      --background-color: #ffffff; /* White */
+      --text-color: #333333; /* Dark gray text */
+      --info-color: #7c71c5; /* Purple */
+      --navbar-background: #000000; /* Black for the navbar */
+      --navbar-link-color: #ffffff; /* White for navbar links */
+      --button-hover-color: #ff66cc; /* Slightly lighter pink */
+      --footer-background: #f9f9f9; /* Light gray for footer */
+      --footer-text-color: #333333; /* Dark gray for footer text */
+  }
+
+  /* General Body Styling */
+  body {
+      background-color: var(--background-color);
+      color: var(--text-color);
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+  }
+
+  /* Info Bar */
+  .info-bar {
+      background-color: var(--secondary-color);
+      color: var(--navbar-link-color);
+      padding: 10px;
+      text-align: center;
+      font-size: 14px;
+  }
+
+  /* Navbar Styling */
+  .navbar {
+      background-color: var(--navbar-background);
+      box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1);
+  }
+
+  .navbar-nav .nav-link {
+      color: var(--navbar-link-color);
+      padding: 15px 20px;
+  }
+
+  .navbar-nav .nav-link:hover {
+      color: var(--primary-color);
+  }
+
+  /* Buttons */
+  .btn-primary {
+      background-color: var(--primary-color);
+      color: var(--navbar-link-color);
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+  }
+
+  .btn-primary:hover {
+      background-color: var(--button-hover-color);
+  }
+
+  /* Input Fields */
+  textarea {
+      width: 100%;
+      padding: 15px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      margin: 20px 0;
+      font-size: 16px;
+  }
+
+  /* Featured Section (Marketing Task) */
+  .marketing-tasks {
+      background-color: var(--secondary-color);
+      color: var(--navbar-link-color);
+      padding: 40px 20px;
+      text-align: center;
+      border-radius: 10px;
+      margin-top: 30px;
+  }
+
+  .marketing-tasks h2 {
+      color: var(--primary-color);
+  }
+
+  /* Footer */
+  footer {
+      background-color: var(--footer-background);
+      padding: 50px 20px;
+      color: var(--footer-text-color);
+      text-align: left;
+  }
+
+  footer a {
+      color: var(--primary-color);
+      text-decoration: none;
+  }
+
+  footer a:hover {
+      text-decoration: underline;
+  }
+
+  footer .footer-column h6 {
+      font-weight: bold;
+      margin-bottom: 15px;
+  }
+
+  /* Icons in Footer */
+  .card-icon {
+      font-size: 40px;
+      color: var(--primary-color);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+      .marketing-tasks {
+          padding: 20px;
+      }
+  }
+</style>
+
+
   <script>
     // Menu side toggle
     document.addEventListener('DOMContentLoaded', function () {

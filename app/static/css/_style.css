@@ -1,19 +1,22 @@
 :root {
-    --primary-color: #007bff;
-    --secondary-color: #6c757d;
-    --background-color: #f8f9fa;
-    --text-color: #212529;
+    --primary-color: #3f4a6f;
+    --secondary-color: #d3dae5;
+    --background-color: #f4f6f8;
+    --text-color: #1f2937;
     --info-color: #7c71c5;
-    --navbar-background: white;
-    --navbar-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1);
+    --navbar-background: #ffffff;
+    --navbar-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     --navbar-link: #333;
-    --white: #fff;
+    --white: #ffffff;
     --featured-column: #f9f9f9;
-    --menu-header: #000;
-    --menu-separator: #ccc;
+    --menu-header: #1f2937;
+    --menu-separator: #e1e5eb;
   }
   
   body {
+    font-family: Arial, sans-serif;
+    color: var(--text-color);
+    background-color: var(--background-color);
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -21,22 +24,27 @@
   
   .container-fluid {
     flex: 1;
+    padding: 0;
   }
   
   .footer {
     margin-top: auto;
+    background-color: #3f4a6f;
+    color: var(--white);
   }
   
-  /* Dark Mode */
   .dark-mode {
     background-color: #333;
     color: #fff;
   }
   
   /* Navbar and Dropdown Menu Styles */
-  .info-bar, .top-bar {
+  .info-bar,
+  .top-bar {
     font-size: 14px;
-    padding: 5px 0;
+    padding: 8px 0;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
   }
   
   .top-bar a {
@@ -45,7 +53,6 @@
   }
   
   .info-bar {
-    background-color: var(--secondary-color);
     color: var(--white);
   }
   
@@ -56,10 +63,11 @@
   
   .navbar-nav .nav-link {
     color: var(--navbar-link);
+    font-weight: 500;
   }
   
   .navbar-nav .dropdown-menu {
-    width: 740px;
+    width: 720px;
     box-shadow: var(--navbar-shadow);
   }
   
@@ -86,6 +94,7 @@
   .btn-primary {
     background-color: var(--primary-color);
     border-color: var(--primary-color);
+    font-weight: bold;
   }
   
   .btn-outline-primary {
@@ -102,7 +111,7 @@
   .dropdown-menu-columns .column {
     flex: 1;
     min-width: 180px;
-    padding: 0 16px;
+    padding: 8px;
   }
   
   .column.featured {
@@ -168,10 +177,10 @@
   
   /* Footer Styles */
   footer {
-    background-color: #f8f9fa;
+    background-color: #f4f6f8;
     padding: 40px 0;
-    color: #333;
-    box-shadow: 0 -4px 2px -2px gray;
+    color: #1f2937;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
   }
   
   footer .footer-column {
@@ -186,8 +195,7 @@
   footer .footer-column a {
     color: var(--primary-color);
     text-decoration: none;
-    display: block;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
   
   footer .footer-column a:hover {
@@ -205,8 +213,8 @@
     top: 0;
     height: 100%;
     width: 300px;
-    background-color: white;
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+    background-color: var(--white);
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
     transition: right 0.3s;
     overflow-y: auto;
     z-index: 1040;
@@ -251,6 +259,7 @@
     background-color: #e0e0e0;
   }
   
+  /* Help Bubble and Widget */
   .help-bubble {
     position: fixed;
     bottom: 20px;
@@ -259,7 +268,7 @@
     height: 60px;
     background-color: var(--primary-color) !important;
     border-radius: 50%;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     z-index: 1050;
     display: flex;
     align-items: center;
@@ -269,7 +278,7 @@
   
   .help-bubble i {
     font-size: 1.5rem;
-    color: white;
+    color: var(--white);
   }
   
   .help-widget {
@@ -278,7 +287,7 @@
     right: 20px;
     width: 300px;
     max-height: 70vh;
-    background-color: #0066cc!important;
+    background-color: #ffffff;
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
@@ -292,11 +301,12 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-    border-bottom: 1px solid #ddd;
+    background-color: #3f4a6f;
+    color: var(--white);
   }
   
   .help-widget-content {
-    padding: 10px;
+    padding: 15px;
   }
   
   .help-widget-icons {
@@ -307,10 +317,10 @@
   
   .help-widget-icons i {
     font-size: 1.5rem;
-    cursor: pointer;
+    color: var(--primary-color);
   }
   
   #main-content {
-    margin-top: 60px;
+    margin-top: 80px;
   }
   

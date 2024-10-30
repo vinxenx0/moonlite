@@ -39,9 +39,169 @@
         border-color: #ced4da;
         /* Change border color on hover */
     }
+
+       /* Variables de color */
+       :root {
+            --primary-color: #6c63ff;
+            --secondary-color: #ff6584;
+            --bg-light: #f8f9fa;
+            --bg-dark: #343a40;
+        }
+
+        /* Estilos generales */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: #333;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(120deg, var(--primary-color), var(--secondary-color));
+            color: #fff;
+            padding: 80px 0;
+            text-align: center;
+        }
+        .hero-section h1 {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+        .hero-section p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        .cta-btn {
+            background-color: #fff;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            padding: 12px 30px;
+            border-radius: 50px;
+            transition: all 0.3s;
+        }
+        .cta-btn:hover {
+            background-color: #f1f1f1;
+            color: var(--secondary-color);
+        }
+
+        /* Prueba Online */
+        #prueba-online {
+            background-color: #fff;
+            padding: 60px 0;
+        }
+        #prueba-online .form-control {
+            border-radius: 50px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        #prueba-online button {
+            border-radius: 50px;
+            padding: 10px 30px;
+        }
+
+        /* Beneficios */
+        .benefit-card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s;
+            background-color: #fff;
+        }
+        .benefit-card:hover {
+            transform: translateY(-10px);
+        }
+        .benefit-card i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        /* Precios */
+        .pricing-plan {
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            background: #fff;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .pricing-plan:hover {
+            transform: translateY(-8px);
+        }
+        .pricing-plan h4 {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        .pricing-plan .display-4 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Testimonios */
+        #testimonials {
+            background-color: var(--bg-light);
+            padding: 60px 0;
+        }
+        .carousel-item blockquote {
+            font-size: 1.1rem;
+            font-style: italic;
+            margin-bottom: 0;
+        }
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            filter: invert(1);
+        }
+
+        /* CTA Adicional */
+        .cta-section {
+            background-color: var(--secondary-color);
+            color: #fff;
+            padding: 60px 0;
+            text-align: center;
+        }
+        .cta-section a {
+            background-color: #ffffff;
+            color: var(--secondary-color);
+            padding: 12px 24px;
+            border-radius: 50px;
+            transition: background 0.3s;
+        }
+        .cta-section a:hover {
+            background-color: #e2e6ea;
+        }
+
+        /* Formulario */
+        #formulario .form-control {
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        #formulario button {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 10px 30px;
+            border-radius: 50px;
+        }
+        #formulario button:hover {
+            background-color: #5145cd;
+        }
+
 </style>
 
 <div class="container mt-5">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+        <h1>Optimiza tu Estrategia SEO en un Solo Lugar</h1>
+        <p class="lead">Herramientas avanzadas y fáciles de usar para analizar y mejorar tu presencia en línea.</p>
+        <a href="#prueba-online" class="btn btn-lg cta-btn">Prueba Gratis Ahora</a>
+    </div>
+</section>
+
+
+
+    
+
     {% if not current_user.is_authenticated %}
     <div class="jumbotron">
         <h1 class="display-4">¡Bienvenido a nuestra aplicación!</h1>
@@ -75,6 +235,119 @@
         </div>
     </div>
 
+
+
+
+    <!-- Beneficios -->
+    <section id="benefits" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Beneficios Principales</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card benefit-card p-4">
+                        <i class="bi bi-bar-chart-line-fill"></i>
+                        <h5>Mejora tu SEO</h5>
+                        <p>Optimiza tu sitio con análisis detallados para aumentar tu visibilidad en buscadores.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card benefit-card p-4">
+                        <i class="bi bi-clock-fill"></i>
+                        <h5>Datos en Tiempo Real</h5>
+                        <p>Obtén métricas actualizadas para tomar decisiones estratégicas.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card benefit-card p-4">
+                        <i class="bi bi-speedometer2"></i>
+                        <h5>Fácil y Rápido</h5>
+                        <p>Análisis inmediato y accesible para maximizar tus esfuerzos de marketing.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Precios -->
+    <section id="pricing" class="py-5">
+        <div class="container text-center">
+            <h2>Planes de Precios</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="pricing-plan p-4">
+                        <h4>Gratis</h4>
+                        <p class="display-4">$0</p>
+                        <ul class="list-unstyled">
+                            <li><i class="bi bi-check-circle"></i> Análisis de URL</li>
+                            <li><i class="bi bi-check-circle"></i> Reportes Limitados</li>
+                        </ul>
+                        <a href="#" class="btn btn-outline-primary">Empieza Gratis</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="pricing-plan bg-primary text-white p-4">
+                        <h4>Pro</h4>
+                        <p class="display-4">$29</p>
+                        <ul class="list-unstyled">
+                            <li><i class="bi bi-check-circle"></i> Análisis Completo</li>
+                            <li><i class="bi bi-check-circle"></i> Reportes Mensuales</li>
+                        </ul>
+                        <a href="#" class="btn btn-light">Contratar</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="pricing-plan p-4">
+                        <h4>Empresas</h4>
+                        <p class="display-4">$99</p>
+                        <ul class="list-unstyled">
+                            <li><i class="bi bi-check-circle"></i> Integración API</li>
+                            <li><i class="bi bi-check-circle"></i> Reportes Ilimitados</li>
+                        </ul>
+                        <a href="#" class="btn btn-outline-primary">Contactar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonios -->
+    <section id="testimonials" class="py-5">
+        <div class="container text-center">
+            <h2>Lo que dicen nuestros usuarios</h2>
+            <div id="carouselTestimonials" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <blockquote class="blockquote">"¡Increíble herramienta! Me ayudó a optimizar mi sitio rápidamente."</blockquote>
+                        <footer class="blockquote-footer">Juan P., Emprendedor</footer>
+                    </div>
+                    <div class="carousel-item">
+                        <blockquote class="blockquote">"Muy intuitiva y precisa, ideal para nuestro equipo de marketing."</blockquote>
+                        <footer class="blockquote-footer">Lucía M., Especialista SEO</footer>
+                    </div>
+                    <div class="carousel-item">
+                        <blockquote class="blockquote">"Gran relación calidad-precio, muy completa."</blockquote>
+                        <footer class="blockquote-footer">Carlos S., Dueño de Agencia</footer>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselTestimonials" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Anterior</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselTestimonials" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Siguiente</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Adicional -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>¡Comienza con una Prueba Gratuita!</h2>
+            <a href="#formulario" class="btn btn-lg">Quiero Probar Gratis</a>
+        </div>
+    </section>
 
 </div>
 {% endblock %}

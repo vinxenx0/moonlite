@@ -56,6 +56,14 @@ body {
 
     <!-- Online Test Box -->
 <section id="online-test" class="content-section bg-light">
+    <div class="jumbotron">
+        <h1 class="display-4">¡Bienvenido a nuestra aplicación!</h1>
+        <p class="lead">Regístrate ahora para comenzar a disfrutar de todas las funcionalidades.</p>
+        <hr class="my-4">
+        <p>Puedes acceder a características exclusivas al registrarte en nuestra plataforma.</p>
+        <a class="btn btn-primary btn-lg" href="{{ url_for('register') }}" role="button">Registrarse</a>
+    </div>
+
     <div class="container text-center">
         <h2>Instant Website Analysis <span class="badge badge-custom">NEW</span></h2>
         <p>Enter your URL below to receive a complimentary performance report.</p>
@@ -85,22 +93,13 @@ body {
             
         </div>
     </div>
--->
+
 
 
 {% if not current_user.is_authenticated %}
-
-<div class="jumbotron">
-    <h1 class="display-4">¡Bienvenido a nuestra aplicación!</h1>
-    <p class="lead">Regístrate ahora para comenzar a disfrutar de todas las funcionalidades.</p>
-    <hr class="my-4">
-    <p>Puedes acceder a características exclusivas al registrarte en nuestra plataforma.</p>
-    <a class="btn btn-primary btn-lg" href="{{ url_for('register') }}" role="button">Registrarse</a>
-</div>
-<h1 class="text-center">Pruebame!</h1>
 {% else %}
 {% endif %}
-
+-->
 
 <!-- Benefits Section -->
 <section class="content-section">

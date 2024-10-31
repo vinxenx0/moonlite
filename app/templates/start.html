@@ -67,6 +67,27 @@ body {
     }
 </style>
 
+<!-- Optional CSS for Styling -->
+<style>
+    .pricing-section h3.card-price {
+        font-size: 2.5rem;
+    }
+    
+    .testimonials-section .card {
+        border-radius: 1rem;
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        filter: invert(1);
+    }
+
+    .carousel-item .blockquote-footer {
+        font-size: 0.875rem;
+        opacity: 0.8;
+    }
+</style>
+
 <div class="container mt-5">
 
 <!-- Enhanced Hero Section -->
@@ -213,6 +234,123 @@ body {
 </section>
 
 <!-- Pricing Section -->
+<section id="pricing" class="pricing-section py-5 bg-light">
+    <div class="container text-center">
+        <h2 class="mb-5 fw-bold">Choose Your Plan</h2>
+        <div class="row justify-content-center">
+            <!-- Free Plan -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-primary text-white py-4 position-relative">
+                        <h5 class="card-title mb-0">Free Plan</h5>
+                        <span class="badge bg-secondary position-absolute top-0 end-0 m-2">Popular</span>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-price text-primary fw-bold">$0<span class="small fw-normal">/month</span></h3>
+                        <p class="card-text">Access essential tools at no cost.</p>
+                        <ul class="list-unstyled">
+                            <li>✔ Basic SEO tools</li>
+                            <li>✔ 5 reports per month</li>
+                            <li>✘ Priority support</li>
+                        </ul>
+                        <a href="#" class="btn btn-outline-primary btn-lg w-100">Get Started</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Basic Plan -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-info text-white py-4 position-relative">
+                        <h5 class="card-title mb-0">Basic Plan</h5>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-price text-info fw-bold">$9<span class="small fw-normal">/month</span></h3>
+                        <p class="card-text">For growing businesses and limited reports.</p>
+                        <ul class="list-unstyled">
+                            <li>✔ All Free Plan features</li>
+                            <li>✔ 20 reports per month</li>
+                            <li>✘ Priority support</li>
+                        </ul>
+                        <a href="#" class="btn btn-info btn-lg w-100">Subscribe Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pro Plan -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-success text-white py-4">
+                        <h5 class="card-title mb-0">Pro Plan</h5>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-price text-success fw-bold">$29<span class="small fw-normal">/month</span></h3>
+                        <p class="card-text">Unlock all features with unlimited reports and priority support.</p>
+                        <ul class="list-unstyled">
+                            <li>✔ All Basic Plan features</li>
+                            <li>✔ Unlimited reports</li>
+                            <li>✔ Priority support</li>
+                        </ul>
+                        <a href="#" class="btn btn-success btn-lg w-100">Subscribe Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials-section py-5 bg-dark text-light">
+    <div class="container text-center">
+        <h2 class="mb-5 fw-bold">What Our Users Say</h2>
+        <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <!-- Testimonial 1 -->
+                <div class="carousel-item active">
+                    <div class="card bg-secondary text-light mx-auto" style="max-width: 700px;">
+                        <div class="card-body">
+                            <p class="card-text">"These tools have transformed the way we analyze our SEO performance. Highly recommended for marketers and SEO specialists!"</p>
+                            <footer class="blockquote-footer text-white">John Doe, SEO Specialist</footer>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="carousel-item">
+                    <div class="card bg-secondary text-light mx-auto" style="max-width: 700px;">
+                        <div class="card-body">
+                            <p class="card-text">"Absolutely love the free tools! The reports are spot-on and easy to share with clients."</p>
+                            <footer class="blockquote-footer text-white">Jane Smith, Digital Marketer</footer>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="carousel-item">
+                    <div class="card bg-secondary text-light mx-auto" style="max-width: 700px;">
+                        <div class="card-body">
+                            <p class="card-text">"Incredible value! The Pro plan offers so much and has improved our workflow immensely."</p>
+                            <footer class="blockquote-footer text-white">Sam Lee, Business Owner</footer>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carousel Controls -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            </button>
+        </div>
+    </div>
+</section>
+
+
+
+
+<!-- Pricing Section 
 <section id="pricing" class="pricing-section">
     <div class="container">
         <h2 class="text-center mb-5">Subscription Plans</h2>
@@ -252,7 +390,7 @@ body {
     </div>
 </section>
 
-
+-->
 <!-- Pricing Plans 
 <section class="content-section">
     <div class="container">
@@ -287,7 +425,7 @@ body {
 </section>
 -->
 
-<!-- Testimonials Carousel -->
+<!-- Testimonials Carousel 
 <section class="feature-section bg-light">
     <div class="container">
         <h2 class="text-center mb-5">What Our Users Say</h2>
@@ -323,7 +461,7 @@ body {
         </div>
     </div>
 </section>
-
+-->
 <!-- Testimonials Carousel 
 <section class="content-section bg-light">
     <div class="container">

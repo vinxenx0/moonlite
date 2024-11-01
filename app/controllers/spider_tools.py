@@ -2,6 +2,7 @@ import re
 import socket
 import subprocess
 from urllib.parse import urlparse
+#from app import app
 import requests
 import json
 from bs4 import BeautifulSoup
@@ -10,6 +11,8 @@ import aspell
 
 import ssl
 import datetime
+
+from app.controllers import mobile_tools
 
 
 
@@ -114,6 +117,8 @@ def audit_image_details(url, soup):
             'Alt_Text_Over_100_Characters': alt_text_over_100_characters
         })
 
+    print(url)
+    print(image_details)
     return {
         'URL': url,
         'Images': image_details
@@ -1143,7 +1148,7 @@ def get_page_info(url):
                 'Schema_ORG_Issues' : get_structured_data_issues(soup),
                 'Header_info' : get_header_info(url),
                 'Validation_Issues': validate_html(response.content),
-                'Mobile_audit_Results' : app.controllers.mobile_tools.audit_mobile_usability(url, soup),
+                'Mobile_audit_Results' : mobile_tools.audit_mobile_usability(url, soup),
                 
                 # probar velocidad con buscar en diccionario # temporal
                 'Internal_Details' : #get_url_details(url_info),  # Corregido aquí 
@@ -1263,11 +1268,13 @@ def get_page_info(url):
 
             }
 
-            #print(json.dumps(page_info))
-
+            
             spelling_errors, grammar_errors = analizar_ortografia(response.text)
+
+            
             validator = json.loads(ejecutar_pa11y(url))
 
+            
             #print(json.dumps(page_info))
             return page_info, validator, spelling_errors, grammar_errors
         

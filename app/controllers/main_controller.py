@@ -60,7 +60,9 @@ def start():
         db.session.add(user_usage)
         db.session.commit()
 
+        #print(get_page_info(url))
         data, validator, spelling_errors, grammar_errors = get_page_info(url)
+        #data, validator = get_page_info(url)
         #validator = json.load(validator)
 
     return render_template('start.html',

@@ -67,106 +67,212 @@ body {
     }
 </style>
 
-
+<style>
+    /* Custom Styles */
+    body {
+        font-family: Arial, sans-serif;
+        color: #333;
+        background-color: #f8f9fa;
+    }
+    .hero-section {
+        background: linear-gradient(135deg, #007bff, #6610f2);
+        color: white;
+        padding: 80px 0;
+        text-align: center;
+        position: relative;
+    }
+    .hero-section .btn-cta {
+        background-color: #ff6b6b;
+        color: white;
+    }
+    .hero-section .btn-cta:hover {
+        background-color: #ff3b3b;
+    }
+    .content-section {
+        padding: 60px 0;
+    }
+    .feature-card, .pricing-card {
+        border: none;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        background: #fff;
+    }
+    .pricing-card.popular {
+        border: 2px solid #007bff;
+    }
+    .badge-popular {
+        background-color: #ff6b6b;
+        color: white;
+    }
+    .cta-section {
+        background: #6610f2;
+        color: white;
+        text-align: center;
+        padding: 40px 0;
+    }
+    .testimonial-carousel .carousel-item blockquote {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+    }
+    footer {
+        background-color: #333;
+        color: #f8f9fa;
+        padding: 20px 0;
+        text-align: center;
+    }
+</style>
 
 <div class="container mt-5">
 
-    <!-- Hero Section -->
-<section class="hero">
-    <h1>Advanced SEO & Marketing Tools</h1>
-    <p>Unlock your online potential with powerful, data-driven insights for SEO, domain analytics, and more.</p>
-    <button class="cta-button" style="background-color: #ff6347;">Get Your Free SEO Report</button>
-</section>
 
-<!-- Instant Website Analysis Form -->
-<section class="website-analysis">
-    <h2>Instant Website Analysis <span class="new-tag">NEW</span></h2>
-    <p>Enter your URL below to receive a free performance report.</p>
-    <input type="url" placeholder="Enter your website URL (e.g., https://yourbusiness.com)">
-    <button class="analyze-button" style="background-color: #007bff;">Analyze URL</button>
-</section>
-
-<!-- Features Overview -->
-<section class="features">
-    <h2>Why Choose Our Tools?</h2>
-    <div class="feature-item">
-        <img src="icons/analysis.svg" alt="Comprehensive Analysis">
-        <h3>Comprehensive Analysis</h3>
-        <p>Real-time insights on SEO, domain metrics, and backlinks.</p>
-    </div>
-    <div class="feature-item">
-        <img src="icons/security.svg" alt="Secure & Private">
-        <h3>Secure & Private</h3>
-        <p>Your data is protected. No tracking or data sharing.</p>
-    </div>
-    <div class="feature-item">
-        <img src="icons/reports.svg" alt="Professional Reports">
-        <h3>Professional Reports</h3>
-        <p>Generate shareable reports in seconds.</p>
-    </div>
-</section>
-
-<!-- Pricing Section -->
-<section class="pricing">
-    <h2>Choose Your Plan</h2>
-    <div class="plan popular">
-        <span class="tag">Popular</span>
-        <h3>Free Plan</h3>
-        <p>$0/month</p>
-        <p>Access essential tools at no cost.</p>
-        <button class="plan-button">Get Started</button>
-    </div>
-    <div class="plan basic">
-        <h3>Basic Plan</h3>
-        <p>$9/month</p>
-        <p>For growing businesses and limited reports.</p>
-        <button class="plan-button">Subscribe Now</button>
-    </div>
-    <div class="plan pro">
-        <h3>Pro Plan</h3>
-        <p>$29/month</p>
-        <p>Unlock all features with unlimited reports and priority support.</p>
-        <button class="plan-button">Subscribe Now</button>
-    </div>
-</section>
-
-<!-- Testimonials Section -->
-<section class="testimonials">
-    <h2>What Our Users Say</h2>
-    <div class="testimonial-carousel">
-        <div class="testimonial">
-            <p>"Absolutely love the free tools! The reports are spot-on and easy to share with clients."</p>
-            <p>— Jane Smith, Digital Marketer</p>
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <h1>Unlock Your SEO Potential</h1>
+                <p class="mb-4">Get your free SEO report with actionable insights to boost your online presence.</p>
+                <a href="#online-test" class="btn btn-cta btn-lg mt-3">Get Your Free SEO Report</a>
+            </div>
+            <div class="col-md-4 d-none d-md-block">
+                <i class="fas fa-search fa-7x"></i>
+            </div>
         </div>
-        <!-- Add more testimonials here -->
+    </div>
+</section>
+
+<!-- Online Test Box -->
+<section id="online-test" class="content-section bg-light">
+    <div class="container text-center">
+        <h2>Analyze Your Website Instantly</h2>
+        <p>Enter your URL below to get an instant, free report on your site’s performance.</p>
+        <form class="row justify-content-center">
+            <div class="col-md-6">
+                <input type="url" class="form-control" placeholder="Enter your website URL (e.g., https://yourbusiness.com)" required>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-primary w-100">Analyze URL</button>
+            </div>
+        </form>
+        <div class="alert alert-info mt-4" role="alert">
+            <i class="fas fa-info-circle"></i> Your data is safe with us. We never store or share any of your information.
+        </div>
+    </div>
+</section>
+
+<!-- Feature Overview Section with Icons -->
+<section class="content-section">
+    <div class="container">
+        <h2 class="text-center mb-5">Our Features</h2>
+        <div class="row text-center">
+            <div class="col-md-4">
+                <div class="feature-card p-4">
+                    <i class="fas fa-chart-line fa-4x mb-3 text-primary"></i>
+                    <h5>Real-time Analysis</h5>
+                    <p>Instant insights on your keywords, backlinks, and rankings.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card p-4">
+                    <i class="fas fa-shield-alt fa-4x mb-3 text-primary"></i>
+                    <h5>Data Privacy</h5>
+                    <p>Your security is our priority. We value your privacy.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card p-4">
+                    <i class="fas fa-file-download fa-4x mb-3 text-primary"></i>
+                    <h5>Custom Reports</h5>
+                    <p>Download reports to analyze and share with your team.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Pricing Plans with Highlighted Popular Plan -->
+<section class="content-section">
+    <div class="container">
+        <h2 class="text-center mb-5">Choose Your Plan</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="pricing-card p-4 text-center">
+                    <h3>Basic</h3>
+                    <p class="text-muted">$9/month</p>
+                    <p>Ideal for beginners and personal use.</p>
+                    <a href="#" class="btn btn-outline-primary">Start Basic</a>
+                </div>
+            </div>
+            <div class="col-md-4 popular">
+                <div class="pricing-card p-4 text-center border">
+                    <span class="badge badge-popular">Popular</span>
+                    <h3>Pro</h3>
+                    <p class="text-muted">$29/month</p>
+                    <p>Advanced tools with priority support for businesses.</p>
+                    <a href="#" class="btn btn-primary">Start Pro</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="pricing-card p-4 text-center">
+                    <h3>Enterprise</h3>
+                    <p class="text-muted">$79/month</p>
+                    <p>Custom solutions and dedicated support.</p>
+                    <a href="#" class="btn btn-outline-primary">Start Enterprise</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Carousel -->
+<section class="content-section bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5">What Our Clients Say</h2>
+        <div id="testimonialCarousel" class="carousel slide testimonial-carousel" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active text-center">
+                    <blockquote class="blockquote">
+                        <p>"Our traffic improved by 200% within months of using this toolset!"</p>
+                        <footer class="blockquote-footer">Alex Smith, Digital Marketer</footer>
+                    </blockquote>
+                </div>
+                <div class="carousel-item text-center">
+                    <blockquote class="blockquote">
+                        <p>"Comprehensive, reliable, and very user-friendly."</p>
+                        <footer class="blockquote-footer">Sarah Johnson, SEO Specialist</footer>
+                    </blockquote>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <h2 class="mb-4">Start Your Free Trial Now!</h2>
+        <p class="lead">Experience the impact of our tools on your digital presence.</p>
+        <a href="#pricing" class="btn btn-light btn-lg">Start Free Trial</a>
     </div>
 </section>
 
 <!-- Footer -->
 <footer>
-    <section class="footer-links">
+    <div class="container">
+        <p>&copy; 2024 SEO Tools. All Rights Reserved.</p>
         <div>
-            <h3>Features</h3>
-            <ul>
-                <li>Rank Tracker</li>
-                <li>On-Page SEO Checker</li>
-                <li>Website Audit</li>
-            </ul>
+            <a href="#" class="text-white me-3"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-white"><i class="fab fa-linkedin"></i></a>
         </div>
-        <div>
-            <h3>Resources</h3>
-            <ul>
-                <li>Blog</li>
-                <li>Guides</li>
-                <li>Case Studies</li>
-            </ul>
-        </div>
-    </section>
-    <section class="footer-disclaimer">
-        <p>Disclaimer: Terms and conditions apply.</p>
-    </section>
+    </div>
 </footer>
-
 
 <!-- Enhanced Hero Section -->
 <section class="hero-section bg-dark text-light py-5">

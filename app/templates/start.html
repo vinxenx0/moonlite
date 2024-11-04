@@ -134,15 +134,11 @@
         text-align: center; */
         color: #f8f9fa;
         padding: 20px 0;
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> 775facfd0c391e9780ac73af10c291e0897e8405
     }
 </style>
 
-<div class="container mt-5">
+<div class="_container _mt-5">
 
 
     <!-- Hero Section -->
@@ -192,13 +188,11 @@
                 </button>-->
                 <button type="submit" class="btn btn-primary" id="analizarBtn">
                     <span id="btnText">ANALIZAR URL</span>
-                    <span id="loadingSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                    <span id="loadingSpinner" class="spinner-border spinner-border-sm d-none" role="status"
+                        aria-hidden="true"></span>
                 </button>
             </form>
-            <div class="alert alert-info mt-4" role="alert">
-                <i class="fas fa-info-circle"></i> Your data is safe with us. We never store or share any of your
-                information.
-            </div>
+
         </div>
     </section>
 
@@ -621,7 +615,7 @@
                                         aria-labelledby="Images-tab">
 
                                         <h2 class="section-title">IMAGES</h2>
-                                      
+
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <h1>Scan Results for {{ data['Images_Issues']['URL'] }}</h1>
@@ -2622,8 +2616,9 @@
                     </div>
                 </div>
                 {% else %}
-                <div class="container mt-5">
-                    <p class="text-center">Esperando datos</p>
+                <div class="alert alert-info mt-4" role="alert">
+                    <i class="fas fa-info-circle"></i> Your data is safe with us. We never store or share any of your
+                    information.
                 </div>
                 {% endif %}
             </div>
@@ -3002,18 +2997,6 @@
 
 
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
-<script>
-    // Activate tooltips
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl, {
-            html: true // Enable HTML content in tooltips
-        });
-    });
-</script>
 <script>
     // Añadir evento submit al formulario para mostrar el spinner en el botón
     document.getElementById('pageInfoForm').addEventListener('submit', function () {
@@ -3022,5 +3005,6 @@
     });
 </script>
 </body>
+
 </html>
 {% endblock %}

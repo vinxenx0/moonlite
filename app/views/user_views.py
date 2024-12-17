@@ -4,7 +4,7 @@ from flask import render_template
 from flask_login import login_required
 from app import app
 from app.models.user_model import Users
-
+ 
 @app.route('/admin/usuarios')
 @login_required
 def usuarios():

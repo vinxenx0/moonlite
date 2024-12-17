@@ -1,4 +1,26 @@
 
+import time
+from flask import render_template
+import requests
+from app.controllers.spider_tools import check_css_status, check_deprecated_tags, check_gzip, get_canonical_info, get_common_url_issues, get_directive_issues, get_h1_issues, get_h2_issues, get_hreflang_issues, get_meta_description_issues, get_meta_keywords_issues, get_page_title_issues, get_soup, get_structured_data_issues
+from flask_login import current_user
+from flask import render_template, request
+from app import app, db
+from app.controllers.logs_controller import log_event
+from app.controllers.spider_tools import *
+from app.controllers.tools_controller import aaaa_lookup, cname_lookup, ip_lookup, reverse_lookup, traceroute_lookup, whois_lookup
+from app.forms import DomainToolsForm, SeoToolsForm
+from datetime import datetime
+from app.models.usage_model import Activity
+
+from app.views.info import tool_info
+
+##########
+###
+###
+###
+#######
+
 @app.route("/tools/domains/traceroute", methods=["GET", "POST"])
 def _traceroute():
     definition = "Traceroute es una herramienta que rastrea la ruta y mide los retrasos de paquetes de datos desde un host a otro. En SEO, es vital para identificar cuellos de botella y problemas de latencia que pueden afectar la velocidad de un sitio web."

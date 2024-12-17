@@ -1,5 +1,5 @@
 # app/controllers/user_controller.py
-from app.forms import PaymentForm
+
 from flask import render_template, redirect, session, url_for, flash, request
 from flask_login import login_user, logout_user, current_user
 from app import app, db, mail
@@ -10,7 +10,7 @@ from app.forms import NewUserRegistrationForm, RegistrationForm
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_user, logout_user, current_user, login_required
 # from app import app, db
-from app.forms import RegistrationForm, PasswordResetForm, PasswordChangeForm, EditProfileForm
+from app.forms import RegistrationForm, PasswordResetForm, PasswordChangeForm, EditProfileForm, PaymentForm
 from flask_mail import Message
 from flask import render_template, make_response, redirect, url_for, session
 

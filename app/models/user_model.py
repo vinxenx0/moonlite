@@ -58,6 +58,11 @@ class Users(UserMixin, db.Model):
         return jwt.encode({'user_id': self.id, 'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=expires_sec)},
                         current_app.config['SECRET_KEY'], algorithm='HS256') #.decode('utf-8')
 
+    def is_subscription_active(self):
+        if not self.subscription_expiration:
+            return False
+        return self.subscription_expiration > datetime.datetime.utcnow()
+
     @staticmethod
     def verify_token(token):
         try:

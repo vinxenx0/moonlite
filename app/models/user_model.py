@@ -28,8 +28,8 @@ class Users(UserMixin, db.Model):
     role = db.Column(db.String(20), nullable=False, default='usuario')
 
     
-    logs = db.relationship('Log', back_populates='user')
-    logs = db.relationship('Log', back_populates='user', cascade="all, delete-orphan")
+    #logs = db.relationship('Log', back_populates='user')
+    #logs = db.relationship('Log', back_populates='user', cascade="all, delete-orphan")
 
     # Subscription data
     subscription_plan = db.Column(Enum('Free', 'Basic', 'Pro', name='subscription_plans'), default='Free')

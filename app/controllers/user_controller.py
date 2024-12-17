@@ -1,4 +1,6 @@
 # app/controllers/user_controller.py
+
+from app.forms import PaymentForm
 from flask import render_template, redirect, session, url_for, flash, request
 from flask_login import login_user, logout_user, current_user
 from app import app, db, mail
@@ -8,7 +10,7 @@ from app.forms import LoginForm, PasswordResetRequestForm
 from app.forms import NewUserRegistrationForm, RegistrationForm
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_user, logout_user, current_user, login_required
-from app import app, db
+# from app import app, db
 from app.forms import RegistrationForm, PasswordResetForm, PasswordChangeForm, EditProfileForm
 from flask_mail import Message
 from flask import render_template, make_response, redirect, url_for, session
@@ -22,6 +24,38 @@ def profile():
     ]
     user = Users.query.filter_by(id=current_user.id).first()
     return render_template('user/profile.html', user=user, breadcrumbs=breadcrumbs)
+
+@app.route('/profile/payment', methods=['GET', 'POST'])
+@login_required
+def edit_payment_methods():
+    breadcrumbs = [{'url': '/profile', 'text': 'Perfil'}, {'url': '/profile/payment', 'text': 'Editar Métodos de Pago'}]
+    form = PaymentForm()
+    user = Users.query.get(current_user.id)
+
+    if form.validate_on_submit():
+        # Update payment methods
+        user.primary_payment = {
+            'method': form.primary_payment_method.data,
+            'details': form.primary_payment_details.data
+        }
+        user.secondary_payment = {
+            'method': form.secondary_payment_method.data,
+            'details': form.secondary_payment_details.data
+        }
+        db.session.commit()
+        flash('Métodos de pago actualizados.', 'success')
+        log_event('PAYMENT_UPDATE', f'Métodos de pago actualizados para el usuario {user.username}.')
+        return redirect(url_for('profile'))
+
+    # Prepopulate the form
+    if user.primary_payment:
+        form.primary_payment_method.data = user.primary_payment.get('method')
+        form.primary_payment_details.data = user.primary_payment.get('details')
+    if user.secondary_payment:
+        form.secondary_payment_method.data = user.secondary_payment.get('method')
+        form.secondary_payment_details.data = user.secondary_payment.get('details')
+
+    return render_template('user/edit_payment.html', form=form, breadcrumbs=breadcrumbs)
 
 
 @app.route('/profile/edit', methods=['GET', 'POST'])
@@ -337,3 +371,52 @@ def send_activation_email(user):
 #    session['cookies_accepted'] = True
 #    session.pop('show_cookies_modal', None)
 #    return redirect(request.referrer)
+
+
+@app.route('/profile/edit_all', methods=['GET', 'POST'])
+@login_required
+def edit_full_profile():
+    breadcrumbs = [{'url': '/profile', 'text': 'Perfil'}, {'url': '/profile/edit_all', 'text': 'Editar Perfil'}]
+    user = Users.query.get(current_user.id)
+    form = EditProfileForm()
+    payment_form = PaymentForm()
+
+    if form.validate_on_submit() and payment_form.validate_on_submit():
+        # Actualizar información básica
+        user.username = form.username.data
+        if form.password.data:
+            user.set_password(form.password.data)
+        
+        # Actualizar métodos de pago
+        user.primary_payment = {
+            'method': payment_form.primary_payment_method.data,
+            'details': payment_form.primary_payment_details.data
+        }
+        user.secondary_payment = {
+            'method': payment_form.secondary_payment_method.data,
+            'details': payment_form.secondary_payment_details.data
+        }
+
+        # Actualizar rol y estado si es administrador
+        if current_user.role == 'admin':
+            user.role = form.role.data
+            user.active = form.active.data
+
+        db.session.commit()
+        flash('Perfil actualizado correctamente.', 'success')
+        log_event('PROFILE_UPDATE', f'Perfil de {user.username} actualizado.')
+        return redirect(url_for('profile'))
+
+    elif request.method == 'GET':
+        # Pre-populate the forms with current user data
+        form.username.data = user.username
+        payment_form.primary_payment_method.data = user.primary_payment.get('method') if user.primary_payment else ''
+        payment_form.primary_payment_details.data = user.primary_payment.get('details') if user.primary_payment else ''
+        payment_form.secondary_payment_method.data = user.secondary_payment.get('method') if user.secondary_payment else ''
+        payment_form.secondary_payment_details.data = user.secondary_payment.get('details') if user.secondary_payment else ''
+        if current_user.role == 'admin':
+            form.role.data = user.role
+            form.active.data = user.active
+
+    return render_template('user/edit_full_profile.html',
+                           form=form, payment_form=payment_form, user=user, breadcrumbs=breadcrumbs)

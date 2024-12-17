@@ -345,8 +345,14 @@
 
             <li><a class="dropdown-item" href="{{ url_for('profile') }}">Mi perfil</a></li>
             <li><a class="dropdown-item" href="{{ url_for('configuracion') }}"> Configuración</a></li>
+            <li><a href="{{ url_for('transaction_history') }}" class="dropdown-item">Mis pagos</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a href="{{ url_for('edit_full_profile') }}" class="dropdown-item">Editar Perfil Completo</a></li>
             <li><a class="dropdown-item" href="{{ url_for('change_password') }}"> Seguridad</a></li>
-
+            <li><a class="dropdown-item" href="{{ url_for('edit_payment_methods') }}">Cambiar metodos de pago</a></li>
+            
             {% if is_admin %}
             <li>
               <hr class="dropdown-divider">

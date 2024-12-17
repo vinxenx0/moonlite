@@ -2,12 +2,27 @@
 from flask_login import current_user
 from flask_wtf import FlaskForm
 from wtforms import BooleanField, StringField, PasswordField, SubmitField, SelectField
-from wtforms.validators import DataRequired, URL, Regexp, Email, EqualTo, ValidationError
+from wtforms.validators import DataRequired, URL, Optional, Regexp, Email, EqualTo, ValidationError
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo, Length
 
 from app.models.user_model import Users
+
+class PaymentForm(FlaskForm):
+    primary_payment_method = SelectField('Método de Pago Primario', choices=[
+        ('IBAN', 'IBAN'), ('SWIFT', 'SWIFT'), ('Bizum', 'Bizum'),
+        ('PayPal', 'PayPal'), ('CreditCard', 'Tarjeta de Crédito')
+    ], validators=[DataRequired()])
+    primary_payment_details = StringField('Detalles del Método de Pago Primario', validators=[DataRequired()])
+    
+    secondary_payment_method = SelectField('Método de Pago Secundario', choices=[
+        ('IBAN', 'IBAN'), ('SWIFT', 'SWIFT'), ('Bizum', 'Bizum'),
+        ('PayPal', 'PayPal'), ('CreditCard', 'Tarjeta de Crédito')
+    ])
+    secondary_payment_details = StringField('Detalles del Método de Pago Secundario')
+
+    submit = SubmitField('Guardar Métodos de Pago')
 
 class NewUserRegistrationForm(FlaskForm):
     username = StringField('Nombre de usuario', validators=[DataRequired(), Length(min=4, max=20)])
@@ -104,3 +119,12 @@ class DomainToolsForm(FlaskForm):
 class SeoToolsForm(FlaskForm):
     domain = StringField('Página analizar incluyendo http o https', validators=[DataRequired()])
     submit = SubmitField('Enviar')
+
+
+class EditProfileForm(FlaskForm):
+    username = StringField('Nombre de Usuario', validators=[DataRequired()])
+    password = PasswordField('Nueva Contraseña', validators=[Optional(), Length(min=6)])
+    confirm_password = PasswordField('Confirmar Contraseña', validators=[EqualTo('password', message="Las contraseñas deben coincidir.")])
+    role = SelectField('Rol', choices=[('admin', 'Admin'), ('usuario', 'Usuario')])
+    active = BooleanField('Cuenta Activa')
+    submit = SubmitField('Guardar Cambios')

@@ -6,17 +6,15 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy_utils import JSONType
 import datetime
 from flask import current_app
-from app import db, login_manager
+# from app import db, login_manager
 from flask_login import UserMixin
 import jwt 
 from flask import current_app
 from app import db, login_manager
 from flask_login import UserMixin
 
-
-
 class Users(UserMixin, db.Model):
-    __tablename__='Users'
+    __tablename__ = 'Users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -24,13 +22,21 @@ class Users(UserMixin, db.Model):
     token = db.Column(db.String(255), index=True, unique=True)
     active = db.Column(db.Boolean, default=False)
     registered_on = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
-    config = db.Column(JSONType)   
+    config = db.Column(JSONType)
     role = db.Column(db.String(20), nullable=False, default='usuario')
 
+    
     #logs = db.relationship('Log', back_populates='user')
     #logs = db.relationship('Log', back_populates='user', cascade="all, delete-orphan")
- 
-    
+
+
+    # Payment methods
+    primary_payment = db.Column(JSONType, nullable=True)  # IBAN, SWIFT, etc.
+    secondary_payment = db.Column(JSONType, nullable=True)
+
+    # Relationship to Transactions
+    transactions = db.relationship('Transaction', backref='user', lazy=True)
+
     def __repr__(self):
         return '<User %r>' % self.username
 
@@ -51,3 +57,15 @@ class Users(UserMixin, db.Model):
         except:
             return None
         return Users.query.get(user_id)
+
+class Transaction(db.Model):
+    __tablename__ = 'Transactions'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('Users.id'), nullable=False)
+    amount = db.Column(db.Float, nullable=False)
+    transaction_type = db.Column(db.String(50), nullable=False)  # payment, refund, etc.
+    description = db.Column(db.String(255), nullable=True)
+    timestamp = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
+
+    def __repr__(self):
+        return f'<Transaction {self.transaction_type} - {self.amount}>'

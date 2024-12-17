@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import SelectField, StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo
-from flask_wtf import FlaskForm
+#from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo, Length
 
@@ -19,4 +19,3 @@ class PasswordChangeForm(FlaskForm):
     password = PasswordField('Nueva Contraseña', validators=[DataRequired(), Length(min=6)])
     confirm_password = PasswordField('Confirmar Nueva Contraseña', validators=[DataRequired()])
     submit = SubmitField('Cambiar Contraseña')
-

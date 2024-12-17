@@ -12,6 +12,8 @@ import jwt
 from flask import current_app
 from app import db, login_manager
 from flask_login import UserMixin
+from sqlalchemy import Enum
+import datetime
 
 class Users(UserMixin, db.Model):
     __tablename__ = 'Users'
@@ -26,8 +28,14 @@ class Users(UserMixin, db.Model):
     role = db.Column(db.String(20), nullable=False, default='usuario')
 
     
-    #logs = db.relationship('Log', back_populates='user')
-    #logs = db.relationship('Log', back_populates='user', cascade="all, delete-orphan")
+    logs = db.relationship('Log', back_populates='user')
+    logs = db.relationship('Log', back_populates='user', cascade="all, delete-orphan")
+
+    # Subscription data
+    subscription_plan = db.Column(Enum('Free', 'Basic', 'Pro', name='subscription_plans'), default='Free')
+    subscription_currency = db.Column(db.String(3), default='USD')  # ISO currency codes (e.g., USD, EUR)
+    subscription_expiration = db.Column(db.DateTime, nullable=True)
+    subscription_frequency = db.Column(Enum('Monthly', 'Annually', name='subscription_frequency'), default='Monthly')
 
 
     # Payment methods

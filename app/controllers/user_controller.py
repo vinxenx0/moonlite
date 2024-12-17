@@ -15,6 +15,41 @@ from app.forms import RegistrationForm, PasswordResetForm, PasswordChangeForm, E
 from flask_mail import Message
 from flask import render_template, make_response, redirect, url_for, session
 
+from app.forms import SubscriptionForm
+import datetime
+
+@app.route('/profile/subscription', methods=['GET', 'POST'])
+@login_required
+def edit_subscription():
+    breadcrumbs = [{'url': '/profile', 'text': 'Perfil'}, {'url': '/profile/subscription', 'text': 'Editar Suscripción'}]
+    user = Users.query.get(current_user.id)
+    form = SubscriptionForm()
+
+    if form.validate_on_submit():
+        user.subscription_plan = form.subscription_plan.data
+        user.subscription_currency = form.subscription_currency.data
+        user.subscription_frequency = form.subscription_frequency.data
+
+        # Set expiration date based on frequency
+        now = datetime.datetime.utcnow()
+        if form.subscription_frequency.data == 'Monthly':
+            user.subscription_expiration = now + datetime.timedelta(days=30)
+        else:
+            user.subscription_expiration = now + datetime.timedelta(days=365)
+
+        db.session.commit()
+        flash('Suscripción actualizada correctamente.', 'success')
+        log_event('SUBSCRIPTION_UPDATE', f'Suscripción de {user.username} actualizada.')
+        return redirect(url_for('profile'))
+
+    # Prepopulate form
+    if request.method == 'GET':
+        form.subscription_plan.data = user.subscription_plan
+        form.subscription_currency.data = user.subscription_currency
+        form.subscription_frequency.data = user.subscription_frequency
+
+    return render_template('user/edit_subscription.html', form=form, breadcrumbs=breadcrumbs)
+
 
 @app.route('/profile')
 @login_required

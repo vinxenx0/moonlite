@@ -1,4 +1,5 @@
 # app/controllers/user_controller.py
+from app.forms.profile_forms import PaymentForm
 from flask import render_template, redirect, session, url_for, flash, request
 from flask_login import login_user, logout_user, current_user
 from app import app, db, mail
@@ -22,6 +23,38 @@ def profile():
     ]
     user = Users.query.filter_by(id=current_user.id).first()
     return render_template('user/profile.html', user=user, breadcrumbs=breadcrumbs)
+
+@app.route('/profile/payment', methods=['GET', 'POST'])
+@login_required
+def edit_payment_methods():
+    breadcrumbs = [{'url': '/profile', 'text': 'Perfil'}, {'url': '/profile/payment', 'text': 'Editar Métodos de Pago'}]
+    form = PaymentForm()
+    user = Users.query.get(current_user.id)
+
+    if form.validate_on_submit():
+        # Update payment methods
+        user.primary_payment = {
+            'method': form.primary_payment_method.data,
+            'details': form.primary_payment_details.data
+        }
+        user.secondary_payment = {
+            'method': form.secondary_payment_method.data,
+            'details': form.secondary_payment_details.data
+        }
+        db.session.commit()
+        flash('Métodos de pago actualizados.', 'success')
+        log_event('PAYMENT_UPDATE', f'Métodos de pago actualizados para el usuario {user.username}.')
+        return redirect(url_for('profile'))
+
+    # Prepopulate the form
+    if user.primary_payment:
+        form.primary_payment_method.data = user.primary_payment.get('method')
+        form.primary_payment_details.data = user.primary_payment.get('details')
+    if user.secondary_payment:
+        form.secondary_payment_method.data = user.secondary_payment.get('method')
+        form.secondary_payment_details.data = user.secondary_payment.get('details')
+
+    return render_template('user/edit_payment.html', form=form, breadcrumbs=breadcrumbs)
 
 
 @app.route('/profile/edit', methods=['GET', 'POST'])

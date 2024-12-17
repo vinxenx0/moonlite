@@ -1,0 +1,512 @@
+<!-- app/templates/start.html -->
+
+{% extends "base.html" %}
+
+{% block title %}TOOLS tools{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        color: #333;
+        background-color: #f8f9fa;
+    }
+
+    .hero-section {
+        background: linear-gradient(135deg, #007bff, #6610f2);
+        color: white;
+        padding: 80px 0;
+        text-align: center;
+    }
+
+    .content-section {
+        padding: 60px 0;
+    }
+
+    .feature-card,
+    .pricing-card {
+        border: none;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background: #fff;
+    }
+
+    .cta-section {
+        background: #6610f2;
+        color: white;
+        text-align: center;
+        padding: 40px 0;
+    }
+
+    .badge-custom {
+        background-color: #6610f2;
+        color: white;
+        padding: 5px 10px;
+        font-size: 0.9rem;
+    }
+</style>
+
+<!-- Optional Styling for Enhanced Visuals -->
+<style>
+    .hero-section {
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('your-background-image.jpg') center/cover no-repeat;
+        color: #f8f9fa;
+    }
+
+    .content-section {
+        background-color: #f8f9fa;
+    }
+
+    .input-group .form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+
+    #analizarBtn {
+        display: flex;
+        align-items: center;
+    }
+
+    .alert i {
+        font-size: 1.2rem;
+    }
+</style>
+
+<style>
+    /* Custom Styles */
+    body {
+        font-family: Arial, sans-serif;
+        color: #333;
+        background-color: #f8f9fa;
+    }
+
+    .hero-section {
+        background: linear-gradient(135deg, #007bff, #6610f2);
+        color: white;
+        padding: 80px 0;
+        text-align: center;
+        position: relative;
+    }
+
+    .hero-section .btn-cta {
+        background-color: #ff6b6b;
+        color: white;
+    }
+
+    .hero-section .btn-cta:hover {
+        background-color: #ff3b3b;
+    }
+
+    .content-section {
+        padding: 60px 0;
+    }
+
+    .feature-card,
+    .pricing-card {
+        border: none;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background: #fff;
+    }
+
+    .pricing-card.popular {
+        border: 2px solid #007bff;
+    }
+
+    .badge-popular {
+        background-color: #ff6b6b;
+        color: white;
+    }
+
+    .cta-section {
+        background: #6610f2;
+        color: white;
+        text-align: center;
+        padding: 40px 0;
+    }
+
+    .testimonial-carousel .carousel-item blockquote {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+    }
+
+    footer {
+        /* background-color: #333; 
+        text-align: center; */
+        color: #f8f9fa;
+        padding: 20px 0;
+
+    }
+</style>
+
+<div class="_container _mt-5">
+
+
+
+    <!-- Benefits Section -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="text-center mb-5">Why Choose Our Tools?</h2>
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <div class="feature-card p-4">
+                        <i class="fas fa-chart-line fa-3x mb-3 text-primary"></i>
+                        <h5>Comprehensive Analysis</h5>
+                        <p>In-depth insights on SEO, domain metrics, and backlinks at your fingertips.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card p-4">
+                        <i class="fas fa-shield-alt fa-3x mb-3 text-primary"></i>
+                        <h5>Secure & Private</h5>
+                        <p>Your data is protected. No tracking or data sharing.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card p-4">
+                        <i class="fas fa-file-download fa-3x mb-3 text-primary"></i>
+                        <h5>Professional Reports</h5>
+                        <p>Generate professional reports in seconds and share them with your team.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Accordion -->
+    <section class="content-section bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">Features Overview</h2>
+            <div class="accordion" id="featuresAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Real-time SEO Analysis
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                        data-bs-parent="#featuresAccordion">
+                        <div class="accordion-body">
+                            Obtain real-time insights into keyword rankings, traffic, and competitive positioning.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Domain & Backlink Monitoring
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                        data-bs-parent="#featuresAccordion">
+                        <div class="accordion-body">
+                            Track your domain's health and backlinks with our powerful tools.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            Customizable Report Downloads
+                        </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                        data-bs-parent="#featuresAccordion">
+                        <div class="accordion-body">
+                            Download reports tailored to your specifications for easy sharing.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing-section py-5 bg-light">
+        <div class="container text-center">
+            <h2 class="mb-5 fw-bold">Choose Your Plan</h2>
+            <div class="row justify-content-center">
+                <!-- Free Plan -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-header bg-primary text-white py-4 position-relative">
+                            <h5 class="card-title mb-0">Free Plan</h5>
+                            <span class="badge bg-secondary position-absolute top-0 end-0 m-2">Popular</span>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-price text-primary fw-bold">$0<span class="small fw-normal">/month</span>
+                            </h3>
+                            <p class="card-text">Access essential tools at no cost.</p>
+                            <ul class="list-unstyled">
+                                <li>✔ Basic SEO tools</li>
+                                <li>✔ 5 reports per month</li>
+                                <li>✘ Priority support</li>
+                            </ul>
+                            <a href="#" class="btn btn-outline-primary btn-lg w-100">Get Started</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Basic Plan -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-header bg-info text-white py-4 position-relative">
+                            <h5 class="card-title mb-0">Basic Plan</h5>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-price text-info fw-bold">$9<span class="small fw-normal">/month</span></h3>
+                            <p class="card-text">For growing businesses and limited reports.</p>
+                            <ul class="list-unstyled">
+                                <li>✔ All Free Plan features</li>
+                                <li>✔ 20 reports per month</li>
+                                <li>✘ Priority support</li>
+                            </ul>
+                            <a href="#" class="btn btn-info btn-lg w-100">Subscribe Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pro Plan -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-header bg-success text-white py-4">
+                            <h5 class="card-title mb-0">Pro Plan</h5>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-price text-success fw-bold">$29<span class="small fw-normal">/month</span>
+                            </h3>
+                            <p class="card-text">Unlock all features with unlimited reports and priority support.</p>
+                            <ul class="list-unstyled">
+                                <li>✔ All Basic Plan features</li>
+                                <li>✔ Unlimited reports</li>
+                                <li>✔ Priority support</li>
+                            </ul>
+                            <a href="#" class="btn btn-success btn-lg w-100">Subscribe Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section py-5 bg-dark text-light">
+        <div class="container text-center">
+            <h2 class="mb-5 fw-bold">What Our Users Say</h2>
+            <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <!-- Testimonial 1 -->
+                    <div class="carousel-item active">
+                        <div class="card bg-secondary text-light mx-auto" style="max-width: 700px;">
+                            <div class="card-body">
+                                <p class="card-text">"These tools have transformed the way we analyze our SEO
+                                    performance. Highly recommended for marketers and SEO specialists!"</p>
+                                <footer class="blockquote-footer text-white">John Doe, SEO Specialist</footer>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 2 -->
+                    <div class="carousel-item">
+                        <div class="card bg-secondary text-light mx-auto" style="max-width: 700px;">
+                            <div class="card-body">
+                                <p class="card-text">"Absolutely love the free tools! The reports are spot-on and easy
+                                    to share with clients."</p>
+                                <footer class="blockquote-footer text-white">Jane Smith, Digital Marketer</footer>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 3 -->
+                    <div class="carousel-item">
+                        <div class="card bg-secondary text-light mx-auto" style="max-width: 700px;">
+                            <div class="card-body">
+                                <p class="card-text">"Incredible value! The Pro plan offers so much and has improved our
+                                    workflow immensely."</p>
+                                <footer class="blockquote-footer text-white">Sam Lee, Business Owner</footer>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Carousel Controls -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <!-- Pricing Section 
+<section id="pricing" class="pricing-section">
+    <div class="container">
+        <h2 class="text-center mb-5">Subscription Plans</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <div class="card-header bg-primary text-white">Free Plan</div>
+                    <div class="card-body">
+                        <h5 class="card-title">$0/month</h5>
+                        <p class="card-text">Access all free tools.</p>
+                        <a href="#" class="btn btn-primary btn-lg">Subscribe Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <div class="card-header bg-primary text-white">Basic Plan</div>
+                    <div class="card-body">
+                        <h5 class="card-title">$9/month</h5>
+                        <p class="card-text">Access all free tools and generate limited reports.</p>
+                        <a href="#" class="btn btn-primary btn-lg">Subscribe Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <div class="card-header bg-success text-white">Pro Plan</div>
+                    <div class="card-body">
+                        <h5 class="card-title">$29/month</h5>
+                        <p class="card-text">Unlimited reports, priority support, and advanced analytics.</p>
+                        <a href="#" class="btn btn-primary btn-lg">Subscribe Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+-->
+    <!-- Pricing Plans 
+<section class="content-section">
+    <div class="container">
+        <h2 class="text-center mb-5">Pricing Plans</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="pricing-card p-4 text-center">
+                    <h3>Basic</h3>
+                    <p class="text-muted">$9/month</p>
+                    <p>Limited reports and tools for small websites.</p>
+                    <a href="#" class="btn btn-outline-primary">Get Started</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="pricing-card p-4 text-center">
+                    <h3>Pro</h3>
+                    <p class="text-muted">$29/month</p>
+                    <p>Unlimited access to all features with priority support.</p>
+                    <a href="#" class="btn btn-primary">Sign Up</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="pricing-card p-4 text-center">
+                    <h3>Enterprise</h3>
+                    <p class="text-muted">$79/month</p>
+                    <p>Tailored solutions with dedicated support.</p>
+                    <a href="#" class="btn btn-outline-primary">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+-->
+
+    <!-- Testimonials Carousel 
+<section class="feature-section bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5">What Our Users Say</h2>
+        <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="d-flex justify-content-center">
+                        <div class="card w-75 text-center">
+                            <div class="card-body">
+                                <p class="card-text">"These tools have transformed the way we analyze our SEO performance. Highly recommended for marketers and SEO specialists!"</p>
+                                <footer class="blockquote-footer">John Doe, SEO Specialist</footer>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="d-flex justify-content-center">
+                        <div class="card w-75 text-center">
+                            <div class="card-body">
+                                <p class="card-text">"Absolutely love the free tools! The reports are spot-on and easy to share with clients."</p>
+                                <footer class="blockquote-footer">Jane Smith, Digital Marketer</footer>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+        </div>
+    </div>
+</section>
+-->
+    <!-- Testimonials Carousel 
+<section class="content-section bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5">What Our Clients Say</h2>
+        <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active text-center">
+                    <blockquote class="blockquote">
+                        <p>"Our traffic improved by 200% within months of using this toolset!"</p>
+                        <footer class="blockquote-footer">Alex Smith, Digital Marketer</footer>
+                    </blockquote>
+                </div>
+                <div class="carousel-item text-center">
+                    <blockquote class="blockquote">
+                        <p>"Comprehensive, reliable, and very user-friendly."</p>
+                        <footer class="blockquote-footer">Sarah Johnson, SEO Specialist</footer>
+                    </blockquote>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            </button>
+        </div>
+    </div>
+</section>
+-->
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="mb-4">Start Your Free Trial Now!</h2>
+            <p class="lead">Access all tools with a 7-day trial and discover the impact on your digital presence.</p>
+            <a href="#pricing" class="btn btn-light btn-lg">Start Free Trial</a>
+        </div>
+    </section>
+
+
+</div>
+<script>
+    // Añadir evento submit al formulario para mostrar el spinner en el botón
+    document.getElementById('pageInfoForm').addEventListener('submit', function () {
+        document.getElementById('btnText').classList.add('d-none');
+        document.getElementById('loadingSpinner').classList.remove('d-none');
+    });
+</script>
+</body>
+
+</html>
+{% endblock %}

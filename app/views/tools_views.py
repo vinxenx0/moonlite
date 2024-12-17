@@ -1,13 +1,26 @@
 
+from datetime import datetime
+from flask_login import current_user
 from app.controllers.logs_controller import log_event
-from flask import jsonify
+from flask import jsonify, request
 from app import app
+from app.controllers.spider_tools import get_page_info
 from app.controllers.tools_controller import *
 import time
 import subprocess
 from flask import render_template
 from app import app
-from app.forms import PingForm
+from app.forms import PageInfoForm, PingForm
+from app.models.usage_model import Activity
+from datetime import datetime
+import json
+from flask import render_template, redirect, url_for, flash, request
+from flask_login import current_user, login_required
+from app import app, db
+from app.controllers.logs_controller import log_event
+from app.controllers.spider_tools import get_page_info
+from app.forms import ConfigForm, PageInfoForm
+from app.models.usage_model import Activity
 
 # Cargar la base de datos de GeoIP
 # geoip_reader = geoip2.database.Reader('GeoLite2-Country.mmdb')
@@ -23,7 +36,60 @@ from app.forms import PingForm
 
 
 
+@app.route('/tools/', methods=['GET', 'POST'])
+def index_tools():
+    data = None
+    validator = None
+    spelling_errors = None
+    grammar_errors = None
+    breadcrumbs = [] #[{'url': '/start', 'text': 'Bienvenido'}]
 
+    form = PageInfoForm()
+    if form.validate_on_submit():
+        # Obtener información del usuario
+        username = 'Anonymous'
+        email = ''
+        if current_user.is_authenticated:
+            username = current_user.username
+            email = current_user.email  # Ajustar según tu formulario
+
+        url = form.url.data
+        ip_address = request.remote_addr
+        user_agent = request.user_agent.string
+        country = 'Spain'  #get_country_from_ip(ip_address)
+        language = request.accept_languages.best
+
+        # Obtener fecha y hora actual
+        timestamp = datetime.utcnow()
+
+        # Obtener URL de la página actual
+        page_url = request.url
+
+        # Guardar la información del usuario en la base de datos
+        user_usage = Activity(username=username,
+                              email=email,
+                              target=url,
+                              ip_address=ip_address,
+                              user_agent=user_agent,
+                              country=country,
+                              language=language,
+                              timestamp=timestamp,
+                              page_url=page_url)
+        db.session.add(user_usage)
+        db.session.commit()
+
+        #print(get_page_info(url))
+        data, validator, spelling_errors, grammar_errors = get_page_info(url)
+        #data, validator = get_page_info(url)
+        #validator = json.load(validator)
+
+    return render_template('tools/index.html',
+                           data=data,
+                           validator=validator,
+                           form=form,
+                           breadcrumbs=breadcrumbs,
+                           spelling_errors=spelling_errors,
+                           grammar_errors=grammar_errors)
 
 @app.route('/tools/check_domain/<string:domain>') #, methods=['POST'])
 def check_domain(domain):

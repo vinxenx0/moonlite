@@ -4,8 +4,9 @@ from flask_login import current_user
 from flask import render_template, request
 from app import app, db
 from app.controllers.logs_controller import log_event
+from app.controllers.spider_tools import get_page_info
 from app.controllers.tools_controller import *
-from app.forms import DomainToolsForm
+from app.forms import DomainToolsForm, PageInfoForm
 from datetime import datetime
 from app.models.usage_model import Activity
 
@@ -16,6 +17,62 @@ from app.views.info import tool_info
 ###
 ###
 #######
+
+
+@app.route('/tools/domains/', methods=['GET', 'POST'])
+def index_domains():
+    data = None
+    validator = None
+    spelling_errors = None
+    grammar_errors = None
+    breadcrumbs = [] #[{'url': '/start', 'text': 'Bienvenido'}]
+
+    form = PageInfoForm()
+    if form.validate_on_submit():
+        # Obtener información del usuario
+        username = 'Anonymous'
+        email = ''
+        if current_user.is_authenticated:
+            username = current_user.username
+            email = current_user.email  # Ajustar según tu formulario
+
+        url = form.url.data
+        ip_address = request.remote_addr
+        user_agent = request.user_agent.string
+        country = 'Spain'  #get_country_from_ip(ip_address)
+        language = request.accept_languages.best
+
+        # Obtener fecha y hora actual
+        timestamp = datetime.utcnow()
+
+        # Obtener URL de la página actual
+        page_url = request.url
+
+        # Guardar la información del usuario en la base de datos
+        user_usage = Activity(username=username,
+                              email=email,
+                              target=url,
+                              ip_address=ip_address,
+                              user_agent=user_agent,
+                              country=country,
+                              language=language,
+                              timestamp=timestamp,
+                              page_url=page_url)
+        db.session.add(user_usage)
+        db.session.commit()
+
+        #print(get_page_info(url))
+        data, validator, spelling_errors, grammar_errors = get_page_info(url)
+        #data, validator = get_page_info(url)
+        #validator = json.load(validator)
+
+    return render_template('tools/domains/index.html',
+                           data=data,
+                           validator=validator,
+                           form=form,
+                           breadcrumbs=breadcrumbs,
+                           spelling_errors=spelling_errors,
+                           grammar_errors=grammar_errors)
 
 @app.route("/tools/domains/<string:tool>", methods=["GET", "POST"])
 def tools_domains_new(tool):

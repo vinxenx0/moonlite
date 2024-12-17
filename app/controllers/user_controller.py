@@ -1,5 +1,5 @@
 # app/controllers/user_controller.py
-from app.forms.profile_forms import PaymentForm
+from app.forms import PaymentForm
 from flask import render_template, redirect, session, url_for, flash, request
 from flask_login import login_user, logout_user, current_user
 from app import app, db, mail

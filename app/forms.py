@@ -8,6 +8,23 @@ from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo, Length
 
 from app.models.user_model import Users
+from flask_wtf import FlaskForm
+from wtforms import SelectField, StringField, SubmitField
+from wtforms.validators import DataRequired, Optional
+
+class SubscriptionForm(FlaskForm):
+    subscription_plan = SelectField('Plan de Suscripción', choices=[
+        ('Free', 'Free - 0$'), 
+        ('Basic', 'Basic - 5$'), 
+        ('Pro', 'Pro - 15$')
+    ], validators=[DataRequired()])
+    subscription_currency = StringField('Moneda (ISO, e.g., USD, EUR)', validators=[DataRequired()])
+    subscription_frequency = SelectField('Frecuencia de Pago', choices=[
+        ('Monthly', 'Mensual'), 
+        ('Annually', 'Anual')
+    ], validators=[DataRequired()])
+    submit = SubmitField('Guardar Suscripción')
+
 
 class PaymentForm(FlaskForm):
     primary_payment_method = SelectField('Método de Pago Primario', choices=[

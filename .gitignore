@@ -1,0 +1,7 @@
+.venv
+.vscode
+.trash
+__pycache__
+*.log
+instance/*
+migrations/*

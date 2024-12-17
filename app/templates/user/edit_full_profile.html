@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+  <h1 class="my-4">Editar Perfil Completo</h1>
+  <form method="POST">
+    {{ form.hidden_tag() }}
+    {{ payment_form.hidden_tag() }}
+    
+    <!-- Información Básica -->
+    <h4>Información Básica</h4>
+    <div class="mb-3">
+      {{ form.username.label(class="form-label") }}
+      {{ form.username(class="form-control") }}
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">Correo Electrónico</label>
+      <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" readonly>
+    </div>
+    <div class="mb-3">
+      {{ form.password.label(class="form-label") }}
+      {{ form.password(class="form-control") }}
+    </div>
+    <div class="mb-3">
+      {{ form.confirm_password.label(class="form-label") }}
+      {{ form.confirm_password(class="form-control") }}
+    </div>
+    
+    <!-- Métodos de Pago -->
+    <h4 class="mt-4">Métodos de Pago</h4>
+    <div class="mb-3">
+      {{ payment_form.primary_payment_method.label(class="form-label") }}
+      {{ payment_form.primary_payment_method(class="form-control") }}
+      {{ payment_form.primary_payment_details.label(class="form-label mt-2") }}
+      {{ payment_form.primary_payment_details(class="form-control") }}
+    </div>
+    <div class="mb-3">
+      {{ payment_form.secondary_payment_method.label(class="form-label") }}
+      {{ payment_form.secondary_payment_method(class="form-control") }}
+      {{ payment_form.secondary_payment_details.label(class="form-label mt-2") }}
+      {{ payment_form.secondary_payment_details(class="form-control") }}
+    </div>
+    
+    <!-- Rol y Estado (Solo Admin) -->
+    {% if current_user.role == 'admin' %}
+    <h4 class="mt-4">Administración</h4>
+    <div class="mb-3">
+      {{ form.role.label(class="form-label") }}
+      {{ form.role(class="form-control") }}
+    </div>
+    <div class="form-check mb-3">
+      <input type="checkbox" class="form-check-input" id="active" name="active" {% if form.active.data %}checked{% endif %}>
+      <label for="active" class="form-check-label">{{ form.active.label.text }}</label>
+    </div>
+    {% endif %}
+    
+    <!-- Botón de Envío -->
+    <button type="submit" class="btn btn-primary mt-3">Guardar Cambios</button>
+  </form>
+</div>
+{% endblock %}

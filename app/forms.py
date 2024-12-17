@@ -119,3 +119,12 @@ class DomainToolsForm(FlaskForm):
 class SeoToolsForm(FlaskForm):
     domain = StringField('Página analizar incluyendo http o https', validators=[DataRequired()])
     submit = SubmitField('Enviar')
+
+
+class EditProfileForm(FlaskForm):
+    username = StringField('Nombre de Usuario', validators=[DataRequired()])
+    password = PasswordField('Nueva Contraseña', validators=[Optional(), Length(min=6)])
+    confirm_password = PasswordField('Confirmar Contraseña', validators=[EqualTo('password', message="Las contraseñas deben coincidir.")])
+    role = SelectField('Rol', choices=[('admin', 'Admin'), ('usuario', 'Usuario')])
+    active = BooleanField('Cuenta Activa')
+    submit = SubmitField('Guardar Cambios')

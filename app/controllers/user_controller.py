@@ -371,3 +371,52 @@ def send_activation_email(user):
 #    session['cookies_accepted'] = True
 #    session.pop('show_cookies_modal', None)
 #    return redirect(request.referrer)
+
+
+@app.route('/profile/edit_all', methods=['GET', 'POST'])
+@login_required
+def edit_full_profile():
+    breadcrumbs = [{'url': '/profile', 'text': 'Perfil'}, {'url': '/profile/edit_all', 'text': 'Editar Perfil'}]
+    user = Users.query.get(current_user.id)
+    form = EditProfileForm()
+    payment_form = PaymentForm()
+
+    if form.validate_on_submit() and payment_form.validate_on_submit():
+        # Actualizar información básica
+        user.username = form.username.data
+        if form.password.data:
+            user.set_password(form.password.data)
+        
+        # Actualizar métodos de pago
+        user.primary_payment = {
+            'method': payment_form.primary_payment_method.data,
+            'details': payment_form.primary_payment_details.data
+        }
+        user.secondary_payment = {
+            'method': payment_form.secondary_payment_method.data,
+            'details': payment_form.secondary_payment_details.data
+        }
+
+        # Actualizar rol y estado si es administrador
+        if current_user.role == 'admin':
+            user.role = form.role.data
+            user.active = form.active.data
+
+        db.session.commit()
+        flash('Perfil actualizado correctamente.', 'success')
+        log_event('PROFILE_UPDATE', f'Perfil de {user.username} actualizado.')
+        return redirect(url_for('profile'))
+
+    elif request.method == 'GET':
+        # Pre-populate the forms with current user data
+        form.username.data = user.username
+        payment_form.primary_payment_method.data = user.primary_payment.get('method') if user.primary_payment else ''
+        payment_form.primary_payment_details.data = user.primary_payment.get('details') if user.primary_payment else ''
+        payment_form.secondary_payment_method.data = user.secondary_payment.get('method') if user.secondary_payment else ''
+        payment_form.secondary_payment_details.data = user.secondary_payment.get('details') if user.secondary_payment else ''
+        if current_user.role == 'admin':
+            form.role.data = user.role
+            form.active.data = user.active
+
+    return render_template('user/edit_full_profile.html',
+                           form=form, payment_form=payment_form, user=user, breadcrumbs=breadcrumbs)

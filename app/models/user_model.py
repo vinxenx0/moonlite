@@ -46,6 +46,10 @@ class Users(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
     
+    def get_token(self, expires_sec=3600):
+        return jwt.encode({'user_id': self.id, 'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=expires_sec)},
+                        current_app.config['SECRET_KEY'], algorithm='HS256') #.decode('utf-8')
+
     @staticmethod
     def verify_token(token):
         try:

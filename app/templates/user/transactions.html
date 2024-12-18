@@ -1,31 +1,104 @@
 {% extends "base.html" %}
 
-{% block title %}Historial de Transacciones{% endblock %}
+{% block title %}Transaction History{% endblock %}
 
 {% block content %}
-<h2>Historial de Transacciones</h2>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Fecha</th>
-            <th>Tipo</th>
-            <th>Cantidad</th>
-            <th>Descripción</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for transaction in transactions %}
-        <tr>
-            <td>{{ transaction.timestamp }}</td>
-            <td>{{ transaction.transaction_type }}</td>
-            <td>{{ transaction.amount }}</td>
-            <td>{{ transaction.description }}</td>
-        </tr>
-        {% else %}
-        <tr>
-            <td colspan="4">No hay transacciones registradas.</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<style>
+    .card {
+    border-radius: 10px;
+}
+
+.card-header {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: #f8f9fa;
+}
+
+.badge {
+    font-size: 0.85rem;
+}
+
+.alert-warning {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.btn-light {
+    border: 1px solid #dee2e6;
+}
+
+.btn-light:hover {
+    background-color: #f8f9fa;
+}
+
+</style>
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h2 class="h5 mb-0"><i class="bi bi-list-ul"></i> Transaction History</h2>
+                    <button class="btn btn-light btn-sm">
+                        <i class="bi bi-arrow-repeat"></i> Refresh
+                    </button>
+                </div>
+                <div class="card-body">
+                    {% if transactions %}
+                    <table id="transactionsTable" class="table table-striped table-hover align-middle">
+                        <thead class="table-primary">
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for transaction in transactions %}
+                            <tr>
+                                <td>{{ transaction.timestamp }}</td>
+                                <td>
+                                    <span class="badge {% if transaction.transaction_type == 'Credit' %}bg-success{% else %}bg-danger{% endif %}">
+                                        {{ transaction.transaction_type }}
+                                    </span>
+                                </td>
+                                <td>{{ transaction.amount }}</td>
+                                <td>{{ transaction.description }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <div class="alert alert-warning text-center" role="alert">
+                        <i class="bi bi-info-circle"></i> No transactions found.
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="card-footer text-muted small text-center">
+                    <i class="bi bi-clock-history"></i> Last updated: {{ current_time }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const table = new simpleDatatables.DataTable("#transactionsTable", {
+            searchable: true,
+            fixedHeight: true,
+            labels: {
+                placeholder: "Search...",
+                perPage: "{select} entries per page",
+                noRows: "No transactions to display",
+                info: "Showing {start} to {end} of {rows} entries",
+            },
+        });
+    });
+</script>
+
+
 {% endblock %}

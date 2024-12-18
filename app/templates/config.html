@@ -1,44 +1,125 @@
-<!-- app/templates/config.html -->
-
 {% extends "base.html" %}
 
-{% block title %}Configuración{% endblock %}
+{% block title %}Configuration{% endblock %}
 
 {% block content %}
-    <h2>Configuración</h2>
-    {% if form.errors %}
-        <div class="alert alert-danger">
-            <ul>
-                {% for field, errors in form.errors.items() %}
-                    {% for error in errors %}
-                        <li>{{ error }}</li>
-                    {% endfor %}
-                {% endfor %}
-            </ul>
+<style>
+    .card {
+    border-radius: 10px;
+}
+
+.card-header {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+}
+
+.btn-primary {
+    background-color: #0069d9;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.alert-danger {
+    font-size: 0.9rem;
+}
+
+</style>
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-primary text-white text-center py-3">
+                    <h2 class="h4"><i class="bi bi-gear"></i> User Configuration</h2>
+                </div>
+                <div class="card-body">
+                    {% if form.errors %}
+                    <div class="alert alert-danger">
+                        <ul class="mb-0">
+                            {% for field, errors in form.errors.items() %}
+                                {% for error in errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    <form method="POST" novalidate>
+                        {{ form.hidden_tag() }}
+
+                        <!-- Primary Color -->
+                        <div class="mb-3">
+                            <label for="color_primary" class="form-label">
+                                <i class="bi bi-palette"></i> {{ form.color_primary.label.text }}
+                            </label>
+                            {{ form.color_primary(class="form-control", id="color_primary", placeholder="Enter primary color") }}
+                        </div>
+
+                        <!-- Secondary Color -->
+                        <div class="mb-3">
+                            <label for="color_secondary" class="form-label">
+                                <i class="bi bi-palette-fill"></i> {{ form.color_secondary.label.text }}
+                            </label>
+                            {{ form.color_secondary(class="form-control", id="color_secondary", placeholder="Enter secondary color") }}
+                        </div>
+
+                        <!-- Tertiary Color -->
+                        <div class="mb-3">
+                            <label for="color_tertiary" class="form-label">
+                                <i class="bi bi-brush"></i> {{ form.color_tertiary.label.text }}
+                            </label>
+                            {{ form.color_tertiary(class="form-control", id="color_tertiary", placeholder="Enter tertiary color") }}
+                        </div>
+
+                        <!-- Website Name -->
+                        <div class="mb-3">
+                            <label for="web_name" class="form-label">
+                                <i class="bi bi-globe"></i> {{ form.web_name.label.text }}
+                            </label>
+                            {{ form.web_name(class="form-control", id="web_name", placeholder="Enter website name") }}
+                        </div>
+
+                        <!-- Logo URL -->
+                        <div class="mb-3">
+                            <label for="logo_url" class="form-label">
+                                <i class="bi bi-image"></i> {{ form.logo_url.label.text }}
+                            </label>
+                            {{ form.logo_url(class="form-control", id="logo_url", placeholder="Enter logo URL") }}
+                        </div>
+                        <small id="logo-preview-help" class="text-muted">Preview your logo here.</small>
+
+
+                        <!-- Submit Button -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-save"></i> Save Configuration
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-muted text-center small">
+                    <i class="bi bi-info-circle"></i> Ensure all fields are correctly filled before saving.
+                </div>
+            </div>
         </div>
-    {% endif %}
-    <form method="POST">
-        {{ form.hidden_tag() }}
-        <div class="form-group">
-            {{ form.color_primary.label }}
-            {{ form.color_primary(class="form-control") }}
-        </div>
-        <div class="form-group">
-            {{ form.color_secondary.label }}
-            {{ form.color_secondary(class="form-control") }}
-        </div>
-        <div class="form-group">
-            {{ form.color_tertiary.label }}
-            {{ form.color_tertiary(class="form-control") }}
-        </div>
-        <div class="form-group">
-            {{ form.web_name.label }}
-            {{ form.web_name(class="form-control") }}
-        </div>
-        <div class="form-group">
-            {{ form.logo_url.label }}
-            {{ form.logo_url(class="form-control") }}
-        </div>
-        <button type="submit" class="btn btn-primary">Guardar</button>
-    </form>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const logoInput = document.querySelector('#logo_url');
+    const preview = document.createElement('img');
+    preview.className = 'img-fluid mt-3';
+    preview.style.maxHeight = '150px';
+    logoInput.parentNode.appendChild(preview);
+
+    logoInput.addEventListener('input', function () {
+        const url = this.value;
+        preview.src = url || '';
+        preview.alt = url ? 'Logo Preview' : '';
+    });
+});
+
+</script>
 {% endblock %}

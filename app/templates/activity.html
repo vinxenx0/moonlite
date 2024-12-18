@@ -1,37 +1,105 @@
 {% extends "base.html" %}
 
+{% block title %}Admin Dashboard - User Usage Records{% endblock %}
+
 {% block content %}
-    <h1>User Usage Records</h1>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Username</th>
-                <th>email</th>
-                <th>Target</th>
-                <th>IP Address</th>
-                <th>User Agent</th>
-                <th>Country</th>
-                <th>Language</th>
-                <th>Timestamp</th>
-                <th>Page URL</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for record in records %}
-                <tr>
-                    <td>{{ record.id }}</td>
-                    <td>{{ record.username }}</td>
-                    <td>{{ record.email }}</td>
-                    <td>{{ record.target }}</td>
-                    <td>{{ record.ip_address }}</td>
-                    <td>{{ record.user_agent }}</td>
-                    <td>{{ record.country }}</td>
-                    <td>{{ record.language }}</td>
-                    <td>{{ record.timestamp }}</td>
-                    <td>{{ record.page_url }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<style>
+    .card {
+    border-radius: 10px;
+}
+
+.card-header {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: #f8f9fa;
+}
+
+.text-truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+</style>
+<div class="container my-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h2 class="h5 mb-0"><i class="bi bi-people"></i> User Usage Records</h2>
+                    <button class="btn btn-light btn-sm">
+                        <i class="bi bi-arrow-repeat"></i> Refresh
+                    </button>
+                </div>
+                <div class="card-body">
+                    {% if records %}
+                    <div class="table-responsive">
+                        <table id="usageRecordsTable" class="table table-striped table-hover align-middle">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>Target</th>
+                                    <th>IP Address</th>
+                                    <th>User Agent</th>
+                                    <th>Country</th>
+                                    <th>Language</th>
+                                    <th>Timestamp</th>
+                                    <th>Page URL</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for record in records %}
+                                <tr>
+                                    <td>{{ record.id }}</td>
+                                    <td>{{ record.username }}</td>
+                                    <td>{{ record.email }}</td>
+                                    <td>{{ record.target }}</td>
+                                    <td>{{ record.ip_address }}</td>
+                                    <td class="text-truncate" style="max-width: 150px;" title="{{ record.user_agent }}">
+                                        {{ record.user_agent }}
+                                    </td>
+                                    <td>{{ record.country }}</td>
+                                    <td>{{ record.language }}</td>
+                                    <td>{{ record.timestamp }}</td>
+                                    <td class="text-truncate" style="max-width: 150px;" title="{{ record.page_url }}">
+                                        {{ record.page_url }}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="alert alert-warning text-center" role="alert">
+                        <i class="bi bi-info-circle"></i> No usage records found.
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="card-footer text-muted text-center small">
+                    <i class="bi bi-clock-history"></i> Last updated: {{ current_time }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const usageTable = new simpleDatatables.DataTable("#usageRecordsTable", {
+        searchable: true,
+        fixedHeight: true,
+        labels: {
+            placeholder: "Search records...",
+            perPage: "{select} entries per page",
+            noRows: "No matching records found",
+            info: "Showing {start} to {end} of {rows} entries",
+        },
+    });
+});
+
+</script>
 {% endblock %}

@@ -1,0 +1,37 @@
+<!-- app/templates/user/profile.html -->
+ 
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+  <h1 class="my-4">Perfil de Usuario</h1>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Información Personal</h5>
+      <p class="card-text">Nombre de usuario: {{ user.username }}</p>
+      <p class="card-text">Correo electrónico: {{ user.email }}</p>
+      <p class="card-text">Rol: {{ user.role }}</p>
+      <p class="card-text">Fecha de registro: {{ user.registered_on.strftime('%Y-%m-%d') }}</p>
+      <p class="card-text">Activo: {% if user.active %} Sí {% else %} No {% endif %}</p>
+      
+      <h5 class="card-title mt-4">Métodos de Pago</h5>
+      <p class="card-text">Método Primario: {{ user.primary_payment.method if user.primary_payment else 'No definido' }}</p>
+      <p class="card-text">Método Secundario: {{ user.secondary_payment.method if user.secondary_payment else 'No definido' }}</p>
+
+      <h5 class="card-title mt-4">Suscripción</h5>
+      <p class="card-text">Plan: {{ user.subscription_plan }}</p>
+      <p class="card-text">Moneda: {{ user.subscription_currency }}</p>
+      <p class="card-text">Frecuencia: {{ user.subscription_frequency }}</p>
+      <p class="card-text">
+        Expira el: 
+        {% if user.subscription_expiration %}
+          {{ user.subscription_expiration.strftime('%Y-%m-%d') }} 
+          {% if user.is_subscription_active() %}(Activa){% else %}(Expirada){% endif %}
+        {% else %}
+          Sin suscripción
+        {% endif %}
+      </p>
+      <a href="{{ url_for('edit_subscription') }}" class="btn btn-primary">Editar Suscripción</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

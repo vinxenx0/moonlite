@@ -1,37 +1,154 @@
-<!-- app/templates/user/profile.html -->
- 
 {% extends 'base.html' %}
-{% block content %}
-<div class="container">
-  <h1 class="my-4">Perfil de Usuario</h1>
-  <div class="card">
-    <div class="card-body">
-      <h5 class="card-title">Información Personal</h5>
-      <p class="card-text">Nombre de usuario: {{ user.username }}</p>
-      <p class="card-text">Correo electrónico: {{ user.email }}</p>
-      <p class="card-text">Rol: {{ user.role }}</p>
-      <p class="card-text">Fecha de registro: {{ user.registered_on.strftime('%Y-%m-%d') }}</p>
-      <p class="card-text">Activo: {% if user.active %} Sí {% else %} No {% endif %}</p>
-      
-      <h5 class="card-title mt-4">Métodos de Pago</h5>
-      <p class="card-text">Método Primario: {{ user.primary_payment.method if user.primary_payment else 'No definido' }}</p>
-      <p class="card-text">Método Secundario: {{ user.secondary_payment.method if user.secondary_payment else 'No definido' }}</p>
 
-      <h5 class="card-title mt-4">Suscripción</h5>
-      <p class="card-text">Plan: {{ user.subscription_plan }}</p>
-      <p class="card-text">Moneda: {{ user.subscription_currency }}</p>
-      <p class="card-text">Frecuencia: {{ user.subscription_frequency }}</p>
-      <p class="card-text">
-        Expira el: 
-        {% if user.subscription_expiration %}
-          {{ user.subscription_expiration.strftime('%Y-%m-%d') }} 
-          {% if user.is_subscription_active() %}(Activa){% else %}(Expirada){% endif %}
-        {% else %}
-          Sin suscripción
-        {% endif %}
-      </p>
-      <a href="{{ url_for('edit_subscription') }}" class="btn btn-primary">Editar Suscripción</a>
+{% block title %}User Profile{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <!-- Main Menu Section -->
+        <div class="col-12 mb-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                    <h2 class="h5 mb-0"><i class="bi bi-list"></i> Main Options</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row row-cols-2 row-cols-md-4 g-3 text-center">
+                        <div class="col">
+                            <a href="{{ url_for('profile') }}" class="btn btn-outline-primary w-100">
+                                <i class="bi bi-person"></i> My Profile
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a href="{{ url_for('edit_subscription') }}" class="btn btn-outline-info w-100">
+                                <i class="bi bi-journal-text"></i> Subscription
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a href="{{ url_for('transaction_history') }}" class="btn btn-outline-warning w-100">
+                                <i class="bi bi-currency-exchange"></i> Renewals
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a href="{{ url_for('configuracion') }}" class="btn btn-outline-secondary w-100">
+                                <i class="bi bi-gear"></i> Settings
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a href="{{ url_for('change_password') }}" class="btn btn-outline-danger w-100">
+                                <i class="bi bi-shield-lock"></i> Security
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a href="{{ url_for('edit_payment_methods') }}" class="btn btn-outline-success w-100">
+                                <i class="bi bi-credit-card"></i> Payment Methods
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a href="#" class="btn btn-outline-warning w-100">
+                                <i class="bi bi-headset"></i> Support
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a href="{{ url_for('logout') }}" class="btn btn-outline-dark w-100">
+                                <i class="bi bi-box-arrow-right"></i> Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- User Information Section -->
+        <div class="row g-4">
+            <!-- Profile Information Card -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-primary text-white text-center">
+                        <i class="bi bi-person-circle" style="font-size: 3rem;"></i>
+                        <h5 class="mt-2">Personal Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>Username:</strong> {{ user.username }}</li>
+                            <li class="list-group-item"><strong>Email:</strong> {{ user.email }}</li>
+                            <li class="list-group-item"><strong>Role:</strong> {{ user.role }}</li>
+                            <li class="list-group-item"><strong>Registered On:</strong> {{ user.registered_on.strftime('%Y-%m-%d') }}</li>
+                            <li class="list-group-item">
+                                <strong>Active:</strong>
+                                {% if user.active %}
+                                <span class="badge bg-success">Yes</span>
+                                {% else %}
+                                <span class="badge bg-danger">No</span>
+                                {% endif %}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subscription Information Card -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-info text-white text-center">
+                        <i class="bi bi-journal-text" style="font-size: 3rem;"></i>
+                        <h5 class="mt-2">Subscription</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>Plan:</strong> {{ user.subscription_plan }}</li>
+                            <li class="list-group-item"><strong>Currency:</strong> {{ user.subscription_currency }}</li>
+                            <li class="list-group-item"><strong>Frequency:</strong> {{ user.subscription_frequency }}</li>
+                            <li class="list-group-item">
+                                <strong>Expires On:</strong>
+                                {% if user.subscription_expiration %}
+                                {{ user.subscription_expiration.strftime('%Y-%m-%d') }}
+                                {% if user.is_subscription_active() %}
+                                <span class="badge bg-success">Active</span>
+                                {% else %}
+                                <span class="badge bg-danger">Expired</span>
+                                {% endif %}
+                                {% else %}
+                                No subscription
+                                {% endif %}
+                            </li>
+                        </ul>
+                        <div class="mt-3 text-center">
+                            <a href="{{ url_for('edit_subscription') }}" class="btn btn-info text-white">
+                                <i class="bi bi-pencil-square"></i> Edit Subscription
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Methods Card -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-secondary text-white text-center">
+                        <i class="bi bi-credit-card" style="font-size: 3rem;"></i>
+                        <h5 class="mt-2">Payment Methods</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>Primary:</strong> {{ user.primary_payment.method if user.primary_payment else 'Not defined' }}</li>
+                            <li class="list-group-item"><strong>Secondary:</strong> {{ user.secondary_payment.method if user.secondary_payment else 'Not defined' }}</li>
+                        </ul>
+                        <div class="mt-3 text-center">
+                            <a href="#" class="btn btn-secondary text-white">
+                                <i class="bi bi-wallet2"></i> Manage Methods
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
+
+<style>
+    .card-header i {
+        display: block;
+        margin: auto;
+    }
+</style>
 {% endblock %}

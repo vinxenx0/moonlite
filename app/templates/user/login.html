@@ -3,22 +3,78 @@
 {% block title %}Iniciar Sesión{% endblock %}
 
 {% block content %}
-<div id="row" class="col-md-4">
-    <h2>Iniciar Sesión</h2>
-    <form method="POST">
-        {{ form.hidden_tag() }}
-        <div class="form-group">
-            {{ form.username.label }}
-            {{ form.username(class="form-control") }}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card shadow-sm border-0 rounded">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4>Bienvenido de nuevo</h4>
+                    <p class="mb-0">Inicia sesión para continuar</p>
+                </div>
+                <div class="card-body">
+                    <form method="POST" class="needs-validation" novalidate>
+                        {{ form.hidden_tag() }}
+
+                        <!-- Username Field -->
+                        <div class="mb-3">
+                            {{ form.username.label(class="form-label fw-bold") }}
+                            {{ form.username(class="form-control", placeholder="Nombre de usuario") }}
+                            {% for error in form.username.errors %}
+                            <div class="text-danger small mt-1">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Password Field -->
+                        <div class="mb-3">
+                            {{ form.password.label(class="form-label fw-bold") }}
+                            <div class="input-group">
+                                {{ form.password(class="form-control", placeholder="Contraseña", id="password") }}
+                                <button type="button" class="btn btn-outline-secondary" id="togglePassword">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
+                            {% for error in form.password.errors %}
+                            <div class="text-danger small mt-1">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
+                            </button>
+                        </div>
+
+                        <!-- Forgot Password -->
+                        <div class="text-center mt-3">
+                            <a href="{{ url_for('reset_password_request') }}" class="text-decoration-none text-primary">
+                                <i class="bi bi-question-circle"></i> He olvidado la contraseña
+                            </a>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center bg-light">
+                    <small class="text-muted">¿No tienes una cuenta? <a href="/register" class="text-decoration-none text-primary fw-bold">Regístrate aquí</a>.</small>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            {{ form.password.label }}
-            {{ form.password(class="form-control") }}
-        </div>
-        <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
-        <div class="form-group">
-            <a class="nav-link" href="{{ url_for('reset_password_request') }}">He olvidado la contraseña</a>
-        </div>
-    </form>
+    </div>
 </div>
+
+<script>
+    // Toggle password visibility
+    document.getElementById('togglePassword').addEventListener('click', function () {
+        const passwordField = document.getElementById('password');
+        const icon = this.querySelector('i');
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            icon.classList.remove('bi-eye');
+            icon.classList.add('bi-eye-slash');
+        } else {
+            passwordField.type = "password";
+            icon.classList.remove('bi-eye-slash');
+            icon.classList.add('bi-eye');
+        }
+    });
+</script>
 {% endblock %}

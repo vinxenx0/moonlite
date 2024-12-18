@@ -1,54 +1,91 @@
-<!-- app/templates/new_user.html -->
- 
 {% extends "base.html" %}
 
 {% block title %}Registro Nuevo Usuario{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header"> Nuevo Usuario</div>
-            <div class="card-body">
-                <form method="POST">
-                    {{ form.hidden_tag() }}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8 col-sm-12">
+            <div class="card shadow-sm border-0 rounded">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4>Crear Nueva Cuenta</h4>
+                    <p class="mb-0">Únete a nuestra plataforma en pocos pasos</p>
+                </div>
+                <div class="card-body">
+                    <form method="POST" class="needs-validation" novalidate>
+                        {{ form.hidden_tag() }}
+                        
+                        <!-- Username -->
+                        <div class="mb-3">
+                            {{ form.username.label(class="form-label fw-bold") }}
+                            {{ form.username(class="form-control", placeholder="Nombre de usuario") }}
+                            {% for error in form.username.errors %}
+                            <div class="text-danger small mt-1">{{ error }}</div>
+                            {% endfor %}
+                        </div>
 
-                    <div class="form-group">
-                        {{ form.username.label(class="form-control-label") }}
-                        {{ form.username(class="form-control", placeholder="Nombre de usuario") }}
-                        {% for error in form.username.errors %}
-                        <small class="form-text text-danger">{{ error }}</small>
-                        {% endfor %}
-                    </div>
+                        <!-- Email -->
+                        <div class="mb-3">
+                            {{ form.email.label(class="form-label fw-bold") }}
+                            {{ form.email(class="form-control", placeholder="Correo electrónico") }}
+                            {% for error in form.email.errors %}
+                            <div class="text-danger small mt-1">{{ error }}</div>
+                            {% endfor %}
+                        </div>
 
-                    <div class="form-group">
-                        {{ form.email.label(class="form-control-label") }}
-                        {{ form.email(class="form-control", placeholder="Correo electrónico") }}
-                        {% for error in form.email.errors %}
-                        <small class="form-text text-danger">{{ error }}</small>
-                        {% endfor %}
-                    </div>
+                        <!-- Password -->
+                        <div class="mb-3">
+                            {{ form.password.label(class="form-label fw-bold") }}
+                            <div class="input-group">
+                                {{ form.password(class="form-control", placeholder="Contraseña", id="password") }}
+                                <button type="button" class="btn btn-outline-secondary" id="togglePassword">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
+                            {% for error in form.password.errors %}
+                            <div class="text-danger small mt-1">{{ error }}</div>
+                            {% endfor %}
+                        </div>
 
-                    <div class="form-group">
-                        {{ form.password.label(class="form-control-label") }}
-                        {{ form.password(class="form-control", placeholder="Contraseña") }}
-                        {% for error in form.password.errors %}
-                        <small class="form-text text-danger">{{ error }}</small>
-                        {% endfor %}
-                    </div>
+                        <!-- Confirm Password -->
+                        <div class="mb-3">
+                            {{ form.confirm_password.label(class="form-label fw-bold") }}
+                            {{ form.confirm_password(class="form-control", placeholder="Confirmar contraseña") }}
+                            {% for error in form.confirm_password.errors %}
+                            <div class="text-danger small mt-1">{{ error }}</div>
+                            {% endfor %}
+                        </div>
 
-                    <div class="form-group">
-                        {{ form.confirm_password.label(class="form-control-label") }}
-                        {{ form.confirm_password(class="form-control", placeholder="Confirmar contraseña") }}
-                        {% for error in form.confirm_password.errors %}
-                        <small class="form-text text-danger">{{ error }}</small>
-                        {% endfor %}
-                    </div>
-
-                    <button type="submit" class="btn btn-primary btn-block">Registrarse</button>
-                </form>
+                        <!-- Submit Button -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="bi bi-person-plus-fill"></i> Registrarse
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center bg-light">
+                    <small class="text-muted">¿Ya tienes una cuenta? <a href="/login" class="text-decoration-none text-primary fw-bold">Inicia sesión aquí</a>.</small>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    // Toggle password visibility
+    document.getElementById('togglePassword').addEventListener('click', function () {
+        const passwordField = document.getElementById('password');
+        const icon = this.querySelector('i');
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            icon.classList.remove('bi-eye');
+            icon.classList.add('bi-eye-slash');
+        } else {
+            passwordField.type = "password";
+            icon.classList.remove('bi-eye-slash');
+            icon.classList.add('bi-eye');
+        }
+    });
+</script>
 {% endblock %}

@@ -1,22 +1,59 @@
 {% extends 'base.html' %}
+
 {% block content %}
-<div class="container">
-  <h1 class="my-4">Editar Suscripción</h1>
-  <form method="POST">
-    {{ form.hidden_tag() }}
-    <div class="mb-3">
-      {{ form.subscription_plan.label(class="form-label") }}
-      {{ form.subscription_plan(class="form-control") }}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Editar Suscripción</h1>
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white text-center">
+                    <i class="bi bi-journal-text" style="font-size: 2rem;"></i>
+                    <h5 class="mt-2">Detalles de Suscripción</h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST" class="needs-validation" novalidate>
+                        {{ form.hidden_tag() }}
+
+                        <!-- Subscription Plan -->
+                        <div class="mb-3">
+                            {{ form.subscription_plan.label(class="form-label fw-bold") }}
+                            {{ form.subscription_plan(class="form-select") }}
+                        </div>
+
+                        <!-- Subscription Currency -->
+                        <div class="mb-3">
+                            {{ form.subscription_currency.label(class="form-label fw-bold") }}
+                            {{ form.subscription_currency(class="form-select") }}
+                        </div>
+
+                        <!-- Subscription Frequency -->
+                        <div class="mb-3">
+                            {{ form.subscription_frequency.label(class="form-label fw-bold") }}
+                            {{ form.subscription_frequency(class="form-select") }}
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="bi bi-save"></i> Guardar Suscripción
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center bg-light">
+                    <a href="/profile" class="text-decoration-none text-secondary">
+                        <i class="bi bi-arrow-left"></i> Volver al Perfil
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="mb-3">
-      {{ form.subscription_currency.label(class="form-label") }}
-      {{ form.subscription_currency(class="form-control") }}
-    </div>
-    <div class="mb-3">
-      {{ form.subscription_frequency.label(class="form-label") }}
-      {{ form.subscription_frequency(class="form-control") }}
-    </div>
-    <button type="submit" class="btn btn-primary">Guardar Suscripción</button>
-  </form>
 </div>
+
+<style>
+    .card-header i {
+        display: block;
+        margin: auto;
+    }
+</style>
 {% endblock %}

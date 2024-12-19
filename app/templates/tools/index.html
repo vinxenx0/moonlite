@@ -18,101 +18,28 @@
         <div class="container">
             <h2 class="text-center mb-4">Explore Our Tools</h2>
 
-            <!-- Domains & Email Tools -->
+            <!-- Categories -->
+            {% for category in tools|groupby('category') %}
             <div class="category-section mt-5">
-                <h3 class="text-primary mb-3"><i class="fas fa-envelope"></i> Domains & Email</h3>
+                <h3 class="mb-3 text-primary"><i class="fas fa-folder"></i> {{ category.grouper }}</h3>
                 <div class="row g-4">
+                    {% for tool in category.list %}
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="card shadow-sm h-100">
                             <div class="card-body text-center">
-                                <i class="fas fa-info-circle fa-2x mb-3 text-primary"></i>
-                                <h5 class="card-title">WHOIS</h5>
-                                <p class="card-text">Check domain ownership details.</p>
-                                <a href="/tools/domains/whois" class="btn btn-primary btn-sm">
+                                <i class="{{ tool.icon }} fa-2x mb-3 text-primary"></i>
+                                <h5 class="card-title">{{ tool.name }}</h5>
+                                <p class="card-text">{{ tool.description }}</p>
+                                <a href="{{ tool.link }}" class="btn btn-primary btn-sm">
                                     Use Tool <i class="fas fa-arrow-right"></i>
                                 </a>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-4 col-sm-6">
-                        <div class="card shadow-sm h-100">
-                            <div class="card-body text-center">
-                                <i class="fas fa-globe fa-2x mb-3 text-primary"></i>
-                                <h5 class="card-title">Reverse Domain</h5>
-                                <p class="card-text">Explore reverse domain lookups.</p>
-                                <a href="/tools/domains/reverse" class="btn btn-primary btn-sm">
-                                    Use Tool <i class="fas fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Add more tools similarly -->
+                    {% endfor %}
                 </div>
             </div>
-
-            <!-- Accessibility & Usability Tools -->
-            <div class="category-section mt-5">
-                <h3 class="text-secondary mb-3"><i class="fas fa-universal-access"></i> Accessibility & Usability</h3>
-                <div class="row g-4">
-                    <div class="col-lg-3 col-md-4 col-sm-6">
-                        <div class="card shadow-sm h-100">
-                            <div class="card-body text-center">
-                                <i class="fas fa-universal-access fa-2x mb-3 text-secondary"></i>
-                                <h5 class="card-title">WCAG-AA/AAA</h5>
-                                <p class="card-text">Evaluate website accessibility compliance.</p>
-                                <a href="/tools/accesibility/wcag" class="btn btn-secondary btn-sm">
-                                    Use Tool <i class="fas fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-4 col-sm-6">
-                        <div class="card shadow-sm h-100">
-                            <div class="card-body text-center">
-                                <i class="fas fa-spell-check fa-2x mb-3 text-secondary"></i>
-                                <h5 class="card-title">Spelling Check</h5>
-                                <p class="card-text">Detect spelling issues on your site.</p>
-                                <a href="/tools/accesibility/ortografia" class="btn btn-secondary btn-sm">
-                                    Use Tool <i class="fas fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Add more tools similarly -->
-                </div>
-            </div>
-
-            <!-- SEO Tools -->
-            <div class="category-section mt-5">
-                <h3 class="text-success mb-3"><i class="fas fa-search"></i> SEO Tools</h3>
-                <div class="row g-4">
-                    <div class="col-lg-3 col-md-4 col-sm-6">
-                        <div class="card shadow-sm h-100">
-                            <div class="card-body text-center">
-                                <i class="fas fa-heading fa-2x mb-3 text-success"></i>
-                                <h5 class="card-title">Titles (H1)</h5>
-                                <p class="card-text">Analyze title tags for SEO improvements.</p>
-                                <a href="/tools/seo/titles" class="btn btn-success btn-sm">
-                                    Use Tool <i class="fas fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-4 col-sm-6">
-                        <div class="card shadow-sm h-100">
-                            <div class="card-body text-center">
-                                <i class="fas fa-clipboard fa-2x mb-3 text-success"></i>
-                                <h5 class="card-title">Meta Descriptions</h5>
-                                <p class="card-text">Optimize meta descriptions for search engines.</p>
-                                <a href="/tools/seo/meta-description" class="btn btn-success btn-sm">
-                                    Use Tool <i class="fas fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Add more tools similarly -->
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </section>
 

@@ -22,6 +22,8 @@ from app.controllers.spider_tools import get_page_info
 from app.forms import ConfigForm, PageInfoForm
 from app.models.usage_model import Activity
 
+from app.views.info import tools
+
 # Cargar la base de datos de GeoIP
 # geoip_reader = geoip2.database.Reader('GeoLite2-Country.mmdb')
 
@@ -42,6 +44,7 @@ def index_tools():
     validator = None
     spelling_errors = None
     grammar_errors = None
+    tools = tools
     breadcrumbs = [] #[{'url': '/start', 'text': 'Bienvenido'}]
 
     form = PageInfoForm()
@@ -73,7 +76,8 @@ def index_tools():
                               user_agent=user_agent,
                               country=country,
                               language=language,
-                              timestamp=timestamp,
+                              timestamp=timestamp, 
+                              tools=tools,
                               page_url=page_url)
         db.session.add(user_usage)
         db.session.commit()

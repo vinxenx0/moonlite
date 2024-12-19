@@ -63,56 +63,10 @@ body {
 }
 
 
-
-.dropdown-menu .dropdown-item i {
-    margin-right: 8px;
-    color: var(--primary-color);
-}
-
 .btn-primary {
     background-color: var(--primary-color);
     border-color: var(--primary-color);
     font-weight: bold;
-}
-
-.dropdown-menu-columns {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.dropdown-menu-columns .column {
-    flex: 1;
-    min-width: 180px;
-    padding: 8px;
-}
-
-.column.featured {
-    background-color: var(--featured-column);
-}
-
-.dropdown-menu-columns .dropdown-header {
-    font-weight: bold;
-    color: var(--menu-header);
-}
-
-@media (max-width: 767px) {
-    .dropdown-menu-columns {
-        flex-direction: column;
-    }
-}
-
-@media (min-width: 768px) {
-    .dropdown-menu-columns {
-        justify-content: center;
-        gap: 1rem;
-    }
-    .dropdown-menu-columns .column {
-        border-right: 1px solid var(--menu-separator);
-        padding-bottom: 1rem;
-    }
-    .dropdown-menu-columns .column:last-child {
-        border-right: none;
-    }
 }
 
 

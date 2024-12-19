@@ -42,7 +42,6 @@ from app.views.info import tools
 def index_tools():
 
     breadcrumbs = [
-        {'url': '/', 'text': 'Home'},
         {'url': '/tools', 'text': 'Todas las herramientas'}
     ]
     
@@ -55,7 +54,6 @@ def index_tools():
 def index_domains():
     
     breadcrumbs = [
-        {'url': '/', 'text': 'Inicio'},
         {'url': '/tools', 'text': 'Tools'},
         {'url': '/tools/domains', 'text': 'Dominios'}
     ]
@@ -70,8 +68,7 @@ def index_domains():
 def index_seo():
     
     breadcrumbs = [
-        {'url': '/', 'text': 'Inicio'},
-        {'url': '/tools', 'text': 'Tools'},
+         {'url': '/tools', 'text': 'Tools'},
         {'url': '/tools/seo', 'text': 'SEO'}
     ]
     return render_template('tools/seo/index.html',

@@ -157,46 +157,6 @@
         </div>
     </section>
 
-    <!-- Online Test Box -->
-    <section id="online-test" class="content-section bg-light">
-        <div class="container text-center">
-            <h2>Analyze Your Website Instantly</h2>
-            <p>Enter your URL below to get an instant, free report on your site’s performance.</p>
-            <!--
-        <form class="row justify-content-center">
-            <div class="col-md-6">
-                <input type="url" class="form-control" placeholder="Enter your website URL (e.g., https://yourbusiness.com)" required>
-            </div>
-            <div class="col-md-3">
-                <button type="submit" class="btn btn-primary w-100">Analyze URL</button>
-            </div>
-        </form>
-        -->
-            <form action="/start" method="post" id="pageInfoForm">
-                {{ form.csrf_token }}
-                <div class="mb-3">
-                    {{ form.url.label(class="form-label") }}
-                    {{ form.url(class="form-control", id="url") }}
-                    {% for error in form.url.errors %}
-                    <small class="form-text text-danger">{{ error }}</small>
-                    {% endfor %}
-                </div><!-- 
-                <button type="submit" class="btn btn-primary" id="analizarBtn">
-                    <span id="btnText">ANALIZAR URL</span>
-                    <span id="loadingSpinner" class="spinner-border spinner-border-sm d-none" role="status"
-                        aria-hidden="true"></span>
-                </button>-->
-                <button type="submit" class="btn btn-primary" id="analizarBtn">
-                    <span id="btnText">ANALIZAR URL</span>
-                    <span id="loadingSpinner" class="spinner-border spinner-border-sm d-none" role="status"
-                        aria-hidden="true"></span>
-                </button>
-            </form>
-
-        </div>
-    </section>
-
-
     {% include 'inc/benefits.html' %}
 
     {% include 'inc/features.html' %}

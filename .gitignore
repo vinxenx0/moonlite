@@ -5,3 +5,4 @@ __pycache__
 *.log
 instance/*
 migrations/*
+*.cpython-38.pyc

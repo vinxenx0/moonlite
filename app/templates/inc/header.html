@@ -252,5 +252,38 @@
         </div>
       </div>
     </nav>
+
+    <!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+      <a class="navbar-brand" href="/">My Tools App</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+          <ul class="navbar-nav align-items-center">
+              {% for category, tools in grouped_tools.items() %}
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="{{ category|replace(' ', '_') }}Dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      {{ category }}
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="{{ category|replace(' ', '_') }}Dropdown">
+                      <div class="dropdown-menu-columns">
+                          <div class="column">
+                              {% for tool in tools %}
+                              <a class="dropdown-item" href="{{ tool.link }}">
+                                  <i class="{{ tool.icon }}"></i> {{ tool.name }}
+                              </a>
+                              {% endfor %}
+                          </div>
+                      </div>
+                  </ul>
+              </li>
+              {% endfor %}
+          </ul>
+      </div>
+  </div>
+</nav>
+
   </header>
   

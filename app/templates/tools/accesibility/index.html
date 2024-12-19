@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Accesibility Tools{% endblock %}
+{% block title %}Accessibility & Usability Tools{% endblock %}
 
 {% block content %}
 
@@ -10,7 +10,7 @@
 <div class="container my-5">
     <!-- Hero Section -->
     <div class="hero-section text-center py-5">
-        <h1 class="text-white">Accesibility  Management</h1>
+        <h1 class="text-white">Accessibility & Usability Management</h1>
         <p class="lead text-white-50">Streamline your workflows with powerful tools for domain analysis, email authentication, and DNS management.</p>
         <a href="#tools-section" class="btn btn-lg btn-light mt-3">
             <i class="fas fa-envelope"></i> Explore Tools
@@ -20,7 +20,7 @@
     <!-- Tools Section -->
     <section id="tools-section" class="mt-5">
         <div class="container">
-            <h2 class="text-center mb-4">Accesibility & Usability Tools</h2>
+            <h2 class="text-center mb-4">Accessibility & Usability Tools</h2>
             <div class="row g-4">
                 {% for tool in tools if tool.category == "Accessibility & Usability" %}
                 <div class="col-lg-3 col-md-4 col-sm-6">

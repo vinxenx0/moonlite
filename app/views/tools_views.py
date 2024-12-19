@@ -55,6 +55,26 @@ def index_tools():
                            breadcrumbs=breadcrumbs,
                            tools=tools)
 
+
+@app.route('/tools/domains/', methods=['GET', 'POST'])
+def index_domains():
+    data = None
+    validator = None
+    spelling_errors = None
+    grammar_errors = None
+    
+    breadcrumbs = [
+        {'url': '/', 'text': 'Inicio'},
+        {'url': '/profile', 'text': 'Opcion 1'},
+        {'url': '/profile/edit', 'text': 'Sub opcion 1'}
+    ]
+
+
+    return render_template('tools/domains/index.html',
+                           breadcrumbs=breadcrumbs,
+                           tools=tools)
+
+
 @app.route('/tools/check_domain/<string:domain>') #, methods=['POST'])
 def check_domain(domain):
     start_time = time.time() 

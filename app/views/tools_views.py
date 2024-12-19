@@ -45,10 +45,8 @@ def index_tools():
     spelling_errors = None
     grammar_errors = None
     breadcrumbs = [
-        {'url': '/', 'text': 'Inicio'},
-        {'url': '/profile', 'text': 'Opcion 1'},
-        {'url': '/profile/edit', 'text': 'Sub opcion 1'}
-    ]
+        {'url': '/', 'text': 'Home'},
+        {'url': '/tools', 'text': 'Todas las herramientas'}
 
     
     return render_template('tools/index.html',
@@ -65,8 +63,8 @@ def index_domains():
     
     breadcrumbs = [
         {'url': '/', 'text': 'Inicio'},
-        {'url': '/profile', 'text': 'Opcion 1'},
-        {'url': '/profile/edit', 'text': 'Sub opcion 1'}
+        {'url': '/tools', 'text': 'Tools'},
+        {'url': '/tools/domains', 'text': 'Dominios'}
     ]
 
 
@@ -77,12 +75,12 @@ def index_domains():
 
 @app.route('/tools/seo/', methods=['GET', 'POST'])
 def index_seo():
+    
     breadcrumbs = [
         {'url': '/', 'text': 'Inicio'},
-        {'url': '/profile', 'text': 'Opcion 1'},
-        {'url': '/profile/edit', 'text': 'Sub opcion 1'}
+        {'url': '/tools', 'text': 'Tools'},
+        {'url': '/tools/seo', 'text': 'SEO'}
     ]
-
     return render_template('tools/seo/index.html',
                            breadcrumbs=breadcrumbs,
                            tools=tools)
@@ -92,8 +90,8 @@ def index_accesiblity():
 
     breadcrumbs = [
         {'url': '/', 'text': 'Inicio'},
-        {'url': '/profile', 'text': 'Opcion 1'},
-        {'url': '/profile/edit', 'text': 'Sub opcion 1'}
+        {'url': '/tools', 'text': 'Tools'},
+        {'url': '/tools/domains', 'text': 'Accesibilidad'}
     ]
 
     return render_template('tools/accesibility/index.html',

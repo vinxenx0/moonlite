@@ -3,24 +3,66 @@
 {% block title %}Domains & Email Tools{% endblock %}
 
 {% block content %}
-
-<!-- Breadcrumb Section -->
-{% include 'inc/breadcrumbs.html' %}
-
 <div class="container my-5">
     <!-- Hero Section -->
     <div class="hero-section text-center py-5">
         <h1 class="text-white">Optimize Your Domain & Email Management</h1>
-        <p class="lead text-white-50">Streamline your workflows with powerful tools for domain analysis, email authentication, and DNS management.</p>
+        <p class="lead text-white-50">Power up your workflows with tools for domain analysis, email authentication, and DNS management.</p>
         <a href="#tools-section" class="btn btn-lg btn-light mt-3">
             <i class="fas fa-envelope"></i> Explore Tools
         </a>
     </div>
 
-    <!-- Tools Section -->
+    <!-- Most Used Tools Section -->
+    <section id="most-used-tools" class="mt-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Most Used Tools</h2>
+            <div class="row g-4">
+                {% for tool in tools if tool.category == "Domains & Email" and tool.most_used %}
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body text-center">
+                            <i class="{{ tool.icon }} fa-2x mb-3 text-primary"></i>
+                            <h5 class="card-title">{{ tool.name }}</h5>
+                            <p class="card-text">{{ tool.description }}</p>
+                            <a href="{{ tool.link }}" class="btn btn-primary btn-sm">
+                                Use Tool <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- New or Updated Tools Section -->
+    <section id="new-tools" class="mt-5">
+        <div class="container">
+            <h2 class="text-center mb-4">New or Updated Tools</h2>
+            <div class="row g-4">
+                {% for tool in tools if tool.category == "Domains & Email" and tool.is_new %}
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="card shadow-sm h-100 border border-success">
+                        <div class="card-body text-center">
+                            <i class="{{ tool.icon }} fa-2x mb-3 text-success"></i>
+                            <h5 class="card-title">{{ tool.name }}</h5>
+                            <p class="card-text">{{ tool.description }}</p>
+                            <a href="{{ tool.link }}" class="btn btn-success btn-sm">
+                                Try Now <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- All Tools Section -->
     <section id="tools-section" class="mt-5">
         <div class="container">
-            <h2 class="text-center mb-4">Domains & Email Tools</h2>
+            <h2 class="text-center mb-4">All Tools in Domains & Email</h2>
             <div class="row g-4">
                 {% for tool in tools if tool.category == "Domains & Email" %}
                 <div class="col-lg-3 col-md-4 col-sm-6">
@@ -43,8 +85,8 @@
     <!-- CTA Section -->
     <section class="cta-section mt-5">
         <div class="container text-center">
-            <h2 class="mb-3">Get Started Today!</h2>
-            <p class="lead">Access all tools to optimize your digital presence.</p>
+            <h2 class="mb-3">Get Started with Domains & Email Tools!</h2>
+            <p class="lead">Unlock the full potential of your domains and email management with these powerful tools.</p>
             <a href="/signup" class="btn btn-lg btn-light">
                 <i class="fas fa-user-plus"></i> Sign Up for Free
             </a>
@@ -73,6 +115,10 @@
     .card .card-body i {
         display: block;
         margin: auto;
+    }
+
+    .card.border-success {
+        border-width: 2px !important;
     }
 </style>
 {% endblock %}

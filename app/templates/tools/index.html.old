@@ -1,0 +1,172 @@
+<!-- app/templates/start.html -->
+
+{% extends "base.html" %}
+
+{% block title %}TOOLS tools{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        color: #333;
+        background-color: #f8f9fa;
+    }
+
+    .hero-section {
+        background: linear-gradient(135deg, #007bff, #6610f2);
+        color: white;
+        padding: 80px 0;
+        text-align: center;
+    }
+
+    .content-section {
+        padding: 60px 0;
+    }
+
+    .feature-card,
+    .pricing-card {
+        border: none;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background: #fff;
+    }
+
+    .cta-section {
+        background: #6610f2;
+        color: white;
+        text-align: center;
+        padding: 40px 0;
+    }
+
+    .badge-custom {
+        background-color: #6610f2;
+        color: white;
+        padding: 5px 10px;
+        font-size: 0.9rem;
+    }
+</style>
+
+<!-- Optional Styling for Enhanced Visuals -->
+<style>
+    .hero-section {
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('your-background-image.jpg') center/cover no-repeat;
+        color: #f8f9fa;
+    }
+
+    .content-section {
+        background-color: #f8f9fa;
+    }
+
+    .input-group .form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+
+    #analizarBtn {
+        display: flex;
+        align-items: center;
+    }
+
+    .alert i {
+        font-size: 1.2rem;
+    }
+</style>
+
+<style>
+    /* Custom Styles */
+    body {
+        font-family: Arial, sans-serif;
+        color: #333;
+        background-color: #f8f9fa;
+    }
+
+    .hero-section {
+        background: linear-gradient(135deg, #007bff, #6610f2);
+        color: white;
+        padding: 80px 0;
+        text-align: center;
+        position: relative;
+    }
+
+    .hero-section .btn-cta {
+        background-color: #ff6b6b;
+        color: white;
+    }
+
+    .hero-section .btn-cta:hover {
+        background-color: #ff3b3b;
+    }
+
+    .content-section {
+        padding: 60px 0;
+    }
+
+    .feature-card,
+    .pricing-card {
+        border: none;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background: #fff;
+    }
+
+    .pricing-card.popular {
+        border: 2px solid #007bff;
+    }
+
+    .badge-popular {
+        background-color: #ff6b6b;
+        color: white;
+    }
+
+    .cta-section {
+        background: #6610f2;
+        color: white;
+        text-align: center;
+        padding: 40px 0;
+    }
+
+    .testimonial-carousel .carousel-item blockquote {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+    }
+
+    footer {
+        /* background-color: #333; 
+        text-align: center; */
+        color: #f8f9fa;
+        padding: 20px 0;
+
+    }
+</style>
+
+<div class="container _mt-5">
+
+    {% include 'inc/benefits.html' %}
+
+    {% include 'inc/features.html' %}
+
+
+    {% include "inc/suscriptions.html" %}
+
+    {% include "inc/testimonials.html" %}
+
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="mb-4">Start Your Free Trial Now!</h2>
+            <p class="lead">Access all tools with a 7-day trial and discover the impact on your digital presence.</p>
+            <a href="#pricing" class="btn btn-light btn-lg">Start Free Trial</a>
+        </div>
+    </section>
+
+
+</div>
+<script>
+    // Añadir evento submit al formulario para mostrar el spinner en el botón
+    document.getElementById('pageInfoForm').addEventListener('submit', function () {
+        document.getElementById('btnText').classList.add('d-none');
+        document.getElementById('loadingSpinner').classList.remove('d-none');
+    });
+</script>
+
+{% endblock %}

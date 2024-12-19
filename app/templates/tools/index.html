@@ -1,172 +1,154 @@
-<!-- app/templates/start.html -->
-
 {% extends "base.html" %}
 
-{% block title %}TOOLS tools{% endblock %}
+{% block title %}Tools & Features{% endblock %}
 
 {% block content %}
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        color: #333;
-        background-color: #f8f9fa;
-    }
+<div class="container my-5">
+    <!-- Hero Section -->
+    <div class="hero-section text-center py-5">
+        <h1 class="text-white">Empower Your Workflow with Our Tools</h1>
+        <p class="lead text-white-50">Explore, analyze, and optimize with our comprehensive toolkit</p>
+        <a href="#tools-section" class="btn btn-lg btn-light mt-3">
+            <i class="fas fa-toolbox"></i> Explore Tools
+        </a>
+    </div>
 
-    .hero-section {
-        background: linear-gradient(135deg, #007bff, #6610f2);
-        color: white;
-        padding: 80px 0;
-        text-align: center;
-    }
-
-    .content-section {
-        padding: 60px 0;
-    }
-
-    .feature-card,
-    .pricing-card {
-        border: none;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        background: #fff;
-    }
-
-    .cta-section {
-        background: #6610f2;
-        color: white;
-        text-align: center;
-        padding: 40px 0;
-    }
-
-    .badge-custom {
-        background-color: #6610f2;
-        color: white;
-        padding: 5px 10px;
-        font-size: 0.9rem;
-    }
-</style>
-
-<!-- Optional Styling for Enhanced Visuals -->
-<style>
-    .hero-section {
-        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('your-background-image.jpg') center/cover no-repeat;
-        color: #f8f9fa;
-    }
-
-    .content-section {
-        background-color: #f8f9fa;
-    }
-
-    .input-group .form-control:focus {
-        border-color: #007bff;
-        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-    }
-
-    #analizarBtn {
-        display: flex;
-        align-items: center;
-    }
-
-    .alert i {
-        font-size: 1.2rem;
-    }
-</style>
-
-<style>
-    /* Custom Styles */
-    body {
-        font-family: Arial, sans-serif;
-        color: #333;
-        background-color: #f8f9fa;
-    }
-
-    .hero-section {
-        background: linear-gradient(135deg, #007bff, #6610f2);
-        color: white;
-        padding: 80px 0;
-        text-align: center;
-        position: relative;
-    }
-
-    .hero-section .btn-cta {
-        background-color: #ff6b6b;
-        color: white;
-    }
-
-    .hero-section .btn-cta:hover {
-        background-color: #ff3b3b;
-    }
-
-    .content-section {
-        padding: 60px 0;
-    }
-
-    .feature-card,
-    .pricing-card {
-        border: none;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        background: #fff;
-    }
-
-    .pricing-card.popular {
-        border: 2px solid #007bff;
-    }
-
-    .badge-popular {
-        background-color: #ff6b6b;
-        color: white;
-    }
-
-    .cta-section {
-        background: #6610f2;
-        color: white;
-        text-align: center;
-        padding: 40px 0;
-    }
-
-    .testimonial-carousel .carousel-item blockquote {
-        background-color: #f8f9fa;
-        padding: 20px;
-        border-radius: 8px;
-    }
-
-    footer {
-        /* background-color: #333; 
-        text-align: center; */
-        color: #f8f9fa;
-        padding: 20px 0;
-
-    }
-</style>
-
-<div class="_container _mt-5">
-
-    {% include 'inc/benefits.html' %}
-
-    {% include 'inc/features.html' %}
-
-
-    {% include "inc/suscriptions.html" %}
-
-    {% include "inc/testimonials.html" %}
-
-
-    <!-- CTA Section -->
-    <section class="cta-section">
+    <!-- Tools Section -->
+    <section id="tools-section" class="mt-5">
         <div class="container">
-            <h2 class="mb-4">Start Your Free Trial Now!</h2>
-            <p class="lead">Access all tools with a 7-day trial and discover the impact on your digital presence.</p>
-            <a href="#pricing" class="btn btn-light btn-lg">Start Free Trial</a>
+            <h2 class="text-center mb-4">Explore Our Tools</h2>
+
+            <!-- Domains & Email Tools -->
+            <div class="category-section mt-5">
+                <h3 class="text-primary mb-3"><i class="fas fa-envelope"></i> Domains & Email</h3>
+                <div class="row g-4">
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-info-circle fa-2x mb-3 text-primary"></i>
+                                <h5 class="card-title">WHOIS</h5>
+                                <p class="card-text">Check domain ownership details.</p>
+                                <a href="/tools/domains/whois" class="btn btn-primary btn-sm">
+                                    Use Tool <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-globe fa-2x mb-3 text-primary"></i>
+                                <h5 class="card-title">Reverse Domain</h5>
+                                <p class="card-text">Explore reverse domain lookups.</p>
+                                <a href="/tools/domains/reverse" class="btn btn-primary btn-sm">
+                                    Use Tool <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Add more tools similarly -->
+                </div>
+            </div>
+
+            <!-- Accessibility & Usability Tools -->
+            <div class="category-section mt-5">
+                <h3 class="text-secondary mb-3"><i class="fas fa-universal-access"></i> Accessibility & Usability</h3>
+                <div class="row g-4">
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-universal-access fa-2x mb-3 text-secondary"></i>
+                                <h5 class="card-title">WCAG-AA/AAA</h5>
+                                <p class="card-text">Evaluate website accessibility compliance.</p>
+                                <a href="/tools/accesibility/wcag" class="btn btn-secondary btn-sm">
+                                    Use Tool <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-spell-check fa-2x mb-3 text-secondary"></i>
+                                <h5 class="card-title">Spelling Check</h5>
+                                <p class="card-text">Detect spelling issues on your site.</p>
+                                <a href="/tools/accesibility/ortografia" class="btn btn-secondary btn-sm">
+                                    Use Tool <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Add more tools similarly -->
+                </div>
+            </div>
+
+            <!-- SEO Tools -->
+            <div class="category-section mt-5">
+                <h3 class="text-success mb-3"><i class="fas fa-search"></i> SEO Tools</h3>
+                <div class="row g-4">
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-heading fa-2x mb-3 text-success"></i>
+                                <h5 class="card-title">Titles (H1)</h5>
+                                <p class="card-text">Analyze title tags for SEO improvements.</p>
+                                <a href="/tools/seo/titles" class="btn btn-success btn-sm">
+                                    Use Tool <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-clipboard fa-2x mb-3 text-success"></i>
+                                <h5 class="card-title">Meta Descriptions</h5>
+                                <p class="card-text">Optimize meta descriptions for search engines.</p>
+                                <a href="/tools/seo/meta-description" class="btn btn-success btn-sm">
+                                    Use Tool <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Add more tools similarly -->
+                </div>
+            </div>
         </div>
     </section>
 
-
+    <!-- CTA Section -->
+    <section class="cta-section mt-5">
+        <div class="container text-center">
+            <h2 class="mb-3">Get Started Today!</h2>
+            <p class="lead">Access all tools to optimize your digital presence.</p>
+            <a href="/signup" class="btn btn-lg btn-light">
+                <i class="fas fa-user-plus"></i> Sign Up for Free
+            </a>
+        </div>
+    </section>
 </div>
-<script>
-    // Añadir evento submit al formulario para mostrar el spinner en el botón
-    document.getElementById('pageInfoForm').addEventListener('submit', function () {
-        document.getElementById('btnText').classList.add('d-none');
-        document.getElementById('loadingSpinner').classList.remove('d-none');
-    });
-</script>
 
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, #007bff, #6610f2), url('hero-bg.jpg') center/cover;
+        color: #fff;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    }
+
+    .cta-section {
+        background-color: #6610f2;
+        color: #fff;
+        padding: 40px 0;
+    }
+
+    .category-section h3 {
+        border-left: 5px solid currentColor;
+        padding-left: 15px;
+    }
+
+    .card .card-body i {
+        display: block;
+        margin: auto;
+    }
+</style>
 {% endblock %}

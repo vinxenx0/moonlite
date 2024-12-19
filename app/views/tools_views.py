@@ -44,7 +44,6 @@ def index_tools():
     validator = None
     spelling_errors = None
     grammar_errors = None
-    tools = tools
     breadcrumbs = [] #[{'url': '/start', 'text': 'Bienvenido'}]
 
     form = PageInfoForm()

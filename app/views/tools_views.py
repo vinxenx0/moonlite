@@ -44,90 +44,14 @@ def index_tools():
     validator = None
     spelling_errors = None
     grammar_errors = None
-    breadcrumbs = [] #[{'url': '/start', 'text': 'Bienvenido'}]
-    _tools = [
-        # Domains & Email
-        {"name": "WHOIS", "description": "Check domain ownership details.", "link": "/tools/domains/whois", "icon": "fas fa-info-circle", "category": "Domains & Email"},
-        {"name": "Reverse Domain", "description": "Explore reverse domain lookups.", "link": "/tools/domains/reverse", "icon": "fas fa-globe", "category": "Domains & Email"},
-        {"name": "CNAME Lookup", "description": "Check CNAME records.", "link": "/tools/domains/cname", "icon": "fas fa-cog", "category": "Domains & Email"},
-        {"name": "IP Lookup", "description": "Find the IP address associated with a domain.", "link": "/tools/domains/ip", "icon": "fas fa-search", "category": "Domains & Email"},
-        {"name": "AAAA Lookup", "description": "Retrieve IPv6 records for a domain.", "link": "/tools/domains/aaaa", "icon": "fas fa-link", "category": "Domains & Email"},
-        {"name": "Traceroute", "description": "Trace the route packets take to a domain.", "link": "/tools/domains/traceroute", "icon": "fas fa-route", "category": "Domains & Email"},
-        {"name": "Nmap", "description": "Perform a network map scan.", "link": "/tools/domains/nmap", "icon": "fas fa-network-wired", "category": "Domains & Email"},
-        {"name": "Blacklist Check", "description": "Check if your domain is blacklisted.", "link": "/tools/domains/blacklist", "icon": "fas fa-ban", "category": "Domains & Email"},
-
-        # Mail Server
-        {"name": "MX Discover", "description": "Identify mail exchange servers for a domain.", "link": "/tools/domains/mx", "icon": "fas fa-server", "category": "Domains & Email"},
-        {"name": "DMARC Lookup", "description": "Check DMARC records for a domain.", "link": "/tools/domains/dmarc", "icon": "fas fa-envelope-open", "category": "Domains & Email"},
-        {"name": "SPF Lookup", "description": "Check SPF records to prevent email spoofing.", "link": "/tools/domains/spf", "icon": "fas fa-shield-alt", "category": "Domains & Email"},
-        {"name": "DKIM Lookup", "description": "Verify DKIM signatures for email authentication.", "link": "/tools/domains/dkim", "icon": "fas fa-signature", "category": "Domains & Email"},
-        {"name": "TXT Lookup", "description": "Retrieve TXT records for a domain.", "link": "/tools/domains/txt", "icon": "fas fa-file-alt", "category": "Domains & Email"},
-        {"name": "DNS Key Lookup", "description": "Check DNSSEC key records.", "link": "/tools/domains/dnskey", "icon": "fas fa-key", "category": "Domains & Email"},
-
-        # Accessibility & Usability
-        {"name": "WCAG-AA/AAA", "description": "Evaluate website accessibility compliance.", "link": "/tools/accesibility/wcag", "icon": "fas fa-universal-access", "category": "Accessibility & Usability"},
-        {"name": "Spelling Check", "description": "Detect spelling issues on your site.", "link": "/tools/accesibility/ortografia", "icon": "fas fa-spell-check", "category": "Accessibility & Usability"},
-        {"name": "Core Web Vitals", "description": "Analyze website performance metrics.", "link": "/tools/accesibility/core-web-vitals", "icon": "fas fa-vials", "category": "Accessibility & Usability"},
-        {"name": "Responsive Design", "description": "Check website responsiveness.", "link": "/tools/accesibility/responsive", "icon": "fas fa-mobile-alt", "category": "Accessibility & Usability"},
-        {"name": "Lazy Loading", "description": "Optimize image loading for speed.", "link": "/tools/accesibility/lazy-loading", "icon": "fas fa-clock", "category": "Accessibility & Usability"},
-
-        # SEO Tools
-        {"name": "Titles (H1)", "description": "Analyze title tags for SEO improvements.", "link": "/tools/seo/titles", "icon": "fas fa-heading", "category": "SEO"},
-        {"name": "Meta Descriptions", "description": "Optimize meta descriptions for search engines.", "link": "/tools/seo/meta-description", "icon": "fas fa-clipboard", "category": "SEO"},
-        {"name": "Headings", "description": "Check proper use of heading tags.", "link": "/tools/seo/headings", "icon": "fas fa-heading", "category": "SEO"},
-        {"name": "Canonical Tags", "description": "Ensure canonicalization to prevent duplicates.", "link": "/tools/seo/canonicals", "icon": "fas fa-link", "category": "SEO"},
-        {"name": "Robots.txt", "description": "Analyze robots.txt for crawling directives.", "link": "/tools/seo/robots", "icon": "fas fa-robot", "category": "SEO"},
-        {"name": "Sitemap", "description": "Check the XML sitemap for search engines.", "link": "/tools/seo/sitemap", "icon": "fas fa-sitemap", "category": "SEO"},
-
-        # Website Security
-        {"name": "HTTPS/SSL", "description": "Verify HTTPS and SSL certificate compliance.", "link": "/tools/security/ssl", "icon": "fas fa-lock", "category": "Website Security"},
-        {"name": "Server Response", "description": "Analyze server response headers.", "link": "/tools/security/server-response", "icon": "fas fa-server", "category": "Website Security"}
+    breadcrumbs = [
+        {'url': '/', 'text': 'Inicio'},
+        {'url': '/profile', 'text': 'Opcion 1'},
+        {'url': '/profile/edit', 'text': 'Sub opcion 1'}
     ]
 
-
-    form = PageInfoForm()
-    if form.validate_on_submit():
-        # Obtener información del usuario
-        username = 'Anonymous'
-        email = ''
-        if current_user.is_authenticated:
-            username = current_user.username
-            email = current_user.email  # Ajustar según tu formulario
-
-        url = form.url.data
-        ip_address = request.remote_addr
-        user_agent = request.user_agent.string
-        country = 'Spain'  #get_country_from_ip(ip_address)
-        language = request.accept_languages.best
-
-        # Obtener fecha y hora actual
-        timestamp = datetime.utcnow()
-
-        # Obtener URL de la página actual
-        page_url = request.url
-
-        # Guardar la información del usuario en la base de datos
-        user_usage = Activity(username=username,
-                              email=email,
-                              target=url,
-                              ip_address=ip_address,
-                              user_agent=user_agent,
-                              country=country,
-                              language=language,
-                              timestamp=timestamp, 
-                              page_url=page_url)
-        db.session.add(user_usage)
-        db.session.commit()
-
-        #print(get_page_info(url))
-        data, validator, spelling_errors, grammar_errors = get_page_info(url)
-        #data, validator = get_page_info(url)
-        #validator = json.load(validator)
-
+    
     return render_template('tools/index.html',
-                           data=data,
-                           validator=validator,
-                           form=form,
                            breadcrumbs=breadcrumbs,
                            tools=tools)
 

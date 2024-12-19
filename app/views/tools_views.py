@@ -45,7 +45,7 @@ def index_tools():
     spelling_errors = None
     grammar_errors = None
     breadcrumbs = [] #[{'url': '/start', 'text': 'Bienvenido'}]
-    tools = [
+    _tools = [
         # Domains & Email
         {"name": "WHOIS", "description": "Check domain ownership details.", "link": "/tools/domains/whois", "icon": "fas fa-info-circle", "category": "Domains & Email"},
         {"name": "Reverse Domain", "description": "Explore reverse domain lookups.", "link": "/tools/domains/reverse", "icon": "fas fa-globe", "category": "Domains & Email"},

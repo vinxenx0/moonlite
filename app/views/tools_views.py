@@ -97,9 +97,8 @@ def index_accesiblity():
     ]
 
     return render_template('tools/accesibility/index.html',
-
                            breadcrumbs=breadcrumbs,
-                           tools=index_tools)
+                           tools=tools)
 
 
 @app.route('/tools/check_domain/<string:domain>') #, methods=['POST'])

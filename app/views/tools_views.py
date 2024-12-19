@@ -40,14 +40,11 @@ from app.views.info import tools
 
 @app.route('/tools/', methods=['GET', 'POST'])
 def index_tools():
-    data = None
-    validator = None
-    spelling_errors = None
-    grammar_errors = None
+
     breadcrumbs = [
         {'url': '/', 'text': 'Home'},
         {'url': '/tools', 'text': 'Todas las herramientas'}
-
+    ]
     
     return render_template('tools/index.html',
                            breadcrumbs=breadcrumbs,
@@ -56,10 +53,6 @@ def index_tools():
 
 @app.route('/tools/domains/', methods=['GET', 'POST'])
 def index_domains():
-    data = None
-    validator = None
-    spelling_errors = None
-    grammar_errors = None
     
     breadcrumbs = [
         {'url': '/', 'text': 'Inicio'},

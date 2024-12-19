@@ -115,7 +115,6 @@ def index_tools():
                               country=country,
                               language=language,
                               timestamp=timestamp, 
-                              tools=tools,
                               page_url=page_url)
         db.session.add(user_usage)
         db.session.commit()
@@ -130,8 +129,7 @@ def index_tools():
                            validator=validator,
                            form=form,
                            breadcrumbs=breadcrumbs,
-                           spelling_errors=spelling_errors,
-                           grammar_errors=grammar_errors)
+                           tools=tools)
 
 @app.route('/tools/check_domain/<string:domain>') #, methods=['POST'])
 def check_domain(domain):

@@ -76,7 +76,6 @@ def index_tools():
                               country=country,
                               language=language,
                               timestamp=timestamp, 
-                              tools=tools,
                               page_url=page_url)
         db.session.add(user_usage)
         db.session.commit()

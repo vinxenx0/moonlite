@@ -89,7 +89,6 @@ x-defaulta -> por hacer
 
 
 AFINAR VERSION WEB:
-- Fuera opcion informes
-- Delimitar las opciones del login user
+- Editar información de registro /profile/edit (comprobar logica en edit_profile.html.old)
 
 ----------------------------------------------------

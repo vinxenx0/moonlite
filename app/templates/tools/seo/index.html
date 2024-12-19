@@ -1,191 +1,77 @@
-<!-- app/templates/start.html -->
-
-{% extends "base.html" %}
-
-{% block title %}SEO tools{% endblock %}
+{% block title %}SEO HAT Tools{% endblock %}
 
 {% block content %}
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        color: #333;
-        background-color: #f8f9fa;
-    }
 
-    .hero-section {
-        background: linear-gradient(135deg, #007bff, #6610f2);
-        color: white;
-        padding: 80px 0;
-        text-align: center;
-    }
-
-    .content-section {
-        padding: 60px 0;
-    }
-
-    .feature-card,
-    .pricing-card {
-        border: none;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        background: #fff;
-    }
-
-    .cta-section {
-        background: #6610f2;
-        color: white;
-        text-align: center;
-        padding: 40px 0;
-    }
-
-    .badge-custom {
-        background-color: #6610f2;
-        color: white;
-        padding: 5px 10px;
-        font-size: 0.9rem;
-    }
-</style>
-
-<!-- Optional Styling for Enhanced Visuals -->
-<style>
-    .hero-section {
-        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('your-background-image.jpg') center/cover no-repeat;
-        color: #f8f9fa;
-    }
-
-    .content-section {
-        background-color: #f8f9fa;
-    }
-
-    .input-group .form-control:focus {
-        border-color: #007bff;
-        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-    }
-
-    #analizarBtn {
-        display: flex;
-        align-items: center;
-    }
-
-    .alert i {
-        font-size: 1.2rem;
-    }
-</style>
-
-<style>
-    /* Custom Styles */
-    body {
-        font-family: Arial, sans-serif;
-        color: #333;
-        background-color: #f8f9fa;
-    }
-
-    .hero-section {
-        background: linear-gradient(135deg, #007bff, #6610f2);
-        color: white;
-        padding: 80px 0;
-        text-align: center;
-        position: relative;
-    }
-
-    .hero-section .btn-cta {
-        background-color: #ff6b6b;
-        color: white;
-    }
-
-    .hero-section .btn-cta:hover {
-        background-color: #ff3b3b;
-    }
-
-    .content-section {
-        padding: 60px 0;
-    }
-
-    .feature-card,
-    .pricing-card {
-        border: none;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        background: #fff;
-    }
-
-    .pricing-card.popular {
-        border: 2px solid #007bff;
-    }
-
-    .badge-popular {
-        background-color: #ff6b6b;
-        color: white;
-    }
-
-    .cta-section {
-        background: #6610f2;
-        color: white;
-        text-align: center;
-        padding: 40px 0;
-    }
-
-    .testimonial-carousel .carousel-item blockquote {
-        background-color: #f8f9fa;
-        padding: 20px;
-        border-radius: 8px;
-    }
-
-    footer {
-        /* background-color: #333; 
-        text-align: center; */
-        color: #f8f9fa;
-        padding: 20px 0;
-
-    }
-</style>
-
-<div class="_container _mt-5">
+<!-- Breadcrumb Section -->
+{% include 'inc/breadcrumbs.html' %}
 
 
+<div class="container my-5">
     <!-- Hero Section -->
-    <section class="hero-section">
+    <div class="hero-section text-center py-5">
+        <h1 class="text-white">Technical SEO Auditing</h1>
+        <p class="lead text-white-50">Streamline your workflows with powerful tools for domain analysis, email authentication, and DNS management.</p>
+        <a href="#tools-section" class="btn btn-lg btn-light mt-3">
+            <i class="fas fa-envelope"></i> Explore Tools
+        </a>
+    </div>
+
+    <!-- Tools Section -->
+    <section id="tools-section" class="mt-5">
         <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <h1>Best SEO Tools</h1>
-                    <p class="mb-4">Get your free SEO report.</p>
-                    <a href="#online-test" class="btn btn-cta btn-lg mt-3">Get Your Free SEO Report</a>
+            <h2 class="text-center mb-4">SEO Tools</h2>
+            <div class="row g-4">
+                {% for tool in tools if tool.category == "SEO" %}
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body text-center">
+                            <i class="{{ tool.icon }} fa-2x mb-3 text-primary"></i>
+                            <h5 class="card-title">{{ tool.name }}</h5>
+                            <p class="card-text">{{ tool.description }}</p>
+                            <a href="{{ tool.link }}" class="btn btn-primary btn-sm">
+                                Use Tool <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-4 d-none d-md-block">
-                    <i class="fas fa-search fa-7x"></i>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </section>
 
-
-
-    {% include 'inc/benefits.html' %}
-
-    {% include 'inc/features.html' %}
-
-
-    {% include "inc/suscriptions.html" %}
-
-    {% include "inc/testimonials.html" %}
-
-
     <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <h2 class="mb-4">Start Your Free Trial Now!</h2>
-            <p class="lead">Access all tools with a 7-day trial and discover the impact on your digital presence.</p>
-            <a href="#pricing" class="btn btn-light btn-lg">Start Free Trial</a>
+    <section class="cta-section mt-5">
+        <div class="container text-center">
+            <h2 class="mb-3">Get Started Today!</h2>
+            <p class="lead">Access all tools to optimize your digital presence.</p>
+            <a href="/signup" class="btn btn-lg btn-light">
+                <i class="fas fa-user-plus"></i> Sign Up for Free
+            </a>
         </div>
     </section>
-
-
 </div>
-<script>
-    // Añadir evento submit al formulario para mostrar el spinner en el botón
-    document.getElementById('pageInfoForm').addEventListener('submit', function () {
-        document.getElementById('btnText').classList.add('d-none');
-        document.getElementById('loadingSpinner').classList.remove('d-none');
-    });
-</script>
 
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, #007bff, #6610f2), url('hero-bg.jpg') center/cover;
+        color: #fff;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    }
+
+    .cta-section {
+        background-color: #6610f2;
+        color: #fff;
+        padding: 40px 0;
+    }
+
+    .category-section h3 {
+        border-left: 5px solid currentColor;
+        padding-left: 15px;
+    }
+
+    .card .card-body i {
+        display: block;
+        margin: auto;
+    }
+</style>
 {% endblock %}

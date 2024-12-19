@@ -75,6 +75,33 @@ def index_domains():
                            tools=tools)
 
 
+@app.route('/tools/seo/', methods=['GET', 'POST'])
+def index_seo():
+    breadcrumbs = [
+        {'url': '/', 'text': 'Inicio'},
+        {'url': '/profile', 'text': 'Opcion 1'},
+        {'url': '/profile/edit', 'text': 'Sub opcion 1'}
+    ]
+
+    return render_template('tools/seo/index.html',
+                           breadcrumbs=breadcrumbs,
+                           tools=tools)
+
+@app.route('/tools/accesibility/', methods=['GET', 'POST'])
+def index_accesiblity():
+
+    breadcrumbs = [
+        {'url': '/', 'text': 'Inicio'},
+        {'url': '/profile', 'text': 'Opcion 1'},
+        {'url': '/profile/edit', 'text': 'Sub opcion 1'}
+    ]
+
+    return render_template('tools/accesibility/index.html',
+
+                           breadcrumbs=breadcrumbs,
+                           tools=index_tools)
+
+
 @app.route('/tools/check_domain/<string:domain>') #, methods=['POST'])
 def check_domain(domain):
     start_time = time.time() 

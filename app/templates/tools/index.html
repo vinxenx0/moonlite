@@ -17,7 +17,7 @@
     <section id="tools-section" class="mt-5">
         <div class="container">
             <h2 class="text-center mb-4">Explore Our Tools</h2>
-
+            {{ tools }}
             <!-- Categories -->
             {% for category in tools|groupby('category') %}
             <div class="category-section mt-5">

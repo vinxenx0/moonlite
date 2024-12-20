@@ -1,6 +1,7 @@
 # app/controllers/user_controller.py
 
 from app.forms import PaymentForm
+from app.utils.logger import log_user_event
 from flask import render_template, redirect, session, url_for, flash, request
 from flask_login import login_user, logout_user, current_user
 from app import app, db, mail
@@ -39,6 +40,7 @@ def edit_subscription():
 
         db.session.commit()
         flash('Suscripción actualizada correctamente.', 'success')
+        log_user_event(user, f"Suscripción cambiada a {form.subscription_plan.data}",'profile','info')
         log_event('SUBSCRIPTION_UPDATE', f'Suscripción de {user.username} actualizada.')
         return redirect(url_for('profile'))
 
@@ -80,6 +82,7 @@ def edit_payment_methods():
         db.session.commit()
         flash('Métodos de pago actualizados.', 'success')
         log_event('PAYMENT_UPDATE', f'Métodos de pago actualizados para el usuario {user.username}.')
+        log_user_event(user, f"Métodos de pago actualizados para el usuario {user.username}",'profile','info')
         return redirect(url_for('profile'))
 
     # Prepopulate the form

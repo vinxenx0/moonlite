@@ -13,6 +13,8 @@ from app.controllers.spider_tools import (
     get_hreflang_issues, get_meta_description_issues, get_meta_keywords_issues, get_page_info, 
     get_page_title_issues, get_soup, get_structured_data_issues
 )
+from app.models.user_model import Users
+from app.utils.logger import log_user_event
 from app.views.info import tool_info
 
 
@@ -110,6 +112,8 @@ def tools_seo(tool):
                 if results is not None:
                     is_results_valid = True
                     log_event(tool, url)
+                    user = Users.query.get(current_user.id)
+                    log_user_event(user, f"Analisis SEO de {url}",tool,'info')
                 else:
                     log_event(tool, 'Fail: No results returned')
             else:
@@ -124,6 +128,8 @@ def tools_seo(tool):
         total_entries, true_count, false_count, none_or_empty_count, false_percentage = 0, 0, 0, 0, 0
 
     duration = time.time() - start_time
+   
+
     return render_template(
         "tools/seo/results_seo.html",
         title=tool, is_results_valid=is_results_valid, duration=duration, form=form,

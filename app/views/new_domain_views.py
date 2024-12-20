@@ -1,4 +1,5 @@
 import time
+from app.models.user_model import Users
 from app.utils.logger import log_user_event
 from flask import render_template
 from flask_login import current_user
@@ -215,6 +216,8 @@ def tools_domains_new(tool):
 
         if results is not None:
             log_event(tool, domain)
+            user = Users.query.get(current_user.id)
+            log_user_event(user, f"Analisis dominio de {domain}",tool,'info')
             is_results_valid = True
         else:
             log_event(tool, 'Fail:' + domain)
@@ -238,6 +241,7 @@ def tools_domains_new(tool):
 
     end_time = time.time()
     duration = end_time - start_time
+
     
     return render_template(
         "tools/domains/results_domains.html",

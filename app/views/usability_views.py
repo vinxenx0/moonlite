@@ -12,6 +12,8 @@ from app.forms import SeoToolsForm
 from datetime import datetime
 from app.models.usage_model import Activity
 
+from app.models.user_model import Users
+from app.utils.logger import log_user_event
 from app.views.info import tool_info
 
 ##########
@@ -129,6 +131,8 @@ def tools_usability(tool):
             if results is not None:
                 log_event(tool, page)
                 is_results_valid = True
+                user = Users.query.get(current_user.id)
+                log_user_event(user, f"Analisis Usabilidad en {url}",tool,'info')
 
                 
 
@@ -162,6 +166,9 @@ def tools_usability(tool):
    
     end_time = time.time()
     duration = end_time - start_time
+
+
+    
     return render_template(
         "tools/usability/usability_results.html",
         # "tools/seo/" + tool + ".html",

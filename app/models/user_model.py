@@ -96,5 +96,5 @@ class UserLog(db.Model):
     log_type = db.Column(Enum('info', 'warn', 'err', name='log_types'), nullable=False)
 
     def __repr__(self):
-        return f'<UserLog {self.event} by {self.username} - {self.log_type}>'
+        return f'<UserLog {self.event} by {self.username} on {self.tool}- {self.log_type}>'
 

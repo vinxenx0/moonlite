@@ -82,3 +82,19 @@ class Transaction(db.Model):
 
     def __repr__(self):
         return f'<Transaction {self.transaction_type} - {self.amount}>'
+    
+
+class UserLog(db.Model):
+    __tablename__ = 'UserLogs'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('Users.id'), nullable=False)
+    username = db.Column(db.String(80), nullable=False)
+    event = db.Column(db.String(255), nullable=False)  # Description of the event
+    tool = db.Column(db.String(255), nullable=False)  # Tool used 
+    timestamp = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
+    ip_address = db.Column(db.String(45), nullable=False)  # Supports IPv4/IPv6
+    log_type = db.Column(Enum('info', 'warn', 'err', name='log_types'), nullable=False)
+
+    def __repr__(self):
+        return f'<UserLog {self.event} by {self.username} - {self.log_type}>'
+

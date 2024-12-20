@@ -1,4 +1,5 @@
 import time
+from app.utils.logger import log_user_event
 from flask import render_template
 from flask_login import current_user
 from flask import render_template, request
@@ -122,7 +123,7 @@ def tools_domains_new(tool):
             #'dns_servers_lookup': dns_servers_lookup(domain),
             #'http_lookup': http_lookup(domain),
             #'https_lookup': https_lookup(domain),
-            'ping': ping_lookup(domain),
+            #'ping': ping_lookup(domain),
             #'traceroute': traceroute_lookup(domain),
             #'nmap': nmap_lookup(domain)
         }
@@ -217,7 +218,7 @@ def tools_domains_new(tool):
             is_results_valid = True
         else:
             log_event(tool, 'Fail:' + domain)
-
+          
         
         # Recorrer el diccionario y contar los valores según las condiciones dadas
         for key, value in results.items():

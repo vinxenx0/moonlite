@@ -124,6 +124,7 @@ def edit_profile():
             db.session.commit()
             flash('Usuario editado correctamente.', 'success')
             log_event('USER EDIT', 'Usuario editado.')
+            log_user_event(user, f"Perfil de usuario editado",'profile','info')
             return redirect(url_for('profile'))
         else:
             flash('No tienes permisos para editar el perfil.', 'success')
@@ -173,6 +174,7 @@ def register():
         flash(
             'Se ha enviado un correo electrónico de confirmación. Por favor, verifica tu cuenta.',
             'success')
+        log_user_event(user, f"Correo de confirmacion enviado a {user.username}",'profile','info')
         return redirect(url_for('login'))
     return render_template('user/new_user.html', title='Registro', form=form, breadcrumbs=breadcrumbs)
 
@@ -232,6 +234,7 @@ def login():
             
             login_user(user)
             log_event('LOGIN', 'Inicio correcto.')
+            log_user_event(user, f"Login correcto",'login','info')
             
             app.config['COLOR_PRIMARY'] = user.config.get(
                 'color_primary', app.config['COLOR_PRIMARY'])
@@ -249,6 +252,7 @@ def login():
             return redirect(next_page or url_for('index'))
         else:
             flash('Usuario o contraseña incorrectos.', 'danger')
+            log_user_event(user, f"Login incorrecto de {user.username}",'login','info')
             #log_event('LOGIN', 'Configuración global sistema.')
             return redirect(url_for('login'))
         
@@ -261,13 +265,15 @@ def logout():
     breadcrumbs = [
         {'url': '/logout', 'text': 'Desconectado'}
     ]
+    
     logout_user()
     session.pop('session', None)
     resp = make_response(redirect(url_for('index')))
     resp.delete_cookie('session') 
 
     app.config.from_pyfile('../instance/config.py')
-    #log_event('LOGOUT', 'Usuario desconectado.')
+    #log_user_event(user, f"Métodos de pago actualizados para el usuario {user.username}",'profile','info')
+    
     flash('Hasta la vista', 'success')
     return render_template('user/logout.html', breadcrumbs=breadcrumbs)
 
@@ -281,10 +287,13 @@ def activate(token):
         flash('¡Tu cuenta ha sido activada! Ya puedes iniciar sesión.',
               'success')
         log_event('ACTIVATION', 'Cuenta activada con token.')
+        log_user_event(user, f"Token activado de {user.username}",'register','info')
+    
         return redirect(url_for('login'))
     
     #log_event('CONFIG', 'Token de activación incorrecto')
     flash('El enlace de activación es inválido o ha expirado.', 'danger')
+    log_user_event(user, f"Token invalido o expirado de {user.username}",'register','warn')
     return redirect(url_for('login'))
 
 
@@ -304,6 +313,7 @@ def reset_password_request():
                 'Se ha enviado un correo electrónico con instrucciones para restablecer tu contraseña.',
                 'success')
             #log_event('PASSWORD', 'Configuración global sistema.')
+            log_user_event(user, f"Enviado restablecer contraseña de {user.username}",'recover','warn')
             return redirect(url_for('login'))
         else:
             flash(
@@ -327,6 +337,7 @@ def change_password():
             current_user.set_password(form.password.data)
             db.session.commit()
             flash('Tu contraseña ha sido cambiada exitosamente.', 'success')
+            #log_user_event(user, f"Enviado restablecer contraseña de {user.username}",'recover','warn')
             log_event('PASSWORD', 'Contraseña cambiada.')
             return redirect(url_for('index'))
         else:
@@ -352,6 +363,7 @@ def reset_password(token):
             'El enlace de restablecimiento de contraseña es inválido o ha expirado.',
             'danger')
         #log_event('PASSWORD', 'Enlace restablecer contraseña inválido')
+        log_user_event(user, f"Enlace restablecer contraseña expirado de {user.username}",'recover','warn')
         return redirect(url_for('login'))
     form = PasswordResetForm()
     if form.validate_on_submit():
@@ -360,6 +372,7 @@ def reset_password(token):
         flash(
             'Tu contraseña ha sido restablecida. Ahora puedes iniciar sesión con tu nueva contraseña.',
             'success')
+        log_user_event(user, f"Restablecida contraseña de {user.username}",'recover','info')
         #log_event('PASSWORD', 'Contraseña restablecida.')
         return redirect(url_for('login'))
     return render_template('user/reset_password.html',
@@ -384,6 +397,7 @@ def send_password_reset_email(user, token):
 #'''
     #msg.html = render_template('email/reset_password.html', user=user, token=token)
     #log_event('PASSWORD', 'Email recuperar contraseña enviado.')
+    log_user_event(user, f"Email recuperar contraseña de {user.username} enviado",'recover','warn')
     mail.send(msg)
 
 
@@ -403,6 +417,7 @@ def send_activation_email(user):
     msg.html = render_template('email/send_activation.html', user=user, token=token)
     mail.send(msg)
     #log_event('ACTIVATION', 'Email de activacion enviado')
+    log_user_event(user, f"Email de activacion de usuario {user.username} enviado",'recover','info')
 
 #@app.route('/accept_cookies', methods=['POST'])
 #def accept_cookies():
@@ -443,6 +458,7 @@ def edit_full_profile():
         db.session.commit()
         flash('Perfil actualizado correctamente.', 'success')
         log_event('PROFILE_UPDATE', f'Perfil de {user.username} actualizado.')
+        log_user_event(user, f"Perfil de usuario {user.username} editado",'profile','info')
         return redirect(url_for('profile'))
 
     elif request.method == 'GET':

@@ -1,5 +1,5 @@
 # Herramientas disponibles en la app
-# Herramientas disponibles en la app
+## hay que poner orden con el tools=[] de __init__.py
 tools = [
     # Domains & Email
     {"name": "WHOIS", "description": "Check domain ownership details.", "link": "/tools/domains/whois", "icon": "fas fa-info-circle", "category": "Domains & Email", "subcategory": "Domain Information", "most_used": False, "is_new": False},
@@ -13,52 +13,77 @@ tools = [
 
     # Mail Server
     {"name": "MX Discover", "description": "Identify mail exchange servers for a domain.", "link": "/tools/domains/mx", "icon": "fas fa-server", "category": "Domains & Email", "subcategory": "Mail Server", "most_used": True, "is_new": False},
-    {"name": "DMARC Lookup", "description": "Check DMARC records for a domain.", "link": "/tools/domains/dmarc", "icon": "fas fa-envelope-open", "category": "Domains & Email", "subcategory": "Mail Server", "most_used": True, "is_new": False},
+    {"name": "DMARC Lookup", "description": "Check DMARC records for a domain.", "link": "/tools/domains/dmarc", "icon": "fas fa-envelope-open", "category": "Domains & Email", "subcategory": "Mail Server", "most_used": True, "is_new": True},
     {"name": "SPF Lookup", "description": "Check SPF records to prevent email spoofing.", "link": "/tools/domains/spf", "icon": "fas fa-shield-alt", "category": "Domains & Email", "subcategory": "Mail Server", "most_used": True, "is_new": False},
     {"name": "DKIM Lookup", "description": "Verify DKIM signatures for email authentication.", "link": "/tools/domains/dkim", "icon": "fas fa-signature", "category": "Domains & Email", "subcategory": "Mail Server", "most_used": True, "is_new": False},
     {"name": "TXT Lookup", "description": "Retrieve TXT records for a domain.", "link": "/tools/domains/txt", "icon": "fas fa-file-alt", "category": "Domains & Email", "subcategory": "Mail Server", "most_used": True, "is_new": False},
-    {"name": "DNS Key Lookup", "description": "Check DNSSEC key records.", "link": "/tools/domains/dnskey", "icon": "fas fa-key", "category": "Domains & Email", "subcategory": "Mail Server", "most_used": True, "is_new": False},
+    {"name": "DNS Key Lookup", "description": "Check DNSSEC key records.", "link": "/tools/domains/dnskey", "icon": "fas fa-key", "category": "Domains & Email", "subcategory": "Mail Server", "most_used": True, "is_new": True},
     {"name": "LOC Entry", "description": "Retrieve LOC records for a domain.", "link": "/tools/domains/loc", "icon": "fas fa-map-marker-alt", "category": "Domains & Email", "subcategory": "Mail Server", "most_used": False, "is_new": False},
     {"name": "IP Sec Key", "description": "Analyze IPSEC Key records.", "link": "/tools/domains/ipseckey", "icon": "fas fa-shield-alt", "category": "Domains & Email", "subcategory": "Mail Server", "most_used": False, "is_new": False},
 
     # DNS Lookup
     {"name": "SOA Lookup", "description": "Check SOA DNS records.", "link": "/tools/domains/soa", "icon": "fas fa-info", "category": "Domains & Email", "subcategory": "DNS Lookup", "most_used": True, "is_new": False},
     {"name": "ASN Lookup", "description": "Perform an ASN record lookup.", "link": "/tools/domains/asn", "icon": "fas fa-sitemap", "category": "Domains & Email", "subcategory": "DNS Lookup", "most_used": False, "is_new": False},
-    {"name": "ARIN Lookup", "description": "Retrieve ARIN information for a domain.", "link": "/tools/domains/arin", "icon": "fas fa-database", "category": "Domains & Email", "subcategory": "DNS Lookup", "most_used": False, "is_new": False},
+    {"name": "ARIN Lookup", "description": "Retrieve ARIN information for a domain.", "link": "/tools/domains/arin", "icon": "fas fa-database", "category": "Domains & Email", "subcategory": "DNS Lookup", "most_used": False, "is_new": True},
     {"name": "RRSIG Lookup", "description": "Retrieve RRSIG DNS records.", "link": "/tools/domains/rrsig", "icon": "fas fa-lock", "category": "Domains & Email", "subcategory": "DNS Lookup", "most_used": False, "is_new": False},
     {"name": "NSEC Lookup", "description": "Perform NSEC DNS lookups.", "link": "/tools/domains/nsec", "icon": "fas fa-lock", "category": "Domains & Email", "subcategory": "DNS Lookup", "most_used": False, "is_new": False},
-    {"name": "MTA STS", "description": "Check MTA STS compliance.", "link": "/tools/domains/mtasts", "icon": "fas fa-envelope", "category": "Domains & Email", "subcategory": "DNS Lookup", "most_used": False, "is_new": False},
+    {"name": "MTA STS", "description": "Check MTA STS compliance.", "link": "/tools/domains/mtasts", "icon": "fas fa-envelope", "category": "Domains & Email", "subcategory": "DNS Lookup", "most_used": False, "is_new": True},
     {"name": "NSEC3PARAM", "description": "Check NSEC3PARAM DNS records.", "link": "/tools/domains/nsec3param", "icon": "fas fa-key", "category": "Domains & Email", "subcategory": "DNS Lookup", "most_used": False, "is_new": False},
     {"name": "SRV Lookup", "description": "Perform SRV record lookup.", "link": "/tools/domains/srv", "icon": "fas fa-network-wired", "category": "Domains & Email", "subcategory": "DNS Lookup", "most_used": True, "is_new": False},
 
-    # Accessibility & Usability
+    # Accessibility 
     {"name": "WCAG-AA/AAA", "description": "Evaluate website accessibility compliance.", "link": "/tools/accesibility/wcag", "icon": "fas fa-universal-access", "category": "Accessibility & Usability", "subcategory": "Accessibility", "most_used": True, "is_new": False},
     {"name": "Spelling Check", "description": "Detect spelling issues on your site.", "link": "/tools/accesibility/ortografia", "icon": "fas fa-spell-check", "category": "Accessibility & Usability", "subcategory": "Accessibility", "most_used": True, "is_new": False},
+    {"name": "Velocidad", "description": "Analyze website performance metrics.", "link": "/tools/accesibility/core-web-vitals", "icon": "fas fa-vials", "category": "Accessibility & Usability", "subcategory": "Accessibility", "most_used": True, "is_new": True},
     {"name": "Core Web Vitals", "description": "Analyze website performance metrics.", "link": "/tools/accesibility/core-web-vitals", "icon": "fas fa-vials", "category": "Accessibility & Usability", "subcategory": "Accessibility", "most_used": True, "is_new": False},
     {"name": "Responsive Design", "description": "Check website responsiveness.", "link": "/tools/accesibility/responsive", "icon": "fas fa-mobile-alt", "category": "Accessibility & Usability", "subcategory": "Accessibility", "most_used": True, "is_new": False},
+    # Img optimization
+    {"name": "Images", "description": "Validate AMP page compliance.", "link": "/tools/accesibility/amp", "icon": "fas fa-mobile-alt", "category": "Accessibility & Usability", "subcategory": "Image Optimization", "most_used": False, "is_new": False},
     {"name": "Lazy Loading", "description": "Optimize image loading for speed.", "link": "/tools/accesibility/lazy-loading", "icon": "fas fa-clock", "category": "Accessibility & Usability", "subcategory": "Image Optimization", "most_used": True, "is_new": False},
+    # Mobile optimization
     {"name": "AMP Valid Page", "description": "Validate AMP page compliance.", "link": "/tools/accesibility/amp", "icon": "fas fa-mobile-alt", "category": "Accessibility & Usability", "subcategory": "Mobile Optimization", "most_used": False, "is_new": False},
-    {"name": "Mobile Audit", "description": "Perform a mobile optimization audit.", "link": "/tools/accesibility/mobile-audit", "icon": "fas fa-mobile-alt", "category": "Accessibility & Usability", "subcategory": "Mobile Optimization", "most_used": False, "is_new": False},
-
+    {"name": "Mobile Audit", "description": "Perform a mobile optimization audit.", "link": "/tools/accesibility/mobile-audit", "icon": "fas fa-mobile-alt", "category": "Accessibility & Usability", "subcategory": "Mobile Optimization", "most_used": False, "is_new": True},
+    # Usability
+    {"name": "Favicon Missing", "description": "Validate AMP page compliance.", "link": "/tools/accesibility/amp", "icon": "fas fa-mobile-alt", "category": "Accessibility & Usability", "subcategory": "Usability", "most_used": False, "is_new": False},
+    {"name": "Flash Used", "description": "Perform a mobile optimization audit.", "link": "/tools/accesibility/mobile-audit", "icon": "fas fa-mobile-alt", "category": "Accessibility & Usability", "subcategory": "Usability", "most_used": False, "is_new": False},
+    {"name": "X Card Tag Missing", "description": "Validate AMP page compliance.", "link": "/tools/accesibility/amp", "icon": "fas fa-mobile-alt", "category": "Accessibility & Usability", "subcategory": "Usability", "most_used": False, "is_new": False},
+    {"name": "Google Search Display", "description": "Perform a mobile optimization audit.", "link": "/tools/accesibility/mobile-audit", "icon": "fas fa-mobile-alt", "category": "Accessibility & Usability", "subcategory": "Usability", "most_used": False, "is_new": True},
+    {"name": "Content Optimization", "description": "Validate AMP page compliance.", "link": "/tools/accesibility/amp", "icon": "fas fa-mobile-alt", "category": "Accessibility & Usability", "subcategory": "Usability", "most_used": False, "is_new": False},
+    {"name": "Redirection Manager", "description": "Perform a mobile optimization audit.", "link": "/tools/accesibility/mobile-audit", "icon": "fas fa-mobile-alt", "category": "Accessibility & Usability", "subcategory": "Usability", "most_used": False, "is_new": True},
+    
     # SEO Tools
     {"name": "Titles (H1)", "description": "Analyze title tags for SEO improvements.", "link": "/tools/seo/titles", "icon": "fas fa-heading", "category": "SEO", "subcategory": "On-Page SEO", "most_used": True, "is_new": False},
     {"name": "Meta Descriptions", "description": "Optimize meta descriptions for search engines.", "link": "/tools/seo/meta-description", "icon": "fas fa-clipboard", "category": "SEO", "subcategory": "On-Page SEO", "most_used": True, "is_new": False},
-    {"name": "Robots.txt", "description": "Analyze robots.txt for crawling directives.", "link": "/tools/seo/robots", "icon": "fas fa-robot", "category": "SEO", "subcategory": "Crawling & Linking", "most_used": True, "is_new": False},
+    {"name": "Meta Keywords", "description": "Ensure canonicalization to prevent duplicates.", "link": "/tools/seo/canonicals", "icon": "fas fa-link", "category": "SEO", "subcategory": "Crawling & Linking", "most_used": True, "is_new": False},
+    {"name": "Encabezados (Headings)", "description": "Analyze title tags for SEO improvements.", "link": "/tools/seo/titles", "icon": "fas fa-heading", "category": "SEO", "subcategory": "On-Page SEO", "most_used": True, "is_new": False},
+    {"name": "Imágenes (IMG)", "description": "Ensure canonicalization to prevent duplicates.", "link": "/tools/seo/canonicals", "icon": "fas fa-link", "category": "SEO", "subcategory": "Crawling & Linking", "most_used": True, "is_new": True},
     {"name": "Canonical Tags", "description": "Ensure canonicalization to prevent duplicates.", "link": "/tools/seo/canonicals", "icon": "fas fa-link", "category": "SEO", "subcategory": "Crawling & Linking", "most_used": True, "is_new": False},
+    {"name": "Directives", "description": "Analyze title tags for SEO improvements.", "link": "/tools/seo/titles", "icon": "fas fa-heading", "category": "SEO", "subcategory": "On-Page SEO", "most_used": True, "is_new": False},
+    {"name": "Schema.org", "description": "Optimize meta descriptions for search engines.", "link": "/tools/seo/meta-description", "icon": "fas fa-clipboard", "category": "SEO", "subcategory": "On-Page SEO", "most_used": True, "is_new": False},
+    {"name": "OpenGraph", "description": "Ensure canonicalization to prevent duplicates.", "link": "/tools/seo/canonicals", "icon": "fas fa-link", "category": "SEO", "subcategory": "Crawling & Linking", "most_used": True, "is_new": True},
+    {"name": "Hreflang", "description": "Analyze title tags for SEO improvements.", "link": "/tools/seo/titles", "icon": "fas fa-heading", "category": "SEO", "subcategory": "On-Page SEO", "most_used": True, "is_new": False},
+    {"name": "URLs", "description": "Optimize meta descriptions for search engines.", "link": "/tools/seo/meta-description", "icon": "fas fa-clipboard", "category": "SEO", "subcategory": "On-Page SEO", "most_used": True, "is_new": False},
+    {"name": "Duplicate Content", "description": "Ensure canonicalization to prevent duplicates.", "link": "/tools/seo/canonicals", "icon": "fas fa-link", "category": "SEO", "subcategory": "Crawling & Linking", "most_used": True, "is_new": False},
+ 
+    
+    {"name": "Robots.txt", "description": "Analyze robots.txt for crawling directives.", "link": "/tools/seo/robots", "icon": "fas fa-robot", "category": "SEO", "subcategory": "Crawling & Linking", "most_used": True, "is_new": False},
     {"name": "Sitemap", "description": "Check the XML sitemap for search engines.", "link": "/tools/seo/sitemap", "icon": "fas fa-sitemap", "category": "SEO", "subcategory": "Crawling & Linking", "most_used": True, "is_new": False},
-    {"name": "Broken Links", "description": "Identify and fix broken links on your website.", "link": "/tools/seo/broken-links", "icon": "fas fa-unlink", "category": "SEO", "subcategory": "Crawling & Linking", "most_used": True, "is_new": False},
+    {"name": "Broken Links", "description": "Identify and fix broken links on your website.", "link": "/tools/seo/broken-links", "icon": "fas fa-unlink", "category": "SEO", "subcategory": "Crawling & Linking", "most_used": True, "is_new": True},
     {"name": "Backlinks", "description": "Analyze backlinks to your website.", "link": "/tools/seo/backlinks", "icon": "fas fa-link", "category": "SEO", "subcategory": "Crawling & Linking", "most_used": True, "is_new": False},
+    {"name": "Outlinks", "description": "Analyze backlinks to your website.", "link": "/tools/seo/backlinks", "icon": "fas fa-link", "category": "SEO", "subcategory": "Crawling & Linking", "most_used": True, "is_new": False},
+    {"name": "External links", "description": "Analyze backlinks to your website.", "link": "/tools/seo/backlinks", "icon": "fas fa-link", "category": "SEO", "subcategory": "Crawling & Linking", "most_used": True, "is_new": False},
     {"name": "Internal Links", "description": "Evaluate internal linking structure.", "link": "/tools/seo/internal-links", "icon": "fas fa-link", "category": "SEO", "subcategory": "Crawling & Linking", "most_used": True, "is_new": False},
+
     {"name": "CSS Issues", "description": "Identify CSS problems affecting performance.", "link": "/tools/seo/css-issues", "icon": "fas fa-code", "category": "SEO", "subcategory": "HTML/CSS Compliance", "most_used": False, "is_new": False},
     {"name": "Deprecated HTML Tags", "description": "Find deprecated HTML tags.", "link": "/tools/seo/deprecated-html", "icon": "fas fa-exclamation-triangle", "category": "SEO", "subcategory": "HTML/CSS Compliance", "most_used": False, "is_new": False},
-    {"name": "Gzip Compression", "description": "Check if Gzip compression is enabled.", "link": "/tools/seo/gzip", "icon": "fas fa-compress", "category": "SEO", "subcategory": "HTML/CSS Compliance", "most_used": False, "is_new": False},
+    {"name": "Gzip Compression", "description": "Check if Gzip compression is enabled.", "link": "/tools/seo/gzip", "icon": "fas fa-compress", "category": "SEO", "subcategory": "HTML/CSS Compliance", "most_used": False, "is_new": True},
 
     # Website Security
     {"name": "X-Tags", "description": "Verify security tags like X-Frame-Options.", "link": "/tools/security/x-tags", "icon": "fas fa-tags", "category": "Website Security", "subcategory": "Website Security", "most_used": False, "is_new": False},
     {"name": "Header Info", "description": "Analyze response headers for security.", "link": "/tools/security/header-info", "icon": "fas fa-info-circle", "category": "Website Security", "subcategory": "Website Security", "most_used": False, "is_new": False},
     {"name": "HTTPS/SSL", "description": "Verify HTTPS and SSL certificate compliance.", "link": "/tools/security/ssl", "icon": "fas fa-lock", "category": "Website Security", "subcategory": "Website Security", "most_used": True, "is_new": False},
     {"name": "Server Response", "description": "Analyze server response headers.", "link": "/tools/security/server-response", "icon": "fas fa-server", "category": "Website Security", "subcategory": "Website Security", "most_used": True, "is_new": False},
-    {"name": "Security Info", "description": "Review website security configurations.", "link": "/tools/security/info", "icon": "fas fa-shield-alt", "category": "Website Security", "subcategory": "Website Security", "most_used": False, "is_new": False},
+    {"name": "Security Info", "description": "Review website security configurations.", "link": "/tools/security/info", "icon": "fas fa-shield-alt", "category": "Website Security", "subcategory": "Website Security", "most_used": False, "is_new": True},
     {"name": "Canonical HTTPS to HTTP", "description": "Check if HTTP is redirected to HTTPS.", "link": "/tools/security/canonical-http", "icon": "fas fa-exchange-alt", "category": "Website Security", "subcategory": "Website Security", "most_used": False, "is_new": False},
     {"name": "HTTP to HTTPS Redirect", "description": "Ensure proper redirection from HTTP to HTTPS.", "link": "/tools/security/redirect-http-https", "icon": "fas fa-exchange-alt", "category": "Website Security", "subcategory": "Website Security", "most_used": False, "is_new": False},
 

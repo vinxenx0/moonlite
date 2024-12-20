@@ -15,6 +15,53 @@
         </a>
     </div>
 
+    <!-- General Category Info Cards -->
+<!-- Tools by Category -->
+<section id="categories" class="mt-5">
+    <h2 class="text-center mb-4">Tool Categories</h2>
+    <div class="row g-4">
+        {% for category, subcategories in grouped_tools.items() %}
+        <div class="col-lg-6 col-md-6 col-sm-12">
+            <!-- Header Card -->
+            <div class="card shadow-sm border-primary mb-3">
+                <div class="card-body text-center">
+                    <i class="fas fa-folder fa-2x text-primary mb-3"></i>
+                    <h5 class="card-title">{{ category }}</h5>
+                    <p class="card-text">
+                        <strong>{{ subcategories|length }}</strong> subcategories, 
+                        <strong>{{ subcategories.values()|map('length')|sum }}</strong> tools.
+                    </p>
+                    <a href="#{{ category|replace(' ', '-') }}" class="btn btn-outline-primary">
+                        View Category <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Display subcategory statistics and most popular tools -->
+            {% for subcategory, tools in subcategories.items() %}
+            <div class="card shadow-sm border-secondary mb-3">
+                <div class="card-body">
+                    <h6 class="card-title">{{ subcategory }}</h6>
+                    <p class="card-text">
+                        <strong>{{ tools|length }}</strong> tools in this subcategory.
+                    </p>
+
+                    <!-- Most Used and Popular Tools -->
+                    {% set popular_tool = tools|sort(attribute='usage_count', reverse=true)|first %}
+                    <p><strong>Most Used Tool:</strong> {{ popular_tool.name }} ({{ popular_tool.usage_count }} uses)</p>
+                    
+                    {% set top_rated_tool = tools|sort(attribute='rating', reverse=true)|first %}
+                    <p><strong>Most Popular Tool:</strong> {{ top_rated_tool.name }} (Rating: {{ top_rated_tool.rating }})</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+
+    <!-- General Category Info Cards -->
  <!-- Tools by Category -->
  <section id="categories" class="mt-5">
     <h2 class="text-center mb-4">Tool Categories</h2>

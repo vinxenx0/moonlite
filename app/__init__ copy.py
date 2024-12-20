@@ -204,8 +204,8 @@ def inject_breadcrumb():
     return {'breadcrumbs': breadcrumbs}
 
 @app.context_processor
-def inject_grouped_tools():
-    # Agrupar herramientas por categoría y subcategoría
+def inject_tools():
+    # Group tools by category and subcategory
     grouped_tools = {}
     for category, tools_in_category in groupby(sorted(tools, key=itemgetter('category')), key=itemgetter('category')):
         subcategories = {}
@@ -213,7 +213,6 @@ def inject_grouped_tools():
             subcategories[subcategory] = list(tools_in_subcategory)
         grouped_tools[category] = subcategories
     return dict(grouped_tools=grouped_tools)
-
 
 @login_manager.user_loader
 def load_user(user_id):

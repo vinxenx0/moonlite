@@ -14,6 +14,71 @@
         </a>
     </div>
 
+
+<!-- Subcategories with Statistics -->
+<section id="seo-subcategories" class="mt-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Domains & Email Subcategories</h2>
+        <div class="row g-4">
+            {% set subcategories = {} %}
+            {% for tool in tools if tool.category == "Domains & Email" %}
+                {% if tool.subcategory not in subcategories %}
+                    {% set _ = subcategories.update({tool.subcategory: {'tool_count': 0, 'most_used': 0, 'new_tools': 0}}) %}
+                {% endif %}
+                {% set _ = subcategories[tool.subcategory].update({'tool_count': subcategories[tool.subcategory]['tool_count'] + 1}) %}
+                {% if tool.most_used %}
+                    {% set _ = subcategories[tool.subcategory].update({'most_used': subcategories[tool.subcategory]['most_used'] + 1}) %}
+                {% endif %}
+                {% if tool.is_new %}
+                    {% set _ = subcategories[tool.subcategory].update({'new_tools': subcategories[tool.subcategory]['new_tools'] + 1}) %}
+                {% endif %}
+            {% endfor %}
+
+            {% for subcategory, stats in subcategories.items() %}
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="card shadow-sm h-100 border border-primary">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-primary">{{ subcategory }}</h5>
+                        <p class="card-text">
+                            <strong>{{ stats.tool_count }}</strong> tools available<br>
+                            <strong>{{ stats.most_used }}</strong> most used tools<br>
+                            <strong>{{ stats.new_tools }}</strong> newly added tools
+                        </p>
+                        <a href="/categories/seo/{{ subcategory|replace(' ', '-') }}" class="btn btn-primary btn-sm">
+                            View Tools <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+        <!-- New or Updated Tools Section -->
+        <section id="new-tools" class="mt-5">
+            <div class="container">
+                <h2 class="text-center mb-4">New or Updated Tools</h2>
+                <div class="row g-4">
+                    {% for tool in tools if tool.category == "Domains & Email" and tool.is_new %}
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="card shadow-sm h-100 border border-success">
+                            <div class="card-body text-center">
+                                <i class="{{ tool.icon }} fa-2x mb-3 text-success"></i>
+                                <h5 class="card-title">{{ tool.name }}</h5>
+                                <p class="card-text">{{ tool.description }}</p>
+                                <a href="{{ tool.link }}" class="btn btn-success btn-sm">
+                                    Try Now <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    
+
     <!-- Most Used Tools Section -->
     <section id="most-used-tools" class="mt-5">
         <div class="container">
@@ -37,26 +102,51 @@
         </div>
     </section>
 
-    <!-- New or Updated Tools Section -->
-    <section id="new-tools" class="mt-5">
-        <div class="container">
-            <h2 class="text-center mb-4">New or Updated Tools</h2>
+
+            <!-- Tools under each Subcategory -->
+<section id="subcategory-tools" class="mt-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Tools by Subcategory</h2>
+        {% set tools_by_subcategory = {} %}
+        {% for tool in tools if tool.category == "Domains & Email" %}
+            {% if tool.subcategory not in tools_by_subcategory %}
+                {% set _ = tools_by_subcategory.update({tool.subcategory: []}) %}
+            {% endif %}
+            {% set _ = tools_by_subcategory[tool.subcategory].append(tool) %}
+        {% endfor %}
+
+        {% for subcategory, tools_list in tools_by_subcategory.items() %}
+        <div class="subcategory-section mt-4">
+            <h3 class="mb-3 text-primary">{{ subcategory }}</h3>
             <div class="row g-4">
-                {% for tool in tools if tool.category == "Domains & Email" and tool.is_new %}
+                {% for tool in tools_list %}
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="card shadow-sm h-100 border border-success">
+                    <div class="card shadow-sm h-100 border border-info">
                         <div class="card-body text-center">
-                            <i class="{{ tool.icon }} fa-2x mb-3 text-success"></i>
+                            <i class="{{ tool.icon }} fa-2x mb-3 text-info"></i>
                             <h5 class="card-title">{{ tool.name }}</h5>
                             <p class="card-text">{{ tool.description }}</p>
-                            <a href="{{ tool.link }}" class="btn btn-success btn-sm">
-                                Try Now <i class="fas fa-arrow-right"></i>
+                            <a href="{{ tool.link }}" class="btn btn-info btn-sm">
+                                Use Tool <i class="fas fa-arrow-right"></i>
                             </a>
                         </div>
                     </div>
                 </div>
                 {% endfor %}
             </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+    <!-- CTA Section -->
+    <section class="cta-section mt-5">
+        <div class="container text-center">
+            <h2 class="mb-3">Get Started with Domains & Email Tools!</h2>
+            <p class="lead">Unlock the full potential of your domains and email management with these powerful tools.</p>
+            <a href="/signup" class="btn btn-lg btn-light">
+                <i class="fas fa-user-plus"></i> Sign Up for Free
+            </a>
         </div>
     </section>
 
@@ -83,16 +173,7 @@
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="cta-section mt-5">
-        <div class="container text-center">
-            <h2 class="mb-3">Get Started with Domains & Email Tools!</h2>
-            <p class="lead">Unlock the full potential of your domains and email management with these powerful tools.</p>
-            <a href="/signup" class="btn btn-lg btn-light">
-                <i class="fas fa-user-plus"></i> Sign Up for Free
-            </a>
-        </div>
-    </section>
+
 </div>
 
 <style>

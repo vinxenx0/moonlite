@@ -2,78 +2,16 @@
 
 {% extends "base.html" %}
 
-{% block title %}Herramienta{% endblock %}
+{% block title %}Mi portada{% endblock %}
+
 
 {% block content %}
+{% include 'inc/breadcrumbs.html' %}
 
-<div class="jumbotron">
+<div class="jumbotron mb-3">
   <h1 class="display-4">¡Bienvenido a nuestra aplicación!</h1>
-  <p class="lead">HAZTE PRO ahora para comenzar a disfrutar de todas las funcionalidades.</p>
-  <hr class="my-4">
-  <p>Puedes acceder a características exclusivas al registrarte en nuestra plataforma.</p>
-  <a class="btn btn-primary btn-lg" href="{{ url_for('index') }}" role="button">PRO</a>
-</div>
-
-
-<div class="row mb-3">
-  <div class="col-md-4">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Formulario</h5>
-        <form>
-          <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">Campo 1</label>
-            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="ejemplo@correo.com">
-          </div>
-          <button type="submit" class="btn btn-primary">Enviar</button>
-        </form>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-4">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Información</h5>
-        <p class="card-text">Este es un ejemplo de información en formato tarjeta.</p>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-4">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Información</h5>
-        <p class="card-text">Este es otro ejemplo de información en formato tarjeta.</p>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="row mb-3">
-  <div class="col">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Información</h5>
-        <p class="card-text">Este es un ejemplo de información en formato tarjeta.</p>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="row mb-3">
-  <div class="col-md-6">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Información</h5>
-        <p class="card-text">Este es un ejemplo de información en formato tarjeta.</p>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-6">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Información</h5>
-        <p class="card-text">Este es otro ejemplo de información en formato tarjeta.</p>
-      </div>
-    </div>
-  </div>
+  <p class="lead"><a class="btn btn-primary btn-lg" href="{{ url_for('index') }}" role="button">HAZTE PRO</a>ahora para comenzar a disfrutar de todas las funcionalidades.</p>
+ 
 </div>
 
 
@@ -171,6 +109,136 @@
   </div>
 </div>
 
+  <!-- Estadísticas -->
+  <div class="row mb-4">
+    <!-- Herramientas Más Usadas -->
+    <div class="col-md-4">
+      <div class="card border-primary shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title text-primary">Herramientas Más Usadas</h5>
+          <ul class="list-group">
+            {% for tool, count in stats['most_used_tools'] %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              {{ tool }}
+              <span class="badge bg-primary rounded-pill">{{ count }}</span>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <!-- % de Tipos de Avisos -->
+    <div class="col-md-4">
+      <div class="card border-warning shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title text-warning">% de Tipos de Avisos</h5>
+          <ul class="list-group">
+            {% for log_type, percentage in stats['log_type_percentages'].items() %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              {{ log_type | capitalize }}
+              <span class="badge bg-warning text-dark rounded-pill">{{ percentage|round(2) }}%</span>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Resumen General -->
+    <div class="col-md-4">
+      <div class="card border-success shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title text-success">Resumen General</h5>
+          <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Herramientas Diferentes
+              <span class="badge bg-success rounded-pill">{{ stats['unique_tools'] }}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Registros por Día
+              <span class="badge bg-success rounded-pill">{{ stats['logs_per_day'] }}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Registros por Mes
+              <span class="badge bg-success rounded-pill">{{ stats['logs_per_month'] }}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Registros por Año
+              <span class="badge bg-success rounded-pill">{{ stats['logs_per_year'] }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- transaction history -->
+<div class="container my-5 mb-3">
+  <div class="row justify-content-center">
+      <div class="col-lg-10">
+          <div class="card shadow-sm border-0">
+              <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                  <h2 class="h5 mb-0"><i class="bi bi-list-ul"></i> Transaction History</h2>
+                  <button class="btn btn-light btn-sm">
+                      <i class="bi bi-arrow-repeat"></i> Refresh
+                  </button>
+              </div>
+              <div class="card-body">
+                  {% if transactions %}
+                  <table id="transactionsTable" class="table table-striped table-hover align-middle">
+                      <thead class="table-primary">
+                          <tr>
+                              <th scope="col">Date</th>
+                              <th scope="col">Type</th>
+                              <th scope="col">Amount</th>
+                              <th scope="col">Description</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          {% for transaction in transactions %}
+                          <tr>
+                              <td>{{ transaction.timestamp }}</td>
+                              <td>
+                                  <span class="badge {% if transaction.transaction_type == 'Credit' %}bg-success{% else %}bg-danger{% endif %}">
+                                      {{ transaction.transaction_type }}
+                                  </span>
+                              </td>
+                              <td>{{ transaction.amount }}</td>
+                              <td>{{ transaction.description }}</td>
+                          </tr>
+                          {% endfor %}
+                      </tbody>
+                  </table>
+                  {% else %}
+                  <div class="alert alert-warning text-center" role="alert">
+                      <i class="bi bi-info-circle"></i> No transactions found.
+                  </div>
+                  {% endif %}
+              </div>
+              <div class="card-footer text-muted small text-center">
+                  <i class="bi bi-clock-history"></i> Last updated: {{ current_time }}
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      const table = new simpleDatatables.DataTable("#transactionsTable", {
+          searchable: true,
+          fixedHeight: true,
+          labels: {
+              placeholder: "Search...",
+              perPage: "{select} entries per page",
+              noRows: "No transactions to display",
+              info: "Showing {start} to {end} of {rows} entries",
+          },
+      });
+  });
+</script>
+
 <div class="row mb-3">
   <div class="col-md-4">
     <div class="card">
@@ -225,5 +293,180 @@
     </div>
   </div>
 </div>
+
+        <!-- User Information Section -->
+        <div class="row g-4 mb-3">
+          <!-- Profile Information Card -->
+          <div class="col-lg-4 col-md-6">
+              <div class="card shadow-sm border-0">
+                  <div class="card-header bg-primary text-white text-center">
+                      <i class="bi bi-person-circle" style="font-size: 3rem;"></i>
+                      <h5 class="mt-2">Personal Information</h5>
+                  </div>
+                  <div class="card-body">
+                      <ul class="list-group list-group-flush">
+                          <li class="list-group-item"><strong>Username:</strong> {{ user.username }}</li>
+                          <li class="list-group-item"><strong>Email:</strong> {{ user.email }}</li>
+                          <li class="list-group-item"><strong>Role:</strong> {{ user.role }}</li>
+                          <li class="list-group-item"><strong>Registered On:</strong> {{ user.registered_on.strftime('%Y-%m-%d') }}</li>
+                          <li class="list-group-item">
+                              <strong>Active:</strong>
+                              {% if user.active %}
+                              <span class="badge bg-success">Yes</span>
+                              {% else %}
+                              <span class="badge bg-danger">No</span>
+                              {% endif %}
+                          </li>
+                      </ul>
+                  </div>
+              </div>
+          </div>
+
+          <!-- Subscription Information Card -->
+          <div class="col-lg-4 col-md-6">
+              <div class="card shadow-sm border-0">
+                  <div class="card-header bg-info text-white text-center">
+                      <i class="bi bi-journal-text" style="font-size: 3rem;"></i>
+                      <h5 class="mt-2">Subscription</h5>
+                  </div>
+                  <div class="card-body">
+                      <ul class="list-group list-group-flush">
+                          <li class="list-group-item"><strong>Plan:</strong> {{ user.subscription_plan }}</li>
+                          <li class="list-group-item"><strong>Currency:</strong> {{ user.subscription_currency }}</li>
+                          <li class="list-group-item"><strong>Frequency:</strong> {{ user.subscription_frequency }}</li>
+                          <li class="list-group-item">
+                              <strong>Expires On:</strong>
+                              {% if user.subscription_expiration %}
+                              {{ user.subscription_expiration.strftime('%Y-%m-%d') }}
+                              {% if user.is_subscription_active() %}
+                              <span class="badge bg-success">Active</span>
+                              {% else %}
+                              <span class="badge bg-danger">Expired</span>
+                              {% endif %}
+                              {% else %}
+                              No subscription
+                              {% endif %}
+                          </li>
+                      </ul>
+                      <div class="mt-3 text-center">
+                          <a href="{{ url_for('edit_subscription') }}" class="btn btn-info text-white">
+                              <i class="bi bi-pencil-square"></i> Edit Subscription
+                          </a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <!-- Payment Methods Card -->
+          <div class="col-lg-4 col-md-6">
+              <div class="card shadow-sm border-0">
+                  <div class="card-header bg-secondary text-white text-center">
+                      <i class="bi bi-credit-card" style="font-size: 3rem;"></i>
+                      <h5 class="mt-2">Payment Methods</h5>
+                  </div>
+                  <div class="card-body">
+                      <ul class="list-group list-group-flush">
+                          <li class="list-group-item"><strong>Primary:</strong> {{ user.primary_payment.method if user.primary_payment else 'Not defined' }}</li>
+                          <li class="list-group-item"><strong>Secondary:</strong> {{ user.secondary_payment.method if user.secondary_payment else 'Not defined' }}</li>
+                      </ul>
+                      <div class="mt-3 text-center">
+                          <a href="#" class="btn btn-secondary text-white">
+                              <i class="bi bi-wallet2"></i> Manage Methods
+                          </a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+
+
+
+
+<div class="row mb-3">
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Información</h5>
+        <p class="card-text">Este es un ejemplo de información en formato tarjeta.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mb-3">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Información</h5>
+        <p class="card-text">Este es un ejemplo de información en formato tarjeta.</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Información</h5>
+        <p class="card-text">Este es otro ejemplo de información en formato tarjeta.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- Tabla de Logs -->
+   <div class="row mb-3">
+  <div class="card">
+    <div class="card-body">
+      {% if logs %}
+      <table id="logsTable" class="table table-striped">
+        <thead>
+          <tr>
+            <th>Fecha y Hora</th>
+            <th>Evento</th>
+            <th>Tool</th>
+            <th>IP</th>
+            <th>Tipo</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for log in logs %}
+          <tr>
+            <td>{{ log.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+            <td>{{ log.event }}</td>
+            <td>{{ log.tool }}</td>
+            <td>{{ log.ip_address }}</td>
+            <td>
+              <span class="badge {% if log.log_type == 'info' %}bg-success{% elif log.log_type == 'warn' %}bg-warning{% else %}bg-danger{% endif %}">
+                {{ log.log_type }}
+              </span>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <p>No hay registros de actividad disponibles.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      new simpleDatatables.DataTable('#logsTable', {
+          searchable: true,
+          fixedHeight: true,
+          labels: {
+              placeholder: "Search logs...",
+              perPage: "{select} entries per page",
+              noRows: "No logs found",
+              info: "Showing {start} to {end} of {rows} entries",
+          },
+      });
+  });
+</script>
+
+
+
+
 
 {% endblock %}

@@ -9,12 +9,26 @@ from app.controllers.logs_controller import log_event
 from app.controllers.spider_tools import get_page_info
 from app.forms import ConfigForm, PageInfoForm
 from app.models.usage_model import Activity
+from app.models.user_model import Transaction, UserLog, Users
+from app.views.user_views import calculate_log_statistics
 
 
 @app.route('/')
 def index():
     if current_user.is_authenticated:
-        return redirect(url_for('dashboard'))  # dashboard
+        breadcrumbs = [{'url': '/dashboard', 'text': 'Mi Escritorio'}]
+        logs = UserLog.query.filter_by(user_id=current_user.id).order_by(UserLog.timestamp.desc()).all()
+        stats = calculate_log_statistics(logs)
+        user = Users.query.filter_by(id=current_user.id).first()
+        logs = UserLog.query.filter_by(user_id=current_user.id).order_by(UserLog.timestamp.desc()).all()
+        transactions = Transaction.query.filter_by(user_id=current_user.id).order_by(Transaction.timestamp.desc()).all()
+        #return redirect(url_for('dashboard'))  # dashboard
+        return render_template('dashboard.html', 
+                               logs=logs,
+                               transactions = transactions,
+                               user=user,
+                               breadcrumbs=breadcrumbs,
+                               stats=stats)
     return redirect(url_for('start'))
 
 

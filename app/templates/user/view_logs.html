@@ -4,47 +4,6 @@
 <div class="container">
   <h1 class="my-4">Historial de Actividades</h1>
   
-  <!-- Estadísticas -->
-  <div class="row mb-4">
-    <div class="col-md-6">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Estadísticas de Actividad</h5>
-          <ul class="list-group">
-            <li class="list-group-item">
-              <strong>Herramientas Más Usadas:</strong>
-              <ul>
-                {% for tool, count in stats['most_used_tools'] %}
-                <li>{{ tool }} - {{ count }} veces</li>
-                {% endfor %}
-              </ul>
-            </li>
-            <li class="list-group-item">
-              <strong>% de Tipos de Avisos:</strong>
-              <ul>
-                {% for log_type, percentage in stats['log_type_percentages'].items() %}
-                <li>{{ log_type }}: {{ percentage|round(2) }}%</li>
-                {% endfor %}
-              </ul>
-            </li>
-            <li class="list-group-item">
-              <strong>Herramientas Diferentes Usadas:</strong> {{ stats['unique_tools'] }}
-            </li>
-            <li class="list-group-item">
-              <strong>Registros por Día:</strong> {{ stats['logs_per_day'] }}
-            </li>
-            <li class="list-group-item">
-              <strong>Registros por Mes:</strong> {{ stats['logs_per_month'] }}
-            </li>
-            <li class="list-group-item">
-              <strong>Registros por Año:</strong> {{ stats['logs_per_year'] }}
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-  
   <!-- Tabla de Logs -->
   <div class="card">
     <div class="card-body">
@@ -80,6 +39,49 @@
       {% endif %}
     </div>
   </div>
+
+    <!-- Estadísticas -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Estadísticas de Actividad</h5>
+              <ul class="list-group">
+                <li class="list-group-item">
+                  <strong>Herramientas Más Usadas:</strong>
+                  <ul>
+                    {% for tool, count in stats['most_used_tools'] %}
+                    <li>{{ tool }} - {{ count }} veces</li>
+                    {% endfor %}
+                  </ul>
+                </li>
+                <li class="list-group-item">
+                  <strong>% de Tipos de Avisos:</strong>
+                  <ul>
+                    {% for log_type, percentage in stats['log_type_percentages'].items() %}
+                    <li>{{ log_type }}: {{ percentage|round(2) }}%</li>
+                    {% endfor %}
+                  </ul>
+                </li>
+                <li class="list-group-item">
+                  <strong>Herramientas Diferentes Usadas:</strong> {{ stats['unique_tools'] }}
+                </li>
+                <li class="list-group-item">
+                  <strong>Registros por Día:</strong> {{ stats['logs_per_day'] }}
+                </li>
+                <li class="list-group-item">
+                  <strong>Registros por Mes:</strong> {{ stats['logs_per_month'] }}
+                </li>
+                <li class="list-group-item">
+                  <strong>Registros por Año:</strong> {{ stats['logs_per_year'] }}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      
 </div>
 
 <script>

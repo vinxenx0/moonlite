@@ -67,5 +67,6 @@ def usuarios():
 def transaction_history():
     breadcrumbs = [{'url': '/profile', 'text': 'Perfil'}, {'url': '/profile/transactions', 'text': 'Historial de Transacciones'}]
     transactions = Transaction.query.filter_by(user_id=current_user.id).order_by(Transaction.timestamp.desc()).all()
-    return render_template('user/transactions.html', transactions=transactions, breadcrumbs=breadcrumbs)
+    user = Users.query.get(current_user.id)
+    return render_template('user/transactions.html', transactions=transactions, breadcrumbs=breadcrumbs, user=user)
 

@@ -249,7 +249,7 @@ def login():
 
             flash('Inicio de sesión exitoso.', 'success')
             next_page = request.args.get('next')
-            return redirect(next_page or url_for('index'))
+            return redirect(next_page or url_for('dashboard'))
         else:
             flash('Usuario o contraseña incorrectos.', 'danger')
             log_user_event(user, f"Login incorrecto de {user.username}",'login','info')
@@ -275,7 +275,8 @@ def logout():
     #log_user_event(user, f"Métodos de pago actualizados para el usuario {user.username}",'profile','info')
     
     flash('Hasta la vista', 'success')
-    return render_template('user/logout.html', breadcrumbs=breadcrumbs)
+    #return render_template('user/logout.html', breadcrumbs=breadcrumbs)
+    return redirect(url_for('start'))
 
 
 @app.route('/activate/<token>')

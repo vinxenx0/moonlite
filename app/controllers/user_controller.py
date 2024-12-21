@@ -42,7 +42,7 @@ def edit_subscription():
         flash('Suscripción actualizada correctamente.', 'success')
         log_user_event(user, f"Suscripción cambiada a {form.subscription_plan.data}",'profile','info')
         log_event('SUBSCRIPTION_UPDATE', f'Suscripción de {user.username} actualizada.')
-        return redirect(url_for('profile'))
+        return redirect(url_for('dashboard'))
 
     # Prepopulate form
     if request.method == 'GET':
@@ -53,7 +53,7 @@ def edit_subscription():
     return render_template('user/edit_subscription.html', form=form, breadcrumbs=breadcrumbs)
 
 
-@app.route('/profile')
+@app.route('/profile') ## futuro dashboard
 @login_required
 def profile():
     breadcrumbs = [

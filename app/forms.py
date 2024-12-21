@@ -15,8 +15,8 @@ from wtforms.validators import DataRequired, Optional
 class SubscriptionForm(FlaskForm):
     subscription_plan = SelectField('Plan de Suscripción', choices=[
         ('Free', 'Free - 0$'), 
-        ('Basic', 'Basic - 5$'), 
-        ('Pro', 'Pro - 15$')
+        ('Pro', 'Pro - 9$'), 
+        ('Corporate', 'Corporate - 129$')
     ], validators=[DataRequired()])
     subscription_currency = StringField('Moneda (ISO, e.g., USD, EUR)', validators=[DataRequired()])
     subscription_frequency = SelectField('Frecuencia de Pago', choices=[

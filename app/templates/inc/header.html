@@ -194,7 +194,7 @@
        
 
             {% if current_user.is_authenticated %}
-    
+            <!-- 
             <span class="nav-item dropdown">
               <a class="btn btn-outline-primary me-2 ms-1 dropdown-toggle" href="#" id="domainDnsDropdown" role="button"
                 data-bs-toggle="dropdown" aria-expanded="false">
@@ -213,7 +213,7 @@
                 <li>
                   <hr class="dropdown-divider">
                 </li>
-                <!-- <li><a href="{{ url_for('edit_full_profile') }}" class="dropdown-item">Editar Perfil Completo</a></li> -->
+                <li><a href="{{ url_for('edit_full_profile') }}" class="dropdown-item">Editar Perfil Completo</a></li>
                 <li><a class="dropdown-item" href="{{ url_for('configuracion') }}"> Configuración</a></li>
                 <li><a class="dropdown-item" href="{{ url_for('change_password') }}"> Seguridad</a></li>
                 <li><a class="dropdown-item" href="{{ url_for('edit_payment_methods') }}">Formas de pago</a></li>
@@ -240,12 +240,17 @@
                 <li><a class="dropdown-item" href="{{ url_for('logout') }}"> Cerrar sesión</a></li>
               </ul>
             </span>
+            -->
+            <a href="/dashboard" class="btn btn-outline-primary me-2"><span class="item-responsive">Hi {{ current_user.username }}</a>
+            <a class="btn btn-primary me-2 ms-1" href="{{ url_for('edit_subscription') }}"><i class="fa-solid fa-rocket"></i>
+              Mejorar mi cuenta!</a></li>
+
             {% else %}
     
             <a class="btn btn-outline-primary me-2 ms-1" href="{{ url_for('login') }}"><i class="fa-solid fa-key"></i>
               Acceder</a>
     
-            <a class="btn btn-outline-primary me-2 ms-1" href="{{ url_for('register') }}"><i class="fa-solid fa-crown"></i>
+            <a class="btn btn-primary me-2 ms-1" href="{{ url_for('register') }}"><i class="fa-solid fa-crown"></i>
               Empezar gratis</a></li>
             {%endif%}
             <!--

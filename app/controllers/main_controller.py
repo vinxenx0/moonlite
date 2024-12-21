@@ -15,22 +15,8 @@ from app.views.user_views import calculate_log_statistics
 
 @app.route('/')
 def index():
-    if current_user.is_authenticated:
-        breadcrumbs = [{'url': '/dashboard', 'text': 'Mi Escritorio'}]
-        logs = UserLog.query.filter_by(user_id=current_user.id).order_by(UserLog.timestamp.desc()).all()
-        stats = calculate_log_statistics(logs)
-        user = Users.query.filter_by(id=current_user.id).first()
-        logs = UserLog.query.filter_by(user_id=current_user.id).order_by(UserLog.timestamp.desc()).all()
-        transactions = Transaction.query.filter_by(user_id=current_user.id).order_by(Transaction.timestamp.desc()).all()
-        #return redirect(url_for('dashboard'))  # dashboard
-        return render_template('dashboard.html', 
-                               logs=logs,
-                               transactions = transactions,
-                               user=user,
-                               breadcrumbs=breadcrumbs,
-                               stats=stats)
+   
     return redirect(url_for('start'))
-
 
 @app.route('/start', methods=['GET', 'POST'])
 def start():
@@ -79,6 +65,39 @@ def start():
         #data, validator = get_page_info(url)
         #validator = json.load(validator)
 
+    if current_user.is_authenticated:
+        # Check the user's subscription type
+        if current_user.subscription_plan == 'Corporate':
+            #return redirect(url_for('corporate_start.html'))
+            return render_template('corporate_start.html',
+                           data=data,
+                           validator=validator,
+                           form=form,
+                           breadcrumbs=breadcrumbs,
+                           spelling_errors=spelling_errors,
+                           grammar_errors=grammar_errors)
+            
+        elif current_user.subscription_plan == 'Pro':
+            #return redirect(url_for('pro_start.html'))
+            return render_template('pro_start.html',
+                           data=data,
+                           validator=validator,
+                           form=form,
+                           breadcrumbs=breadcrumbs,
+                           spelling_errors=spelling_errors,
+                           grammar_errors=grammar_errors)
+            
+        elif current_user.subscription_plan == 'Free':
+            return render_template('start.html',
+                           data=data,
+                           validator=validator,
+                           form=form,
+                           breadcrumbs=breadcrumbs,
+                           spelling_errors=spelling_errors,
+                           grammar_errors=grammar_errors)
+            # Default for users without a defined subscription
+            #return redirect(url_for('start'))
+    # Redirect unauthenticated users to a generic start page
     return render_template('start.html',
                            data=data,
                            validator=validator,
@@ -91,9 +110,19 @@ def start():
 @app.route('/dashboard')
 @login_required
 def dashboard():
-    breadcrumbs = [] #[{'url': '/dashboard', 'text': 'Dashboard'}]
-    log_event('DASHBOARD', 'Portada herramienta.')
-    return render_template('dashboard.html', breadcrumbs=breadcrumbs)
+        breadcrumbs = [{'url': '/dashboard', 'text': 'Mi Escritorio'}]
+        logs = UserLog.query.filter_by(user_id=current_user.id).order_by(UserLog.timestamp.desc()).all()
+        stats = calculate_log_statistics(logs)
+        user = Users.query.filter_by(id=current_user.id).first()
+        logs = UserLog.query.filter_by(user_id=current_user.id).order_by(UserLog.timestamp.desc()).all()
+        transactions = Transaction.query.filter_by(user_id=current_user.id).order_by(Transaction.timestamp.desc()).all()
+        #return redirect(url_for('dashboard'))  # dashboard
+        return render_template('dashboard.html', 
+                               logs=logs,
+                               transactions = transactions,
+                               user=user,
+                               breadcrumbs=breadcrumbs,
+                               stats=stats)
 
 
 @app.route('/config', methods=['GET', 'POST'])

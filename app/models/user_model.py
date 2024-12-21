@@ -32,7 +32,7 @@ class Users(UserMixin, db.Model):
     #logs = db.relationship('Log', back_populates='user', cascade="all, delete-orphan")
 
     # Subscription data
-    subscription_plan = db.Column(Enum('Free', 'Basic', 'Pro', name='subscription_plans'), default='Free')
+    subscription_plan = db.Column(Enum('Free', 'Pro', 'Corporate', name='subscription_plans'), default='Free')
     subscription_currency = db.Column(db.String(3), default='USD')  # ISO currency codes (e.g., USD, EUR)
     subscription_expiration = db.Column(db.DateTime, nullable=True)
     subscription_frequency = db.Column(Enum('Monthly', 'Annually', name='subscription_frequency'), default='Monthly')

@@ -1,48 +1,16 @@
 {% extends "base.html" %}
 
-{% block title %}Transaction History{% endblock %}
+{% block title %}Historial de Transacciones{% endblock %}
 
 {% block content %}
-<style>
-    .card {
-    border-radius: 10px;
-}
-
-.card-header {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 700;
-}
-
-.table-striped > tbody > tr:nth-of-type(odd) {
-    background-color: #f8f9fa;
-}
-
-.badge {
-    font-size: 0.85rem;
-}
-
-.alert-warning {
-    background-color: #fff3cd;
-    color: #856404;
-}
-
-.btn-light {
-    border: 1px solid #dee2e6;
-}
-
-.btn-light:hover {
-    background-color: #f8f9fa;
-}
-
-</style>
 <div class="container my-5">
     <div class="row justify-content-center">
         <div class="col-lg-10">
             <div class="card shadow-sm border-0">
                 <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                    <h2 class="h5 mb-0"><i class="bi bi-list-ul"></i> Transaction History</h2>
+                    <h2 class="h5 mb-0"><i class="bi bi-list-ul"></i> Historial de Transacciones</h2>
                     <button class="btn btn-light btn-sm">
-                        <i class="bi bi-arrow-repeat"></i> Refresh
+                        <i class="bi bi-arrow-repeat"></i> Actualizar
                     </button>
                 </div>
                 <div class="card-body">
@@ -50,22 +18,22 @@
                     <table id="transactionsTable" class="table table-striped table-hover align-middle">
                         <thead class="table-primary">
                             <tr>
-                                <th scope="col">Date</th>
-                                <th scope="col">Type</th>
-                                <th scope="col">Amount</th>
-                                <th scope="col">Description</th>
+                                <th scope="col">Fecha</th>
+                                <th scope="col">Tipo</th>
+                                <th scope="col">Monto</th>
+                                <th scope="col">Descripción</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for transaction in transactions %}
                             <tr>
-                                <td>{{ transaction.timestamp }}</td>
+                                <td>{{ transaction.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
                                 <td>
-                                    <span class="badge {% if transaction.transaction_type == 'Credit' %}bg-success{% else %}bg-danger{% endif %}">
+                                    <span class="badge {% if transaction.transaction_type == 'Subscription' %}bg-info{% else %}bg-secondary{% endif %}">
                                         {{ transaction.transaction_type }}
                                     </span>
                                 </td>
-                                <td>{{ transaction.amount }}</td>
+                                <td>{{ transaction.amount }} {{ user.subscription_currency }}</td>
                                 <td>{{ transaction.description }}</td>
                             </tr>
                             {% endfor %}
@@ -73,12 +41,12 @@
                     </table>
                     {% else %}
                     <div class="alert alert-warning text-center" role="alert">
-                        <i class="bi bi-info-circle"></i> No transactions found.
+                        <i class="bi bi-info-circle"></i> No se encontraron transacciones.
                     </div>
                     {% endif %}
                 </div>
                 <div class="card-footer text-muted small text-center">
-                    <i class="bi bi-clock-history"></i> Last updated: {{ current_time }}
+                    <i class="bi bi-clock-history"></i> Última actualización: {{ current_time }}
                 </div>
             </div>
         </div>
@@ -87,18 +55,16 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const table = new simpleDatatables.DataTable("#transactionsTable", {
+        new simpleDatatables.DataTable('#transactionsTable', {
             searchable: true,
             fixedHeight: true,
             labels: {
-                placeholder: "Search...",
-                perPage: "{select} entries per page",
-                noRows: "No transactions to display",
-                info: "Showing {start} to {end} of {rows} entries",
+                placeholder: "Buscar...",
+                perPage: "{select} entradas por página",
+                noRows: "No hay transacciones para mostrar",
+                info: "Mostrando {start} a {end} de {rows} entradas",
             },
         });
     });
 </script>
-
-
 {% endblock %}

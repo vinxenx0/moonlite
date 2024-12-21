@@ -6,7 +6,7 @@ from flask import render_template, redirect, session, url_for, flash, request
 from flask_login import login_user, logout_user, current_user
 from app import app, db, mail
 from app.controllers.logs_controller import log_event
-from app.models.user_model import Users
+from app.models.user_model import Transaction, Users
 from app.forms import LoginForm, PasswordResetRequestForm
 from app.forms import NewUserRegistrationForm, RegistrationForm
 from flask import render_template, redirect, url_for, flash, request
@@ -27,24 +27,46 @@ def edit_subscription():
     form = SubscriptionForm()
 
     if form.validate_on_submit():
+        # Plan actual antes de la actualización
+        previous_plan = user.subscription_plan
+
+        # Actualizar datos de suscripción
         user.subscription_plan = form.subscription_plan.data
         user.subscription_currency = form.subscription_currency.data
         user.subscription_frequency = form.subscription_frequency.data
 
-        # Set expiration date based on frequency
+        # Establecer fecha de expiración en función de la frecuencia
         now = datetime.datetime.utcnow()
         if form.subscription_frequency.data == 'Monthly':
             user.subscription_expiration = now + datetime.timedelta(days=30)
         else:
             user.subscription_expiration = now + datetime.timedelta(days=365)
 
+        # Establecer monto basado en el plan
+        plan_costs = {'Free': 0, 'Pro': 15, 'Corporate': 50}
+        amount = plan_costs.get(form.subscription_plan.data, 0)
+
+        # Crear una transacción para registrar el cambio
+        transaction = Transaction(
+            user_id=user.id,
+            amount=amount,
+            transaction_type='Subscription',
+            description=f"Cambio de suscripción de {previous_plan} a {form.subscription_plan.data} ({form.subscription_frequency.data})",
+            timestamp=datetime.datetime.utcnow()
+        )
+        db.session.add(transaction)
+
+        # Guardar cambios
         db.session.commit()
+
+        # Log del evento
+        log_user_event(user, f"Suscripción cambiada a {form.subscription_plan.data}", 'subscription', 'info')
+        log_event('SUBSCRIPTION_UPDATE', f'Suscripción de {user.username} actualizada a {form.subscription_plan.data}.')
+
         flash('Suscripción actualizada correctamente.', 'success')
-        log_user_event(user, f"Suscripción cambiada a {form.subscription_plan.data}",'profile','info')
-        log_event('SUBSCRIPTION_UPDATE', f'Suscripción de {user.username} actualizada.')
         return redirect(url_for('dashboard'))
 
-    # Prepopulate form
+    # Prepopular el formulario
     if request.method == 'GET':
         form.subscription_plan.data = user.subscription_plan
         form.subscription_currency.data = user.subscription_currency

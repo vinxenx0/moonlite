@@ -36,7 +36,7 @@ from app.views.info import tools
 #        print(f"Error getting country from IP: {e}")
 #        return None
 
-
+ 
 
 @app.route('/tools/', methods=['GET', 'POST'])
 def index_tools():

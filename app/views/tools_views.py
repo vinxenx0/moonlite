@@ -39,6 +39,7 @@ from app.views.info import tools
  
 
 @app.route('/tools/')
+@app.route('/tools')
 def index_tools():
 
     breadcrumbs = [

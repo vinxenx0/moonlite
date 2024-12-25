@@ -39,16 +39,18 @@ from app.views.info import tools
  
 
 @app.route('/tools/')
-@app.route('/tools')
 def index_tools():
 
     breadcrumbs = [
         {'url': '/tools', 'text': 'Todas las herramientas'}
     ]
     tools = []
+    if request.method == 'POST':
+        return redirect(url_for('index_tools'))  # Redirección a la misma ruta
     return render_template('tools/index.html',
                            breadcrumbs=breadcrumbs,
                            tools=tools)
+
 
 
 @app.route('/tools/domains/', methods=['GET', 'POST'])

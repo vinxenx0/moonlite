@@ -45,8 +45,6 @@ def index_tools():
         {'url': '/tools', 'text': 'Todas las herramientas'}
     ]
     tools = []
-    if request.method == 'POST':
-        return redirect(url_for('index_tools'))  # Redirección a la misma ruta
     return render_template('tools/index.html',
                            breadcrumbs=breadcrumbs,
                            tools=tools)
@@ -150,7 +148,7 @@ def check_domain(domain):
 
 
 
-@app.route('/tools/ping', methods=['GET', 'POST'])
+@app.route('/tools/ping/', methods=['GET', 'POST'])
 def ping():
     breadcrumbs = [
         {'url': '/tools', 'text': 'Tools'},

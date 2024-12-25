@@ -15,6 +15,9 @@ from app.views.user_views import calculate_log_statistics
 
 @app.route('/')
 def index():
+    # Si la ruta no termina con '/', redirige con barra diagonal
+    if not request.path.endswith('/'):
+        return redirect(request.path + '/', code=301)  # Redirige permanentemente con la barra diagonal
     return redirect(url_for('start'))
 
 @app.route('/start', methods=['GET', 'POST'])

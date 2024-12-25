@@ -38,13 +38,13 @@ from app.views.info import tools
 
  
 
-@app.route('/tools/', methods=['GET', 'POST'])
+@app.route('/tools/')
 def index_tools():
 
     breadcrumbs = [
         {'url': '/tools', 'text': 'Todas las herramientas'}
     ]
-    
+    tools = []
     return render_template('tools/index.html',
                            breadcrumbs=breadcrumbs,
                            tools=tools)

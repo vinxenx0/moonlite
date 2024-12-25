@@ -47,7 +47,7 @@ def index_tools_with_trailing_slash():
     breadcrumbs = [
         {'url': '/tools', 'text': 'Todas las herramientas'}
     ]
-    tools = []
+
     return render_template('tools/index.html',
                            breadcrumbs=breadcrumbs,
                            tools=tools)

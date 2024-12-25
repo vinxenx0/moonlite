@@ -54,7 +54,7 @@ def index_tools():
 def index_domains():
     
     breadcrumbs = [
-        {'url': '/tools/', 'text': 'Tools'},
+        {'url': '/tools', 'text': 'Tools'},
         {'url': '/tools/domains', 'text': 'Dominios'}
     ]
 
@@ -68,7 +68,7 @@ def index_domains():
 def index_seo():
     
     breadcrumbs = [
-         {'url': '/tools/', 'text': 'Tools'},
+         {'url': '/tools', 'text': 'Tools'},
         {'url': '/tools/seo', 'text': 'SEO'}
     ]
     return render_template('tools/seo/index.html',
@@ -80,7 +80,7 @@ def index_accesiblity():
 
     breadcrumbs = [
         {'url': '/', 'text': 'Inicio'},
-        {'url': '/tools/', 'text': 'Tools'},
+        {'url': '/tools', 'text': 'Tools'},
         {'url': '/tools/domains', 'text': 'Accesibilidad'}
     ]
 

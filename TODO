@@ -3,7 +3,7 @@
 
 updates to revision
 
-- el token le añade b' al token
+#########el token le añade b' al token
 - pagina front cuando haces login
 - revisar lo que devuelve el speller check de la ortografia
 - revisar las devoluciones de los scripts para el dashboard

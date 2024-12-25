@@ -115,225 +115,23 @@
        
     </style>
 
-    <!-- Jumbotron -->
-    <header class="jumbotron">
-        <div class="jumbotron-content">
-            <h1 class="display-3">Toma el Control de tu Monitoreo Web</h1>
-            <p class="lead">Herramientas poderosas para generar informes técnicos y asegurar el rendimiento óptimo.</p>
-            <a href="#pricing" class="btn btn-primary btn-lg btn-cta">Empieza Gratis Hoy</a>
-        </div>
-        <img src="https://via.placeholder.com/600x400" alt="Monitoreo de sitio web">
-    </header>
+
+    {% include "inc/jumbotron.html" %}
 
 
 
-    <!-- Test Our Tool -->
-    <section class="test-tool-section text-center py-5">
-        <div class="container">
-            <h2>Test Our Monitoring Tool</h2>
-            <p>Enter your URL below to test our monitoring capabilities.</p>
-            <form>
-                <div class="input-group mb-3">
-                    <input type="url" class="form-control" placeholder="Enter your website URL">
-                    <button class="btn btn-primary" type="submit">Test Now</button>
-                </div>
-            </form>
-        </div>
-    </section>
+    {% include "inc/trytool.html" %}
 
+    {% include "inc/featurettes.html" %}
 
+    {% include "inc/benefits.html" %}
 
-    <!-- Featurettes -->
-    <div class="container my-5">
-        <div class="row featurette">
-            <div class="col-md-6">
-                <img src="https://via.placeholder.com/500" alt="Feature 1" class="img-fluid rounded">
-            </div>
-            <div class="col-md-6">
-                <h2>Real-Time Monitoring</h2>
-                <p>Analyze your site's performance in real time with our powerful tools.</p>
-				                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Key Features</h5>
-                        <ul class="list-group">
-                            <li class="list-group-item">Live Data Analysis</li>
-                            <li class="list-group-item">Performance Alerts</li>
-                            <li class="list-group-item">Uptime Tracking</li>
-                        </ul>
-                    </div>
-                </div>
-                <a href="#features" class="btn btn-outline-primary">Learn More</a>
-            </div>
-        </div>
-        <div class="row featurette">
-            <div class="col-md-6 order-md-2">
-                <img src="https://via.placeholder.com/500" alt="Feature 2" class="img-fluid rounded">
-            </div>
-            <div class="col-md-6 order-md-1">
-                <h2>Comprehensive Reporting</h2>
-                <p>Generate detailed reports to help you understand and improve performance.</p>
-				                <div class="accordion" id="reportAccordion">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
-                                Report Types
-                            </button>
-                        </h2>
-                        <div id="collapseOne" class="accordion-collapse collapse show">
-                            <div class="accordion-body">
-                                Generate PDF, Excel, and Custom Reports with ease.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
-                                Advanced Filtering
-                            </button>
-                        </h2>
-                        <div id="collapseTwo" class="accordion-collapse collapse">
-                            <div class="accordion-body">
-                                Apply advanced filters to focus on critical metrics.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <a href="#pricing" class="btn btn-outline-primary">Explore Plans</a>
-            </div>
-        </div>
-            <div class="row featurette">
-            <div class="col-md-6">
-                <img src="https://via.placeholder.com/500" alt="Feature 3" class="img-fluid rounded">
-            </div>
-            <div class="col-md-6">
-                <h2>Customizable Dashboards</h2>
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Feature</th>
-                                <th>Description</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Widgets</td>
-                                <td>Add and organize custom widgets.</td>
-                            </tr>
-                            <tr>
-                                <td>Layouts</td>
-                                <td>Choose pre-built or custom layouts.</td>
-                            </tr>
-                            <tr>
-                                <td>Reports</td>
-                                <td>Integrate reports directly into dashboards.</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-				<a href="#pricing" class="btn btn-outline-primary">Explore Plans</a>
-			</div>
-        </div>
-	</div>
+    {% include "inc/features.html" %}
 
-    <!-- Benefits Section -->
-    <section class="benefits-section">
-        <div class="container">
-            <h2 class="text-center mb-5">Why Choose Our Tools?</h2>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="benefit-card">
-                        <i class="bi bi-graph-up fa-3x mb-3 text-primary"></i>
-                        <h5>Comprehensive Analysis</h5>
-                        <p>In-depth insights on SEO, domain metrics, and backlinks.</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="benefit-card">
-                        <i class="bi bi-shield-check fa-3x mb-3 text-primary"></i>
-                        <h5>Secure & Private</h5>
-                        <p>Your data is protected. No tracking or data sharing.</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="benefit-card">
-                        <i class="bi bi-file-earmark-text fa-3x mb-3 text-primary"></i>
-                        <h5>Professional Reports</h5>
-                        <p>Generate professional reports and share them easily.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    {% include "inc/suscriptions.html" %}
 
-    <!-- Features Overview -->
-    <section class="features-overview">
-        <div class="container">
-            <h2 class="text-center mb-5">Features Overview</h2>
-            <div class="accordion" id="featuresAccordion">
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingOne">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
-                            Real-time SEO Analysis
-                        </button>
-                    </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse show">
-                        <div class="accordion-body">
-                            Get real-time insights into keyword rankings, traffic, and competitors.
-                        </div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingTwo">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
-                            Domain & Backlink Monitoring
-                        </button>
-                    </h2>
-                    <div id="collapseTwo" class="accordion-collapse collapse">
-                        <div class="accordion-body">
-                            Track your domain's health and backlinks efficiently.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    {% include "inc/testimonials.html" %}
 
-    <!-- Pricing -->
-    <section id="pricing" class="pricing-section">
-        <div class="container text-center">
-            <h2>Choose Your Plan</h2>
-            <div class="row">
-                <!-- Basic Plan -->
-                <div class="col-md-6">
-                    <div class="card pricing-table">
-                        <div class="card-header bg-primary text-white">
-                            <h5>Basic Plan</h5>
-                        </div>
-                        <div class="card-body">
-                            <h3>$9<span class="small">/month</span></h3>
-                            <p>For growing businesses and limited reports.</p>
-                            <a href="#" class="btn btn-primary">Subscribe Now</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Pro Plan -->
-                <div class="col-md-6">
-                    <div class="card pricing-table">
-                        <div class="card-header bg-success text-white">
-                            <h5>Pro Plan</h5>
-                        </div>
-                        <div class="card-body">
-                            <h3>$29<span class="small">/month</span></h3>
-                            <p>Unlock all features with unlimited reports and priority support.</p>
-                            <a href="#" class="btn btn-success">Subscribe Now</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-	
 
 	
 	    <!-- CTA Section -->
@@ -351,5 +149,11 @@
             
         </div>
     </section>
-
+    <script>
+        // Añadir evento submit al formulario para mostrar el spinner en el botón
+        document.getElementById('pageInfoForm').addEventListener('submit', function () {
+            document.getElementById('btnText').classList.add('d-none');
+            document.getElementById('loadingSpinner').classList.remove('d-none');
+        });
+    </script>
     {% endblock %}

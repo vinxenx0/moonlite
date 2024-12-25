@@ -38,9 +38,12 @@ from app.views.info import tools
 
  
 
-@app.route('/tools/')
-def index_tools():
+@app.route('/tools', methods=['GET'])
+def index_tools_redirect():
+    return redirect(url_for('index_tools_with_trailing_slash'))
 
+@app.route('/tools/', methods=['GET'])
+def index_tools_with_trailing_slash():
     breadcrumbs = [
         {'url': '/tools', 'text': 'Todas las herramientas'}
     ]

@@ -274,7 +274,7 @@ def login():
             return redirect(next_page or url_for('dashboard'))
         else:
             flash('Usuario o contraseña incorrectos.', 'danger')
-            log_user_event(user, f"Login incorrecto",'login','info')
+            #log_user_event(user, f"Login incorrecto",'login','info')
             #log_event('LOGIN', 'Configuración global sistema.')
             return redirect(url_for('login'))
         

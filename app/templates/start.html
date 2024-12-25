@@ -5,157 +5,120 @@
 {% block title %}Inicio{% endblock %}
 
 {% block content %}
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        color: #333;
-        background-color: #f8f9fa;
-    }
+    <style>
+        /* General Body Styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+        }
 
-    .hero-section {
-        background: linear-gradient(135deg, #007bff, #6610f2);
-        color: white;
-        padding: 80px 0;
-        text-align: center;
-    }
+          /* Jumbotron Full Page */
+        .jumbotron {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 2rem;
+            color: white;
+            background: linear-gradient(135deg, #6610f2, #6f42c1);
+        }
 
-    .content-section {
-        padding: 60px 0;
-    }
+        .jumbotron-content {
+            max-width: 50%;
+        }
 
-    .feature-card,
-    .pricing-card {
-        border: none;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        background: #fff;
-    }
+        .jumbotron img {
+            max-height: 80%;
+            max-width: 40%;
+            object-fit: cover;
+            border-radius: 0.5rem;
+        }
 
-    .cta-section {
+        /* CTA Buttons */
+        .btn-cta {
+            animation: pulsate 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulsate {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Featurettes */
+        .featurette {
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background-color: #f8f9fa;
+            border-radius: 0.5rem;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .featurette img {
+            border-radius: 0.5rem;
+        }
+        .featurette .btn {
+            margin-top: 1rem;
+        }
+
+        /* Benefits Section */
+        .benefits-section {
+            background-color: #e9ecef;
+            padding: 3rem 2rem;
+        }
+        .benefit-card {
+            background-color: white;
+            border: 1px solid #dee2e6;
+            border-radius: 0.5rem;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .benefit-card:hover {
+            transform: translateY(-10px);
+        }
+
+        /* Features Overview */
+        .features-overview {
+            background-color: #f8f9fa;
+            padding: 3rem 1rem;
+        }
+        .features-overview .accordion-button::after {
+            font-family: 'Bootstrap Icons';
+        }
+
+        /* Pricing Section */
+        .pricing-section {
+            background-color: #fff;
+            padding: 4rem 2rem;
+        }
+        .pricing-table .card {
+            border: none;
+            border-radius: 1rem;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+		
+		 .cta-section {
         background: #6610f2;
         color: white;
         text-align: center;
         padding: 40px 0;
     }
 
-    .badge-custom {
-        background-color: #6610f2;
-        color: white;
-        padding: 5px 10px;
-        font-size: 0.9rem;
-    }
-</style>
-
-<!-- Optional Styling for Enhanced Visuals -->
-<style>
-    .hero-section {
-        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('your-background-image.jpg') center/cover no-repeat;
-        color: #f8f9fa;
-    }
-
-    .content-section {
-        background-color: #f8f9fa;
-    }
-
-    .input-group .form-control:focus {
-        border-color: #007bff;
-        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-    }
-
-    #analizarBtn {
-        display: flex;
-        align-items: center;
-    }
-
-    .alert i {
-        font-size: 1.2rem;
-    }
-</style>
-
-<style>
-    /* Custom Styles */
-    body {
-        font-family: Arial, sans-serif;
-        color: #333;
-        background-color: #f8f9fa;
-    }
-
-    .hero-section {
-        background: linear-gradient(135deg, #007bff, #6610f2);
-        color: white;
-        padding: 80px 0;
-        text-align: center;
-        position: relative;
-    }
-
-    .hero-section .btn-cta {
-        background-color: #ff6b6b;
-        color: white;
-    }
-
-    .hero-section .btn-cta:hover {
-        background-color: #ff3b3b;
-    }
-
-    .content-section {
-        padding: 60px 0;
-    }
-
-    .feature-card,
-    .pricing-card {
-        border: none;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        background: #fff;
-    }
-
-    .pricing-card.popular {
-        border: 2px solid #007bff;
-    }
-
-    .badge-popular {
-        background-color: #ff6b6b;
-        color: white;
-    }
-
-    .cta-section {
-        background: #6610f2;
-        color: white;
-        text-align: center;
-        padding: 40px 0;
-    }
-
-    .testimonial-carousel .carousel-item blockquote {
-        background-color: #f8f9fa;
-        padding: 20px;
-        border-radius: 8px;
-    }
-
-    footer {
-        /* background-color: #333; 
-        text-align: center; */
-        color: #f8f9fa;
-        padding: 20px 0;
-
-    }
-</style>
-
-<div class="_container _mt-5">
+       
+    </style>
 
 
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <h1>Unlock Your SEO Potential</h1>
-                    <p class="mb-4">Get your free SEO report with actionable insights to boost your online presence.</p>
-                    <a href="#online-test" class="btn btn-cta btn-lg mt-3">Get Your Free SEO Report</a>
-                </div>
-                <div class="col-md-4 d-none d-md-block">
-                    <i class="fas fa-search fa-7x"></i>
-                </div>
-            </div>
-        </div>
-    </section>
+    {% include "inc/jumbotron.html" %}
+
+
 
     <!-- Online Test Box -->
     <section id="online-test" class="content-section bg-light">
@@ -2625,47 +2588,38 @@
         </div>
     </div>
 
+    {% include "inc/featurettes.html" %}
 
-    <!--
-    <div class="card mt-4">
-        <div class="card-body">
-            
-        </div>
-    </div>
+    {% include "inc/benefits.html" %}
 
-
-
-{% if not current_user.is_authenticated %}
-{% else %}
-{% endif %}
--->
-
-    {% include 'inc/benefits.html' %}
-
-    {% include 'inc/features.html' %}
-
+    {% include "inc/features.html" %}
 
     {% include "inc/suscriptions.html" %}
 
     {% include "inc/testimonials.html" %}
 
 
-    <!-- CTA Section -->
+	
+	    <!-- CTA Section -->
     <section class="cta-section">
         <div class="container">
             <h2 class="mb-4">Start Your Free Trial Now!</h2>
             <p class="lead">Access all tools with a 7-day trial and discover the impact on your digital presence.</p>
-            <a href="#pricing" class="btn btn-light btn-lg">Start Free Trial</a>
+            <form>
+                <div class="input-group mb-3">
+                    <input type="email" class="form-control" placeholder="Tu correo electrónico" aria-label="Correo electrónico" required>
+                    <button class="btn btn-primary" type="submit">Comenzar Prueba</button>
+                </div>
+            </form>
+			<p>Ingresa tu correo electrónico para comenzar tu prueba gratuita. <strong>¡Sin tarjeta de crédito requerida!</strong></p>
+            
         </div>
     </section>
-
-</div>
-<script>
-    // Añadir evento submit al formulario para mostrar el spinner en el botón
-    document.getElementById('pageInfoForm').addEventListener('submit', function () {
-        document.getElementById('btnText').classList.add('d-none');
-        document.getElementById('loadingSpinner').classList.remove('d-none');
-    });
-</script>
-
-{% endblock %}
+    <script>
+        // Añadir evento submit al formulario para mostrar el spinner en el botón
+        document.getElementById('pageInfoForm').addEventListener('submit', function () {
+            document.getElementById('btnText').classList.add('d-none');
+            document.getElementById('loadingSpinner').classList.remove('d-none');
+        });
+    </script>
+    {% endblock %}

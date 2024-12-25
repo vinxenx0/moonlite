@@ -16,7 +16,7 @@ from app.views.user_views import calculate_log_statistics
 @app.route('/')
 def index():
    
-    return render_template('new_start.html')
+    return redirect(url_for('start.html'))
 
 @app.route('/start', methods=['GET', 'POST'])
 def start():

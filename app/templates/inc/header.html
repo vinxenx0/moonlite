@@ -449,7 +449,7 @@
               </ul>
             </span>
             -->
-            <a href="/dashboard" class="btn btn-outline-primary me-2"><span class="item-responsive">Jau {{ current_user.username }}</a>
+            <a href="/dashboard" class="btn btn-outline-primary me-2"><span class="item-responsive">{{ current_user.username }}</a>
             <a class="btn btn-primary me-2 ms-1" href="{{ url_for('edit_subscription') }}"><i class="fa-solid fa-rocket"></i>
               Mejorar!</a></li>
 

@@ -313,3 +313,7 @@ footer .footer-column a:hover {
 #main-content {
   margin-top: 60px;
 }
+
+.row {
+  margin-right: 0!important;
+}

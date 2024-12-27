@@ -4,8 +4,7 @@
     <!-- Top Bar -->
     <div class="top-bar d-flex align-items-right py-2 bg-light">
       <div _class="d-flex flex-wrap gap-3">
-        <a class="text-dark text-decoration-none fw-semibold" href="{{ url_for('login') }}"><i class="fa-solid fa-key"></i>
-          Entrar</a>
+        
       </div>
     </div>
 
@@ -412,9 +411,10 @@
     </li>
 
     {% else %}
+    <a class="btn btn-outline-primary me-2 ms-1" href="{{ url_for('login') }}"><i class="fa-solid fa-key"></i>
+      Entrar</a>
 
-
-    <a class="btn btn-secondary me-2" href="{{ url_for('register') }}"><i class="fa-solid fa-crown"></i>
+    <a class="btn btn-primary me-2 ms-1" href="{{ url_for('register') }}"><i class="fa-solid fa-crown"></i>
       Empezar gratis</a></li>
     {%endif%}
     <!--

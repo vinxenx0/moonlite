@@ -4,21 +4,8 @@
     <!-- Top Bar -->
     <div class="top-bar d-flex align-items-right py-2 bg-light">
       <div class="d-flex flex-wrap gap-3">
-       
-                  {% if current_user.is_authenticated %}
-                  <a href="/dashboard" class="text-dark text-decoration-none fw-semibold"><span class="item-responsive">👤 {{ current_user.username }}</a>
-                  <a class="text-dark text-decoration-none fw-semibold" href="{{ url_for('edit_subscription') }}"><i class="fa-solid fa-rocket"></i>
-                    Mejorar!</a></li>
-      
-                  {% else %}
-          
-                  <a class="text-dark text-decoration-none fw-semibold" href="{{ url_for('login') }}"><i class="fa-solid fa-key"></i>
-                    Entrar</a>
-          
-                  <a class="text-dark text-decoration-none fw-semibold" href="{{ url_for('register') }}"><i class="fa-solid fa-crown"></i>
-                    Empezar gratis</a></li>
-                  {%endif%}
-   
+        <a class="text-dark text-decoration-none fw-semibold" href="{{ url_for('login') }}"><i class="fa-solid fa-key"></i>
+          Entrar</a>
       </div>
     </div>
 
@@ -416,7 +403,26 @@
           </li>
           </ul>
         </div>
+
+  <!-- User Actions -->
+  <div class="d-flex align-items-center ms-3">
+
+    {% if current_user.is_authenticated %}
+    <a href="/dashboard" class="text-dark text-decoration-none fw-semibold"><span class="item-responsive">👤 {{ current_user.username }}</a>
+    </li>
+
+    {% else %}
+
+
+    <a class="text-dark text-decoration-none fw-semibold" href="{{ url_for('register') }}"><i class="fa-solid fa-crown"></i>
+      Empezar gratis</a></li>
+    {%endif%}
+    <!--
+    <a href="#" class="btn btn-outline-primary me-2">Sign in</a>
+    <a class="text-dark text-decoration-none fw-semibold" href="{{ url_for('edit_subscription') }}"><i class="fa-solid fa-rocket"></i>
+      Mejorar!</a> -->
   
+</div>
 
 
       </div>

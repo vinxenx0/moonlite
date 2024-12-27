@@ -3,7 +3,7 @@
 
     <!-- Top Bar -->
     <div class="top-bar d-flex align-items-right py-2 bg-light">
-      <div class="d-flex flex-wrap gap-3">
+      <div _class="d-flex flex-wrap gap-3">
         <a class="text-dark text-decoration-none fw-semibold" href="{{ url_for('login') }}"><i class="fa-solid fa-key"></i>
           Entrar</a>
       </div>
@@ -408,13 +408,13 @@
   <div class="d-flex align-items-center ms-3">
 
     {% if current_user.is_authenticated %}
-    <a href="/dashboard" class="text-dark text-decoration-none fw-semibold"><span class="item-responsive">👤 {{ current_user.username }}</a>
+    <a href="/dashboard" class="btn btn-secondary me-2"><span class="item-responsive">👤 {{ current_user.username }}</a>
     </li>
 
     {% else %}
 
 
-    <a class="text-dark text-decoration-none fw-semibold" href="{{ url_for('register') }}"><i class="fa-solid fa-crown"></i>
+    <a class="btn btn-secondary me-2" href="{{ url_for('register') }}"><i class="fa-solid fa-crown"></i>
       Empezar gratis</a></li>
     {%endif%}
     <!--

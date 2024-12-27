@@ -18,8 +18,10 @@ body {
   flex-direction: column;
   min-height: 100vh;
   background-image: url('https://ciberpunk.es/wp-content/uploads/2020/12/finance4-section-bg2.png');
-  background-repeat: repeat-x;
+  background-repeat: repeat-y;
+  background-blend-mode: normal;
 }
+
 .container-fluid {
   flex: 1;
 }

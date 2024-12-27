@@ -37,7 +37,8 @@ body {
 }
 
 /* Navbar and Dropdown Menu Styles */
-.info-bar, .top-bar {
+.info-bar,
+.top-bar {
   font-size: 14px;
   padding: 5px 0;
 }
@@ -318,5 +319,118 @@ footer .footer-column a:hover {
 }
 
 .row {
-  margin-right: 0!important;
+  margin-right: 0 !important;
+}
+
+/* start page */
+/* Jumbotron Full Page */
+.jumbotron {
+  /* height: 100vh; */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem;
+  color: white;
+  background:
+    linear-gradient(135deg, rgba(102, 16, 242, 0.8), rgba(111, 66, 193, 0.8)),
+    url('https://ciberpunk.es/wp-content/uploads/2020/12/finance4-section-bg2.png');
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: overlay;
+}
+
+
+.jumbotron-content {
+  max-width: 50%;
+}
+
+.jumbotron img {
+  max-height: 80%;
+  max-width: 40%;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+/* CTA Buttons */
+.btn-cta {
+  animation: pulsate 1.5s ease-in-out infinite;
+}
+
+@keyframes pulsate {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Featurettes */
+.featurette {
+  margin-bottom: 2rem;
+  padding: 2rem;
+  background-color: #f8f9fa;
+  border-radius: 0.5rem;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.featurette img {
+  border-radius: 0.5rem;
+}
+
+.featurette .btn {
+  margin-top: 1rem;
+}
+
+/* Benefits Section */
+.benefits-section {
+  background-color: #e9ecef;
+  padding: 3rem 2rem;
+}
+
+.benefit-card {
+  background-color: white;
+  border: 1px solid #dee2e6;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.benefit-card:hover {
+  transform: translateY(-10px);
+}
+
+/* Features Overview */
+.features-overview {
+  background-color: #f8f9fa;
+  padding: 3rem 1rem;
+}
+
+.features-overview .accordion-button::after {
+  font-family: 'Bootstrap Icons';
+}
+
+/* Pricing Section */
+.pricing-section {
+  background-color: #fff;
+  padding: 4rem 2rem;
+}
+
+.pricing-table .card {
+  border: none;
+  border-radius: 1rem;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.cta-section {
+  background: #6610f2;
+  color: white;
+  text-align: center;
+  padding: 40px 0;
 }

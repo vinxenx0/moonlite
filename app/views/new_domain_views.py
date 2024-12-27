@@ -216,9 +216,10 @@ def tools_domains_new(tool):
 
         if results is not None:
             log_event(tool, domain)
-            user = Users.query.get(current_user.id)
-            log_user_event(user, f"Analisis dominio de {domain}",tool,'info')
-            is_results_valid = True
+            if current_user.is_authenticated:
+                user = Users.query.get(current_user.id)
+                log_user_event(user, f"Analisis dominio de {domain}",tool,'info')
+                is_results_valid = True
         else:
             log_event(tool, 'Fail:' + domain)
           

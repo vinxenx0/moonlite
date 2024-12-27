@@ -10,10 +10,23 @@ from flask import current_app
 from flask_login import UserMixin
 import jwt 
 from flask import current_app
-from app import db, login_manager
+from app import db
 from flask_login import UserMixin
 from sqlalchemy import Enum
 import datetime
+from flask_login import UserMixin
+from app import db
+from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
+from sqlalchemy_utils import JSONType
+import datetime
+from flask import current_app
+# from app import db, login_manager
+from flask_login import UserMixin
+import jwt 
+from flask import current_app
+from app import db
+from flask_login import UserMixin
 
 class Users(UserMixin, db.Model):
     __tablename__ = 'Users'

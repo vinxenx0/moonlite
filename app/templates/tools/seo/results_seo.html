@@ -259,41 +259,6 @@
         </div>
     </div>
 
-    <!-- Results Summary Section -->
-    <div class="row text-center mt-4">
-        <div class="col-lg-3 col-md-6 mb-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Total Checks</h5>
-                    <span class="badge bg-info">{{total_checks}}</span>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6 mb-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Duration</h5>
-                    <span class="badge bg-info">{{duration}}</span>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6 mb-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Success Checks</h5>
-                    <span class="badge bg-success">{{success_count}}</span>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6 mb-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Danger Checks</h5>
-                    <span class="badge bg-danger">{{danger_percentage}}%</span>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- desplegables -->
     {% if is_results_valid %}
@@ -400,6 +365,41 @@
                 <div class="card-body text-center">
                     <h5 class="card-title">Additional Chart 2</h5>
                     <canvas id="additionalChart2"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Results Summary Section -->
+    <div class="row text-center mt-4">
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Checks</h5>
+                    <span class="badge bg-info">{{total_checks}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Duration</h5>
+                    <span class="badge bg-info">{{duration}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Success Checks</h5>
+                    <span class="badge bg-success">{{success_count}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Danger Checks</h5>
+                    <span class="badge bg-danger">{{danger_percentage}}%</span>
                 </div>
             </div>
         </div>

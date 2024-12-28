@@ -14,6 +14,7 @@
 
 {% include "inc/jumbotron.html" %}
 
+{% include "inc/suscriptions.html" %}
 
 
 <!-- Online Test Box -->
@@ -813,7 +814,8 @@
                                                             True</span>{% else
                                                         %}<span class="badge bg-danger"><i class="fas fa-times"></i>
                                                             False</span>{% endif
-                                                        %}</p>
+                                                        %}
+                                                    </p>
                                                     <p class="list-item list-item-border" data-bs-toggle="tooltip"
                                                         data-bs-placement="right" title="HTTPS URLs"
                                                         data-bs-html="true"><strong>HTTPS
@@ -879,7 +881,8 @@
                                                             True</span>{% else
                                                         %}<span class="badge bg-danger"><i class="fas fa-times"></i>
                                                             False</span>{% endif
-                                                        %}</p>
+                                                        %}
+                                                    </p>
                                                     <p class="list-item list-item-border" data-bs-toggle="tooltip"
                                                         data-bs-placement="right" title="Missing HSTS Header"
                                                         data-bs-html="true">
@@ -2081,7 +2084,8 @@
                                                             <strong>Meta Description Pixel
                                                                 Width:</strong> {{
                                                             data['Internal_Details']['Meta_Description_Pixel_Width']
-                                                            }}</p>
+                                                            }}
+                                                        </p>
                                                         <p class="list-item list-item-border" data-bs-toggle="tooltip"
                                                             data-bs-placement="right" title="Meta Keyword 1"
                                                             data-bs-html="true">
@@ -2476,10 +2480,9 @@
 
 {% include "inc/features.html" %}
 
-{% include "inc/suscriptions.html" %}
-
+<!--
 {% include "inc/testimonials.html" %}
-
+-->
 
 
 <!-- CTA Section 

@@ -295,6 +295,63 @@
         </div>
     </div>
 
+    <!-- desplegables -->
+    {% if is_results_valid %}
+    <!--
+    <h2 class="section-title">{{title}}</h2>
+    -->
+
+    <div class="toggle-buttons d-flex justify-content-end mb-3">
+        <button id="expandAll" class="btn btn-primary btn-sm">
+            <i class="fas fa-angle-double-down"></i> Expand All
+        </button>
+        <button id="collapseAll" class="btn btn-secondary btn-sm">
+            <i class="fas fa-angle-double-up"></i> Collapse All
+        </button>
+    </div>
+
+    <div class="accordion" id="resultsAccordion">
+        {% for key, value in results.items() %}
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-{{key}}">
+                <button class="accordion-button collapsed {% if results[key] %}bg-success{% else %}bg-danger{% endif %}"
+                    type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{key}}" aria-expanded="false"
+                    aria-controls="collapse-{{key}}">
+                    <div class="row w-100">
+                        <div class="col-md-4">
+                            <strong>{{key.replace('_', ' ').title()}}:</strong>
+                        </div>
+                        <div class="col-md-4">
+                            {% if value is boolean %}
+                            {% if value %}
+                            <span class="badge bg-success"><i class="fas fa-check"></i> True</span>
+                            {% else %}
+                            <span class="badge bg-danger"><i class="fas fa-times"></i> False</span>
+                            {% endif %}
+                            {% else %}
+                            {{value}}
+                            {% endif %}
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <i class="fas fa-info-circle"></i> More Info
+                        </div>
+                    </div>
+                </button>
+            </h2>
+            <div id="collapse-{{key}}" class="accordion-collapse collapse" aria-labelledby="heading-{{key}}"
+                data-bs-parent="#resultsAccordion">
+                <div class="accordion-body">
+                    <p>Additional information about {{key.replace('_', ' ').title()}}.</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>No se encontraron resultados válidos.</p>
+    {% endif %}
+
+
     <!-- Charts Section -->
     <div class="row">
         <!-- Normalized Chart Structure -->
@@ -355,60 +412,6 @@
 
 
 
-{% if is_results_valid %}
-<!--
-<h2 class="section-title">{{title}}</h2>
--->
-
-<div class="toggle-buttons d-flex justify-content-end mb-3">
-    <button id="expandAll" class="btn btn-primary btn-sm">
-        <i class="fas fa-angle-double-down"></i> Expand All
-    </button>
-    <button id="collapseAll" class="btn btn-secondary btn-sm">
-        <i class="fas fa-angle-double-up"></i> Collapse All
-    </button>
-</div>
-
-<div class="accordion" id="resultsAccordion">
-    {% for key, value in results.items() %}
-    <div class="accordion-item">
-        <h2 class="accordion-header" id="heading-{{key}}">
-            <button class="accordion-button collapsed {% if results[key] %}bg-success{% else %}bg-danger{% endif %}"
-                type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{key}}" aria-expanded="false"
-                aria-controls="collapse-{{key}}">
-                <div class="row w-100">
-                    <div class="col-md-4">
-                        <strong>{{key.replace('_', ' ').title()}}:</strong>
-                    </div>
-                    <div class="col-md-4">
-                        {% if value is boolean %}
-                        {% if value %}
-                        <span class="badge bg-success"><i class="fas fa-check"></i> True</span>
-                        {% else %}
-                        <span class="badge bg-danger"><i class="fas fa-times"></i> False</span>
-                        {% endif %}
-                        {% else %}
-                        {{value}}
-                        {% endif %}
-                    </div>
-                    <div class="col-md-4 text-end">
-                        <i class="fas fa-info-circle"></i> More Info
-                    </div>
-                </div>
-            </button>
-        </h2>
-        <div id="collapse-{{key}}" class="accordion-collapse collapse" aria-labelledby="heading-{{key}}"
-            data-bs-parent="#resultsAccordion">
-            <div class="accordion-body">
-                <p>Additional information about {{key.replace('_', ' ').title()}}.</p>
-            </div>
-        </div>
-    </div>
-    {% endfor %}
-</div>
-{% else %}
-<p>No se encontraron resultados válidos.</p>
-{% endif %}
 
 <script>
     // JavaScript to handle Expand All/Collapse All functionality

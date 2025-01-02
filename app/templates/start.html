@@ -16,14 +16,16 @@
 
 {% include "inc/suscriptions.html" %}
 
-
 <!-- Online Test Box -->
 <section id="online-test" class="content-section">
-    <div class="container text-center">
-        <h2>¡Analiza cualquier sitio!
-        </h2>
-        <p class="lead">Revisa +100 puntos clave en un mismo sitio y en segundos.</p>
-        <!--
+
+    <div class="container my-5">
+        <div class="row featurette">
+            <div class="col-md-6 mb-3">
+                <h2>¡Analiza cualquier sitio!
+                </h2>
+                <p class="lead">Revisa +100 puntos clave en un mismo sitio y en segundos.</p>
+                <!--
             <p>Enter your URL below to get an instant, free report on your site’s performance.</p>
             
         <form class="row justify-content-center">
@@ -35,32 +37,39 @@
             </div>
         </form>
         -->
-        <form action="/start" method="post" id="pageInfoForm">
-            {{ form.csrf_token }}
-            <div class="mb-3">
-                {{ form.url.label(class="form-label") }}
-                {{ form.url(class="form-control", id="url") }}
-                {% for error in form.url.errors %}
-                <small class="form-text text-danger">{{ error }}</small>
-                {% endfor %}
-            </div><!-- 
+                <form action="/start" method="post" id="pageInfoForm">
+                    {{ form.csrf_token }}
+                    <div class="mb-3">
+                        {{ form.url.label(class="form-label") }}
+                        {{ form.url(class="form-control", id="url") }}
+                        {% for error in form.url.errors %}
+                        <small class="form-text text-danger">{{ error }}</small>
+                        {% endfor %}
+                    </div><!-- 
                 <button type="submit" class="btn btn-primary" id="analizarBtn">
                     <span id="btnText">ANALIZAR URL</span>
                     <span id="loadingSpinner" class="spinner-border spinner-border-sm d-none" role="status"
                         aria-hidden="true"></span>
                 </button>-->
-            <button type="submit" class="btn btn-primary" id="analizarBtn">
-                <span id="btnText">MoOnitorizar!</span>
-                <span id="loadingSpinner" class="spinner-border spinner-border-sm d-none" role="status"
-                    aria-hidden="true"></span>
-            </button>
-        </form>
+                    <button type="submit" class="btn btn-primary" id="analizarBtn">
+                        <span id="btnText">MoOnitorizar!</span>
+                        <span id="loadingSpinner" class="spinner-border spinner-border-sm d-none" role="status"
+                            aria-hidden="true"></span>
+                    </button>
+                </form>
 
+            </div>
+            <div class="alert alert-info mt-4" role="alert">
+                <i class="fas fa-info-circle"></i> Your data is safe with us. We never store or share any of your
+                information.
+            </div>
+        </div>
     </div>
 </section>
 
-{% if data %}
+
 <div class="container mt-5">
+    {% if data %}
     <h1 class="text-center">Resultados</h1>
 
     <div class="accordion mt-4" id="accordionExample">
@@ -2464,15 +2473,20 @@
                     <!-- Add more accordion items for each section -->
                 </div>
             </div>
-            {% else %}
-            <div class="alert alert-info mt-4" role="alert">
-                <i class="fas fa-info-circle"></i> Your data is safe with us. We never store or share any of your
-                information.
-            </div>
-            {% endif %}
+           
         </div>
     </div>
+   
+    {% else %}
+    <!-- 
+<div class="alert alert-info mt-4" role="alert">
+    <i class="fas fa-info-circle"></i> Your data is safe with us. We never store or share any of your
+    information.
 </div>
+-->
+{% endif %}
+</div>
+
 
 {% include "inc/featurettes.html" %}
 
@@ -2480,7 +2494,7 @@
 
 {% include "inc/features.html" %}
 
-<!--{% include "inc/testimonials.html" %}-->
+{% include "inc/testimonials.html" %}
 
 
 <!-- CTA Section 

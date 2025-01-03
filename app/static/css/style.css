@@ -419,9 +419,10 @@ footer .footer-column a:hover {
 /* Jumbotron Full Page */
 .jumbotron {
   display: flex;
-  align-items: center;
+  /* align-items: center; */
+  width: 100%;
   justify-content: space-between;
-  padding: 4rem 2rem;
+  padding: 4rem 2rem; 
   color: white;
   background: linear-gradient(135deg, rgba(102, 16, 242, 0.8), rgba(111, 66, 193, 0.8)),
     url('https://ciberpunk.es/wp-content/uploads/2020/12/finance4-section-bg2.png');

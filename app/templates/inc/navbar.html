@@ -291,32 +291,40 @@
 
         </li>
       </ul>
-    </div>
+
 
     <!-- User Actions -->
-    <div class="d-flex align-items-center ms-3">
 
+    <div class="d-flex flex-column flex-sm-row align-items-center justify-content-center ms-0 mb-3 mt-3">
       {% if current_user.is_authenticated %}
-      <a href="/dashboard" class="btn btn-outline-primary me-2"><span class="item-responsive">👤 {{
-          current_user.username
-          }} <small>({{ current_user.subscription_plan }})</small></a>
-
-      {% if current_user.subscription_plan == "Free" %}
-      <a class="btn btn-primary me-2 ms-1 text-decoration-none fw-semibold" href="{{ url_for('edit_subscription') }}"><i
-          class="fa-solid fa-rocket"></i>
-        Mejorar!</a>
-      {% endif %}
-
+          <a href="/dashboard" class="btn btn-outline-primary mb-2 mb-sm-0 me-sm-2">
+              <span class="item-responsive">👤 {{ current_user.username }}
+                  <small>({{ current_user.subscription_plan }})</small>
+              </span>
+          </a>
+  
+          {% if current_user.subscription_plan == "Free" %}
+              <a class="btn btn-primary mb-2 mb-sm-0 me-sm-2 text-decoration-none fw-semibold" href="{{ url_for('edit_subscription') }}">
+                  <i class="fa-solid fa-rocket"></i> Mejorar!
+              </a>
+          {% elif current_user.subscription_plan == "Pro" %}
+              <a class="btn btn-primary mb-2 mb-sm-0 me-sm-2 text-decoration-none fw-semibold" href="{{ url_for('edit_subscription') }}">
+                  <i class="fa-solid fa-crown"></i> Probar Corporate!
+              </a>
+          {% endif %}
       {% else %}
-      <a class="btn btn-outline-primary me-2 ms-1" href="{{ url_for('login') }}"><i class="fa-solid fa-key"></i>
-        Entrar</a>
-
-      <a class="btn btn-primary me-2 ms-1" href="{{ url_for('register') }}"><i class="fa-solid fa-crown"></i>
-        Empezar gratis</a></li>
-      {%endif%}
-
-
+          <a class="btn btn-outline-primary mb-2 mb-sm-0 me-sm-2" href="{{ url_for('login') }}">
+              <i class="fa-solid fa-key"></i> Entrar
+          </a>
+          <a class="btn btn-primary mb-2 mb-sm-0" href="{{ url_for('register') }}">
+              <i class="fa-solid fa-crown"></i> Empezar gratis
+          </a>
+      {% endif %}
+  </div>
+  
     </div>
+
+
 
 
   </div>

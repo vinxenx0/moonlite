@@ -327,7 +327,8 @@ footer .footer-column a:hover {
   margin-top: 4rem;
 }
 
-.content-section { /* se usa en online test */
+.content-section {
+  /* se usa en online test */
 
   margin-bottom: 2rem;
   padding: 2rem;

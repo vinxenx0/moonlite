@@ -1,7 +1,6 @@
-
 <style>
- 
-  
+
+
 
 </style>
 <!-- Navbar -->
@@ -234,8 +233,8 @@
                   Web para Principiantes</a>
                 <a class="dropdown-item" href="/resources/guides/performance"><i class="fas fa-tachometer-alt"></i>
                   Mejorando el Rendimiento de tu Sitio</a>
-                <a class="dropdown-item" href="/resources/guides/accessibility"><i
-                    class="fas fa-universal-access"></i> Introducción a la Accesibilidad Web</a>
+                <a class="dropdown-item" href="/resources/guides/accessibility"><i class="fas fa-universal-access"></i>
+                  Introducción a la Accesibilidad Web</a>
 
                 <h6 class="dropdown-header">Documentación Técnica 📂</h6>
                 <a class="dropdown-item" href="/resources/docs/dns"><i class="fas fa-network-wired"></i> Manual DNS
@@ -303,8 +302,8 @@
           }} <small>({{ current_user.subscription_plan }})</small></a>
 
       {% if current_user.subscription_plan == "Free" %}
-      <a class="btn btn-primary me-2 ms-1 text-decoration-none fw-semibold"
-        href="{{ url_for('edit_subscription') }}"><i class="fa-solid fa-rocket"></i>
+      <a class="btn btn-primary me-2 ms-1 text-decoration-none fw-semibold" href="{{ url_for('edit_subscription') }}"><i
+          class="fa-solid fa-rocket"></i>
         Mejorar!</a>
       {% endif %}
 
@@ -330,14 +329,15 @@
     display: flex;
     flex-wrap: wrap;
   }
+
   .dropdown-menu-columns .column {
-    flex: 1 0 22%; /* Cada columna ocupa el 25% */
+    flex: 1 0 22%;
+    /* Cada columna ocupa el 25% */
     padding: 10px;
   }
+
   .dropdown-header {
     font-weight: bold;
     margin-bottom: 2px;
   }
 </style>
-
-

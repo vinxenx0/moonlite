@@ -1,12 +1,12 @@
 <!-- Redesigned Header -->
 <header class="header">
-  
-<!-- Info Bar -->
-<div class="info-bar text-center py-2 bg-primary text-white">
-  Mo0nLite 🐞 ¿Has encontrado un bug? <a href="#" class="text-warning text-decoration-underline">Reportar error</a>
-</div>
 
-  
+  <!-- Info Bar -->
+  <div class="info-bar text-center py-2 bg-primary text-white">
+    Mo0nLite 🐞 ¿Has encontrado un bug? <a href="#" class="text-warning text-decoration-underline">Reportar error</a>
+  </div>
+
+
   <!-- Top Bar 
   <div class="top-bar d-flex align-items-right py-2 bg-light">
     <div _class="d-flex flex-wrap gap-3">
@@ -467,11 +467,12 @@
         <a href="/dashboard" class="btn btn-outline-primary me-2"><span class="item-responsive">👤 {{
             current_user.username
             }} <small>({{ current_user.subscription_plan }})</small></a>
-        
-            {% if current_user.subscription_plan == "Free" %}
-            <a class="btn btn-primary me-2 ms-1 text-decoration-none fw-semibold" href="{{ url_for('edit_subscription') }}"><i class="fa-solid fa-rocket"></i>
-              Mejorar!</a>
-            {% endif %}
+
+        {% if current_user.subscription_plan == "Free" %}
+        <a class="btn btn-primary me-2 ms-1 text-decoration-none fw-semibold"
+          href="{{ url_for('edit_subscription') }}"><i class="fa-solid fa-rocket"></i>
+          Mejorar!</a>
+        {% endif %}
 
         {% else %}
         <a class="btn btn-outline-primary me-2 ms-1" href="{{ url_for('login') }}"><i class="fa-solid fa-key"></i>

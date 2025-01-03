@@ -162,7 +162,6 @@ body {
   .navbar-nav .dropdown-menu {
     width: 420px;
   }
-  
 }
 
 @media (max-width: 350px) {
@@ -435,4 +434,3 @@ footer .footer-column a:hover {
   text-align: center;
   padding: 40px 0;
 }
-

@@ -3,12 +3,10 @@
         <h2>Choose Your Plan</h2>
         <p>Select the plan that suits you best. Toggle between monthly and yearly prices.</p>
         <div class="form-check form-switch d-inline-block">
-            <input class="form-check-input" type="checkbox" id="togglePricing" size="20"
-                aria-label="Toggle yearly billing">
+            <input class="form-check-input" type="checkbox" id="togglePricing" aria-label="Toggle yearly billing">
             <label class="form-check-label" for="togglePricing">Yearly Billing</label>
         </div>
-        <p class="small text-muted mt-2">* Yearly subscription includes a <span class="discount-text">12%
-                discount</span>!</p>
+        <p class="small text-muted mt-2">* Yearly subscription includes a <strong>12% discount</strong>!</p>
     </div>
 
     <div class="row text-center">
@@ -75,7 +73,6 @@
     </div>
 </section>
 
-
 <script>
     const toggle = document.getElementById('togglePricing');
     const prices = document.querySelectorAll('.price');
@@ -101,158 +98,130 @@
             }
         });
     });
-
 </script>
 
 <style>
-    /* Pricing Section */
-    #pricing .pricing-section {
-        background-color: #f7f8fb;
-        padding: 4rem 2rem;
-    }
+/* Pricing Section */
+.pricing-section {
+  background-color: #f7f8fb;
+  padding: 4rem 2rem;
+}
 
-    #pricing .card {
-        border: none;
-        border-radius: 1rem;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
+.card {
+  border: none;
+  border-radius: 1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-    #pricing .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    }
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
 
-    #pricing .card-header {
-        background-color: #fff;
-        border-bottom: 2px solid #eee;
-        padding: 1rem;
-    }
+.card-header {
+  background-color: #fff;
+  border-bottom: 2px solid #eee;
+  padding: 1rem;
+}
 
-    #pricing .card-header h5 {
-        font-weight: bold;
-        color: #333;
-        font-size: 1.25rem;
-    }
+.card-header h5 {
+  font-weight: bold;
+  color: #333;
+  font-size: 1.25rem;
+}
 
-    #pricing .card-body {
-        padding: 1.5rem;
-    }
+.card-body {
+  padding: 1.5rem;
+}
 
-    #pricing .price {
-        font-size: 2.5rem;
-        font-weight: bold;
-        color: #333;
-        position: relative;
-    }
+.price {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+}
 
-    #pricing .price_free {
-        font-size: 2.5rem;
-        font-weight: bold;
-        color: #00B0FF;
-    }
+.price_free {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #00B0FF;
+}
 
-    #pricing .price-label {
-        font-size: 1rem;
-        color: #999;
-    }
+.price-label {
+  font-size: 1rem;
+  color: #999;
+}
 
-    #pricing .card-body ul {
-        padding-left: 20px;
-        font-size: 0.9rem;
-        color: #555;
-    }
+.card-body ul {
+  padding-left: 20px;
+  font-size: 0.9rem;
+  color: #555;
+}
 
-    #pricing .card-body ul li {
-        margin-bottom: 10px;
-    }
+.card-body ul li {
+  margin-bottom: 10px;
+}
 
-    #pricing .card-body .btn {
-        width: 100%;
-        padding: 0.75rem;
-        border-radius: 30px;
-        font-weight: bold;
-        text-transform: uppercase;
-        transition: background-color 0.3s ease;
-    }
+.card-body .btn {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 30px;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
+}
 
-    #pricing .card-body .btn:hover {
-        background-color: #333;
-        color: #fff;
-    }
+.card-body .btn:hover {
+  background-color: #333;
+  color: #fff;
+}
 
-    /* Pricing Toggle */
-    #pricing .form-check {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+/* Pricing Toggle */
+.form-check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-    #pricing .form-check .form-check-label {
-        font-weight: bold;
-        margin-left: 10px;
-    }
+.form-check .form-check-label {
+  font-weight: bold;
+  margin-left: 10px;
+}
 
-    #pricing .form-check-input {
-        width:80px;
-         height: 30px;
-          border-radius: 50px;
-        /* Mantener el borde redondeado */
-        background-color: #4CAF50;
-        position: relative;
-        transition: background-color 0.3s ease;
-    }
+.form-check-input {
+  width: 60px;
+  height: 30px;
+  border-radius: 50px;
+  background-color: #4CAF50;
+  position: relative;
+}
 
-    #pricing .form-check-input:checked {
-        background-color: #FFC107;
-    }
+.form-check-input:checked {
+  background-color: #FFC107;
+}
 
-    #pricing .form-check-input:checked::before {
-        transform: translateX(90px);
-        /* Ajustamos el control deslizante */
-        width: 30px;
-        /* Aumentamos el tamaño del deslizante */
-        height: 30px;
-        /* Mantener el tamaño del deslizante */
-    }
+.form-check-input:checked::before {
+  transform: translateX(30px);
+}
 
-    /* Tooltip (12% Off Badge) */
-    #pricing .discount-badge {
-        position: absolute;
-        top: -10px;
-        right: -10px;
-        transform: translate(50%, -50%);
-        font-size: 0.9rem;
-        padding: 5px 10px;
-        border-radius: 10px;
-        background-color: #ff4d4d;
-        color: white;
-        font-weight: bold;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
+/* Responsive */
+@media (max-width: 767px) {
+  .pricing-table {
+    margin-bottom: 20px;
+  }
 
-    #pricing .discount-text {
-        font-weight: bold;
-        color: #ff4d4d;
-    }
+  .row {
+    display: block;
+  }
 
-    /* Responsive */
-    @media (max-width: 767px) {
-        #pricing .pricing-table {
-            margin-bottom: 20px;
-        }
+  .col-md-4 {
+    width: 100%;
+    margin-bottom: 2rem;
+  }
 
-        #pricing .row {
-            display: block;
-        }
+  .price {
+    font-size: 2rem;
+  }
+}
 
-        #pricing .col-md-4 {
-            width: 100%;
-            margin-bottom: 2rem;
-        }
-
-        #pricing .price {
-            font-size: 2rem;
-        }
-    }
 </style>

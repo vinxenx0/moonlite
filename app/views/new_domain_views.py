@@ -70,7 +70,7 @@ def tools_domains_new(tool):
         if current_user.is_authenticated:
             username = current_user.username
             email = current_user.email
-
+#
         url = form.domain.data
         ip_address = request.remote_addr
         user_agent = request.user_agent.string
@@ -95,7 +95,7 @@ def tools_domains_new(tool):
         db.session.add(user_usage)
         db.session.commit()
 
-        _results = {
+        #_results = {
             #'mx_lookup': mx_lookup(domain),
             # 'whois_lookup': whois_lookup(domain),
             #'dmarc_lookup': dmarc_lookup(domain),
@@ -127,7 +127,7 @@ def tools_domains_new(tool):
             #'ping': ping_lookup(domain),
             #'traceroute': traceroute_lookup(domain),
             #'nmap': nmap_lookup(domain)
-        }
+        #}
 
 
         # Ejecutar la función correspondiente
@@ -213,16 +213,10 @@ def tools_domains_new(tool):
 
 
 
-
         if results is not None:
-            log_event(tool, domain)
-            if current_user.is_authenticated:
-                user = Users.query.get(current_user.id)
-                log_user_event(user, f"Analisis dominio de {domain}",tool,'info')
-                is_results_valid = True
-        else:
-            log_event(tool, 'Fail:' + domain)
-          
+            is_results_valid = True
+            
+                
         
         # Recorrer el diccionario y contar los valores según las condiciones dadas
         for key, value in results.items():

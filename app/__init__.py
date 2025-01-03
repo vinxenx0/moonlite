@@ -22,6 +22,8 @@ app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = 'vicente@ciberpunk.es'
 app.config['MAIL_PASSWORD'] = 'rt6K_22MHj'
+app.config['SECRET_KEY'] = 'your_secret_key'
+
 
 app.config['PREFERRED_URL_SCHEME'] = 'https'  # Forzar https
   

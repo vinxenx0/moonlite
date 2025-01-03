@@ -104,23 +104,28 @@ def tools_seo(tool):
         db.session.add(user_usage)
         db.session.commit()
 
-        try:
-            soup = get_soup(url)
-            response = requests.get(url)
-            if soup:
-                results = process_tool(tool, soup, url, response)
-                if results is not None:
-                    is_results_valid = True
-                    log_event(tool, url)
+    try:
+        soup = get_soup(url)
+        response = requests.get(url)
+        if soup:
+            results = process_tool(tool, soup, url, response)
+            if results is not None:
+                is_results_valid = True
+                log_event(tool, url)
+                if current_user.is_authenticated:
                     user = Users.query.get(current_user.id)
-                    log_user_event(user, f"Analisis SEO de {url}",tool,'info')
+                    log_user_event(user, f"Analisis SEO de {url}", tool, 'info')
                 else:
-                    log_event(tool, 'Fail: No results returned')
+                    # Manejo opcional para usuarios no autenticados
+                    log_event(tool, f"Anonymous user analyzed {url}")
             else:
-                log_event(tool, 'Fail: Unable to parse HTML')
-        except Exception as e:
-            log_event(tool, f'Fail: {e}')
-            results = {'error': str(e)}
+                log_event(tool, 'Fail: No results returned')
+        else:
+            log_event(tool, 'Fail: Unable to parse HTML')
+    except Exception as e:
+        log_event(tool, f'Fail: {e}')
+        results = {'error': str(e)}
+
 
     if results:
         total_entries, true_count, false_count, none_or_empty_count, false_percentage = count_results(results)

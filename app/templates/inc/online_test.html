@@ -1,0 +1,50 @@
+<!-- Online Test Box -->
+<section id="online-test" class="content-section">
+
+    <div class="container my-5">
+        <div class="row featurette">
+
+            <div class="col-md-6 text-center mb-4">
+                <h2 class="font-weight-bold text-primary">
+                    <i class="fas fa-search"></i> ¡Analiza cualquier sitio web!
+                </h2>
+                <p class="lead text-muted mb-4">Revisa +100 puntos clave en segundos para mejorar tu sitio.</p>
+                <p class="text-muted mb-4">Ingresa la URL de tu sitio y obtén un análisis instantáneo de su desempeño y
+                    seguridad.</p>
+
+                <form action="/start" method="post" id="pageInfoForm" class="position-relative">
+                    {{ form.csrf_token }}
+                    <div class="mb-4">
+                        {{ form.url.label(class="form-label text-muted") }}
+                        {{ form.url(class="form-control form-control-lg shadow-sm", id="url", placeholder="Ej.
+                        https://tusitio.com") }}
+                        {% for error in form.url.errors %}
+                        <small class="form-text text-danger">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Botón con animación de carga -->
+                    <button type="submit" class="btn btn-primary btn-lg px-5 py-3 w-100" id="analizarBtn">
+                        <span id="btnText">¡MoOnitorizar!</span>
+                        <span id="loadingSpinner" class="spinner-border spinner-border-sm d-none" role="status"
+                            aria-hidden="true"></span>
+                    </button>
+                </form>
+
+                <!-- Mensaje de privacidad -->
+                <div class="alert alert-info mt-4 text-center" role="alert">
+                    <i class="fas fa-lock"></i> Tus datos están seguros con nosotros. No almacenamos ni compartimos
+                    ninguna información.
+                </div>
+            </div>
+
+            <!-- Columna de imagen o gráfico visual -->
+            <div class="col-md-6">
+                <div class="text-center">
+                    <img src="https://ciberpunk.es/wp-content/uploads/2020/11/finance4-features-pic3.png"
+                        alt="Ilustración análisis de sitio web" class="img-fluid" />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

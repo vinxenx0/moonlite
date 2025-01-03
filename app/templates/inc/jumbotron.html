@@ -1,26 +1,40 @@
-    <!-- Jumbotron -->
-    <header class="jumbotron mb-5">
-         <div class="jumbotron-content">
-            <h1 class="display-3">Analiza webs en profundidad <strong>facilmente</strong></h1>
-            <p class="lead">Usa MoOnitor <b>sin coste</b> y crea informes profesionales por <b>6€/mes</b></p>
-            <!--Usa MoOnitor sin coste y genera informes por 9€/mes
-            <ul>
-                <li>Detecta +150 problemas web en una misma herramienta</li>
-                <li>Crea informes detallados para ti o tus clientes en segundos</li>
-                <li>Genera informes clave de tus url para tus clientes</li>
-                <li>Aprende nuevas técnicas de marketing digital mientras usas la herramienta</li>
-                -->
-                <!-- 
-                Revisa +150 puntos clave de 5 ambitos diferentes
-                Ofrece informes a tus clientes en segundos
-                La mejor solución para freelances, agencias y estudios
-                Aprende nuevas técnicas de marketing digital mientras usas la herramienta
-                Analiza tiendas, administraciones, portafolios, cualquier url
-                
-            </ul> -->
-            <a href="#pricing" class="btn btn-primary btn-lg btn-cta me-2">Entra ya!</a>
-            <a href="{{ url_for('register') }}" class="btn btn-secondary btn-lg me-2">Empezar gratis</a>
+<!-- Jumbotron -->
+<header class="jumbotron mb-5">
+    <div class="container">
+        <div class="row align-items-center justify-content-center">
+            <!-- Text Content -->
+            <div class="col-lg-6 jumbotron-content mb-4 mb-lg-0 text-center text-lg-start">
+                <h1 class="display-3 fw-bold text-light">Analiza webs en profundidad <strong>facilmente</strong></h1>
+                <p class="lead text-light">Usa MoOnitor <b>sin coste</b> y crea informes profesionales por <b>6€/mes</b>
+                </p>
+
+                <div class="d-flex justify-content-center justify-content-lg-start mb-3">
+                    <a href="#pricing" class="btn btn-primary btn-lg btn-cta me-3">Entra ya!</a>
+                    <a href="{{ url_for('register') }}" class="btn btn-secondary btn-lg me-3">Empezar gratis</a>
+                </div>
+
+                <!-- Additional Benefits with Icons -->
+                <div class="d-flex justify-content-center justify-content-lg-start text-light">
+                    <div class="benefit-icon me-5">
+                        <i class="bi bi-credit-card fa-2x mb-2"></i>
+                        <p>No credit card required</p>
+                    </div>
+                    <div class="benefit-icon me-5">
+                        <i class="bi bi-calendar-check fa-2x mb-2"></i>
+                        <p>30-day free trial</p>
+                    </div>
+                    <div class="benefit-icon">
+                        <i class="bi bi-x-circle fa-2x mb-2"></i>
+                        <p>Cancel anytime</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Image -->
+            <div class="col-lg-6">
+                <img src="https://ciberpunk.es/wp-content/uploads/2020/11/finance4-slider-pic1.png"
+                    alt="Monitoreo de sitio web" class="img-fluid rounded-4 shadow-lg">
+            </div>
         </div>
-        <img src="https://ciberpunk.es/wp-content/uploads/2020/11/finance4-slider-pic1.png" alt="Monitoreo de sitio web">
-       
-    </header> 
+    </div>
+</header>

@@ -19,8 +19,7 @@
                     <h5>Free Plan</h5>
                 </div>
                 <div class="card-body">
-                    <h3 class="price_free">$0</h3>
-                    <p class="small price-label">Per Month</p>
+                    <h3 class="price_free">$0 <span class="small price-label">para siempre</span></h3>
                     <ul class="list-unstyled text-start">
                         <li><i class="bi bi-check-circle text-success"></i> Access to basic features</li>
                         <li><i class="bi bi-check-circle text-success"></i> Limited reports</li>
@@ -38,10 +37,9 @@
                 </div>
                 <div class="card-body">
                     <h3 class="price position-relative" data-monthly="29" data-yearly="290">
-                        $29
+                        $29 <span class="small price-label">Per Month</span>
                         <span class="badge bg-danger discount-badge d-none">12% Off</span>
                     </h3>
-                    <p class="small price-label">Per Month</p>
                     <ul class="list-unstyled text-start">
                         <li><i class="bi bi-check-circle text-success"></i> All features unlocked</li>
                         <li><i class="bi bi-check-circle text-success"></i> Unlimited reports</li>
@@ -59,10 +57,9 @@
                 </div>
                 <div class="card-body">
                     <h3 class="price position-relative" data-monthly="9" data-yearly="90">
-                        $9
+                        $9 <span class="small price-label">Per Month</span>
                         <span class="badge bg-danger discount-badge d-none">12% Off</span>
                     </h3>
-                    <p class="small price-label">Per Month</p>
                     <ul class="list-unstyled text-start">
                         <li><i class="bi bi-check-circle text-success"></i> Access to essential features</li>
                         <li><i class="bi bi-check-circle text-success"></i> Limited reports</li>
@@ -75,11 +72,9 @@
     </div>
 </section>
 
-
 <script>
     const toggle = document.getElementById('togglePricing');
     const prices = document.querySelectorAll('.price');
-    const priceLabels = document.querySelectorAll('.price-label');  // Select the price labels
     const badges = document.querySelectorAll('.discount-badge');
 
     toggle.addEventListener('change', () => {
@@ -87,172 +82,20 @@
             const monthly = price.getAttribute('data-monthly');
             const yearly = price.getAttribute('data-yearly');
             const badge = badges[index];
-            const priceLabel = priceLabels[index];  // Get the corresponding price label
+            const priceLabel = price.querySelector('.price-label');  // Get the corresponding price label
 
             if (toggle.checked) {
-                price.textContent = `$${yearly}`;
-                priceLabel.textContent = 'Per Year'; // Change the label to "Per Year"
+                price.innerHTML = `$${yearly} <span class="small price-label">Per Year</span>`;
                 badge.classList.remove('d-none'); // Show badge for yearly pricing
                 price.appendChild(badge); // Append badge
             } else {
-                price.textContent = `$${monthly}`;
-                priceLabel.textContent = 'Per Month'; // Change the label back to "Per Month"
+                price.innerHTML = `$${monthly} <span class="small price-label">Per Month</span>`;
                 badge.classList.add('d-none'); // Hide badge for monthly pricing
             }
         });
     });
-
 </script>
 
 <style>
-    /* Pricing Section */
-    #pricing .pricing-section {
-        background-color: #f7f8fb;
-        padding: 4rem 2rem;
-    }
 
-    #pricing .card {
-        border: none;
-        border-radius: 1rem;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    #pricing .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    }
-
-    #pricing .card-header {
-        background-color: #fff;
-        border-bottom: 2px solid #eee;
-        padding: 1rem;
-    }
-
-    #pricing .card-header h5 {
-        font-weight: bold;
-        color: #333;
-        font-size: 1.25rem;
-    }
-
-    #pricing .card-body {
-        padding: 1.5rem;
-    }
-
-    #pricing .price {
-        font-size: 2.5rem;
-        font-weight: bold;
-        color: #333;
-        position: relative;
-    }
-
-    #pricing .price_free {
-        font-size: 2.5rem;
-        font-weight: bold;
-        color: #00B0FF;
-    }
-
-    #pricing .price-label {
-        font-size: 1rem;
-        color: #999;
-    }
-
-    #pricing .card-body ul {
-        padding-left: 20px;
-        font-size: 0.9rem;
-        color: #555;
-    }
-
-    #pricing .card-body ul li {
-        margin-bottom: 10px;
-    }
-
-    #pricing .card-body .btn {
-        width: 100%;
-        padding: 0.75rem;
-        border-radius: 30px;
-        font-weight: bold;
-        text-transform: uppercase;
-        transition: background-color 0.3s ease;
-    }
-
-    #pricing .card-body .btn:hover {
-        background-color: #333;
-        color: #fff;
-    }
-
-    /* Pricing Toggle */
-    #pricing .form-check {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    #pricing .form-check .form-check-label {
-        font-weight: bold;
-        margin-left: 10px;
-    }
-
-    #pricing .form-check-input {
-        width:80px;
-         height: 30px;
-          border-radius: 50px;
-        /* Mantener el borde redondeado */
-        background-color: #4CAF50;
-        position: relative;
-        transition: background-color 0.3s ease;
-    }
-
-    #pricing .form-check-input:checked {
-        background-color: #FFC107;
-    }
-
-    #pricing .form-check-input:checked::before {
-        transform: translateX(90px);
-        /* Ajustamos el control deslizante */
-        width: 30px;
-        /* Aumentamos el tamaño del deslizante */
-        height: 30px;
-        /* Mantener el tamaño del deslizante */
-    }
-
-    /* Tooltip (12% Off Badge) */
-    #pricing .discount-badge {
-        position: absolute;
-        top: -10px;
-        right: -10px;
-        transform: translate(50%, -50%);
-        font-size: 0.9rem;
-        padding: 5px 10px;
-        border-radius: 10px;
-        background-color: #ff4d4d;
-        color: white;
-        font-weight: bold;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    #pricing .discount-text {
-        font-weight: bold;
-        color: #ff4d4d;
-    }
-
-    /* Responsive */
-    @media (max-width: 767px) {
-        #pricing .pricing-table {
-            margin-bottom: 20px;
-        }
-
-        #pricing .row {
-            display: block;
-        }
-
-        #pricing .col-md-4 {
-            width: 100%;
-            margin-bottom: 2rem;
-        }
-
-        #pricing .price {
-            font-size: 2rem;
-        }
-    }
 </style>

@@ -53,9 +53,19 @@ body {
   color: var(--white);
 }
 
-.navbar {
+/********************************
+MENU ESTILOS
+********************/
+
+.features-overview {
   background-color: var(--navbar-background);
   box-shadow: var(--navbar-shadow);
+  width: 100%;
+  /* max-width: 1200px; */
+  display: block;
+  padding: 0;
+  box-shadow: var(--navbar-shadow);
+  position: relative;
 }
 
 .navbar-nav .nav-link {
@@ -63,7 +73,7 @@ body {
 }
 
 .navbar-nav .dropdown-menu {
-  width: 740px;
+  width: 900px;
   box-shadow: var(--navbar-shadow);
 }
 
@@ -85,8 +95,7 @@ body {
   border-radius: 4px;
   margin-left: 8px;
 }
-
-/* Buttons */
+ 
 .btn-primary {
   background-color: var(--primary-color);
   border-color: var(--primary-color);
@@ -97,16 +106,20 @@ body {
   color: var(--primary-color);
 }
 
-/* Dropdown Menu Columns */
+/* Estilos para las columnas del menú */
 .dropdown-menu-columns {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* Permite que las columnas se envuelvan cuando no hay espacio suficiente */
+  justify-content: space-between; /* Asegura que las columnas se distribuyan con espacio entre ellas */
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 4px;
 }
 
 .dropdown-menu-columns .column {
-  flex: 1;
-  min-width: 180px;
+  flex-basis: 23%; /* Establece el tamaño de cada columna, permitiendo 4 columnas */
   padding: 0 16px;
+  box-sizing: border-box; /* Asegura que el padding no afecte al ancho total */
 }
 
 .column.featured {
@@ -118,10 +131,9 @@ body {
   color: var(--menu-header);
 }
 
-/* Responsive Dropdown Styles */
 @media (max-width: 767px) {
   .dropdown-menu-columns {
-    flex-direction: column;
+    flex-direction: column; /* Para pantallas pequeñas, cambia las columnas a una sola columna */
   }
 }
 
@@ -132,7 +144,6 @@ body {
   }
 
   .dropdown-menu-columns .column {
-    border-right: 1px solid var(--menu-separator);
     padding-bottom: 1rem;
   }
 
@@ -162,7 +173,6 @@ body {
   .navbar-nav .dropdown-menu {
     width: 420px;
   }
-  
 }
 
 @media (max-width: 350px) {
@@ -170,6 +180,72 @@ body {
     width: 200px;
   }
 }
+
+/* Estilo para los elementos del menú */
+.dropdown-menu-columns .dropdown-header {
+  font-weight: bold;
+  color: var(--menu-header);
+  padding-bottom: 0.5rem;
+  /* border-bottom: 1px solid #ddd; */
+  /* margin-bottom: 1rem; */
+}
+
+.dropdown-menu-columns .dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 0;
+  text-decoration: none;
+  color: var(--navbar-link);
+}
+
+.dropdown-menu-columns .dropdown-item:hover {
+  background-color: var(--hover-background);
+}
+
+.dropdown-menu-columns .dropdown-item i {
+  margin-right: 10px;
+  color: var(--primary-color);
+}
+
+  
+  /* Mega Menu Styles */
+/* Mega Menu Styles */
+
+
+.dropdown-menu-columns {
+  display: flex;
+  flex-wrap: wrap; 
+
+}
+
+
+
+.dropdown-menu-columns .dropdown-header {
+  font-weight: bold;
+  color: var(--menu-header);
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 1rem;
+}
+
+ 
+.dropdown-menu-columns .dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 0;
+  text-decoration: none;
+  color: var(--navbar-link);
+}
+
+.dropdown-menu-columns .dropdown-item:hover {
+  background-color: var(--hover-background);
+}
+
+ 
+.dropdown-menu-columns .dropdown-item i {
+  margin-right: 10px;
+  color: var(--primary-color);
+} 
 
 /* Footer Styles */
 footer {
@@ -326,31 +402,56 @@ footer .footer-column a:hover {
 /* start page */
 /* Jumbotron Full Page */
 .jumbotron {
-  /* height: 100vh; */
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 2rem;
+  padding: 4rem 2rem;
   color: white;
-  background:
-    linear-gradient(135deg, rgba(102, 16, 242, 0.8), rgba(111, 66, 193, 0.8)),
-    url('https://ciberpunk.es/wp-content/uploads/2020/12/finance4-section-bg2.png');
+  background: linear-gradient(135deg, rgba(102, 16, 242, 0.8), rgba(111, 66, 193, 0.8)),
+      url('https://ciberpunk.es/wp-content/uploads/2020/12/finance4-section-bg2.png');
   background-size: cover;
   background-position: center;
   background-blend-mode: overlay;
+  height: 100vh;
 }
 
-
 .jumbotron-content {
-  max-width: 50%;
+  max-width: 100%;
 }
 
 .jumbotron img {
-  max-height: 80%;
-  max-width: 40%;
-  object-fit: cover;
+  max-width: 100%;
   border-radius: 0.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
+
+.btn-cta {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-cta:hover {
+  transform: scale(1.05);
+  background-color: #0056b3; /* Darker shade for hover */
+}
+
+.benefit-icon {
+  text-align: center;
+}
+
+.benefit-icon i {
+  color: #007bff;
+  transition: color 0.3s ease;
+}
+
+.benefit-icon i:hover {
+  color: #0056b3;
+}
+
+.benefit-icon p {
+  margin-top: 0.5rem;
+  font-size: 1.1rem;
+}
+
 
 /* CTA Buttons */
 .btn-cta {
@@ -389,22 +490,35 @@ footer .footer-column a:hover {
 }
 
 /* Benefits Section */
+
 .benefits-section {
-  background-color: #e9ecef;
+  /* background-color: #e9ecef; */
   padding: 3rem 2rem;
 }
 
 .benefit-card {
   background-color: white;
   border: 1px solid #dee2e6;
-  border-radius: 0.5rem;
+  border-radius: 1rem;
   padding: 2rem;
   text-align: center;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .benefit-card:hover {
-  transform: translateY(-10px);
+  transform: translateY(-15px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.icon-container {
+  display: inline-block;
+  background-color: #007bff;
+  border-radius: 50%;
+  padding: 20px;
+}
+
+.benefit-card i {
+  font-size: 3rem;
 }
 
 /* Features Overview */
@@ -418,16 +532,156 @@ footer .footer-column a:hover {
 }
 
 /* Pricing Section */
-.pricing-section {
-  background-color: #fff;
-  padding: 4rem 2rem;
-}
+    /* Pricing Section */
+    #pricing .pricing-section {
+      background-color: #f7f8fb;
+      padding: 4rem 2rem;
+  }
 
-.pricing-table .card {
-  border: none;
-  border-radius: 1rem;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-}
+  #pricing .card {
+      border: none;
+      border-radius: 1rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  #pricing .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  #pricing .card-header {
+      background-color: #fff;
+      border-bottom: 2px solid #eee;
+      padding: 1rem;
+  }
+
+  #pricing .card-header h5 {
+      font-weight: bold;
+      color: #333;
+      font-size: 1.25rem;
+  }
+
+  #pricing .card-body {
+      padding: 1.5rem;
+  }
+
+  #pricing .price {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #333;
+      position: relative;
+  }
+
+  #pricing .price_free {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #00B0FF;
+  }
+
+  #pricing .price-label {
+      font-size: 1rem;
+      color: #999;
+  }
+
+  #pricing .card-body ul {
+      padding-left: 20px;
+      font-size: 0.9rem;
+      color: #555;
+  }
+
+  #pricing .card-body ul li {
+      margin-bottom: 10px;
+  }
+
+  #pricing .card-body .btn {
+      width: 100%;
+      padding: 0.75rem;
+      border-radius: 30px;
+      font-weight: bold;
+      text-transform: uppercase;
+      transition: background-color 0.3s ease;
+  }
+
+  #pricing .card-body .btn:hover {
+      background-color: #333;
+      color: #fff;
+  }
+
+  /* Pricing Toggle */
+  #pricing .form-check {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
+
+  #pricing .form-check .form-check-label {
+      font-weight: bold;
+      margin-left: 10px;
+  }
+
+  #pricing .form-check-input {
+      width: 80px;
+      height: 30px;
+      border-radius: 50px;
+      /* Mantener el borde redondeado */
+      background-color: #4CAF50;
+      position: relative;
+      transition: background-color 0.3s ease;
+  }
+
+  #pricing .form-check-input:checked {
+      background-color: #FFC107;
+  }
+
+  #pricing .form-check-input:checked::before {
+      transform: translateX(90px);
+      /* Ajustamos el control deslizante */
+      width: 30px;
+      /* Aumentamos el tamaño del deslizante */
+      height: 30px;
+      /* Mantener el tamaño del deslizante */
+  }
+
+  /* Tooltip (12% Off Badge) */
+  #pricing .discount-badge {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      transform: translate(50%, -50%);
+      font-size: 0.9rem;
+      padding: 5px 10px;
+      border-radius: 10px;
+      background-color: #ff4d4d;
+      color: white;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  #pricing .discount-text {
+      font-weight: bold;
+      color: #ff4d4d;
+  }
+
+  /* Responsive */
+  @media (max-width: 767px) {
+      #pricing .pricing-table {
+          margin-bottom: 20px;
+      }
+
+      #pricing .row {
+          display: block;
+      }
+
+      #pricing .col-md-4 {
+          width: 100%;
+          margin-bottom: 2rem;
+      }
+
+      #pricing .price {
+          font-size: 2rem;
+      }
+  }
 
 .cta-section {
   background: #6610f2;

@@ -1,0 +1,140 @@
+  <style>
+/* styles */
+.navbar {
+  background-color: var(--navbar-background);
+  box-shadow: var(--navbar-shadow);
+}
+
+.navbar-nav .nav-link {
+  color: var(--navbar-link);
+}
+
+.navbar-nav .dropdown-menu {
+  width: 1000px;  /* Ancho para el mega menú */
+  box-shadow: var(--navbar-shadow);
+  padding: 20px 0; /* Añadido padding para separación */
+  display: flex;   /* Usamos flexbox para distribución en columnas */
+  flex-wrap: wrap; /* Para permitir que las columnas se ajusten en diferentes filas si es necesario */
+}
+
+.dropdown-menu .dropdown-item {
+  align-items: center;
+}
+
+.dropdown-menu .dropdown-item i {
+  margin-right: 8px;
+  color: var(--primary-color);
+}
+
+.dropdown-menu .dropdown-item span.new,
+.dropdown-menu .dropdown-item span.update {
+  background-color: var(--primary-color);
+  color: var(--white);
+  font-size: 12px;
+  padding: 2px 4px;
+  border-radius: 4px;
+  margin-left: 8px;
+}
+
+/* Dropdown Menu Columns */
+.dropdown-menu-columns {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.dropdown-menu-columns .column {
+  flex: 1 1 180px; /* Aseguramos que cada columna ocupe al menos 180px */
+  padding: 0 16px;
+}
+
+.column.featured {
+  background-color: var(--featured-column);
+}
+
+.dropdown-menu-columns .dropdown-header {
+  font-weight: bold;
+  color: var(--menu-header);
+  margin-bottom: 8px; /* Añadido espacio debajo de los encabezados */
+}
+
+/* Responsive Dropdown Styles */
+@media (max-width: 767px) {
+  .dropdown-menu-columns {
+    flex-direction: column; /* Para pantallas más pequeñas, las columnas se apilan */
+  }
+}
+
+@media (min-width: 768px) {
+  .dropdown-menu-columns {
+    gap: 1rem;
+  }
+  .dropdown-menu-columns .column {
+    border-right: 1px solid var(--menu-separator);
+    padding-bottom: 1rem;
+  }
+
+  .dropdown-menu-columns .column:last-child {
+    border-right: none;
+  }
+}
+
+@media (max-width: 450px) {
+  .navbar-nav .dropdown-menu {
+    width: 100%;
+  }
+}
+
+
+  </style>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+      <!-- Logo -->
+      <a class="navbar-brand mx-auto" href="{{ url_for('index') }}">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" height="50" class="d-inline-block align-text-top">
+      </a>
+  
+      <!-- Navbar Toggle -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <!-- Navbar Links -->
+      <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+        <ul class="navbar-nav align-items-center">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="domainDnsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              🔍 Herramientas
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="domainDnsDropdown">
+              <div class="dropdown-menu-columns">
+                <!-- Columna 1 -->
+                <div class="column">
+                  <h6 class="dropdown-header">Dominios y Correos 🔍</h6>
+                  <a class="dropdown-item" href="/tools/domains/whois"><i class="fas fa-info-circle"></i> WHOIS</a>
+                  <a class="dropdown-item" href="/tools/domains/reverse"><i class="fas fa-globe"></i> Reverse Domain</a>
+                  <a class="dropdown-item" href="/tools/domains/cname"><i class="fas fa-cog"></i> CNAME</a>
+                </div>
+                <!-- Columna 2 -->
+                <div class="column">
+                  <h6 class="dropdown-header">Mail 📬</h6>
+                  <a class="dropdown-item" href="/tools/domains/mx"><i class="fas fa-server"></i> MX Discover</a>
+                  <a class="dropdown-item" href="/tools/domains/spf"><i class="fas fa-shield-alt"></i> SPF Lookup</a>
+                </div>
+                <!-- Columna 3 -->
+                <div class="column">
+                  <h6 class="dropdown-header">DNS 🌐</h6>
+                  <a class="dropdown-item" href="/tools/domains/soa"><i class="fas fa-info"></i> SOA Lookup</a>
+                  <a class="dropdown-item" href="/tools/domains/asn"><i class="fas fa-sitemap"></i> ASN Lookup</a>
+                </div>
+              </div>
+            </ul>
+          </li>
+          <!-- Más elementos del menú -->
+        </ul>
+      </div>
+    </div>
+  </nav>
+  

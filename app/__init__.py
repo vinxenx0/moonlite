@@ -1,7 +1,7 @@
 # __init__py
 import json
 import os
-from flask import Flask, session
+from flask import Flask, render_template, session
 from flask_sqlalchemy import SQLAlchemy
 import logging
 from flask_login import LoginManager, current_user
@@ -229,3 +229,21 @@ def load_user(user_id):
 #    if not current_user.is_authenticated and 'cookies_accepted' not in session:
 #        session['show_cookies_modal'] = True
 
+
+# Manejar error 400 (Bad Request)
+@app.errorhandler(400)
+def bad_request(error):
+    return render_template('error_pages/400.html', error=error), 400
+
+# Manejar otros errores comunes
+@app.errorhandler(403)
+def forbidden(error):
+    return render_template('error_pages/403.html', error=error), 403
+
+@app.errorhandler(404)
+def not_found(error):
+    return render_template('error_pages/404.html', error=error), 404
+
+@app.errorhandler(500)
+def internal_server_error(error):
+    return render_template('error_pages/500.html', error=error), 500

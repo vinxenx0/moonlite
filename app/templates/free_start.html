@@ -5,6 +5,7 @@
 {% block title %}Inicio{% endblock %}
 
 {% block content %}
+{% include 'inc/breadcrumbs.html' %}
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -138,56 +139,27 @@
     }
 </style>
 
+
 <div class="_container _mt-5">
 
-    <!--
-    <div class="jumbotron mb-3">
-        <h1 class="display-4">¡Bienvenido a nuestra aplicación!</h1>
-        <p class="lead">ahora para comenzar a disfrutar de todas las funcionalidades.</p>
-       
-      </div>
 
-     Hero Section -->
-     
+
+    <!-- Hero Section 
     <section class="hero-section">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-8">
-                    <h1>Bussines Account</h1>
+                    <h1>Analiza Sitios Enteros</h1>
                     <p class="mb-4">Get your free SEO report with actionable insights to boost your online presence.</p>
-                    <a href="#online-test" class="btn btn-cta btn-lg mt-3">Get Your Free SEO Report</a>
+                    <a href="#online-test" class="btn btn-cta btn-lg mt-3">Prueba Corporate</a>
                 </div>
                 <div class="col-md-4 d-none d-md-block">
                     <i class="fas fa-search fa-7x"></i>
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
-        <!-- Tools by Category -->
-        <section id="categories" class="mt-5">
-            <h2 class="text-center mb-4">Tool Categories</h2>
-            <div class="row g-4">
-                {% for category, subcategories in grouped_tools.items() %}
-                <div class="col-lg-6 col-md-6 col-sm-12">
-                    <!-- Header Card -->
-                    <div class="card shadow-sm border-primary mb-3">
-                        <div class="card-body text-center">
-                            <i class="fas fa-folder fa-2x text-primary mb-3"></i>
-                            <h5 class="card-title">{{ category }}</h5>
-                            <p class="card-text">
-                                <strong>{{ subcategories|length }}</strong> subcategories,
-                                <strong>{{ subcategories.values()|map('length')|sum }}</strong> tools.
-                            </p>
-                            <a href="#{{ category|replace(' ', '-') }}" class="btn btn-outline-primary">
-                                View Category <i class="fas fa-arrow-right"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </section>
 
     {% include "inc/online_test.html" %}
 
@@ -2708,6 +2680,36 @@
         {% endif %}
     </div>
 
+
+
+    {% include "inc/suscriptions.html" %}
+    
+        <!-- Tools by Category -->
+        <section id="categories" class="mt-5">
+            <h2 class="text-center mb-4">Tool Categories</h2>
+            <div class="row g-4">
+                {% for category, subcategories in grouped_tools.items() %}
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <!-- Header Card -->
+                    <div class="card shadow-sm border-primary mb-3">
+                        <div class="card-body text-center">
+                            <i class="fas fa-folder fa-2x text-primary mb-3"></i>
+                            <h5 class="card-title">{{ category }}</h5>
+                            <p class="card-text">
+                                <strong>{{ subcategories|length }}</strong> subcategories,
+                                <strong>{{ subcategories.values()|map('length')|sum }}</strong> tools.
+                            </p>
+                            <a href="#{{ category|replace(' ', '-') }}" class="btn btn-outline-primary">
+                                View Category <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+
        <!-- Most Used Tools Section -->
        <section id="most-used-tools" class="mt-5">
         <h2 class="text-center mb-4">Most Used Tools</h2>
@@ -2731,7 +2733,6 @@
 
 
 
-    {% include "inc/suscriptions.html" %}
      <!-- CTA Section -->
      <section class="cta-section">
         <div class="container">

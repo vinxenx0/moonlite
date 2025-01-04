@@ -1,7 +1,7 @@
 <!-- Pricing Section -->
 <section id="pricing" class="container _pricing-section">
     <div class="text-center mb-4">
-        <h2>Choose Your Plan</h2>
+        <h2>Suscripciones</h2>
     </div>
 
     <div class="row text-center">
@@ -9,16 +9,17 @@
         <div class="col-md-4 mb-4">
             <div class="card pricing-table">
                 <div class="card-header bg-primary text-white">
-                    <h5>Free Plan</h5>
+                    <h5>Gratuito</h5>
                 </div>
                 <div class="card-body">
-                    <h3 class="price_free">$0 <span class="small price-label">para siempre</span></h3>
+                    <h3 class="price_free">0€ <span class="small price-label"><u>siempre</u></span></h3>
                     <ul class="list-unstyled text-start">
-                        <li><i class="bi bi-check-circle text-success"></i> Access to basic features</li>
-                        <li><i class="bi bi-check-circle text-success"></i> Limited reports</li>
-                        <li><i class="bi bi-x-circle text-danger"></i> No priority support</li>
+                        <li><i class="bi bi-check-circle text-success"></i> Herramientas básicas</li>
+                        <li><i class="bi bi-check-circle text-success"></i> Informes limitados</li>
+                        <li><i class="bi bi-x-circle text-danger"></i> Sin publicidad</li>
+                        <li><i class="bi bi-x-circle text-danger"></i> Sin Soporte</li>
                     </ul>
-                    <a href="#" class="btn btn-primary">Get Started</a>
+                    <a href="{{ url_for('register') }}" class="btn btn-primary">Entrar</a>
                 </div>
             </div>
         </div>
@@ -26,87 +27,88 @@
         <div class="col-md-4 mb-4">
             <div class="card pricing-table">
                 <div class="card-header bg-success text-white">
-                    <h5>Pro Plan</h5>
+                    <h5>Profesionales</h5>
                 </div>
                 <div class="card-body">
-                    <h3 class="price position-relative" data-monthly="29" data-yearly="290">
-                        $290 <span class="small price-label">Per Year</span>
+                    <h3 class="price position-relative" data-monthly="12" data-yearly="99">
+                        99€<span class="small price-label">/año</span>
                         <span class="badge bg-danger discount-badge">12% Off</span>
                     </h3>
                     <ul class="list-unstyled text-start">
-                        <li><i class="bi bi-check-circle text-success"></i> All features unlocked</li>
-                        <li><i class="bi bi-check-circle text-success"></i> Unlimited reports</li>
-                        <li><i class="bi bi-check-circle text-success"></i> Priority support</li>
+                        <li><i class="bi bi-check-circle text-success"></i> Todas las Herramientas</li>
+                        <li><i class="bi bi-check-circle text-success"></i> Informes completos</li>
+                        <li><i class="bi bi-check-circle text-success"></i> Sin publicidad</li>
+                        <li><i class="bi bi-check-circle text-success"></i> Tickets de soporte</li>
                     </ul>
-                    <a href="#" class="btn btn-success">Subscribe Now</a>
+                    <a href="{{ url_for('register') }}/pro" class="btn btn-success">Suscribirse</a>
                 </div>
             </div>
         </div>
-        <!-- Basic Plan -->
+        <!-- Corporate Plan -->
         <div class="col-md-4 mb-4">
             <div class="card pricing-table">
                 <div class="card-header bg-warning text-dark">
-                    <h5>Basic Plan</h5>
+                    <h5>Agencias</h5>
                 </div>
                 <div class="card-body">
-                    <h3 class="price position-relative" data-monthly="9" data-yearly="90">
-                        $90 <span class="small price-label">Per Year</span>
+                    <h3 class="price position-relative" data-monthly="150" data-yearly="1200">
+                        150€ <span class="small price-label">/año</span>
                         <span class="badge bg-danger discount-badge">12% Off</span>
                     </h3>
                     <ul class="list-unstyled text-start">
-                        <li><i class="bi bi-check-circle text-success"></i> Access to essential features</li>
-                        <li><i class="bi bi-check-circle text-success"></i> Limited reports</li>
-                        <li><i class="bi bi-x-circle text-danger"></i> No priority support</li>
+                        <li><i class="bi bi-check-circle text-success"></i> Herramientas e informes completos</li>
+                        <li><i class="bi bi-check-circle text-success"></i> Sugerencias IA</li>
+                        <li><i class="bi bi-x-circle text-success"></i> Marca blanca</li>
+                        <li><i class="bi bi-x-circle text-success"></i> Soporte en linea</li>
                     </ul>
-                    <a href="#" class="btn btn-warning">Subscribe Now</a>
+                    <a href="{{ url_for('register') }}/agency" class="btn btn-warning">Contactar</a>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="text-center mb-4">
-        <p>Select the plan that suits you best. Toggle between monthly and yearly prices.</p>
         <div class="form-check form-switch d-inline-block">
             <input class="form-check-input" type="checkbox" id="togglePricing" size="20"
                 aria-label="Toggle yearly billing" checked>
-            <label class="form-check-label" for="togglePricing">Yearly Billing</label>
+            <label class="form-check-label" for="togglePricing">Pago anual incluye <span class="discount-text">* 12%
+                    discount</span></label>
         </div>
-        <p class="small text-muted mt-2">* Yearly subscription includes a <span class="discount-text">12%
-                discount</span>!</p>
+
     </div>
-    
+
 </section>
 
 <script>
-const toggle = document.getElementById('togglePricing');
-const prices = document.querySelectorAll('.price');
-const badges = document.querySelectorAll('.discount-badge');
+    const toggle = document.getElementById('togglePricing');
+    const prices = document.querySelectorAll('.price');
+    const badges = document.querySelectorAll('.discount-badge');
 
-// Update pricing based on the default yearly selection
-function updatePricing() {
-    prices.forEach((price, index) => {
-        const monthly = price.getAttribute('data-monthly');
-        const yearly = price.getAttribute('data-yearly');
-        const badge = badges[index];
-        const priceLabel = price.querySelector('.price-label');
+    // Update pricing based on the default yearly selection
+    function updatePricing() {
+        prices.forEach((price, index) => {
+            const monthly = price.getAttribute('data-monthly');
+            const yearly = price.getAttribute('data-yearly');
+            const badge = badges[index];
+            const priceLabel = price.querySelector('.price-label');
 
-        if (toggle.checked) {
-            price.innerHTML = `$${yearly} <span class="small price-label">Per Year</span>`;
-            badge.classList.remove('d-none'); // Show badge for yearly pricing
-            price.appendChild(badge); // Append badge
-        } else {
-            price.innerHTML = `$${monthly} <span class="small price-label">Per Month</span>`;
-            badge.classList.add('d-none'); // Hide badge for monthly pricing
-        }
+            if (toggle.checked) {
+                price.innerHTML = `${yearly}€ <span class="small price-label">/año</span>`;
+                badge.classList.remove('d-none'); // Show badge for yearly pricing
+                price.appendChild(badge); // Append badge
+            } else {
+                price.innerHTML = `${monthly}€ <span class="small price-label">/mes</span>`;
+                badge.classList.add('d-none'); // Hide badge for monthly pricing
+            }
+        });
+    }
+
+    // Set the default state to yearly pricing when page loads
+    document.addEventListener('DOMContentLoaded', () => {
+        updatePricing();
     });
-}
 
-// Set the default state to yearly pricing when page loads
-document.addEventListener('DOMContentLoaded', () => {
-    updatePricing();
-});
-
-// Listen for toggle change and update the prices
-toggle.addEventListener('change', updatePricing);
+    // Listen for toggle change and update the prices
+    toggle.addEventListener('change', updatePricing);
 
 </script>

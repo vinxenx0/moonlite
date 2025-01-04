@@ -140,6 +140,7 @@
 
 <div class="_container _mt-5">
 
+    <!-- 
     <div class="jumbotron mb-3">
         <h1 class="display-4">¡Bienvenido a nuestra aplicación!</h1>
         <p class="lead"><a class="btn btn-primary btn-lg" href="{{ url_for('index') }}" role="button">HAZTE
@@ -147,63 +148,38 @@
 
     </div>
 
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <h1>Analiza Sitios Enteros</h1>
-                    <p class="mb-4">Get your free SEO report with actionable insights to boost your online presence.</p>
-                    <a href="#online-test" class="btn btn-cta btn-lg mt-3">Prueba Corporate</a>
+    Hero Section -->
+
+
+        <!-- Tools by Category -->
+        <section id="categories" class="mt-5">
+            <h2 class="text-center mb-4">Tool Categories</h2>
+            <div class="row g-4">
+                {% for category, subcategories in grouped_tools.items() %}
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <!-- Header Card -->
+                    <div class="card shadow-sm border-primary mb-3">
+                        <div class="card-body text-center">
+                            <i class="fas fa-folder fa-2x text-primary mb-3"></i>
+                            <h5 class="card-title">{{ category }}</h5>
+                            <p class="card-text">
+                                <strong>{{ subcategories|length }}</strong> subcategories,
+                                <strong>{{ subcategories.values()|map('length')|sum }}</strong> tools.
+                            </p>
+                            <a href="#{{ category|replace(' ', '-') }}" class="btn btn-outline-primary">
+                                View Category <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-4 d-none d-md-block">
-                    <i class="fas fa-search fa-7x"></i>
-                </div>
+                {% endfor %}
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Online Test Box -->
-    <section id="online-test" class="content-section bg-light">
-        <div class="container text-center">
-            <h2>Quick Scan</h2>
-            <p>Enter your URL below to get an instant, free report on your site’s performance.</p>
-            <!--
-        <form class="row justify-content-center">
-            <div class="col-md-6">
-                <input type="url" class="form-control" placeholder="Enter your website URL (e.g., https://yourbusiness.com)" required>
-            </div>
-            <div class="col-md-3">
-                <button type="submit" class="btn btn-primary w-100">Analyze URL</button>
-            </div>
-        </form>
-        -->
-            <form action="/start" method="post" id="pageInfoForm">
-                {{ form.csrf_token }}
-                <div class="mb-3">
-                    {{ form.url.label(class="form-label") }}
-                    {{ form.url(class="form-control", id="url") }}
-                    {% for error in form.url.errors %}
-                    <small class="form-text text-danger">{{ error }}</small>
-                    {% endfor %}
-                </div><!-- 
-                <button type="submit" class="btn btn-primary" id="analizarBtn">
-                    <span id="btnText">ANALIZAR URL</span>
-                    <span id="loadingSpinner" class="spinner-border spinner-border-sm d-none" role="status"
-                        aria-hidden="true"></span>
-                </button>-->
-                <button type="submit" class="btn btn-primary" id="analizarBtn">
-                    <span id="btnText">ANALIZAR URL</span>
-                    <span id="loadingSpinner" class="spinner-border spinner-border-sm d-none" role="status"
-                        aria-hidden="true"></span>
-                </button>
-            </form>
+    {% include "inc/online_test.html" %}
 
-        </div>
-    </section>
-
-    {% if data %}
     <div class="container mt-5">
+        {% if data %}
         <h1 class="text-center">Resultados</h1>
 
         <div class="accordion mt-4" id="accordionExample">
@@ -905,7 +881,8 @@
                                                             <strong>Canonical HTTP Absolute:</strong> {% if
                                                             data['Canonical_Info']['Canonical_HTTP_Absolute']
                                                             %}<span class="badge bg-success"><i
-                                                                    class="fas fa-check"></i> True</span>{% else
+                                                                    class="fas fa-check"></i>
+                                                                True</span>{% else
                                                             %}<span class="badge bg-danger"><i class="fas fa-times"></i>
                                                                 False</span>{% endif
                                                             %}
@@ -916,7 +893,8 @@
                                                             <strong>Canonical HTTP Relative:</strong> {% if
                                                             data['Canonical_Info']['Canonical_HTTP_Relative']
                                                             %}<span class="badge bg-success"><i
-                                                                    class="fas fa-check"></i> True</span>{% else
+                                                                    class="fas fa-check"></i>
+                                                                True</span>{% else
                                                             %}<span class="badge bg-danger"><i class="fas fa-times"></i>
                                                                 False</span>{% endif
                                                             %}
@@ -939,7 +917,8 @@
                                                                 Conflicting:</strong> {% if
                                                             data['Canonical_Info']['Canonical_Multiple_Conflicting']
                                                             %}<span class="badge bg-success"><i
-                                                                    class="fas fa-check"></i> True</span>{% else
+                                                                    class="fas fa-check"></i>
+                                                                True</span>{% else
                                                             %}<span class="badge bg-danger"><i class="fas fa-times"></i>
                                                                 False</span>{% endif
                                                             %}
@@ -955,14 +934,16 @@
                                                     <div class="col-md-6">
                                                         <p class="list-item list-item-border" data-bs-toggle="tooltip"
                                                             data-bs-placement="right" title="HTTP URLs"
-                                                            data-bs-html="true"><strong>HTTP
+                                                            data-bs-html="true">
+                                                            <strong>HTTP
                                                                 URLs:</strong> {% if
                                                             data['Security_Info']['HTTP_URLs'] %}<span
                                                                 class="badge bg-success"><i class="fas fa-check"></i>
                                                                 True</span>{% else
                                                             %}<span class="badge bg-danger"><i class="fas fa-times"></i>
                                                                 False</span>{% endif
-                                                            %}</p>
+                                                            %}
+                                                        </p>
                                                         <p class="list-item list-item-border" data-bs-toggle="tooltip"
                                                             data-bs-placement="right" title="HTTPS URLs"
                                                             data-bs-html="true"><strong>HTTPS
@@ -1013,7 +994,8 @@
                                                             <strong>Unsafe Cross-Origin Links:</strong> {% if
                                                             data['Security_Info']['Unsafe_Cross-Origin_Links']
                                                             %}<span class="badge bg-success"><i
-                                                                    class="fas fa-check"></i> True</span>{% else
+                                                                    class="fas fa-check"></i>
+                                                                True</span>{% else
                                                             %}<span class="badge bg-danger"><i class="fas fa-times"></i>
                                                                 False</span>{% endif
                                                             %}
@@ -1021,14 +1003,17 @@
                                                         <p class="list-item list-item-border" data-bs-toggle="tooltip"
                                                             data-bs-placement="right"
                                                             title="Protocol-Relative Resource Links"
-                                                            data-bs-html="true"><strong>Protocol-Relative Resource
+                                                            data-bs-html="true">
+                                                            <strong>Protocol-Relative Resource
                                                                 Links:</strong> {% if
                                                             data['Security_Info']['Protocol-Relative_Resource_Links']
                                                             %}<span class="badge bg-success"><i
-                                                                    class="fas fa-check"></i> True</span>{% else
+                                                                    class="fas fa-check"></i>
+                                                                True</span>{% else
                                                             %}<span class="badge bg-danger"><i class="fas fa-times"></i>
                                                                 False</span>{% endif
-                                                            %}</p>
+                                                            %}
+                                                        </p>
                                                         <p class="list-item list-item-border" data-bs-toggle="tooltip"
                                                             data-bs-placement="right" title="Missing HSTS Header"
                                                             data-bs-html="true">
@@ -1047,7 +1032,8 @@
                                                                 Content-Security-Policy Header:</strong> {% if
                                                             data['Security_Info']['Missing_Content-Security-Policy_Header']
                                                             %}<span class="badge bg-success"><i
-                                                                    class="fas fa-check"></i> True</span>{% else
+                                                                    class="fas fa-check"></i>
+                                                                True</span>{% else
                                                             %}<span class="badge bg-danger"><i class="fas fa-times"></i>
                                                                 False</span>{% endif
                                                             %}</p>
@@ -1058,7 +1044,8 @@
                                                                 X-Content-Type-Options Header:</strong> {% if
                                                             data['Security_Info']['Missing_X-Content-Type-Options_Header']
                                                             %}<span class="badge bg-success"><i
-                                                                    class="fas fa-check"></i> True</span>{% else
+                                                                    class="fas fa-check"></i>
+                                                                True</span>{% else
                                                             %}<span class="badge bg-danger"><i class="fas fa-times"></i>
                                                                 False</span>{% endif
                                                             %}</p>
@@ -1069,7 +1056,8 @@
                                                                 Header:</strong> {% if
                                                             data['Security_Info']['Missing_X-Frame-Options_Header']
                                                             %}<span class="badge bg-success"><i
-                                                                    class="fas fa-check"></i> True</span>{% else
+                                                                    class="fas fa-check"></i>
+                                                                True</span>{% else
                                                             %}<span class="badge bg-danger"><i class="fas fa-times"></i>
                                                                 False</span>{% endif
                                                             %}
@@ -1081,7 +1069,8 @@
                                                                 Referrer-Policy Header:</strong> {% if
                                                             data['Security_Info']['Missing_Secure_Referrer-Policy_Header']
                                                             %}<span class="badge bg-success"><i
-                                                                    class="fas fa-check"></i> True</span>{% else
+                                                                    class="fas fa-check"></i>
+                                                                True</span>{% else
                                                             %}<span class="badge bg-danger"><i class="fas fa-times"></i>
                                                                 False</span>{% endif
                                                             %}</p>
@@ -1110,7 +1099,8 @@
                                                             <strong>Non ASCII Characters:</strong> {% if
                                                             data['Common_URL_Issues']['Non_ASCII_Characters']
                                                             %}<span class="badge bg-success"><i
-                                                                    class="fas fa-check"></i> True</span>{% else
+                                                                    class="fas fa-check"></i>
+                                                                True</span>{% else
                                                             %}<span class="badge bg-danger"><i class="fas fa-times"></i>
                                                                 False</span>{% endif
                                                             %}
@@ -1211,7 +1201,8 @@
                                                             <strong>GA Tracking Parameters:</strong> {% if
                                                             data['Common_URL_Issues']['GA_Tracking_Parameters']
                                                             %}<span class="badge bg-success"><i
-                                                                    class="fas fa-check"></i> True</span>{% else
+                                                                    class="fas fa-check"></i>
+                                                                True</span>{% else
                                                             %}<span class="badge bg-danger"><i class="fas fa-times"></i>
                                                                 False</span>{% endif
                                                             %}
@@ -1312,7 +1303,8 @@
                                                             <head>'] %}<span class="badge bg-success"><i
                                                                         class="fas fa-check"></i> True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}
                                                         </p>
                                                     </div>
@@ -1376,9 +1368,11 @@
                                                                 <strong>Missing:</strong> {% if
                                                                 data['Meta_Description_Issues']['Missing'] %}<span
                                                                     class="badge bg-success"><i
-                                                                        class="fas fa-check"></i> True</span>{% else
+                                                                        class="fas fa-check"></i>
+                                                                    True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}
                                                             </p>
                                                             <p class="list-item list-item-border"
@@ -1387,9 +1381,11 @@
                                                                 <strong>Duplicate:</strong> {% if
                                                                 data['Meta_Description_Issues']['Duplicate'] %}<span
                                                                     class="badge bg-success"><i
-                                                                        class="fas fa-check"></i> True</span>{% else
+                                                                        class="fas fa-check"></i>
+                                                                    True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}
                                                             </p>
                                                             <p class="list-item list-item-border"
@@ -1400,7 +1396,8 @@
                                                                 %}<span class="badge bg-success"><i
                                                                         class="fas fa-check"></i> True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}
                                                             </p>
                                                         </div>
@@ -1413,7 +1410,8 @@
                                                                 %}<span class="badge bg-success"><i
                                                                         class="fas fa-check"></i> True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}
                                                             </p>
                                                             <p class="list-item list-item-border"
@@ -1422,9 +1420,11 @@
                                                                 <strong>Multiple:</strong> {% if
                                                                 data['Meta_Description_Issues']['Multiple'] %}<span
                                                                     class="badge bg-success"><i
-                                                                        class="fas fa-check"></i> True</span>{% else
+                                                                        class="fas fa-check"></i>
+                                                                    True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}
                                                             </p>
                                                             <p class="list-item list-item-border"
@@ -1455,9 +1455,11 @@
                                                                 <strong>Missing:</strong> {% if
                                                                 data['Meta_Keywords_Issues']['Missing'] %}<span
                                                                     class="badge bg-success"><i
-                                                                        class="fas fa-check"></i> True</span>{% else
+                                                                        class="fas fa-check"></i>
+                                                                    True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}
                                                             </p>
                                                         </div>
@@ -1468,9 +1470,11 @@
                                                                 <strong>Duplicate:</strong> {% if
                                                                 data['Meta_Keywords_Issues']['Duplicate'] %}<span
                                                                     class="badge bg-success"><i
-                                                                        class="fas fa-check"></i> True</span>{% else
+                                                                        class="fas fa-check"></i>
+                                                                    True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}
                                                             </p>
                                                             <p class="list-item list-item-border"
@@ -1479,9 +1483,11 @@
                                                                 <strong>Multiple:</strong> {% if
                                                                 data['Meta_Keywords_Issues']['Multiple'] %}<span
                                                                     class="badge bg-success"><i
-                                                                        class="fas fa-check"></i> True</span>{% else
+                                                                        class="fas fa-check"></i>
+                                                                    True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}
                                                             </p>
                                                         </div>
@@ -1500,9 +1506,11 @@
                                                                 <strong>Missing:</strong> {% if
                                                                 data['H1_Issues']['Missing'] %}<span
                                                                     class="badge bg-success"><i
-                                                                        class="fas fa-check"></i> True</span>{% else
+                                                                        class="fas fa-check"></i>
+                                                                    True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}
                                                             </p>
                                                             <p class="list-item list-item-border"
@@ -1511,9 +1519,11 @@
                                                                 <strong>Duplicate:</strong> {% if
                                                                 data['H1_Issues']['Duplicate'] %}<span
                                                                     class="badge bg-success"><i
-                                                                        class="fas fa-check"></i> True</span>{% else
+                                                                        class="fas fa-check"></i>
+                                                                    True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}
                                                             </p>
                                                             <p class="list-item list-item-border"
@@ -1522,9 +1532,11 @@
                                                                 <strong>Over 70 characters:</strong> {% if
                                                                 data['H1_Issues']['Over_70_characters'] %}<span
                                                                     class="badge bg-success"><i
-                                                                        class="fas fa-check"></i> True</span>{% else
+                                                                        class="fas fa-check"></i>
+                                                                    True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}
                                                             </p>
                                                         </div>
@@ -1535,9 +1547,11 @@
                                                                 <strong>Multiple:</strong> {% if
                                                                 data['H1_Issues']['Multiple'] %}<span
                                                                     class="badge bg-success"><i
-                                                                        class="fas fa-check"></i> True</span>{% else
+                                                                        class="fas fa-check"></i>
+                                                                    True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}
                                                             </p>
                                                             <p class="list-item list-item-border"
@@ -1546,9 +1560,11 @@
                                                                 <strong>Alt Text in h1:</strong> {% if
                                                                 data['H1_Issues']['Alt_Text_in_h1'] %}<span
                                                                     class="badge bg-success"><i
-                                                                        class="fas fa-check"></i> True</span>{% else
+                                                                        class="fas fa-check"></i>
+                                                                    True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}
                                                             </p>
                                                             <p class="list-item list-item-border"
@@ -1557,9 +1573,11 @@
                                                                 <strong>Non-sequential:</strong> {% if
                                                                 data['H1_Issues']['Non-sequential'] %}<span
                                                                     class="badge bg-success"><i
-                                                                        class="fas fa-check"></i> True</span>{% else
+                                                                        class="fas fa-check"></i>
+                                                                    True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}
                                                             </p>
                                                         </div>
@@ -1579,9 +1597,11 @@
                                                                 <strong>Missing:</strong> {% if
                                                                 data['H2_Issues']['Missing'] %}<span
                                                                     class="badge bg-success"><i
-                                                                        class="fas fa-check"></i> True</span>{% else
+                                                                        class="fas fa-check"></i>
+                                                                    True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}
                                                             </p>
                                                             <p class="list-item list-item-border"
@@ -1590,9 +1610,11 @@
                                                                 <strong>Duplicate:</strong> {% if
                                                                 data['H2_Issues']['Duplicate'] %}<span
                                                                     class="badge bg-success"><i
-                                                                        class="fas fa-check"></i> True</span>{% else
+                                                                        class="fas fa-check"></i>
+                                                                    True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}
                                                             </p>
                                                             <p class="list-item list-item-border"
@@ -1601,9 +1623,11 @@
                                                                 <strong>Over 70 characters:</strong> {% if
                                                                 data['H2_Issues']['Over_70_characters'] %}<span
                                                                     class="badge bg-success"><i
-                                                                        class="fas fa-check"></i> True</span>{% else
+                                                                        class="fas fa-check"></i>
+                                                                    True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}
                                                             </p>
                                                         </div>
@@ -1614,9 +1638,11 @@
                                                                 <strong>Multiple:</strong> {% if
                                                                 data['H2_Issues']['Multiple'] %}<span
                                                                     class="badge bg-success"><i
-                                                                        class="fas fa-check"></i> True</span>{% else
+                                                                        class="fas fa-check"></i>
+                                                                    True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}
                                                             </p>
                                                             <p class="list-item list-item-border"
@@ -1625,9 +1651,11 @@
                                                                 <strong>Non-sequential:</strong> {% if
                                                                 data['H2_Issues']['Non-sequential'] %}<span
                                                                     class="badge bg-success"><i
-                                                                        class="fas fa-check"></i> True</span>{% else
+                                                                        class="fas fa-check"></i>
+                                                                    True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}
                                                             </p>
                                                         </div>
@@ -1664,14 +1692,16 @@
                                                     <button class="nav-link" id="hflang-ref-issues-tab"
                                                         data-bs-toggle="tab" data-bs-target="#hflang-ref-issues"
                                                         type="button" role="tab" aria-controls="hflang-ref-issues"
-                                                        aria-selected="false">HFLang Ref Issues</button>
+                                                        aria-selected="false">HFLang Ref
+                                                        Issues</button>
                                                 </li>
 
                                                 <li class="nav-item" role="presentation">
                                                     <button class="nav-link" id="schema-org-issues-tab"
                                                         data-bs-toggle="tab" data-bs-target="#schema-org-issues"
                                                         type="button" role="tab" aria-controls="schema-org-issues"
-                                                        aria-selected="false">Schema ORG Issues</button>
+                                                        aria-selected="false">Schema ORG
+                                                        Issues</button>
                                                 </li>
 
                                                 <li class="nav-item" role="presentation">
@@ -1695,9 +1725,11 @@
                                                                 <strong>Index:</strong> {% if
                                                                 data['Directives_Issues']['Index'] %}<span
                                                                     class="badge bg-success"><i
-                                                                        class="fas fa-check"></i> True</span>{% else
+                                                                        class="fas fa-check"></i>
+                                                                    True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}
                                                             </p>
                                                             <p class="list-item list-item-border"
@@ -1706,9 +1738,11 @@
                                                                 <strong>Noindex:</strong> {% if
                                                                 data['Directives_Issues']['Noindex'] %}<span
                                                                     class="badge bg-success"><i
-                                                                        class="fas fa-check"></i> True</span>{% else
+                                                                        class="fas fa-check"></i>
+                                                                    True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}
                                                             </p>
                                                             <p class="list-item list-item-border"
@@ -1717,9 +1751,11 @@
                                                                 <strong>Follow:</strong> {% if
                                                                 data['Directives_Issues']['Follow'] %}<span
                                                                     class="badge bg-success"><i
-                                                                        class="fas fa-check"></i> True</span>{% else
+                                                                        class="fas fa-check"></i>
+                                                                    True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}
                                                             </p>
                                                             <p class="list-item list-item-border"
@@ -1728,9 +1764,11 @@
                                                                 <strong>Nofollow:</strong> {% if
                                                                 data['Directives_Issues']['Nofollow'] %}<span
                                                                     class="badge bg-success"><i
-                                                                        class="fas fa-check"></i> True</span>{% else
+                                                                        class="fas fa-check"></i>
+                                                                    True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}
                                                             </p>
                                                             <p class="list-item list-item-border"
@@ -1739,9 +1777,11 @@
                                                                 <strong>None:</strong> {% if
                                                                 data['Directives_Issues']['None'] %}<span
                                                                     class="badge bg-success"><i
-                                                                        class="fas fa-check"></i> True</span>{% else
+                                                                        class="fas fa-check"></i>
+                                                                    True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}
                                                             </p>
                                                         </div>
@@ -1752,9 +1792,11 @@
                                                                 <strong>NoArchive:</strong> {% if
                                                                 data['Directives_Issues']['NoArchive'] %}<span
                                                                     class="badge bg-success"><i
-                                                                        class="fas fa-check"></i> True</span>{% else
+                                                                        class="fas fa-check"></i>
+                                                                    True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}
                                                             </p>
                                                             <p class="list-item list-item-border"
@@ -1763,9 +1805,11 @@
                                                                 <strong>NoSnippet:</strong> {% if
                                                                 data['Directives_Issues']['NoSnippet'] %}<span
                                                                     class="badge bg-success"><i
-                                                                        class="fas fa-check"></i> True</span>{% else
+                                                                        class="fas fa-check"></i>
+                                                                    True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}
                                                             </p>
                                                             <p class="list-item list-item-border"
@@ -1774,9 +1818,11 @@
                                                                 <strong>Max-Snippet:</strong> {% if
                                                                 data['Directives_Issues']['Max-Snippet'] %}<span
                                                                     class="badge bg-success"><i
-                                                                        class="fas fa-check"></i> True</span>{% else
+                                                                        class="fas fa-check"></i>
+                                                                    True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}
                                                             </p>
                                                             <p class="list-item list-item-border"
@@ -1787,7 +1833,8 @@
                                                                 %}<span class="badge bg-success"><i
                                                                         class="fas fa-check"></i> True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}
                                                             </p>
                                                             <p class="list-item list-item-border"
@@ -1798,7 +1845,8 @@
                                                                 %}<span class="badge bg-success"><i
                                                                         class="fas fa-check"></i> True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}
                                                             </p>
                                                         </div>
@@ -1819,7 +1867,8 @@
                                                                 %}<span class="badge bg-success"><i
                                                                         class="fas fa-check"></i> True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}
                                                             </p>
                                                             <p class="list-item list-item-border"
@@ -1930,7 +1979,8 @@
                                                                 %}<span class="badge bg-success"><i
                                                                         class="fas fa-check"></i> True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}
                                                             </p>
                                                             <p class="list-item list-item-border"
@@ -1941,7 +1991,8 @@
                                                                 %}<span class="badge bg-success"><i
                                                                         class="fas fa-check"></i> True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}
                                                             </p>
                                                             <!-- Add more items as needed -->
@@ -2120,7 +2171,8 @@
                                                     <button class="nav-link" id="validation-issues-tab"
                                                         data-bs-toggle="tab" data-bs-target="#validation-issues"
                                                         type="button" role="tab" aria-controls="validation-issues"
-                                                        aria-selected="false">Validation Issues</button>
+                                                        aria-selected="false">Validation
+                                                        Issues</button>
                                                 </li>
 
                                                 <li class="nav-item" role="presentation">
@@ -2236,10 +2288,12 @@
                                                             <p class="list-item list-item-border"
                                                                 data-bs-toggle="tooltip" data-bs-placement="right"
                                                                 title="Meta Description Pixel Width"
-                                                                data-bs-html="true"><strong>Meta Description Pixel
+                                                                data-bs-html="true">
+                                                                <strong>Meta Description Pixel
                                                                     Width:</strong> {{
                                                                 data['Internal_Details']['Meta_Description_Pixel_Width']
-                                                                }}</p>
+                                                                }}
+                                                            </p>
                                                             <p class="list-item list-item-border"
                                                                 data-bs-toggle="tooltip" data-bs-placement="right"
                                                                 title="Meta Keyword 1" data-bs-html="true">
@@ -2438,7 +2492,8 @@
                                                             <p class="list-item list-item-border"
                                                                 data-bs-toggle="tooltip" data-bs-placement="right"
                                                                 title="Invalid HTML Elements In <head>"
-                                                                data-bs-html="true"><strong>Invalid HTML Elements In
+                                                                data-bs-html="true">
+                                                                <strong>Invalid HTML Elements In
                                                                     &lt;head&gt;:</strong> {% if
                                                                 data['Validation_Issues']['Invalid_HTML_Elements_In_
 
@@ -2457,7 +2512,8 @@
                                                                 <html>'] %}<span class="badge bg-success"><i
                                                                         class="fas fa-check"></i> True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}
                                                             </p>
                                                             <p class="list-item list-item-border"
@@ -2469,7 +2525,8 @@
                                                                 _Element'] %}<span class="badge bg-success"><i
                                                                         class="fas fa-check"></i> True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}</p>
                                                             <p class="list-item list-item-border"
                                                                 data-bs-toggle="tooltip" data-bs-placement="right"
@@ -2533,7 +2590,8 @@
                                                                 %}<span class="badge bg-success"><i
                                                                         class="fas fa-check"></i> True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}
                                                             </p>
                                                         </div>
@@ -2561,7 +2619,8 @@
                                                                 %}<span class="badge bg-success"><i
                                                                         class="fas fa-check"></i> True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}
                                                             </p>
                                                             <p class="list-item list-item-border"
@@ -2579,7 +2638,8 @@
                                                                 %}<span class="badge bg-success"><i
                                                                         class="fas fa-check"></i> True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}
                                                             </p>
                                                         </div>
@@ -2606,7 +2666,8 @@
                                                                 %}<span class="badge bg-success"><i
                                                                         class="fas fa-check"></i> True</span>{% else
                                                                 %}<span class="badge bg-danger"><i
-                                                                        class="fas fa-times"></i> False</span>{%
+                                                                        class="fas fa-times"></i>
+                                                                    False</span>{%
                                                                 endif %}
                                                             </p>
                                                         </div>
@@ -2621,49 +2682,71 @@
                         <!-- Add more accordion items for each section -->
                     </div>
                 </div>
-                {% else %}
-                <div class="alert alert-info mt-4" role="alert">
-                    <i class="fas fa-info-circle"></i> Your data is safe with us. We never store or share any of your
-                    information.
-                </div>
-                {% endif %}
+
             </div>
         </div>
+
+        {% else %}
+        <!-- 
+    <div class="alert alert-info mt-4" role="alert">
+        <i class="fas fa-info-circle"></i>No hay datos
+    </div>
+    -->
+        {% endif %}
     </div>
 
-
-    <!--
-    <div class="card mt-4">
-        <div class="card-body">
-            
+    <section class="hero-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <h1>Analiza Sitios Enteros</h1>
+                    <p class="mb-4">Get your free SEO report with actionable insights to boost your online presence.</p>
+                    <a href="#online-test" class="btn btn-cta btn-lg mt-3">Prueba Corporate</a>
+                </div>
+                <div class="col-md-4 d-none d-md-block">
+                    <i class="fas fa-search fa-7x"></i>
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
 
 
+       <!-- Most Used Tools Section -->
+       <section id="most-used-tools" class="mt-5">
+        <h2 class="text-center mb-4">Most Used Tools</h2>
+        <div class="row g-4">
+            {% for tool in tools if tool.most_used %}
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="card h-100 shadow-sm border-success">
+                    <div class="card-body text-center">
+                        <i class="{{ tool.icon }} fa-2x mb-3 text-success"></i>
+                        <h5 class="card-title">{{ tool.name }}</h5>
+                        <p class="card-text">{{ tool.description }}</p>
+                        <a href="{{ tool.link }}" class="btn btn-success btn-sm">
+                            Use Tool <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
 
-{% if not current_user.is_authenticated %}
-{% else %}
-{% endif %}
--->
-
-    {% include 'inc/benefits.html' %}
-
-    {% include 'inc/features.html' %}
 
 
     {% include "inc/suscriptions.html" %}
-
-    <!--    {% include "inc/testimonials.html" %} -->
-
-
-    <!-- CTA Section -->
-    <section class="cta-section">
+     <!-- CTA Section -->
+     <section class="cta-section">
         <div class="container">
             <h2 class="mb-4">Start Your Free Trial Now!</h2>
             <p class="lead">Access all tools with a 7-day trial and discover the impact on your digital presence.</p>
             <a href="#pricing" class="btn btn-light btn-lg">Start Free Trial</a>
         </div>
     </section>
+
+    {% include "inc/featurettes.html" %}
+
+    {% include "inc/benefits.html" %}
 
 </div>
 <script>

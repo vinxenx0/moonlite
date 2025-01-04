@@ -11,6 +11,7 @@ from app.forms import ConfigForm, PageInfoForm
 from app.models.usage_model import Activity
 from app.models.user_model import Transaction, UserLog, Users
 from app.views.user_views import calculate_log_statistics
+from app.views.info import tools
 
 
 @app.route('/')
@@ -26,7 +27,7 @@ def start():
     validator = None
     spelling_errors = None
     grammar_errors = None
-    breadcrumbs = [] #[{'url': '/start', 'text': 'Bienvenido'}]
+    breadcrumbs = [{'url': '/start', 'text': 'Start'}]
 
     form = PageInfoForm()
     if form.validate_on_submit():
@@ -75,6 +76,7 @@ def start():
                            data=data,
                            validator=validator,
                            form=form,
+                           tools=tools,
                            breadcrumbs=breadcrumbs,
                            spelling_errors=spelling_errors,
                            grammar_errors=grammar_errors)
@@ -85,15 +87,17 @@ def start():
                            data=data,
                            validator=validator,
                            form=form,
+                           tools=tools,
                            breadcrumbs=breadcrumbs,
                            spelling_errors=spelling_errors,
                            grammar_errors=grammar_errors)
             
         elif current_user.subscription_plan == 'Free':
-            return render_template('start.html',
+            return render_template('free_start.html',
                            data=data,
                            validator=validator,
                            form=form,
+                           tools=tools,
                            breadcrumbs=breadcrumbs,
                            spelling_errors=spelling_errors,
                            grammar_errors=grammar_errors)

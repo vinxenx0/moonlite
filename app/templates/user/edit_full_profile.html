@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container">
-  <h1 class="my-4">Editar Perfil Completo</h1>
+{% include 'inc/breadcrumbs.html' %}
+<div class="container mb-5">
+  <!--<h1 class="my-4">Editar Perfil Completo</h1>-->
   <form method="POST">
     {{ form.hidden_tag() }}
     {{ payment_form.hidden_tag() }}

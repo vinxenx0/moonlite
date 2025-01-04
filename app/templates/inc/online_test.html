@@ -12,7 +12,7 @@
                 <p class="text-muted mb-4">Ingresa la URL de tu sitio y obtén un análisis instantáneo de su desempeño y
                     seguridad.</p>
 
-                <form action="/start" method="post" id="pageInfoForm" class="position-relative">
+                <form action="/start#results" method="post" id="pageInfoForm" class="position-relative">
                     {{ form.csrf_token }}
                     <div class="mb-4">
                         {{ form.url.label(class="form-label text-muted") }}
@@ -49,7 +49,7 @@
     </div>
 </section>
 
-<div class="container mt-5">
+<div class="container mt-5" id="results">
     {% if data %}
     <h1 class="text-center">Resultados</h1>
 

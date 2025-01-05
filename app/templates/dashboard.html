@@ -34,7 +34,7 @@
 
           <!-- Renewals (Only unlocked for non-Free users) -->
           <div class="col position-relative">
-            {% if not current_user.subscription_plan or current_user.subscription_plan == 'Free' %}
+            {% if not current_user.subscription_plan or current_user.subscription_plan == 'Free' or not user.is_subscription_active() %}
             <div class="overlay">
               <i class="fas fa-lock fa-2x"></i>
             </div>
@@ -47,7 +47,7 @@
 
           <!-- Settings (Only unlocked for non-Free users) -->
           <div class="col position-relative">
-            {% if not current_user.subscription_plan or current_user.subscription_plan == 'Free' %}
+            {% if not current_user.subscription_plan or current_user.subscription_plan == 'Free' or not user.is_subscription_active() %}
             <div class="overlay">
               <i class="fas fa-lock fa-2x"></i>
             </div>
@@ -74,7 +74,7 @@
 
           <!-- Support (Only unlocked for non-Free users) -->
           <div class="col position-relative">
-            {% if not current_user.subscription_plan or current_user.subscription_plan == 'Free' %}
+            {% if not current_user.subscription_plan or current_user.subscription_plan == 'Free' or not user.is_subscription_active() %}
             <div class="overlay">
               <i class="fas fa-lock fa-2x"></i>
             </div>

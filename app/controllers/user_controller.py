@@ -35,12 +35,20 @@ def edit_subscription():
         user.subscription_currency = form.subscription_currency.data
         user.subscription_frequency = form.subscription_frequency.data
 
-        # Establecer fecha de expiración en función de la frecuencia
-        now = datetime.datetime.utcnow()
-        if form.subscription_frequency.data == 'Monthly':
-            user.subscription_expiration = now + datetime.timedelta(days=30)
+
+        # Solo actualizar fecha de expiración si el plan no es "Free"
+        if form.subscription_plan.data != 'Free':
+            now = datetime.datetime.utcnow()
+            if form.subscription_frequency.data == 'Monthly':
+                user.subscription_expiration = now + datetime.timedelta(days=30)
+            else:
+                user.subscription_expiration = now + datetime.timedelta(days=365)
         else:
-            user.subscription_expiration = now + datetime.timedelta(days=365)
+            # Si el plan es "Free", la suscripción no tiene expiración
+            if user.subscription_expiration is not None:
+                user.subscription_expiration = user.subscription_expiration
+            else: 
+                user.subscription_expiration = None
 
         # Establecer monto basado en el plan
         plan_costs = {'Free': 0, 'Pro': 15, 'Corporate': 50}
@@ -188,6 +196,12 @@ def register():
         )
         user.set_password(form.password.data)
         user.token = user.get_token()
+
+        # Handle subscription plan and payment frequency
+        user.subscription_plan = form.subscription_plan.data  # 'Free', 'Pro', or 'Corporate'
+        if form.subscription_plan.data != 'Free':  # Only set frequency if the plan is not Free
+            user.subscription_frequency = form.payment_frequency.data  # 'Monthly' or 'Annually'
+
         db.session.add(user)
         db.session.commit()
         # flash('¡Registro exitoso! Ahora puedes iniciar sesión.', 'success')
@@ -316,7 +330,7 @@ def activate(token):
     
     #log_event('CONFIG', 'Token de activación incorrecto')
     flash('El enlace de activación es inválido o ha expirado.', 'danger')
-    log_user_event(user, f"Token invalido o expirado de {user.username}",'register','warn')
+    log_event('ACTIVATION', 'Token invalidado')
     return redirect(url_for('login'))
 
 

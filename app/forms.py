@@ -41,11 +41,17 @@ class PaymentForm(FlaskForm):
 
     submit = SubmitField('Guardar Métodos de Pago')
 
+
 class NewUserRegistrationForm(FlaskForm):
     username = StringField('Nombre de usuario', validators=[DataRequired(), Length(min=4, max=20)])
     email = StringField('Correo electrónico', validators=[DataRequired(), Email()])
     password = PasswordField('Contraseña', validators=[DataRequired()])
     confirm_password = PasswordField('Confirmar contraseña', validators=[DataRequired(), EqualTo('password')])
+
+    # New subscription fields
+    subscription_plan = SelectField('Plan de suscripción', choices=[('Free', 'Gratis'), ('Pro', 'Pro'), ('Corporate', 'Corporativo')], default='Free', validators=[DataRequired()])
+    payment_frequency = SelectField('Frecuencia de pago', choices=[('Monthly', 'Mensual'), ('Annually', 'Anual')], validators=[DataRequired()], default='Monthly')
+
     submit = SubmitField('Registrarse')
 
     def validate_username(self, username):
@@ -57,6 +63,12 @@ class NewUserRegistrationForm(FlaskForm):
         user = Users.query.filter_by(email=email.data).first()
         if user:
             raise ValidationError('Este correo electrónico ya está registrado. Por favor, use otro.')
+
+    def validate_payment_frequency(self, payment_frequency):
+        # Ensure payment_frequency is only required if subscription is not 'Free'
+        if self.subscription_plan.data == 'Free' and payment_frequency.data:
+            raise ValidationError('La frecuencia de pago no es necesaria para el plan gratuito.')
+
 
 
 class RegistrationForm(FlaskForm):

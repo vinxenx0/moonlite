@@ -14,7 +14,7 @@
                 <div class="card-body">
                     <form method="POST" class="needs-validation" novalidate>
                         {{ form.hidden_tag() }}
-
+                        
                         <!-- Username -->
                         <div class="mb-3">
                             {{ form.username.label(class="form-label fw-bold") }}
@@ -56,26 +56,6 @@
                             {% endfor %}
                         </div>
 
-                        <!-- Subscription Plan -->
-                        <div class="mb-3">
-                            <label for="subscription_plan" class="form-label fw-bold">Plan de Suscripción</label>
-                            <select class="form-select" id="subscription_plan" name="subscription_plan" required>
-                                <option value="Free">Gratis</option>
-                                <option value="Pro">Pro</option>
-                                <option value="Corporate">Corporativo</option>
-                            </select>
-                        </div>
-
-                        <!-- Payment Frequency -->
-                        <div class="mb-3" id="payment_frequency_wrapper">
-                            <label for="payment_frequency" class="form-label fw-bold">Frecuencia de Pago</label>
-                            <select class="form-select" id="payment_frequency" name="payment_frequency" disabled>
-                                <option value="Monthly">Mensual</option>
-                                <option value="Annually">Anual</option>
-                            </select>
-                            <div class="text-muted small mt-1">Solo disponible para planes de pago.</div>
-                        </div>
-
                         <!-- Submit Button -->
                         <div class="d-grid">
                             <button type="submit" class="btn btn-primary btn-lg">
@@ -85,8 +65,7 @@
                     </form>
                 </div>
                 <div class="card-footer text-center bg-light">
-                    <small class="text-muted">¿Ya tienes una cuenta? <a href="/login"
-                            class="text-decoration-none text-primary fw-bold">Inicia sesión aquí</a>.</small>
+                    <small class="text-muted">¿Ya tienes una cuenta? <a href="/login" class="text-decoration-none text-primary fw-bold">Inicia sesión aquí</a>.</small>
                 </div>
             </div>
         </div>
@@ -108,23 +87,5 @@
             icon.classList.add('bi-eye');
         }
     });
-
-    // Show payment frequency based on subscription plan
-    document.getElementById('subscription_plan').addEventListener('change', function () {
-        const paymentFrequencyWrapper = document.getElementById('payment_frequency_wrapper');
-        const paymentFrequency = document.getElementById('payment_frequency');
-
-        if (this.value === 'Free') {
-            paymentFrequencyWrapper.style.display = 'none';
-            paymentFrequency.disabled = true;
-        } else {
-            paymentFrequencyWrapper.style.display = 'block';
-            paymentFrequency.disabled = false;
-        }
-    });
-
-    // Initialize the visibility of the payment frequency field based on the default selection
-    document.getElementById('subscription_plan').dispatchEvent(new Event('change'));
 </script>
-
 {% endblock %}

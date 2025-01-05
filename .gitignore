@@ -1,3 +1,17 @@
+# Archivos de configuración sensibles
+instance/config_prod.py
+.env
+
+# Archivos de logs
+*.log
+
+# Archivos de compilación
+__pycache__/
+*.pyc
+
+# Archivos de entornos virtuales
+.venv/
+.dev/
 .venv
 .vscode
 .trash
@@ -7,3 +21,4 @@ instance/*
 migrations/*
 .pyc
 *.pyc
+

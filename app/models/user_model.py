@@ -86,7 +86,7 @@ class Users(UserMixin, db.Model):
                 datetime.timedelta(seconds=expires_sec)
             },
             current_app.config['SECRET_KEY'],
-            algorithm='HS256') #.decode('utf-8')
+            algorithm='HS256').decode('utf-8')
 
     def is_subscription_active(self):
         if not self.subscription_expiration:

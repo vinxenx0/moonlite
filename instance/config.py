@@ -1,6 +1,6 @@
 #instance/config.py
 
-SECRET_KEY = 'tu_clave_secreta'
+SECRET_KEY = 'your_secret_key'
 #SQLALCHEMY_DATABASE_URI = 'mysql://vicente:vblp2267@81.19.160.18/email_moonitor' # requiere mysqlclient
 SQLALCHEMY_DATABASE_URI = 'sqlite:///../instance/database.db'  
 SQLALCHEMY_TRACK_MODIFICATIONS = False

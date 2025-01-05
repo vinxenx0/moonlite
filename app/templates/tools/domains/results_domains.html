@@ -277,7 +277,7 @@
 
 
 <div id="report" class="container-fluid position-relative mb-5 mt-4">
-    {% if not current_user.subscription_plan or current_user.subscription_plan == 'Free' %}
+    {% if not current_user.subscription_plan or current_user.subscription_plan == 'Free' or not current_user.is_subscription_active() %}
     <!-- Overlay to blur content for free or no subscription -->
     <div class="overlay">
         <div class="text-center">

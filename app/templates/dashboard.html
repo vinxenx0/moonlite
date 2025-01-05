@@ -188,7 +188,7 @@
 
 <!-- transaction history -->
 <div class="row mb-4 position-relative">
-  {% if not current_user.subscription_plan or current_user.subscription_plan == 'Free' %}
+  {% if not current_user.subscription_plan or current_user.subscription_plan == 'Free' or not user.is_subscription_active() %}
   <div class="overlay">
     <div class="text-center">
       <i class="fas fa-lock fa-3x mb-3"></i>
@@ -246,7 +246,7 @@
 
 <!-- Estadísticas -->
 <div class="row mb-4 position-relative">
-  {% if not current_user.subscription_plan or current_user.subscription_plan == 'Free' %}
+  {% if not current_user.subscription_plan or current_user.subscription_plan == 'Free' or not user.is_subscription_active() %}
   <div class="overlay">
     <div class="text-center">
       <i class="fas fa-lock fa-3x mb-3"></i>
@@ -318,7 +318,7 @@
 
 <!-- Tabla de Logs -->
 <div class="row mb-3 position-relative">
-  {% if not current_user.subscription_plan or current_user.subscription_plan == 'Free' %}
+  {% if not current_user.subscription_plan or current_user.subscription_plan == 'Free' or not user.is_subscription_active() %}
   <div class="overlay">
     <div class="text-center">
       <i class="fas fa-lock fa-3x mb-3"></i>

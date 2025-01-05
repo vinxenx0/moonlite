@@ -17,3 +17,12 @@
   <!-- Navbar -->
   {% include 'inc/navbar.html' %}
 </header>
+
+{% if not current_user.subscription_plan == 'Free' and not current_user.is_subscription_active() %}
+<div class="row flash_message">
+  <div class="alert alert-warning text-center" role="alert">
+    <p>Actualiza tus medios de pago para completar tu suscripción a <b>{{ current_user.subscription_plan }}</b> </p>
+  </div>
+
+</div>
+{% endif %}

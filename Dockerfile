@@ -1,35 +1,50 @@
-# Usar una imagen base de Python
 FROM python:3.10-slim
 
-# Establecer el directorio de trabajo
+# Instalar las dependencias necesarias
+RUN apt-get update && apt-get install -y \
+    sudo \
+    wget \
+    curl \
+    software-properties-common \
+    dirmngr \
+    gnupg2 \
+    pkg-config \
+    build-essential \
+    libaspell-dev \
+    python3-dev \
+    python3-venv \
+    libapache2-mod-wsgi-py3 \
+    git \
+    redis \
+    libmariadb-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Establecer el directorio de trabajo en /app
 WORKDIR /app
 
-# Copiar el archivo de requerimientos
+# Copiar los archivos necesarios
 COPY requirements.txt requirements.txt
-COPY requirements.mysql.txt requirements.mysql.txt
 
-# Instalar las dependencias necesarias
+# Crear un entorno virtual y activarlo
+#RUN python3 -m venv /app/.venv
+
+# Instalar las dependencias en el entorno virtual directamente
 RUN pip install --upgrade pip
+# RUN pip install email_validator sqlalchemy_utils flask_wtf flask_login mysqlclient flask_migrate flask_mail whois ipwhois  pyasn requests aspell-python-py3 langid textstat PyJWT python-whois
 RUN pip install -r requirements.txt
-RUN pip install -r requirements.mysql.txt
+#RUN /app/.venv/bin/pip install -r requirements.mysql.txt
 
-# Copiar todo el código de la aplicación
+# Copiar el código de la aplicación
 COPY . .
 
-# Crear el entorno virtual y activarlo (opcional, ya que Docker ya proporciona un entorno aislado)
-RUN python3 -m venv .venv
-
-# Activar el entorno virtual
-RUN . .venv/bin/activate
-
-# Exponer el puerto que la aplicación usará
-EXPOSE 8080
-
-# Establecer la variable de entorno para usar producción (de ser necesario)
+# Establecer las variables de entorno
+ENV FLASK_APP=run.py
 ENV FLASK_ENV=production
+ENV FLASK_RUN_HOST=0.0.0.0
+ENV FLASK_RUN_PORT=8080
 
 # Ejecutar la aplicación usando Gunicorn (el servidor de producción)
-CMD ["gunicorn", "-b", "0.0.0.0:8080", "run:app"]
+# CMD ["gunicorn", "-b", "0.0.0.0:8080", "run:app"]
 
 # Comando para ejecutar la aplicación Flask en development
-#CMD ["/bin/bash", "-c", "source .venv/bin/activate && python3 run.py"]
+CMD ["/bin/bash", "-c", "python3 run.py"]

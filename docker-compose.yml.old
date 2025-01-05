@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - MAIL_PASSWORD=${MAIL_PASSWORD}
+      - SECRET_KEY=${SECRET_KEY}
+      - SQLALCHEMY_DATABASE_URI=${SQLALCHEMY_DATABASE_URI}
+      - MAIL_SERVER=${MAIL_SERVER}
+      - MAIL_PORT=587
+      - MAIL_USE_TLS=true
+      - MAIL_USERNAME=${MAIL_USERNAME}
+      - MAIL_DEFAULT_SENDER=${MAIL_DEFAULT_SENDER}
+      - PREFERRED_URL_SCHEME=https
+    volumes:
+      - ./instance:/app/instance  # database.db sqlite
+    depends_on:
+      - db
+    networks:
+      - backend
+
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    ports:
+      - "3306:3306"
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge

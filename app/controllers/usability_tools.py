@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 
+
 def fetch_page_content(url):
     try:
         response = requests.get(url)
@@ -11,8 +12,10 @@ def fetch_page_content(url):
     except Exception as e:
         return {'Error': str(e)}
 
+
 def check_favicon(html_content):
-    if not html_content or isinstance(html_content, dict) and 'Error' in html_content:
+    if not html_content or isinstance(html_content,
+                                      dict) and 'Error' in html_content:
         return html_content
 
     soup = BeautifulSoup(html_content, 'html.parser')
@@ -20,8 +23,10 @@ def check_favicon(html_content):
 
     return favicon_tag is None
 
+
 def check_flash_usage(html_content):
-    if not html_content or isinstance(html_content, dict) and 'Error' in html_content:
+    if not html_content or isinstance(html_content,
+                                      dict) and 'Error' in html_content:
         return html_content
 
     soup = BeautifulSoup(html_content, 'html.parser')
@@ -29,14 +34,17 @@ def check_flash_usage(html_content):
 
     return len(flash_tags) > 0
 
+
 def check_x_card_tag(html_content):
-    if not html_content or isinstance(html_content, dict) and 'Error' in html_content:
+    if not html_content or isinstance(html_content,
+                                      dict) and 'Error' in html_content:
         return html_content
 
     soup = BeautifulSoup(html_content, 'html.parser')
     x_card_tag = soup.find('meta', attrs={'name': 'twitter:card'})
 
     return x_card_tag is None
+
 
 def usability_audit(url):
     try:

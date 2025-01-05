@@ -4,15 +4,13 @@ import requests
 from app import app, db
 from flask_login import current_user
 from datetime import datetime
-from app.forms import PageInfoForm, SeoToolsForm
+from app.forms import SeoToolsForm
 from app.models.usage_model import Activity
 from app.controllers.logs_controller import log_event
 from app.controllers.spider_tools import (
-    check_css_status, check_deprecated_tags, check_gzip, get_canonical_info, 
-    get_common_url_issues, get_directive_issues, get_h1_issues, get_h2_issues, 
-    get_hreflang_issues, get_meta_description_issues, get_meta_keywords_issues, get_page_info, 
-    get_page_title_issues, get_soup, get_structured_data_issues
-)
+    check_css_status, check_deprecated_tags, check_gzip, get_canonical_info,
+    get_common_url_issues, get_directive_issues, get_h1_issues, get_hreflang_issues, get_meta_description_issues, get_meta_keywords_issues,
+    get_page_title_issues, get_soup, get_structured_data_issues)
 from app.models.user_model import Users
 from app.utils.logger import log_user_event
 from app.views.info import tool_info
@@ -47,32 +45,40 @@ def process_tool(tool, soup, url, response):
         return check_css_status(response)
     return None
 
+
 def count_results(results):
     total_entries = len(results)
     true_count = sum(1 for v in results.values() if v is True)
     false_count = sum(1 for v in results.values() if v is False)
-    none_or_empty_count = sum(1 for v in results.values() if v is None or v == '')
-    false_percentage = (false_count / total_entries * 100) if total_entries > 0 else 0
+    none_or_empty_count = sum(1 for v in results.values()
+                              if v is None or v == '')
+    false_percentage = (false_count / total_entries *
+                        100) if total_entries > 0 else 0
     return total_entries, true_count, false_count, none_or_empty_count, false_percentage
+
 
 @app.route("/tools/seo/<string:tool>", methods=["GET", "POST"])
 def tools_seo(tool):
-    
-    
+
     print("tool_seo new")
     start_time = time.time()
     definition, slogan, keywords, info_popup = "", "", "", ""
     soup, response, results = None, None, None
     is_results_valid = False
 
-    breadcrumbs = [
-        {"url": "/tools", "text": "Tools"},
-        {"url": "/tools/seo/", "text": "SEO"},
-        {"url": "/tools/seo/" + tool, "text": tool}
-    ]
+    breadcrumbs = [{
+        "url": "/tools",
+        "text": "Tools"
+    }, {
+        "url": "/tools/seo/",
+        "text": "SEO"
+    }, {
+        "url": "/tools/seo/" + tool,
+        "text": tool
+    }]
 
     form = SeoToolsForm()
-    
+
     # Comprobar que existe la herramienta primero
     if tool in tool_info:
         definition = tool_info[tool]['definition']
@@ -96,11 +102,15 @@ def tools_seo(tool):
         page_url = request.url
 
         # Guardar la información del usuario en la base de datos
-        user_usage = Activity(
-            username=username, email=email, target=url, ip_address=ip_address,
-            user_agent=user_agent, country=country, language=language,
-            timestamp=timestamp, page_url=page_url
-        )
+        user_usage = Activity(username=username,
+                              email=email,
+                              target=url,
+                              ip_address=ip_address,
+                              user_agent=user_agent,
+                              country=country,
+                              language=language,
+                              timestamp=timestamp,
+                              page_url=page_url)
         db.session.add(user_usage)
         db.session.commit()
 
@@ -114,7 +124,8 @@ def tools_seo(tool):
                 log_event(tool, url)
                 if current_user.is_authenticated:
                     user = Users.query.get(current_user.id)
-                    log_user_event(user, f"Analisis SEO de {url}", tool, 'info')
+                    log_user_event(user, f"Analisis SEO de {url}", tool,
+                                   'info')
                 else:
                     # Manejo opcional para usuarios no autenticados
                     log_event(tool, f"Anonymous user analyzed {url}")
@@ -126,21 +137,27 @@ def tools_seo(tool):
         log_event(tool, f'Fail: {e}')
         results = {'error': str(e)}
 
-
     if results:
-        total_entries, true_count, false_count, none_or_empty_count, false_percentage = count_results(results)
+        total_entries, true_count, false_count, none_or_empty_count, false_percentage = count_results(
+            results)
     else:
         total_entries, true_count, false_count, none_or_empty_count, false_percentage = 0, 0, 0, 0, 0
 
     duration = time.time() - start_time
-   
 
-    return render_template(
-        "tools/seo/results_seo.html",
-        title=tool, is_results_valid=is_results_valid, duration=duration, form=form,
-        results=results, breadcrumbs=breadcrumbs, definition=definition,
-        slogan=slogan, info_popup=info_popup, keywords=keywords,
-        total_checks=total_entries, success_count=true_count,
-        empty_checks=none_or_empty_count, danger_count=false_count,
-        danger_percentage=false_percentage
-    )
+    return render_template("tools/seo/results_seo.html",
+                           title=tool,
+                           is_results_valid=is_results_valid,
+                           duration=duration,
+                           form=form,
+                           results=results,
+                           breadcrumbs=breadcrumbs,
+                           definition=definition,
+                           slogan=slogan,
+                           info_popup=info_popup,
+                           keywords=keywords,
+                           total_checks=total_entries,
+                           success_count=true_count,
+                           empty_checks=none_or_empty_count,
+                           danger_count=false_count,
+                           danger_percentage=false_percentage)

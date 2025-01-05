@@ -11,8 +11,6 @@
   --featured-column: #f9f9f9;
   --menu-header: #000;
   --menu-separator: #ccc;
-  --hover-background: #e0e0e0;
-  /* Definida para los hover faltantes */
 }
 
 body {
@@ -35,7 +33,7 @@ body {
 /* Dark Mode */
 .dark-mode {
   background-color: #333;
-  color: var(--white);
+  color: #fff;
 }
 
 /* Navbar and Dropdown Menu Styles */
@@ -63,8 +61,10 @@ MENU ESTILOS
   background-color: var(--navbar-background);
   box-shadow: var(--navbar-shadow);
   width: 100%;
+  /* max-width: 1200px; */
   display: block;
   padding: 0;
+  box-shadow: var(--navbar-shadow);
   position: relative;
 }
 
@@ -79,19 +79,11 @@ MENU ESTILOS
 
 .dropdown-menu .dropdown-item {
   align-items: center;
-  display: flex;
-  text-decoration: none;
-  color: var(--navbar-link);
-  padding: 0.75rem 0;
 }
 
 .dropdown-menu .dropdown-item i {
   margin-right: 8px;
   color: var(--primary-color);
-}
-
-.dropdown-menu .dropdown-item:hover {
-  background-color: var(--hover-background);
 }
 
 .dropdown-menu .dropdown-item span.new,
@@ -118,16 +110,20 @@ MENU ESTILOS
 .dropdown-menu-columns {
   display: flex;
   flex-wrap: wrap;
+  /* Permite que las columnas se envuelvan cuando no hay espacio suficiente */
   justify-content: space-between;
+  /* Asegura que las columnas se distribuyan con espacio entre ellas */
   padding: 1rem;
-  background-color: var(--white);
+  background-color: #fff;
   border-radius: 4px;
 }
 
 .dropdown-menu-columns .column {
   flex-basis: 23%;
+  /* Establece el tamaño de cada columna, permitiendo 4 columnas */
   padding: 0 16px;
   box-sizing: border-box;
+  /* Asegura que el padding no afecte al ancho total */
 }
 
 .column.featured {
@@ -137,19 +133,12 @@ MENU ESTILOS
 .dropdown-menu-columns .dropdown-header {
   font-weight: bold;
   color: var(--menu-header);
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid #ddd;
-  margin-bottom: 1rem;
-}
-
-.dropdown-menu-columns .dropdown-item i {
-  margin-right: 10px;
-  color: var(--primary-color);
 }
 
 @media (max-width: 767px) {
   .dropdown-menu-columns {
     flex-direction: column;
+    /* Para pantallas pequeñas, cambia las columnas a una sola columna */
   }
 }
 
@@ -165,6 +154,10 @@ MENU ESTILOS
 
   .dropdown-menu-columns .column:last-child {
     border-right: none;
+  }
+
+  .dropdown-menu-columns .dropdown-item {
+    padding: 0.5rem 0;
   }
 
   .navbar-nav .dropdown-menu {
@@ -193,11 +186,77 @@ MENU ESTILOS
   }
 }
 
+/* Estilo para los elementos del menú */
+.dropdown-menu-columns .dropdown-header {
+  font-weight: bold;
+  color: var(--menu-header);
+  padding-bottom: 0.5rem;
+  /* border-bottom: 1px solid #ddd; */
+  /* margin-bottom: 1rem; */
+}
+
+.dropdown-menu-columns .dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 0;
+  text-decoration: none;
+  color: var(--navbar-link);
+}
+
+.dropdown-menu-columns .dropdown-item:hover {
+  background-color: var(--hover-background);
+}
+
+.dropdown-menu-columns .dropdown-item i {
+  margin-right: 10px;
+  color: var(--primary-color);
+}
+
+
+/* Mega Menu Styles */
+/* Mega Menu Styles */
+
+
+.dropdown-menu-columns {
+  display: flex;
+  flex-wrap: wrap;
+
+}
+
+
+
+.dropdown-menu-columns .dropdown-header {
+  font-weight: bold;
+  color: var(--menu-header);
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 1rem;
+}
+
+
+.dropdown-menu-columns .dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 0;
+  text-decoration: none;
+  color: var(--navbar-link);
+}
+
+.dropdown-menu-columns .dropdown-item:hover {
+  background-color: var(--hover-background);
+}
+
+
+.dropdown-menu-columns .dropdown-item i {
+  margin-right: 10px;
+  color: var(--primary-color);
+}
+
 /* Footer Styles */
 footer {
-  background-color: var(--background-color);
+  background-color: #f8f9fa;
   padding: 40px 0;
-  color: var(--text-color);
+  color: #333;
   box-shadow: 0 -4px 2px -2px gray;
 }
 
@@ -222,13 +281,17 @@ footer .footer-column a:hover {
 }
 
 /* Sidebar and Widgets */
+.card-icon {
+  font-size: 2rem;
+}
+
 .sidebar {
   position: fixed;
   right: -300px;
   top: 0;
   height: 100%;
   width: 300px;
-  background-color: var(--white);
+  background-color: white;
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
   transition: right 0.3s;
   overflow-y: auto;
@@ -256,7 +319,7 @@ footer .footer-column a:hover {
   top: 0;
   width: 100%;
   z-index: 1030;
-  background-color: var(--background-color);
+  background-color: #f8f9fa;
   border-bottom: 1px solid #e7e7e7;
 }
 
@@ -265,11 +328,14 @@ footer .footer-column a:hover {
 }
 
 .content-section {
+  /* se usa en online test */
+
   margin-bottom: 2rem;
   padding: 2rem;
-  background-color: var(--background-color);
+  background-color: #f8f9fa;
   border-radius: 0.5rem;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+
 }
 
 .info-icon {
@@ -279,7 +345,7 @@ footer .footer-column a:hover {
 }
 
 .info-icon:hover {
-  background-color: var(--hover-background);
+  background-color: #e0e0e0;
 }
 
 .help-bubble {
@@ -288,7 +354,7 @@ footer .footer-column a:hover {
   right: 20px;
   width: 60px;
   height: 60px;
-  background-color: var(--primary-color);
+  background-color: var(--primary-color) !important;
   border-radius: 50%;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
   z-index: 1050;
@@ -300,7 +366,7 @@ footer .footer-column a:hover {
 
 .help-bubble i {
   font-size: 1.5rem;
-  color: var(--white);
+  color: white;
 }
 
 .help-widget {
@@ -348,7 +414,6 @@ footer .footer-column a:hover {
 .row {
   margin-right: 0 !important;
 }
-
 
 /* start page */
 /* Jumbotron Full Page */
@@ -806,98 +871,3 @@ footer .footer-column a:hover {
   text-align: center;
   padding: 40px 0;
 }
-
-
-
-.hero-section {
-  background: linear-gradient(135deg, #007bff, #6610f2), url('hero-bg.jpg') center/cover;
-  color: #fff;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-}
-
-.hero-section .cta-section {
-  background-color: #6610f2;
-  color: #fff;
-  padding: 40px 0;
-}
-
-.hero-section .category-section h3 {
-  border-left: 5px solid currentColor;
-  padding-left: 15px;
-}
-
-.hero-section .card .card-body i {
-  display: block;
-  margin: auto;
-}
-
-
-/* Overlay styles */
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.7);
-  /* Light blur overlay */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.overlay h3 {
-  color: #333;
-  font-size: 24px;
-}
-
-.overlay i {
-  color: #ffcc00;
-  /* Yellow color for the lock icon */
-}
-
-.overlay .text-center {
-  text-align: center;
-}
-
-/* Apply blur and disable interaction only to the report section */
-#report .row,
-#report .card,
-#report .accordion-item {
-  filter: blur(4px);
-  /* Blur the content */
-  pointer-events: none;
-  /* Disable interaction with blurred content */
-}
-
-/* Apply blur and disable interaction only to the report section */
-#report .accordion,
-#report .row {
-  filter: blur(4px);
-  /* Blur the content */
-  pointer-events: none;
-  /* Disable interaction with blurred content */
-}
-
-.hero-section {
-  background: linear-gradient(135deg, #007bff, #6610f2);
-  color: white;
-  padding: 80px 0;
-  text-align: center;
-  position: relative;
-}
-
-.hero-section .btn-cta {
-  background-color: #ff6b6b;
-  color: white;
-}
-
-.hero-section .btn-cta:hover {
-  background-color: #ff3b3b;
-}
-
-.hero-section .content-section {
-  padding: 60px 0;
-}
-

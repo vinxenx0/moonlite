@@ -30,7 +30,8 @@ def audit_mobile_usability(url, soup):
             })
 
     # Check if content width matches viewport width
-    content_width = soup.find('style', attrs={'media': 'screen and (max-width: 600px)'})
+    content_width = soup.find('style',
+                              attrs={'media': 'screen and (max-width: 600px)'})
     if content_width:
         content_not_sized_correctly = True
 
@@ -44,7 +45,8 @@ def audit_mobile_usability(url, soup):
             font_size = style.split('font-size:')[1].split(';')[0].strip()
             if font_size.isdigit():
                 font_size = int(font_size)
-                if font_size < 12 and (font_size * 100 / total_text_length) > 40:
+                if font_size < 12 and (font_size * 100 /
+                                       total_text_length) > 40:
                     illegible_font_size.append({
                         'text': text.strip(),
                         'font_size': font_size
@@ -60,7 +62,12 @@ def audit_mobile_usability(url, soup):
                 unsupported_plugins.append(str(plugin))
 
     # Check for mobile alternate link
-    mobile_alternate_link_tag = soup.find('link', attrs={'rel': 'alternate', 'media': 'only screen and (max-width: 640px)'})
+    mobile_alternate_link_tag = soup.find(
+        'link',
+        attrs={
+            'rel': 'alternate',
+            'media': 'only screen and (max-width: 640px)'
+        })
     if mobile_alternate_link_tag:
         mobile_alternate_link = True
 

@@ -18,8 +18,11 @@ from app.views.info import tools
 def index():
     # Si la ruta no termina con '/', redirige con barra diagonal
     if not request.path.endswith('/'):
-        return redirect(request.path + '/', code=301)  # Redirige permanentemente con la barra diagonal
+        return redirect(
+            request.path + '/',
+            code=301)  # Redirige permanentemente con la barra diagonal
     return redirect(url_for('start'))
+
 
 @app.route('/start', methods=['GET', 'POST'])
 def start():
@@ -74,36 +77,36 @@ def start():
             #return redirect(url_for('corporate_start.html'))
             breadcrumbs = [{'url': '/start', 'text': 'Corporate'}]
             return render_template('corporate_start.html',
-                           data=data,
-                           validator=validator,
-                           form=form,
-                           tools=tools,
-                           breadcrumbs=breadcrumbs,
-                           spelling_errors=spelling_errors,
-                           grammar_errors=grammar_errors)
-            
+                                   data=data,
+                                   validator=validator,
+                                   form=form,
+                                   tools=tools,
+                                   breadcrumbs=breadcrumbs,
+                                   spelling_errors=spelling_errors,
+                                   grammar_errors=grammar_errors)
+
         elif current_user.subscription_plan == 'Pro':
             #return redirect(url_for('pro_start.html'))
             breadcrumbs = [{'url': '/start', 'text': 'Profesional'}]
             return render_template('pro_start.html',
-                           data=data,
-                           validator=validator,
-                           form=form,
-                           tools=tools,
-                           breadcrumbs=breadcrumbs,
-                           spelling_errors=spelling_errors,
-                           grammar_errors=grammar_errors)
-            
+                                   data=data,
+                                   validator=validator,
+                                   form=form,
+                                   tools=tools,
+                                   breadcrumbs=breadcrumbs,
+                                   spelling_errors=spelling_errors,
+                                   grammar_errors=grammar_errors)
+
         elif current_user.subscription_plan == 'Free':
             breadcrumbs = [{'url': '/start', 'text': 'Licencia de prueba'}]
             return render_template('free_start.html',
-                           data=data,
-                           validator=validator,
-                           form=form,
-                           tools=tools,
-                           breadcrumbs=breadcrumbs,
-                           spelling_errors=spelling_errors,
-                           grammar_errors=grammar_errors)
+                                   data=data,
+                                   validator=validator,
+                                   form=form,
+                                   tools=tools,
+                                   breadcrumbs=breadcrumbs,
+                                   spelling_errors=spelling_errors,
+                                   grammar_errors=grammar_errors)
             # Default for users without a defined subscription
             #return redirect(url_for('start'))
     # Redirect unauthenticated users to a generic start page
@@ -120,19 +123,22 @@ def start():
 @app.route('/dashboard')
 @login_required
 def dashboard():
-        breadcrumbs = [{'url': '/dashboard', 'text': 'Mi Escritorio'}]
-        logs = UserLog.query.filter_by(user_id=current_user.id).order_by(UserLog.timestamp.desc()).all()
-        stats = calculate_log_statistics(logs)
-        user = Users.query.filter_by(id=current_user.id).first()
-        logs = UserLog.query.filter_by(user_id=current_user.id).order_by(UserLog.timestamp.desc()).all()
-        transactions = Transaction.query.filter_by(user_id=current_user.id).order_by(Transaction.timestamp.desc()).all()
-        #return redirect(url_for('dashboard'))  # dashboard
-        return render_template('dashboard.html', 
-                               logs=logs,
-                               transactions = transactions,
-                               user=user,
-                               breadcrumbs=breadcrumbs,
-                               stats=stats)
+    breadcrumbs = [{'url': '/dashboard', 'text': 'Mi Escritorio'}]
+    logs = UserLog.query.filter_by(user_id=current_user.id).order_by(
+        UserLog.timestamp.desc()).all()
+    stats = calculate_log_statistics(logs)
+    user = Users.query.filter_by(id=current_user.id).first()
+    logs = UserLog.query.filter_by(user_id=current_user.id).order_by(
+        UserLog.timestamp.desc()).all()
+    transactions = Transaction.query.filter_by(
+        user_id=current_user.id).order_by(Transaction.timestamp.desc()).all()
+    #return redirect(url_for('dashboard'))  # dashboard
+    return render_template('dashboard.html',
+                           logs=logs,
+                           transactions=transactions,
+                           user=user,
+                           breadcrumbs=breadcrumbs,
+                           stats=stats)
 
 
 @app.route('/config', methods=['GET', 'POST'])

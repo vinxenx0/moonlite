@@ -11,7 +11,9 @@ class Log(db.Model):
     page = db.Column(db.String(255), nullable=False)
     event = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(255), nullable=False)
-    timestamp = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
+    timestamp = db.Column(db.DateTime,
+                          nullable=False,
+                          default=datetime.datetime.utcnow)
 
     # user = db.relationship('Users', back_populates='logs')
 

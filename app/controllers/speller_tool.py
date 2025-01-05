@@ -4,6 +4,7 @@ import textstat
 #from gingerit.gingerit import GingerIt
 from bs4 import BeautifulSoup
 
+
 def analyze_content(url, html_content, language='en'):
     try:
         soup = BeautifulSoup(html_content, 'html.parser')
@@ -14,8 +15,10 @@ def analyze_content(url, html_content, language='en'):
 
         # Average Words Per Sentence
         sentences = textstat.sentences(body_text)
-        total_words = sum(len(re.findall(r'\w+', sentence)) for sentence in sentences)
-        average_words_per_sentence = total_words / len(sentences) if len(sentences) > 0 else 0
+        total_words = sum(
+            len(re.findall(r'\w+', sentence)) for sentence in sentences)
+        average_words_per_sentence = total_words / len(sentences) if len(
+            sentences) > 0 else 0
 
         # Flesch Reading Ease Score
         flesch_reading_ease_score = textstat.flesch_reading_ease(body_text)
@@ -39,9 +42,14 @@ def analyze_content(url, html_content, language='en'):
         # Grammar and Spelling Check
         ginger_parser = GingerIt()
         ginger_results = ginger_parser.parse(body_text)
-        total_language_errors = ginger_results['corrections'] if 'corrections' in ginger_results else 0
-        spelling_errors = sum(1 for error in ginger_results['corrections'] if error['correct'] != error['text']) if 'corrections' in ginger_results else 0
-        grammar_errors = sum(1 for error in ginger_results['corrections'] if error['correct'] == error['text']) if 'corrections' in ginger_results else 0
+        total_language_errors = ginger_results[
+            'corrections'] if 'corrections' in ginger_results else 0
+        spelling_errors = sum(
+            1 for error in ginger_results['corrections'] if error['correct'] !=
+            error['text']) if 'corrections' in ginger_results else 0
+        grammar_errors = sum(
+            1 for error in ginger_results['corrections'] if error['correct'] ==
+            error['text']) if 'corrections' in ginger_results else 0
 
         # Hash
         page_hash = hashlib.md5(html_content.encode()).hexdigest()

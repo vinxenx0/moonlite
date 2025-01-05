@@ -29,7 +29,7 @@ def tools_domains_new(tool):
     true_count = 0
     false_count = 0
     none_or_empty_count = 0
-    
+
     definition = ""
     slogan = ""
     keywords = ""
@@ -52,7 +52,7 @@ def tools_domains_new(tool):
     form = DomainToolsForm()
     results = None
     is_results_valid = False
-    user=current_user
+    user = current_user
 
     # Comprobar que existe la herramienta primero
     if tool in tool_info:
@@ -72,6 +72,8 @@ def tools_domains_new(tool):
         if current_user.is_authenticated:
             username = current_user.username
             email = current_user.email
+
+
 #
         url = form.domain.data
         ip_address = request.remote_addr
@@ -98,39 +100,38 @@ def tools_domains_new(tool):
         db.session.commit()
 
         #_results = {
-            #'mx_lookup': mx_lookup(domain),
-            # 'whois_lookup': whois_lookup(domain),
-            #'dmarc_lookup': dmarc_lookup(domain),
-            #'spf_lookup': spf_lookup(domain),
-            #'dns_lookup': dns_lookup(domain),
-            # 'reverse_lookup': reverse_lookup(domain),
-            #'dkim_lookup': dkim_lookup(domain),
-            #'aaaa_lookup': aaaa_lookup(domain),
-            #'srv_lookup': srv_lookup('_service', '_protocol', domain),
-            #'cert_lookup': cert_lookup(domain),
-            #'bimi_lookup': bimi_lookup(domain),
-            #'ip_lookup': ip_lookup(domain),
-            #'cname_lookup': cname_lookup(domain),
-            #'soa_lookup': soa_lookup(domain),
-            #'txt_lookup': txt_lookup(domain),
-            #'dnskey_lookup': dnskey_lookup(domain),
-            #'ssl_lookup': ssl_lookup(domain),
-            #'loc_lookup': loc_lookup(domain),
-            #'ipseckey_lookup': ipseckey_lookup(domain),
-            #'asn_lookup': asn_lookup(domain),
-            #'rrsig_lookup': rrsig_lookup(domain),
-            #'nsec_lookup': nsec_lookup(domain),
-            #'arin_lookup': arin_lookup(domain),
-            #'mta_sts_lookup': mta_sts_lookup(domain),
-            #'nsec3param_lookup': nsec3param_lookup(domain),
-            #'dns_servers_lookup': dns_servers_lookup(domain),
-            #'http_lookup': http_lookup(domain),
-            #'https_lookup': https_lookup(domain),
-            #'ping': ping_lookup(domain),
-            #'traceroute': traceroute_lookup(domain),
-            #'nmap': nmap_lookup(domain)
+        #'mx_lookup': mx_lookup(domain),
+        # 'whois_lookup': whois_lookup(domain),
+        #'dmarc_lookup': dmarc_lookup(domain),
+        #'spf_lookup': spf_lookup(domain),
+        #'dns_lookup': dns_lookup(domain),
+        # 'reverse_lookup': reverse_lookup(domain),
+        #'dkim_lookup': dkim_lookup(domain),
+        #'aaaa_lookup': aaaa_lookup(domain),
+        #'srv_lookup': srv_lookup('_service', '_protocol', domain),
+        #'cert_lookup': cert_lookup(domain),
+        #'bimi_lookup': bimi_lookup(domain),
+        #'ip_lookup': ip_lookup(domain),
+        #'cname_lookup': cname_lookup(domain),
+        #'soa_lookup': soa_lookup(domain),
+        #'txt_lookup': txt_lookup(domain),
+        #'dnskey_lookup': dnskey_lookup(domain),
+        #'ssl_lookup': ssl_lookup(domain),
+        #'loc_lookup': loc_lookup(domain),
+        #'ipseckey_lookup': ipseckey_lookup(domain),
+        #'asn_lookup': asn_lookup(domain),
+        #'rrsig_lookup': rrsig_lookup(domain),
+        #'nsec_lookup': nsec_lookup(domain),
+        #'arin_lookup': arin_lookup(domain),
+        #'mta_sts_lookup': mta_sts_lookup(domain),
+        #'nsec3param_lookup': nsec3param_lookup(domain),
+        #'dns_servers_lookup': dns_servers_lookup(domain),
+        #'http_lookup': http_lookup(domain),
+        #'https_lookup': https_lookup(domain),
+        #'ping': ping_lookup(domain),
+        #'traceroute': traceroute_lookup(domain),
+        #'nmap': nmap_lookup(domain)
         #}
-
 
         # Ejecutar la función correspondiente
         if tool == 'nmap':
@@ -147,39 +148,41 @@ def tools_domains_new(tool):
             results = {'reverse_lookup': reverse_lookup(domain)}
         elif tool == 'whois':
             results = {"whois_lookup": whois_lookup(domain)}
-        
+
         elif tool == 'nsec3param':
             results = {'nsec3param_lookup': nsec3param_lookup(domain)}
 
         elif tool == 'mtasts':
-            results = { 'mta_sts_lookup': mta_sts_lookup(domain)}
+            results = {'mta_sts_lookup': mta_sts_lookup(domain)}
 
         elif tool == 'arin':
-            results = { 'arin_lookup': arin_lookup(domain)}
-        
+            results = {'arin_lookup': arin_lookup(domain)}
+
         elif tool == 'nsec':
-            results = { 'nsec_lookup': nsec_lookup(domain)}
+            results = {'nsec_lookup': nsec_lookup(domain)}
 
         elif tool == 'rrsig':
-            results = {  'rrsig_lookup': rrsig_lookup(domain)}
+            results = {'rrsig_lookup': rrsig_lookup(domain)}
 
         elif tool == 'asn':
             results = {'asn_lookup': asn_lookup(domain)}
-        
+
         elif tool == 'ipseckey':
             results = {'ipseckey_lookup': ipseckey_lookup(domain)}
 
         elif tool == 'loc':
-            results = { 'loc_lookup': loc_lookup(domain)}
+            results = {'loc_lookup': loc_lookup(domain)}
 
         elif tool == 'ssl':
-            results = {'ssl_lookup': ssl_lookup(domain),}
+            results = {
+                'ssl_lookup': ssl_lookup(domain),
+            }
 
         elif tool == 'soa':
             results = {'soa_lookup': soa_lookup(domain)}
 
         elif tool == 'txt':
-            results = { 'txt_lookup': txt_lookup(domain)}
+            results = {'txt_lookup': txt_lookup(domain)}
 
         elif tool == 'bimi':
             results = {'bimi_lookup': bimi_lookup(domain)}
@@ -191,7 +194,9 @@ def tools_domains_new(tool):
             results = {'http_lookup': http_lookup(domain)}
 
         elif tool == 'https':
-            results = {'https_lookup': https_lookup(domain),}
+            results = {
+                'https_lookup': https_lookup(domain),
+            }
 
         elif tool == 'dnskey':
             results = {'dnskey_lookup': dnskey_lookup(domain)}
@@ -200,7 +205,9 @@ def tools_domains_new(tool):
             results = {'cert_lookup': cert_lookup(domain)}
 
         elif tool == 'srv':
-            results = {'srv_lookup': srv_lookup('_service', '_protocol', domain)}
+            results = {
+                'srv_lookup': srv_lookup('_service', '_protocol', domain)
+            }
         elif tool == 'dkim':
             results = {'dkim_lookup': dkim_lookup(domain)}
         elif tool == 'dns':
@@ -212,14 +219,9 @@ def tools_domains_new(tool):
         elif tool == 'mx':
             results = {'mx_lookup': mx_lookup(domain)}
 
-
-
-
         if results is not None:
             is_results_valid = True
-            
-                
-        
+
         # Recorrer el diccionario y contar los valores según las condiciones dadas
         for key, value in results.items():
             total_entries += 1
@@ -239,7 +241,6 @@ def tools_domains_new(tool):
     end_time = time.time()
     duration = end_time - start_time
 
-    
     return render_template(
         "tools/domains/results_domains.html",
         # "tools/domains/" + tool + ".html",
@@ -254,9 +255,8 @@ def tools_domains_new(tool):
         slogan=slogan,
         info_popup=info_popup,
         keywords=keywords,
-        total_checks =  total_entries,
-        success_count = true_count,
-        empty_checks = none_or_empty_count,
+        total_checks=total_entries,
+        success_count=true_count,
+        empty_checks=none_or_empty_count,
         danger_count=false_count,
-        danger_percentage=false_percentage
-    )
+        danger_percentage=false_percentage)

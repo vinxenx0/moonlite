@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from requests.exceptions import RequestException
 
+
 def extract_internal_links(url, domain):
     try:
         response = requests.get(url)
@@ -26,6 +27,7 @@ def extract_internal_links(url, domain):
     except Exception as e:
         return {'Error': str(e)}
 
+
 def analyze_internal_links(links):
     no_anchor = []
     nofollow_links = []
@@ -39,7 +41,8 @@ def analyze_internal_links(links):
             no_anchor.append(link['url'])
         elif link['anchor_text'].startswith(('http://', 'https://')):
             no_anchor.append(link['url'])
-        elif all(char in '!@#$%^&*()_+=-[]{}|;:",.<>?/`~' for char in link['anchor_text']):
+        elif all(char in '!@#$%^&*()_+=-[]{}|;:",.<>?/`~'
+                 for char in link['anchor_text']):
             no_anchor.append(link['url'])
 
         if link['nofollow']:
@@ -50,8 +53,12 @@ def analyze_internal_links(links):
         else:
             page_links_count[link['url']] = 1
 
-    one_inbound_links = [url for url, count in page_links_count.items() if count == 1]
-    too_many_links = [url for url, count in page_links_count.items() if count > 400]
+    one_inbound_links = [
+        url for url, count in page_links_count.items() if count == 1
+    ]
+    too_many_links = [
+        url for url, count in page_links_count.items() if count > 400
+    ]
 
     return {
         'no_anchor': no_anchor,
@@ -59,6 +66,7 @@ def analyze_internal_links(links):
         'one_inbound_links': one_inbound_links,
         'too_many_links': too_many_links
     }
+
 
 def inbound_links_audit(url):
     try:
@@ -73,17 +81,25 @@ def inbound_links_audit(url):
         analysis = analyze_internal_links(internal_links)
         issues = []
         if analysis['no_anchor']:
-            issues.append(f'Internal links missing anchor: {analysis["no_anchor"]}')
+            issues.append(
+                f'Internal links missing anchor: {analysis["no_anchor"]}')
         if analysis['nofollow_links']:
-            issues.append(f'Nofollow internal links: {analysis["nofollow_links"]}')
+            issues.append(
+                f'Nofollow internal links: {analysis["nofollow_links"]}')
         if analysis['one_inbound_links']:
-            issues.append(f'One inbound internal link: {analysis["one_inbound_links"]}')
+            issues.append(
+                f'One inbound internal link: {analysis["one_inbound_links"]}')
         if analysis['too_many_links']:
             issues.append(f'Too many links: {analysis["too_many_links"]}')
 
-        return {'Inbound Links Issues': issues} if issues else {'Inbound Links Issues': 'No issues found'}
+        return {
+            'Inbound Links Issues': issues
+        } if issues else {
+            'Inbound Links Issues': 'No issues found'
+        }
     except Exception as e:
         return {'Error': str(e)}
+
 
 # Ejemplo de uso
 url_to_audit = 'https://www.example.com'

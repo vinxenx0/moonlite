@@ -2,7 +2,7 @@ import time
 from app.controllers.usability_tools import check_favicon, check_flash_usage, check_x_card_tag, fetch_page_content
 from flask import render_template
 import requests
-from app.controllers.spider_tools import check_css_status, check_deprecated_tags, check_gzip, get_canonical_info, get_common_url_issues, get_directive_issues, get_h1_issues, get_h2_issues, get_hreflang_issues, get_meta_description_issues, get_meta_keywords_issues, get_page_title_issues, get_soup, get_structured_data_issues
+from app.controllers.spider_tools import get_soup
 from flask_login import current_user
 from flask import render_template, request
 from app import app, db
@@ -22,9 +22,10 @@ from app.views.info import tool_info
 ###
 #######
 
+
 @app.route("/tools/usability/<string:tool>", methods=["GET", "POST"])
 def tools_usability(tool):
- 
+
     start_time = time.time()
     definition = ""
     slogan = ""
@@ -101,25 +102,23 @@ def tools_usability(tool):
         db.session.add(user_usage)
         db.session.commit()
 
-
         soup = get_soup(url)
         response = requests.get(url)
         html_content = fetch_page_content(url)
-        
+
         if soup:
             try:
                 # Ejecutar la función correspondiente
                 if tool == 'missing-favicon':
                     results = check_favicon(html_content)
-                        
+
                 elif tool == 'flash-used':
-                    results =  check_flash_usage(html_content)
-                       
+                    results = check_flash_usage(html_content)
+
                 elif tool == 'x-card-missing':
                     results = check_x_card_tag(html_content)
-                    
 
-                print(results)   
+                print(results)
 
             except Exception as e:
                 print(f"Error processing page info: {e}")
@@ -127,14 +126,13 @@ def tools_usability(tool):
                 results = {'error': e}
 
             is_results_valid = True
-            
+
             if results is not None:
                 log_event(tool, page)
                 is_results_valid = True
                 user = Users.query.get(current_user.id)
-                log_user_event(user, f"Analisis Usabilidad en {url}",tool,'info')
-
-                
+                log_user_event(user, f"Analisis Usabilidad en {url}", tool,
+                               'info')
 
                 # Recorrer el diccionario y contar los valores según las condiciones dadas
                 #for key, value in results.items():
@@ -151,8 +149,8 @@ def tools_usability(tool):
                 results = {'error': 'Fail None results'}
 
         else:
-                log_event(tool, 'Fail:' + page)
-                results = {'error': 'Unable to parse HTML'}
+            log_event(tool, 'Fail:' + page)
+            results = {'error': 'Unable to parse HTML'}
 
     # añadir la info extra
     # contar los true, false, y none
@@ -163,12 +161,10 @@ def tools_usability(tool):
         false_percentage = (false_count / total_entries) * 100
     else:
         false_percentage = 0
-   
+
     end_time = time.time()
     duration = end_time - start_time
 
-
-    
     return render_template(
         "tools/usability/usability_results.html",
         # "tools/seo/" + tool + ".html",
@@ -182,9 +178,8 @@ def tools_usability(tool):
         slogan=slogan,
         info_popup=info_popup,
         keywords=keywords,
-        total_checks =  total_entries,
-        success_count = true_count,
-        empty_checks = none_or_empty_count,
+        total_checks=total_entries,
+        success_count=true_count,
+        empty_checks=none_or_empty_count,
         danger_count=false_count,
-        danger_percentage=false_percentage
-    )
+        danger_percentage=false_percentage)

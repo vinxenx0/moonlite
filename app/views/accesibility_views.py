@@ -16,7 +16,6 @@ from app.models.usage_model import Activity
 from app.views.info import tool_info
 
 
-
 @app.route("/tools/accesibility/wcag", methods=["GET", "POST"])
 def wcag():
     definition = ""
@@ -46,13 +45,13 @@ def wcag():
 
         results = json.loads(ejecutar_pa11y(domain))
         print(results)
-        
+
         if results is not None:
             is_results_valid = True
         else:
             is_results_valid = False
 
-        is_results_valid = True ## temporal
+        is_results_valid = True  ## temporal
 
     end_time = time.time()
     duration = end_time - start_time
@@ -72,6 +71,7 @@ def wcag():
 
 
 # spelling_errors, grammar_errors = analizar_ortografia(response.text)
+
 
 @app.route("/tools/accesibility/ortografia", methods=["GET", "POST"])
 def ortografia():
@@ -106,13 +106,13 @@ def ortografia():
         print("----")
         print(results)
         print("----")
-        
+
         if results is not None:
             is_results_valid = True
         else:
             is_results_valid = False
 
-        is_results_valid = True ## temporal
+        is_results_valid = True  ## temporal
 
     end_time = time.time()
     duration = end_time - start_time

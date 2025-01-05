@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from requests.exceptions import RequestException, Timeout
 
+
 def extract_external_links(url):
     try:
         response = requests.get(url)
@@ -26,6 +27,7 @@ def extract_external_links(url):
     except Exception as e:
         return {'Error': str(e)}
 
+
 def analyze_external_link(link):
     try:
         response = requests.get(link['url'], timeout=15)
@@ -36,6 +38,7 @@ def analyze_external_link(link):
     except RequestException:
         link['status'] = 'Error'
     return link
+
 
 def external_links_audit(url):
     try:
@@ -51,22 +54,32 @@ def external_links_audit(url):
             if not link['anchor_text']:
                 issues.append(f'External link missing anchor: {link["url"]}')
             elif link['anchor_text'].strip() == '':
-                issues.append(f'External link with empty anchor: {link["url"]}')
+                issues.append(
+                    f'External link with empty anchor: {link["url"]}')
             elif link['anchor_text'].startswith(('http://', 'https://')):
-                issues.append(f'External link with naked URL anchor: {link["url"]}')
-            elif all(char in '!@#$%^&*()_+=-[]{}|;:",.<>?/`~' for char in link['anchor_text']):
-                issues.append(f'External link with anchor containing only symbols: {link["url"]}')
-            
+                issues.append(
+                    f'External link with naked URL anchor: {link["url"]}')
+            elif all(char in '!@#$%^&*()_+=-[]{}|;:",.<>?/`~'
+                     for char in link['anchor_text']):
+                issues.append(
+                    f'External link with anchor containing only symbols: {link["url"]}'
+                )
+
             if link['nofollow']:
                 issues.append(f'Nofollow external link: {link["url"]}')
-            
+
             link_analysis = analyze_external_link(link)
             if link_analysis['status'] == 'Timed out':
                 issues.append(f'External link timed out: {link["url"]}')
 
-        return {'External Links Issues': issues} if issues else {'External Links Issues': 'No issues found'}
+        return {
+            'External Links Issues': issues
+        } if issues else {
+            'External Links Issues': 'No issues found'
+        }
     except Exception as e:
         return {'Error': str(e)}
+
 
 # Ejemplo de uso
 url_to_audit = 'https://www.example.com'

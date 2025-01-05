@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from requests.exceptions import RequestException
 
+
 def extract_js_data(url):
     try:
         response = requests.get(url)
@@ -21,6 +22,7 @@ def extract_js_data(url):
         return {'Error': str(e)}
     except Exception as e:
         return {'Error': str(e)}
+
 
 def analyze_js_file(js_url):
     try:
@@ -47,6 +49,7 @@ def analyze_js_file(js_url):
     except Exception as e:
         return {'Error': str(e)}
 
+
 def js_audit_url(url):
     try:
         js_links = extract_js_data(url)
@@ -59,18 +62,23 @@ def js_audit_url(url):
         issues = []
         total_js_files = len(js_links)
         if total_js_files > 30:
-            issues.append(f'Too many JavaScript files: {total_js_files} JavaScript files found.')
+            issues.append(
+                f'Too many JavaScript files: {total_js_files} JavaScript files found.'
+            )
 
         total_js_size = 0
         for js_url in js_links:
             js_analysis = analyze_js_file(js_url)
             if isinstance(js_analysis, dict) and 'Error' in js_analysis:
-                issues.append(f'Error analyzing {js_url}: {js_analysis["Error"]}')
+                issues.append(
+                    f'Error analyzing {js_url}: {js_analysis["Error"]}')
                 continue
 
             total_js_size += js_analysis['size']
             if js_analysis['size'] > 2 * 1024 * 1024:
-                issues.append(f'JavaScript too big: {js_url} is {js_analysis["size"] / (1024 * 1024):.2f} MB.')
+                issues.append(
+                    f'JavaScript too big: {js_url} is {js_analysis["size"] / (1024 * 1024):.2f} MB.'
+                )
             if not js_analysis['compressed']:
                 issues.append(f'JavaScript not compressed: {js_url}')
             if not js_analysis['cached']:
@@ -79,11 +87,18 @@ def js_audit_url(url):
                 issues.append(f'JavaScript not minified: {js_url}')
 
         if total_js_size > 2 * 1024 * 1024:
-            issues.append(f'Total JavaScript size exceeds 2 MB: {total_js_size / (1024 * 1024):.2f} MB.')
+            issues.append(
+                f'Total JavaScript size exceeds 2 MB: {total_js_size / (1024 * 1024):.2f} MB.'
+            )
 
-        return {'JavaScript Issues': issues} if issues else {'JavaScript Issues': 'No issues found'}
+        return {
+            'JavaScript Issues': issues
+        } if issues else {
+            'JavaScript Issues': 'No issues found'
+        }
     except Exception as e:
         return {'Error': str(e)}
+
 
 # Ejemplo de uso
 url_to_audit = 'https://www.example.com'

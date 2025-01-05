@@ -6,7 +6,7 @@ from app import db
 
 
 class Activity(db.Model):
-    __tablename__='Activity'
+    __tablename__ = 'Activity'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64))
     target = db.Column(db.String(256))

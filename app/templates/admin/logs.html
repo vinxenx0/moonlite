@@ -31,11 +31,12 @@
                                 <tr>
                                     <td>{{ log.user.username if log.user else 'Unauthenticated' }}</td>
                                     <td>
-                                        <span class="badge {% if log.event == 'Error' %}bg-danger{% elif log.event == 'Info' %}bg-info{% elif log.event == 'Warning' %}bg-warning{% else %}bg-secondary{% endif %}">
+                                        <span
+                                            class="badge {% if log.event == 'Error' %}bg-danger{% elif log.event == 'Info' %}bg-info{% elif log.event == 'Warning' %}bg-warning{% else %}bg-secondary{% endif %}">
                                             {{ log.event }}
                                         </span>
                                     </td>
-                                    
+
                                     <td class="text-truncate" style="max-width: 200px;" title="{{ log.description }}">
                                         {{ log.description }}
                                     </td>
@@ -75,11 +76,11 @@
     });
 
     document.addEventListener('DOMContentLoaded', function () {
-    const refreshLogs = () => {
-        location.reload();
-    };
-    setInterval(refreshLogs, 60000); // Refresh every 60 seconds
-});
+        const refreshLogs = () => {
+            location.reload();
+        };
+        setInterval(refreshLogs, 60000); // Refresh every 60 seconds
+    });
 
 </script>
 {% endblock %}

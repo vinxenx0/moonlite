@@ -1,26 +1,15 @@
-
-from datetime import datetime
-from flask_login import current_user
 from app.controllers.logs_controller import log_event
-from flask import jsonify, request
+from flask import jsonify
 from app import app
-from app.controllers.spider_tools import get_page_info
 from app.controllers.tools_controller import *
 import time
 import subprocess
 from flask import render_template
 from app import app
-from app.forms import PageInfoForm, PingForm
-from app.models.usage_model import Activity
-from datetime import datetime
-import json
-from flask import render_template, redirect, url_for, flash, request
-from flask_login import current_user, login_required
-from app import app, db
+from app.forms import PingForm
+from flask import render_template, redirect, url_for
+from app import app
 from app.controllers.logs_controller import log_event
-from app.controllers.spider_tools import get_page_info
-from app.forms import ConfigForm, PageInfoForm
-from app.models.usage_model import Activity
 
 from app.views.info import tools
 
@@ -36,32 +25,31 @@ from app.views.info import tools
 #        print(f"Error getting country from IP: {e}")
 #        return None
 
- 
 
 @app.route('/tools', methods=['GET'])
 def index_tools_redirect():
     return redirect(url_for('index_tools_with_trailing_slash'))
 
+
 @app.route('/tools/', methods=['GET'])
 def index_tools_with_trailing_slash():
-    breadcrumbs = [
-        {'url': '/tools', 'text': 'Todas las herramientas'}
-    ]
+    breadcrumbs = [{'url': '/tools', 'text': 'Todas las herramientas'}]
 
     return render_template('tools/index.html',
                            breadcrumbs=breadcrumbs,
                            tools=tools)
 
 
-
 @app.route('/tools/domains/', methods=['GET', 'POST'])
 def index_domains():
-    
-    breadcrumbs = [
-        {'url': '/tools', 'text': 'Tools'},
-        {'url': '/tools/domains', 'text': 'Dominios'}
-    ]
 
+    breadcrumbs = [{
+        'url': '/tools',
+        'text': 'Tools'
+    }, {
+        'url': '/tools/domains',
+        'text': 'Dominios'
+    }]
 
     return render_template('tools/domains/index.html',
                            breadcrumbs=breadcrumbs,
@@ -70,37 +58,49 @@ def index_domains():
 
 @app.route('/tools/seo/', methods=['GET', 'POST'])
 def index_seo():
-    
-    breadcrumbs = [
-         {'url': '/tools', 'text': 'Tools'},
-        {'url': '/tools/seo', 'text': 'SEO'}
-    ]
+
+    breadcrumbs = [{
+        'url': '/tools',
+        'text': 'Tools'
+    }, {
+        'url': '/tools/seo',
+        'text': 'SEO'
+    }]
     return render_template('tools/seo/index.html',
                            breadcrumbs=breadcrumbs,
                            tools=tools)
 
+
 @app.route('/tools/accesibility/', methods=['GET', 'POST'])
 def index_accesiblity():
 
-    breadcrumbs = [
-        {'url': '/', 'text': 'Inicio'},
-        {'url': '/tools', 'text': 'Tools'},
-        {'url': '/tools/domains', 'text': 'Accesibilidad'}
-    ]
+    breadcrumbs = [{
+        'url': '/',
+        'text': 'Inicio'
+    }, {
+        'url': '/tools',
+        'text': 'Tools'
+    }, {
+        'url': '/tools/domains',
+        'text': 'Accesibilidad'
+    }]
 
     return render_template('tools/accesibility/index.html',
                            breadcrumbs=breadcrumbs,
                            tools=tools)
 
 
-@app.route('/tools/check_domain/<string:domain>') #, methods=['POST'])
+@app.route('/tools/check_domain/<string:domain>')  #, methods=['POST'])
 def check_domain(domain):
-    start_time = time.time() 
-    breadcrumbs = [
-        {'url': '/tools', 'text': 'Tools'},
-        {'url': '/tools/checkdomain', 'text': 'Check Domain'}
-    ]
-    
+    start_time = time.time()
+    breadcrumbs = [{
+        'url': '/tools',
+        'text': 'Tools'
+    }, {
+        'url': '/tools/checkdomain',
+        'text': 'Check Domain'
+    }]
+
     if domain:
         results = {
             'mx_lookup': mx_lookup(domain),
@@ -137,32 +137,37 @@ def check_domain(domain):
         }
 
         sorted_results = {key: results[key] for key in sorted(results.keys())}
-        
+
         end_time = time.time()
         duration = end_time - start_time
-        
-        sorted_results['duration'] = duration 
-        log_event('CHECKDOMAIN', 'Herramienta lanzada.')        
+
+        sorted_results['duration'] = duration
+        log_event('CHECKDOMAIN', 'Herramienta lanzada.')
         return jsonify(sorted_results)
- 
+
     else:
         log_event('CHECKDOMAIN', 'Error.')
         return jsonify({'error': 'Domain not provided'}), 400
 
 
-
 @app.route('/tools/ping/', methods=['GET', 'POST'])
 def ping():
-    breadcrumbs = [
-        {'url': '/tools', 'text': 'Tools'},
-        {'url': '/tools/ping', 'text': 'Ping'}
-    ]
+    breadcrumbs = [{
+        'url': '/tools',
+        'text': 'Tools'
+    }, {
+        'url': '/tools/ping',
+        'text': 'Ping'
+    }]
     form = PingForm()
     ping_result = None
     if form.validate_on_submit():
         domain = form.domain.data
         try:
-            result = subprocess.run(['ping', '-c', '4', domain], capture_output=True, text=True, timeout=10)
+            result = subprocess.run(['ping', '-c', '4', domain],
+                                    capture_output=True,
+                                    text=True,
+                                    timeout=10)
             if result.returncode == 0:
                 log_event('PING', 'Correcto.')
                 ping_result = result.stdout
@@ -172,4 +177,8 @@ def ping():
         except subprocess.TimeoutExpired:
             log_event('PING', 'Timeout.')
             ping_result = "El ping ha superado el tiempo de espera."
-    return render_template('tools/ping.html', title='PING', form=form, ping_result=ping_result, breadcrumbs=breadcrumbs)
+    return render_template('tools/ping.html',
+                           title='PING',
+                           form=form,
+                           ping_result=ping_result,
+                           breadcrumbs=breadcrumbs)

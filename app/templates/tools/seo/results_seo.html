@@ -413,43 +413,7 @@
 <!-- Add this CSS to handle the overlay and blur effect -->
 <style>
     /* Overlay styles */
-    .overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(255, 255, 255, 0.7);
-        /* Light blur overlay */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-    }
 
-    .overlay h3 {
-        color: #333;
-        font-size: 24px;
-    }
-
-    .overlay i {
-        color: #ffcc00;
-        /* Yellow color for the lock icon */
-    }
-
-    .overlay .text-center {
-        text-align: center;
-    }
-
-    /* Apply blur and disable interaction only to the report section */
-    #report .row,
-    #report .card,
-    #report .accordion-item {
-        filter: blur(4px);
-        /* Blur the content */
-        pointer-events: none;
-        /* Disable interaction with blurred content */
-    }
 </style>
 
 

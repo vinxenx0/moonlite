@@ -1,7 +1,9 @@
 from bs4 import BeautifulSoup
 import requests
 
+
 def description_tags_audit(url):
+
     def fetch_page_content(url):
         try:
             response = requests.get(url)
@@ -13,7 +15,8 @@ def description_tags_audit(url):
             return {'Error': str(e)}
 
     def check_description_missing(html_content):
-        if not html_content or isinstance(html_content, dict) and 'Error' in html_content:
+        if not html_content or isinstance(html_content,
+                                          dict) and 'Error' in html_content:
             return html_content
 
         soup = BeautifulSoup(html_content, 'html.parser')
@@ -22,7 +25,8 @@ def description_tags_audit(url):
         return description_tag is None
 
     def check_duplicate_description(html_content):
-        if not html_content or isinstance(html_content, dict) and 'Error' in html_content:
+        if not html_content or isinstance(html_content,
+                                          dict) and 'Error' in html_content:
             return html_content
 
         soup = BeautifulSoup(html_content, 'html.parser')
@@ -31,7 +35,8 @@ def description_tags_audit(url):
         return len(description_tags) > 1
 
     def check_description_too_long(html_content):
-        if not html_content or isinstance(html_content, dict) and 'Error' in html_content:
+        if not html_content or isinstance(html_content,
+                                          dict) and 'Error' in html_content:
             return html_content
 
         soup = BeautifulSoup(html_content, 'html.parser')
@@ -39,7 +44,9 @@ def description_tags_audit(url):
 
         if description_tag:
             content = description_tag.get('content')
-            return len(content) > 160  # Maximum recommended length for description tags
+            return len(
+                content
+            ) > 160  # Maximum recommended length for description tags
 
         return False
 
@@ -59,6 +66,7 @@ def description_tags_audit(url):
         return result
     except Exception as e:
         return {'Error': str(e)}
+
 
 # Ejemplo de uso
 url_to_audit = 'https://www.example.com'

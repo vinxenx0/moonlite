@@ -267,6 +267,7 @@
         <div class="text-center">
             <i class="fas fa-lock fa-3x mb-3"></i>
             <h3>You need to upgrade your plan to access this feature.</h3>
+            {% include "inc/suscriptions.html" %}
         </div>
     </div>
     {% endif %}
@@ -405,9 +406,10 @@
                 </div>
             </div>
         </div>
+        {% include 'tools/buzz_report.html' %}
     </div>
 
-    {% include 'tools/buzz_report.html' %}
+    
 </div>
 
 <!-- Add this CSS to handle the overlay and blur effect -->

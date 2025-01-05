@@ -244,6 +244,8 @@
   </div>
 </div>
 
+{% include "inc/suscriptions.html" %}
+
 <!-- Estadísticas -->
 <div class="row mb-4 position-relative">
   {% if not current_user.subscription_plan or current_user.subscription_plan == 'Free' or not user.is_subscription_active() %}
@@ -317,7 +319,7 @@
 </div>
 
 <!-- Tabla de Logs -->
-<div class="row mb-3 position-relative">
+<div class="row mb-5 position-relative">
   {% if not current_user.subscription_plan or current_user.subscription_plan == 'Free' or not user.is_subscription_active() %}
   <div class="overlay">
     <div class="text-center">
@@ -365,59 +367,8 @@
 
 <!-- Add this CSS to handle the overlay and blur effect -->
 <style>
-  /* Overlay styles */
-  .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.7);
-    /* Light blur overlay */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
 
-
-  .overlay i {
-    color: #ffffff;
-    /* White color for the lock icon */
-  }
-
-  /* Disabled button style */
-  .disabled {
-    pointer-events: none;
-    /* Disable interaction with the button */
-    opacity: 0.5;
-    /* Make the button appear dimmed */
-  }
-
-  .overlay h3 {
-    color: #333;
-    font-size: 24px;
-  }
-
-  .overlay i {
-    color: #ffcc00;
-    /* Yellow color for the lock icon */
-  }
-
-  .overlay .text-center {
-    text-align: center;
-  }
-
-  /* Apply blur and disable interaction only to the relevant sections */
-  .position-relative .card-body,
-  .position-relative .card-footer,
-  .position-relative table,
-  .position-relative .list-group {
-    filter: blur(4px);
-    /* Blur the content */
-    pointer-events: none;
-    /* Disable interaction with blurred content */
-  }
+ 
 </style>
 
 <!-- 

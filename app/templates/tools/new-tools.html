@@ -1,0 +1,19 @@
+<section id="new-tools" class="container my-5 mt-5">
+    <h2 class="text-center mb-4">New & Updated Tools</h2>
+    <div class="row g-4">
+        {% for tool in tools if tool.is_new %}
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="card h-100 shadow-sm border-info">
+                <div class="card-body text-center">
+                    <i class="{{ tool.icon }} fa-2x mb-3 text-info"></i>
+                    <h5 class="card-title">{{ tool.name }}</h5>
+                    <p class="card-text">{{ tool.description }}</p>
+                    <a href="{{ tool.link }}" class="btn btn-info btn-sm">
+                        Try Now <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>

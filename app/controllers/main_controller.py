@@ -108,6 +108,7 @@ def start():
                            data=data,
                            validator=validator,
                            form=form,
+                           tools=tools,
                            breadcrumbs=breadcrumbs,
                            spelling_errors=spelling_errors,
                            grammar_errors=grammar_errors)
@@ -190,4 +191,4 @@ def configuracion():
 def test():
     breadcrumbs = [{'url': '/test', 'text': 'Test'}]
     #return render_template('inc/layout.html')
-    return render_template('base.html')
+    return render_template('test.html')

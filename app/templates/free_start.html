@@ -163,36 +163,33 @@
 
     {% include "inc/online_test.html" %}
 
-
-
-        <!-- Tools by Category -->
-        <section id="categories" class="mt-5">
-            <h2 class="text-center mb-4">Tool Categories</h2>
-            <div class="row g-4">
-                {% for category, subcategories in grouped_tools.items() %}
-                <div class="col-lg-6 col-md-6 col-sm-12">
-                    <!-- Header Card -->
-                    <div class="card shadow-sm border-primary mb-3">
-                        <div class="card-body text-center">
-                            <i class="fas fa-folder fa-2x text-primary mb-3"></i>
-                            <h5 class="card-title">{{ category }}</h5>
-                            <p class="card-text">
-                                <strong>{{ subcategories|length }}</strong> subcategories,
-                                <strong>{{ subcategories.values()|map('length')|sum }}</strong> tools.
-                            </p>
-                            <a href="#{{ category|replace(' ', '-') }}" class="btn btn-outline-primary">
-                                View Category <i class="fas fa-arrow-right"></i>
-                            </a>
-                        </div>
+    <!-- Tools by Category -->
+    <section id="categories" class="mt-5">
+        <h2 class="text-center mb-4">Tool Categories</h2>
+        <div class="row g-4">
+            {% for category, subcategories in grouped_tools.items() %}
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <!-- Header Card -->
+                <div class="card shadow-sm border-primary mb-3">
+                    <div class="card-body text-center">
+                        <i class="fas fa-folder fa-2x text-primary mb-3"></i>
+                        <h5 class="card-title">{{ category }}</h5>
+                        <p class="card-text">
+                            <strong>{{ subcategories|length }}</strong> subcategories,
+                            <strong>{{ subcategories.values()|map('length')|sum }}</strong> tools.
+                        </p>
+                        <a href="#{{ category|replace(' ', '-') }}" class="btn btn-outline-primary">
+                            View Category <i class="fas fa-arrow-right"></i>
+                        </a>
                     </div>
                 </div>
-                {% endfor %}
             </div>
-        </section>
+            {% endfor %}
+        </div>
+    </section>
 
-
-     <!-- CTA Section -->
-     <section class="cta-section">
+       <!-- CTA Section -->
+       <section class="cta-section mt-5">
         <div class="container">
             <h2 class="mb-4">Start Your Free Trial Now!</h2>
             <p class="lead">Access all tools with a 7-day trial and discover the impact on your digital presence.</p>
@@ -200,11 +197,27 @@
         </div>
     </section>
 
-     
-    {% include "inc/suscriptions.html" %}
 
-       <!-- Most Used Tools Section -->
-       <section id="most-used-tools" class="mt-5">
+    {% include "user/dashboard.html" %}
+
+    {% include "tools/most-used.html" %}
+
+
+
+    <!-- CTA Section -->
+    <section class="cta-section mt-5">
+        <div class="container">
+            <h2 class="mb-4">Start Your Free Trial Now!</h2>
+            <p class="lead">Access all tools with a 7-day trial and discover the impact on your digital presence.</p>
+            <a href="#pricing" class="btn btn-light btn-lg">Start Free Trial</a>
+        </div>
+    </section>
+
+
+
+
+    <!-- Most Used Tools Section -->
+    <section id="most-used-tools" class="mt-5">
         <h2 class="text-center mb-4">Most Used Tools</h2>
         <div class="row g-4">
             {% for tool in tools if tool.most_used %}
@@ -224,19 +237,20 @@
         </div>
     </section>
 
+    <!-- CTA Section -->
+    <section class="cta-section mb-5 mt-5">
+        <div class="container">
+            <h2 class="mb-4">Start Your Free Trial Now!</h2>
+            <p class="lead">Access all tools with a 7-day trial and discover the impact on your digital presence.</p>
+            <a href="#pricing" class="btn btn-light btn-lg">Start Free Trial</a>
+        </div>
+    </section>
+
+    <!--{% include "inc/featurettes.html" %}-->
 
 
-    {% include "inc/featurettes.html" %}
 
-        <!-- CTA Section -->
-        <section class="cta-section mb-5 mt-5">
-            <div class="container">
-                <h2 class="mb-4">Start Your Free Trial Now!</h2>
-                <p class="lead">Access all tools with a 7-day trial and discover the impact on your digital presence.</p>
-                <a href="#pricing" class="btn btn-light btn-lg">Start Free Trial</a>
-            </div>
-        </section>
-    
+    {% include "inc/suscriptions.html" %}
 
 </div>
 <script>

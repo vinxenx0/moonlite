@@ -16,74 +16,7 @@
         </a>
     </div>
 
-    <!-- Tools by Category -->
-    <section id="categories" class="mt-5">
-        <h2 class="text-center mb-4">Tool Categories</h2>
-        <div class="row g-4">
-            {% for category, subcategories in grouped_tools.items() %}
-            <div class="col-lg-6 col-md-6 col-sm-12">
-                <!-- Header Card -->
-                <div class="card shadow-sm border-primary mb-3">
-                    <div class="card-body text-center">
-                        <i class="fas fa-folder fa-2x text-primary mb-3"></i>
-                        <h5 class="card-title">{{ category }}</h5>
-                        <p class="card-text">
-                            <strong>{{ subcategories|length }}</strong> subcategories,
-                            <strong>{{ subcategories.values()|map('length')|sum }}</strong> tools.
-                        </p>
-                        <a href="#{{ category|replace(' ', '-') }}" class="btn btn-outline-primary">
-                            View Category <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </section>
-    <!-- New Tools Section -->
-    <section id="new-tools" class="mt-5">
-        <h2 class="text-center mb-4">New & Updated Tools</h2>
-        <div class="row g-4">
-            {% for tool in tools if tool.is_new %}
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="card h-100 shadow-sm border-info">
-                    <div class="card-body text-center">
-                        <i class="{{ tool.icon }} fa-2x mb-3 text-info"></i>
-                        <h5 class="card-title">{{ tool.name }}</h5>
-                        <p class="card-text">{{ tool.description }}</p>
-                        <a href="{{ tool.link }}" class="btn btn-info btn-sm">
-                            Try Now <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </section>
-
-
-    <!-- Most Used Tools Section -->
-    <section id="most-used-tools" class="mt-5">
-        <h2 class="text-center mb-4">Most Used Tools</h2>
-        <div class="row g-4">
-            {% for tool in tools if tool.most_used %}
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="card h-100 shadow-sm border-success">
-                    <div class="card-body text-center">
-                        <i class="{{ tool.icon }} fa-2x mb-3 text-success"></i>
-                        <h5 class="card-title">{{ tool.name }}</h5>
-                        <p class="card-text">{{ tool.description }}</p>
-                        <a href="{{ tool.link }}" class="btn btn-success btn-sm">
-                            Use Tool <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </section>
-
-
+  {% include "tools/resume.html" %}
 
 
     {% for category, subcategories in grouped_tools.items() %}

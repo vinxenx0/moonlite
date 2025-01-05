@@ -1,0 +1,19 @@
+<section id="most-used-tools" class="container my-5 mt-5">
+    <h2 class="text-center mb-4">Most Used Tools</h2>
+    <div class="row g-4">
+        {% for tool in tools if tool.most_used %}
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="card h-100 shadow-sm border-success">
+                <div class="card-body text-center">
+                    <i class="{{ tool.icon }} fa-2x mb-3 text-success"></i>
+                    <h5 class="card-title">{{ tool.name }}</h5>
+                    <p class="card-text">{{ tool.description }}</p>
+                    <a href="{{ tool.link }}" class="btn btn-success btn-sm">
+                        Use Tool <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>

@@ -39,7 +39,7 @@ def admin_stats():
         'url': '/admin/stats',
         'text': 'Estadísticas'
     }]
-    end_date = datetime.now()
+    end_date = datetime.datetime.utcnow()
     start_date = end_date - timedelta(days=30)
     users = Users.query.all()
     users_last_month = Users.query.filter(

@@ -17,75 +17,42 @@
         <h2 class="h5 mb-0"><i class="bi bi-list"></i> Main Options</h2>
       </div>
       <div class="card-body">
-        <div class="row row-cols-2 row-cols-md-4 g-3 text-center position-relative">
-          <!-- My Profile -->
+        <div class="row row-cols-2 row-cols-md-4 g-3 text-center">
           <div class="col">
             <a href="{{ url_for('profile') }}" class="btn btn-outline-primary w-100">
               <i class="bi bi-person"></i> My Profile
             </a>
           </div>
-
-          <!-- Subscription -->
           <div class="col">
             <a href="{{ url_for('edit_subscription') }}" class="btn btn-outline-info w-100">
               <i class="bi bi-journal-text"></i> Subscription
             </a>
           </div>
-
-          <!-- Renewals (Only unlocked for non-Free users) -->
-          <div class="col position-relative">
-            {% if not current_user.subscription_plan or current_user.subscription_plan == 'Free' %}
-            <div class="overlay">
-              <i class="fas fa-lock fa-2x"></i>
-            </div>
-            {% endif %}
-            <a href="{{ url_for('transaction_history') }}"
-              class="btn btn-outline-warning w-100 {% if current_user.subscription_plan == 'Free' %}disabled{% endif %}">
+          <div class="col">
+            <a href="{{ url_for('transaction_history') }}" class="btn btn-outline-warning w-100">
               <i class="bi bi-currency-exchange"></i> Renewals
             </a>
           </div>
-
-          <!-- Settings (Only unlocked for non-Free users) -->
-          <div class="col position-relative">
-            {% if not current_user.subscription_plan or current_user.subscription_plan == 'Free' %}
-            <div class="overlay">
-              <i class="fas fa-lock fa-2x"></i>
-            </div>
-            {% endif %}
-            <a href="{{ url_for('configuracion') }}"
-              class="btn btn-outline-secondary w-100 {% if current_user.subscription_plan == 'Free' %}disabled{% endif %}">
+          <div class="col">
+            <a href="{{ url_for('configuracion') }}" class="btn btn-outline-secondary w-100">
               <i class="bi bi-gear"></i> Settings
             </a>
           </div>
-
-          <!-- Security -->
           <div class="col">
             <a href="{{ url_for('change_password') }}" class="btn btn-outline-danger w-100">
               <i class="bi bi-shield-lock"></i> Security
             </a>
           </div>
-
-          <!-- Payment Methods -->
           <div class="col">
             <a href="{{ url_for('edit_payment_methods') }}" class="btn btn-outline-success w-100">
               <i class="bi bi-credit-card"></i> Payment Methods
             </a>
           </div>
-
-          <!-- Support (Only unlocked for non-Free users) -->
-          <div class="col position-relative">
-            {% if not current_user.subscription_plan or current_user.subscription_plan == 'Free' %}
-            <div class="overlay">
-              <i class="fas fa-lock fa-2x"></i>
-            </div>
-            {% endif %}
-            <a href="#"
-              class="btn btn-outline-warning w-100 {% if current_user.subscription_plan == 'Free' %}disabled{% endif %}">
+          <div class="col">
+            <a href="#" class="btn btn-outline-warning w-100">
               <i class="bi bi-headset"></i> Support
             </a>
           </div>
-
-          <!-- Logout -->
           <div class="col">
             <a href="{{ url_for('logout') }}" class="btn btn-outline-dark w-100">
               <i class="bi bi-box-arrow-right"></i> Logout
@@ -96,8 +63,6 @@
     </div>
   </div>
 </div>
-
-
 
 <!-- User Information Section -->
 <div class="row mb-4">
@@ -187,15 +152,8 @@
 </div>
 
 <!-- transaction history -->
-<div class="row mb-4 position-relative">
-  {% if not current_user.subscription_plan or current_user.subscription_plan == 'Free' %}
-  <div class="overlay">
-    <div class="text-center">
-      <i class="fas fa-lock fa-3x mb-3"></i>
-      <h3>You need to upgrade your plan to access this feature.</h3>
-    </div>
-  </div>
-  {% endif %}
+
+<div class="row mb-4">
   <div class="_col-lg-10">
     <div class="card shadow-sm border-0">
       <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
@@ -245,15 +203,7 @@
 </div>
 
 <!-- Estadísticas -->
-<div class="row mb-4 position-relative">
-  {% if not current_user.subscription_plan or current_user.subscription_plan == 'Free' %}
-  <div class="overlay">
-    <div class="text-center">
-      <i class="fas fa-lock fa-3x mb-3"></i>
-      <h3>You need to upgrade your plan to access this feature.</h3>
-    </div>
-  </div>
-  {% endif %}
+<div class="row mb-4">
   <!-- Herramientas Más Usadas -->
   <div class="col-md-4 mb-4">
     <div class="card border-primary shadow-sm">
@@ -316,16 +266,13 @@
   </div>
 </div>
 
+
+
+
+
+
 <!-- Tabla de Logs -->
-<div class="row mb-3 position-relative">
-  {% if not current_user.subscription_plan or current_user.subscription_plan == 'Free' %}
-  <div class="overlay">
-    <div class="text-center">
-      <i class="fas fa-lock fa-3x mb-3"></i>
-      <h3>You need to upgrade your plan to access this feature.</h3>
-    </div>
-  </div>
-  {% endif %}
+<div class="row mb-3">
   <div class="card">
     <div class="card-body">
       {% if logs %}
@@ -362,63 +309,6 @@
     </div>
   </div>
 </div>
-
-<!-- Add this CSS to handle the overlay and blur effect -->
-<style>
-  /* Overlay styles */
-  .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.7);
-    /* Light blur overlay */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-
-
-  .overlay i {
-    color: #ffffff;
-    /* White color for the lock icon */
-  }
-
-  /* Disabled button style */
-  .disabled {
-    pointer-events: none;
-    /* Disable interaction with the button */
-    opacity: 0.5;
-    /* Make the button appear dimmed */
-  }
-
-  .overlay h3 {
-    color: #333;
-    font-size: 24px;
-  }
-
-  .overlay i {
-    color: #ffcc00;
-    /* Yellow color for the lock icon */
-  }
-
-  .overlay .text-center {
-    text-align: center;
-  }
-
-  /* Apply blur and disable interaction only to the relevant sections */
-  .position-relative .card-body,
-  .position-relative .card-footer,
-  .position-relative table,
-  .position-relative .list-group {
-    filter: blur(4px);
-    /* Blur the content */
-    pointer-events: none;
-    /* Disable interaction with blurred content */
-  }
-</style>
 
 <!-- 
 <div class="row mb-3">

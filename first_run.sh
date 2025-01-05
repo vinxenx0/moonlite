@@ -15,7 +15,7 @@ sudo useradd -m -s /bin/bash -G sudo moonlite
 
 -- crear entorno
 
-git clone -b log-user-activity https://github.com/vinxenx0/moonlite
+git clone https://github.com/vinxenx0/moonlite
 
 cd moonline
 python3 -m venv .venv
@@ -25,3 +25,5 @@ pip install -r requirements.txt
 pip install -r requirements.mysql.txt
 
 -- arrancar
+
+python3 run.py

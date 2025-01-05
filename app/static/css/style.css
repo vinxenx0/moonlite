@@ -686,13 +686,42 @@ footer .footer-column a:hover {
 
 /* Pricing Section */
 /* Pricing Section */
+/* Bold Minimalism Aesthetic */
+.pricing-table {
+  border: 3px solid transparent;
+  border-radius: 1rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.pricing-table:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.pricing-table.border-selected {
+  border-color: greenyellow;
+  border-width: 10px;
+}
+
+/* Badge for Current Plan */
+.pricing-table .badge {
+  font-size: 0.8rem;
+  padding: 0.4rem 0.7rem;
+  border-radius: 1rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
 #pricing .pricing-section {
   background-color: #f7f8fb;
   padding: 4rem 2rem;
 }
 
 #pricing .card {
-  border: none;
+  /* border: none; */
   border-radius: 1rem;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;

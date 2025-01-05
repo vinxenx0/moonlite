@@ -72,6 +72,7 @@ def start():
         # Check the user's subscription type
         if current_user.subscription_plan == 'Corporate':
             #return redirect(url_for('corporate_start.html'))
+            breadcrumbs = [{'url': '/start', 'text': 'Corporate'}]
             return render_template('corporate_start.html',
                            data=data,
                            validator=validator,
@@ -83,6 +84,7 @@ def start():
             
         elif current_user.subscription_plan == 'Pro':
             #return redirect(url_for('pro_start.html'))
+            breadcrumbs = [{'url': '/start', 'text': 'Profesional'}]
             return render_template('pro_start.html',
                            data=data,
                            validator=validator,
@@ -93,6 +95,7 @@ def start():
                            grammar_errors=grammar_errors)
             
         elif current_user.subscription_plan == 'Free':
+            breadcrumbs = [{'url': '/start', 'text': 'Licencia de prueba'}]
             return render_template('free_start.html',
                            data=data,
                            validator=validator,

@@ -13,6 +13,7 @@ from datetime import datetime
 from app.models.usage_model import Activity
 
 from app.views.info import tool_info
+from app.views.info import tools
 
 ##########
 ###
@@ -51,6 +52,7 @@ def tools_domains_new(tool):
     form = DomainToolsForm()
     results = None
     is_results_valid = False
+    user=current_user
 
     # Comprobar que existe la herramienta primero
     if tool in tool_info:
@@ -243,6 +245,7 @@ def tools_domains_new(tool):
         # "tools/domains/" + tool + ".html",
         title=tool,
         is_results_valid=is_results_valid,
+        user=current_user,
         duration=duration,
         form=form,
         results=results,

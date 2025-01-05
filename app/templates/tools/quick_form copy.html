@@ -14,7 +14,6 @@
     </div>
 
     <div class="row mb-3">
-        <!-- Form Section -->
         <div class="col-md-7 mb-4">
             <div class="card alert-info">
                 <div class="card-body">
@@ -44,23 +43,12 @@
                 </div>
             </div>
         </div>
-
-        <!-- Definition Section -->
         <div class="col-md-5">
-            {% if not current_user.subscription_plan or current_user.subscription_plan == 'Free' %}
-            <div class="card alert-warning speech-bubble-locked text-center">
-                <div class="card-body">
-                    <i class="bi bi-lock-fill text-muted fs-1 mb-3"></i>
-                    <p class="mb-0">Actualízate a <strong>Pro</strong> para desbloquear esta función.</p>
-                </div>
-            </div>
-            {% else %}
             <div class="card alert-info speech-bubble">
                 <div class="card-body">
                     <p class="mb-0">{{definition}}</p>
                 </div>
             </div>
-            {% endif %}
         </div>
     </div>
 </div>
@@ -74,30 +62,13 @@
         padding: 1rem;
     }
 
-    /* Custom CSS for locked speech bubble */
-    .speech-bubble-locked {
+    #myForm  {
         position: relative;
-        background-color: #f8d7da;
+    
         border-radius: .4em;
-        padding: 2rem 1rem;
-        color: #721c24;
-        border: 1px solid #f5c6cb;
+  
     }
 
-    #myForm {
-        position: relative;
-        border-radius: .4em;
-    }
-
-    .btn-outline-primary {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .bi-lock-fill {
-        color: #6c757d;
-    }
 </style>
 
 <script>
@@ -105,7 +76,7 @@
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl)
-    });
+    })
 
     // Capturar el evento de envío del formulario
     document.getElementById('myForm').addEventListener('submit', function () {

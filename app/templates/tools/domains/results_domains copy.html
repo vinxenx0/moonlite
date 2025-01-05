@@ -228,64 +228,56 @@
             {{ results }}
         </h3> -->
 
-<!-- Dashboard Header -->
-<div class="row dashboard-header">
-    <div class="col text-center">
-        <h3>Analytics Dashboard<br />{{title}}</h3>
-        <p class="lead">A comprehensive view of your data metrics</p>
+    <!-- Dashboard Header -->
+    <div class="row dashboard-header">
+        <div class="col text-center">
+            <h3>Analytics Dashboard<br />{{title}}</h3>
+            <p class="lead">A comprehensive view of your data metrics</p>
+        </div>
     </div>
-</div>
 
-<div class="row mb-4">
-    <div class="col-md-3">
-        <div class="card border-info">
-            <div class="card-body text-center">
-                <div class="card-icon text-info"><i class="fas fa-stopwatch"></i></div>
-                <h5 class="card-title">Total Check</h5>
-                <p class="card-text">{{total_checks}}</p>
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card border-info">
+                <div class="card-body text-center">
+                    <div class="card-icon text-info"><i class="fas fa-stopwatch"></i></div>
+                    <h5 class="card-title">Total Check</h5>
+                    <p class="card-text">{{total_checks}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-warning">
+                <div class="card-body text-center">
+                    <div class="card-icon text-warning"><i class="fas fa-image"></i></div>
+                    <h5 class="card-title">Duration</h5>
+                    <p class="card-text">{{duration}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-danger">
+                <div class="card-body text-center">
+                    <div class="card-icon text-danger"><i class="fas fa-hand-pointer"></i></div>
+                    <h5 class="card-title">Success Checks</h5>
+                    <p class="card-text">{{success_count}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-primary">
+                <div class="card-body text-center">
+                    <div class="card-icon text-primary"><i class="fas fa-ruler-combined"></i></div>
+                    <h5 class="card-title">Danger Checks</h5>
+                    <p class="card-text">{{danger_percentage}}%</p>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="card border-warning">
-            <div class="card-body text-center">
-                <div class="card-icon text-warning"><i class="fas fa-image"></i></div>
-                <h5 class="card-title">Duration</h5>
-                <p class="card-text">{{duration}}</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="card border-danger">
-            <div class="card-body text-center">
-                <div class="card-icon text-danger"><i class="fas fa-hand-pointer"></i></div>
-                <h5 class="card-title">Success Checks</h5>
-                <p class="card-text">{{success_count}}</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="card border-primary">
-            <div class="card-body text-center">
-                <div class="card-icon text-primary"><i class="fas fa-ruler-combined"></i></div>
-                <h5 class="card-title">Danger Checks</h5>
-                <p class="card-text">{{danger_percentage}}%</p>
-            </div>
-        </div>
-    </div>
-</div>
 
 
-<div id="report" class="container-fluid position-relative mb-5 mt-4">
-    {% if not current_user.subscription_plan or current_user.subscription_plan == 'Free' %}
-    <!-- Overlay to blur content for free or no subscription -->
-    <div class="overlay">
-        <div class="text-center">
-            <i class="fas fa-lock fa-3x mb-3"></i>
-            <h3>You need to upgrade your plan to access this feature.</h3>
-        </div>
-    </div>
-    {% endif %}
+<div id="report" class="container-fluid">
+
 
     <div class="accordion" id="resultsAccordion">
         {% for key, value in results.items() %}
@@ -350,6 +342,7 @@
 
     <!-- Charts Section -->
     <div class="row">
+        <!-- Normalized Chart Structure -->
         <div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100">
                 <div class="card-body text-center">
@@ -436,47 +429,6 @@
         </div>
     </div>
 </div>
-
-<!-- Add this CSS to handle the overlay and blur effect -->
-<style>
-    /* Overlay styles */
-    .overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(255, 255, 255, 0.7);
-        /* Light blur overlay */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-    }
-
-    .overlay h3 {
-        color: #333;
-        font-size: 24px;
-    }
-
-    .overlay i {
-        color: #ffcc00;
-        /* Yellow color for the lock icon */
-    }
-
-    .overlay .text-center {
-        text-align: center;
-    }
-
-    /* Apply blur and disable interaction only to the report section */
-    #report .accordion,
-    #report .row {
-        filter: blur(4px);
-        /* Blur the content */
-        pointer-events: none;
-        /* Disable interaction with blurred content */
-    }
-</style>
 
 
 <script>

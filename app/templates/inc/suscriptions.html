@@ -1,28 +1,28 @@
 <!-- Pricing Section -->
-<section id="pricing" class="container _pricing-section mt-5 mb-5">
+<section id="pricing" class="container my-5 _pricing-section">
     <div class="text-center mb-4">
-        <h2>Suscripciones</h2>
-        <div class="text-center mb-4">
-            <div class="form-check form-switch d-inline-block">
-                <input class="form-check-input" type="checkbox" id="togglePricing" size="20"
-                    aria-label="Toggle yearly billing" checked>
-                <label class="form-check-label" for="togglePricing">Pago anual con <span class="discount-text">12%
-                        descuento</span></label>
-            </div>
-
+        <h2 class="display-4 fw-bold">Suscripciones</h2>
+        <p class="lead text-muted">
+            Selecciona el plan que mejor se adapte a tus necesidades. Cambia entre mensual y anual con descuento.
+        </p>
+        <div class="form-check form-switch d-inline-block">
+            <input class="form-check-input" type="checkbox" id="togglePricing">
+            <label class="form-check-label fw-bold" for="togglePricing">
+                Pago anual con <span class="discount-text">12% descuento</span>
+            </label>
         </div>
 
     </div>
 
-    <div class="row text-center">
+    <div class="row text-center gy-4">
         <!-- Free Plan -->
-        <div class="col-md-4 mb-4">
-            <div class="card pricing-table">
+        <div class="col-md-4">
+            <div class="card pricing-table position-relative {% if current_user.subscription_plan == 'Free' %}border-selected{% endif %}">
                 <div class="card-header bg-primary text-white">
-                    <h5>Gratuito</h5>
+                    <h5 class="fw-bold">Gratuito</h5>
                 </div>
                 <div class="card-body">
-                    <h3 class="price_free">0€ <span class="small price-label"><u>siempre</u></span></h3>
+                    <h3 class="price_free">0€ <span class="small text-muted"><u>siempre</u></span></h3>
                     <ul class="list-unstyled text-start">
                         <li><i class="bi bi-check-circle text-success"></i> Herramientas básicas</li>
                         <li><i class="bi bi-check-circle text-success"></i> Resultados limitados</li>
@@ -30,20 +30,24 @@
                         <li><i class="bi bi-x-circle text-danger"></i> Ad free</li>
                         <li><i class="bi bi-x-circle text-danger"></i> Soporte</li>
                     </ul>
+                    {% if current_user.subscription_plan == 'Free' %}
+                    <span class="badge bg-success position-absolute top-0 end-0 m-3" data-bs-toggle="tooltip"
+                        data-bs-placement="top" title="Mi plan actual">Mi Plan Actual</span>
+                    {% endif %}
                     <a href="{{ url_for('register') }}" class="btn btn-primary">Entrar</a>
                 </div>
             </div>
         </div>
         <!-- Pro Plan -->
-        <div class="col-md-4 mb-4">
-            <div class="card pricing-table">
+        <div class="col-md-4">
+            <div class="card pricing-table position-relative {% if current_user.subscription_plan == 'Pro' %}border-selected{% endif %}">
                 <div class="card-header bg-success text-white">
-                    <h5>Profesionales</h5>
+                    <h5 class="fw-bold">Profesionales</h5>
                 </div>
                 <div class="card-body">
                     <h3 class="price position-relative" data-monthly="12" data-yearly="99">
-                        99€<span class="small price-label">/año</span>
-                        <span class="badge bg-danger discount-badge">12% Off</span>
+                        12€ <span class="small text-muted">/mes</span>
+                        <span class="badge bg-danger discount-badge d-none">12% Off</span>
                     </h3>
                     <ul class="list-unstyled text-start">
                         <li><i class="bi bi-check-circle text-success"></i> Todas las Herramientas</li>
@@ -52,36 +56,43 @@
                         <li><i class="bi bi-check-circle text-success"></i> Ad free</li>
                         <li><i class="bi bi-check-circle text-success"></i> Tickets de soporte</li>
                     </ul>
+                    {% if current_user.subscription_plan == 'Pro' %}
+                    <span class="badge bg-success position-absolute top-0 end-0 m-3" data-bs-toggle="tooltip"
+                        data-bs-placement="top" title="Mi plan actual">Mi Plan Actual</span>
+                    {% endif %}
                     <a href="{{ url_for('register') }}/pro" class="btn btn-success">Suscribirse</a>
                 </div>
             </div>
         </div>
         <!-- Corporate Plan -->
-        <div class="col-md-4 mb-4">
-            <div class="card pricing-table">
+        <div class="col-md-4">
+            <div class="card pricing-table position-relative {% if current_user.subscription_plan == 'Corporate' %}border-selected{% endif %}">
                 <div class="card-header bg-warning text-dark">
-                    <h5>Agencias</h5>
+                    <h5 class="fw-bold">Agencias</h5>
                 </div>
                 <div class="card-body">
                     <h3 class="price position-relative" data-monthly="150" data-yearly="1200">
-                        150€ <span class="small price-label">/año</span>
-                        <span class="badge bg-danger discount-badge">12% Off</span>
+                        150€ <span class="small text-muted">/mes</span>
+                        <span class="badge bg-danger discount-badge d-none">12% Off</span>
                     </h3>
                     <ul class="list-unstyled text-start">
                         <li><i class="bi bi-check-circle text-success"></i> Herramientas e informes completos</li>
                         <li><i class="bi bi-check-circle text-success"></i> Sugerencias y mejoras con IA</li>
-                        <li><i class="bi bi-x-circle text-success"></i> Panel con tu marca</li>
-                        <li><i class="bi bi-x-circle text-success"></i> Informes en PDF</li>
-                        <li><i class="bi bi-x-circle text-success"></i> Soporte en linea</li>
+                        <li><i class="bi bi-x-circle text-danger"></i> Panel con tu marca</li>
+                        <li><i class="bi bi-x-circle text-danger"></i> Informes en PDF</li>
+                        <li><i class="bi bi-x-circle text-danger"></i> Soporte en linea</li>
                     </ul>
+                    {% if current_user.subscription_plan == 'Corporate' %}
+                    <span class="badge bg-success position-absolute top-0 end-0 m-3" data-bs-toggle="tooltip"
+                        data-bs-placement="top" title="Mi plan actual">Mi Plan Actual</span>
+                    {% endif %}
                     <a href="{{ url_for('register') }}/agency" class="btn btn-warning">Contactar</a>
                 </div>
             </div>
         </div>
     </div>
-
-
 </section>
+
 
 <script>
     const toggle = document.getElementById('togglePricing');
@@ -114,5 +125,14 @@
 
     // Listen for toggle change and update the prices
     toggle.addEventListener('change', updatePricing);
+
+    // Enable Bootstrap tooltips
+    document.addEventListener('DOMContentLoaded', function () {
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+            new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    });
+
 
 </script>

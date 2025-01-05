@@ -1,17 +1,33 @@
-     <!-- Help Modal -->
-     <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="infoModalLabel">{{ title }}</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    {{ info_popup}}                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
+<!-- Help Modal -->
+<div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="infoModalLabel">
+                    {% if current_user.subscription_plan == 'Corporate' %}
+                        {{ title }}
+                    {% else %}
+                        <i class="bi bi-lock-fill text-muted fs-4 me-2"></i> Función Bloqueada
+                    {% endif %}
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% if current_user.subscription_plan == 'Corporate' %}
+                    {{ info_popup }}
+                {% else %}
+                    <p class="text-center mb-0">
+                        Esta función está disponible solo para usuarios con el plan <strong>Corporate</strong>. 
+                        <br>Actualízate para desbloquear esta funcionalidad.
+                    </p>
+                {% endif %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                {% if current_user.subscription_plan != 'Corporate' %}
+                    <a href="/upgrade" class="btn btn-primary">Actualizar a Corporate</a>
+                {% endif %}
             </div>
         </div>
     </div>
-
+</div>

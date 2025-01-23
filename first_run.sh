@@ -1,13 +1,13 @@
 
 --- dependencias
 
-sudo apt-get install sudo wget curl software-properties-common dirmngr gnupg2 pkg-config build-essential libaspell-dev python3-dev python3-venv libapache2-mod-wsgi-py3 git redis libmariadb-dev
+sudo apt-get install sudo wget curl software-properties-common dirmngr gnupg2 pkg-config build-essential libaspell-dev python3-dev python3-venv python3-pip libapache2-mod-wsgi-py3 git redis libmariadb-dev
 
 wget https://dev.mysql.com/get/mysql-apt-config_0.8.30-1_all.deb
 sudo dpkg -i mysql-apt-config_0.8.30-1_all.deb
-
+a
 sudo apt update
-sudo apt install mysql-client mysql-community-server mysql-server -y
+sudo apt install mysql-client aspell aspell-es pkg-config libmariadb-dev mysql-community-server mysql-server python3-dev libmysqlclient-dev -y
 sudo apt-get install mariadb-server mariadb-client -y
 
 --- creacion del usuario

@@ -15,6 +15,27 @@
         </ol>
     </nav>
 
+    <!-- Recomendaciones -->
+    <h2 class="mb-4">Acciones Recomendadas</h2>
+    <div class="card shadow-sm mb-5">
+        <div class="card-body">
+            {% if stats['churn_rate'] > 5 %}
+            <p class="text-danger">
+                <strong>Alerta:</strong> La tasa de cancelación (Churn Rate) es alta. Considera mejorar el proceso de 
+                <em>onboarding</em>, implementar un programa de lealtad o realizar encuestas de satisfacción para reducir el riesgo de cancelación.
+            </p>
+            {% endif %}
+            {% if stats['clv'] < stats['cac'] %}
+            <p class="text-warning">
+                <strong>Alerta:</strong> El Customer Lifetime Value (CLV) es menor que el Coste de Adquisición (CAC). Esto significa que estás gastando más en adquirir clientes de lo que ellos generan. Enfócate en estrategias de upselling o cross-selling.
+            </p>
+            {% endif %}
+            <p class="text-success">
+                <strong>Tip:</strong> Aprovecha el crecimiento de tus métricas recurrentes como el MRR y ARR para evaluar oportunidades de expansión en nuevos mercados o lanzar campañas de marketing específicas.
+            </p>
+        </div>
+    </div>
+
     <!-- KPIs en Cards con Descripciones -->
     <div class="row g-4 mb-5">
         <!-- Churn Rate -->
@@ -24,16 +45,8 @@
                     <h5 class="card-title text-danger">Churn Rate</h5>
                     <p class="card-text display-5">{{ stats['churn_rate'] | round(2) }}%</p>
                     <p class="text-muted">
-                        El Churn Rate mide el porcentaje de clientes que cancelan sus suscripciones.
-                        Un Churn Rate alto indica problemas de retención. 
+                        El porcentaje de clientes que cancelan sus suscripciones. Tasa ideal: <strong>Menor al 5%</strong>.
                     </p>
-                    {% if stats['churn_rate'] > 5 %}
-                    <span class="badge bg-danger">Crítico</span>
-                    {% elif stats['churn_rate'] > 2 %}
-                    <span class="badge bg-warning">Mejorar</span>
-                    {% else %}
-                    <span class="badge bg-success">Bueno</span>
-                    {% endif %}
                 </div>
             </div>
         </div>
@@ -45,8 +58,7 @@
                     <h5 class="card-title text-success">Customer Lifetime Value (CLV)</h5>
                     <p class="card-text display-5">{{ stats['clv'] | round(2) }} USD</p>
                     <p class="text-muted">
-                        El CLV mide cuánto valor genera un cliente a lo largo de su relación con tu SaaS.
-                        Aumentar el CLV incrementa la rentabilidad por cliente.
+                        Representa el ingreso total generado por un cliente durante su tiempo como suscriptor.
                     </p>
                 </div>
             </div>
@@ -59,14 +71,14 @@
                     <h5 class="card-title text-warning">Coste de Adquisición de Clientes (CAC)</h5>
                     <p class="card-text display-5">{{ stats['cac'] | round(2) }} USD</p>
                     <p class="text-muted">
-                        El CAC calcula cuánto cuesta adquirir un cliente. Es fundamental mantener un CAC menor que el CLV.
+                        El coste promedio de adquirir un nuevo cliente. Mantén un CAC menor que el CLV.
                     </p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Gráficos -->
+    <!-- Visualización de Datos -->
     <h2 class="mb-4">Visualización de Datos</h2>
     <div class="row g-4">
         <!-- Gráfico de Churn Rate -->
@@ -75,6 +87,10 @@
                 <div class="card-body">
                     <h5 class="card-title">Distribución del Churn Rate</h5>
                     <canvas id="churnRateChart"></canvas>
+                    <p class="text-muted mt-3">
+                        Este gráfico muestra el porcentaje de clientes que permanecen activos frente a los que han cancelado su suscripción.
+                        Un churn alto puede significar problemas de retención.
+                    </p>
                 </div>
             </div>
         </div>
@@ -85,6 +101,9 @@
                 <div class="card-body">
                     <h5 class="card-title">Ingresos Recurrentes (MRR vs ARR)</h5>
                     <canvas id="mrrArrChart"></canvas>
+                    <p class="text-muted mt-3">
+                        Compara los ingresos mensuales (MRR) con los anuales (ARR). Estos datos son útiles para predecir el crecimiento financiero.
+                    </p>
                 </div>
             </div>
         </div>
@@ -97,40 +116,25 @@
                 <div class="card-body">
                     <h5 class="card-title">Net Revenue Retention (NRR)</h5>
                     <canvas id="nrrChart"></canvas>
+                    <p class="text-muted mt-3">
+                        La retención neta mide el cambio en los ingresos tras considerar cancelaciones y actualizaciones.
+                        Una NRR alta indica clientes satisfechos y rentables.
+                    </p>
                 </div>
             </div>
         </div>
 
-        <!-- Gráfico de Expansion Revenue Rate -->
+        <!-- Gráfico de Tasa de Expansión -->
         <div class="col-md-6">
             <div class="card shadow-sm">
                 <div class="card-body">
                     <h5 class="card-title">Tasa de Expansión de Ingresos</h5>
                     <canvas id="expansionRateChart"></canvas>
+                    <p class="text-muted mt-3">
+                        Representa el crecimiento de ingresos de clientes existentes mediante actualizaciones y ventas cruzadas.
+                    </p>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Recomendaciones -->
-    <h2 class="mt-5">Recomendaciones</h2>
-    <div class="card shadow-sm">
-        <div class="card-body">
-            {% if stats['churn_rate'] > 5 %}
-            <p class="text-danger">
-                <strong>Alerta:</strong> La tasa de cancelación es alta. Considera estrategias de retención como 
-                mejorar el onboarding o crear programas de lealtad.
-            </p>
-            {% endif %}
-            {% if stats['clv'] < stats['cac'] %}
-            <p class="text-warning">
-                <strong>Alerta:</strong> El CLV es menor al CAC. Es fundamental reducir costos de adquisición o 
-                aumentar el valor por cliente mediante upselling.
-            </p>
-            {% endif %}
-            <p class="text-success">
-                <strong>Tip:</strong> Sigue midiendo métricas como el MRR y el ARR para monitorear el crecimiento mensual y anual.
-            </p>
         </div>
     </div>
 </div>

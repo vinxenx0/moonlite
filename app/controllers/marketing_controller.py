@@ -45,7 +45,7 @@ def marketing_dashboard():
 def calculate_marketing_metrics():
     """Calcula métricas clave de marketing y las devuelve como un diccionario."""
     stats = {}
-    now = datetime.utcnow()
+    now = datetime.datetime.utcnow
     one_month_ago = now - timedelta(days=30)
 
     # Número de clientes

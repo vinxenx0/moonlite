@@ -1,4 +1,5 @@
 # __init__py
+import datetime
 import json
 import os
 from flask import Flask, render_template, session
@@ -875,8 +876,8 @@ with app.app_context():
             arr=300000.0,  # Ejemplo de Annual Recurring Revenue
             nrr=120.0,  # Ejemplo de Net Revenue Retention
             expansion_revenue_rate=10.0,  # Ejemplo de Expansion Revenue Rate
-            created_at=datetime.utcnow(),
-            updated_at=datetime.utcnow()
+            created_at=datetime.datetime.utcnow,
+            updated_at=datetime.datetime.utcnow
         )
         db.session.add(marketing_data)
         db.session.commit()

@@ -876,8 +876,10 @@ with app.app_context():
             arr=300000.0,  # Ejemplo de Annual Recurring Revenue
             nrr=120.0,  # Ejemplo de Net Revenue Retention
             expansion_revenue_rate=10.0,  # Ejemplo de Expansion Revenue Rate
-            created_at=datetime.datetime.utcnow,
-            updated_at=datetime.datetime.utcnow
+            #created_at=datetime.datetime.utcnow,
+            #updated_at=datetime.datetime.utcnow
+            created_at=datetime.utcnow(),  # Objeto datetime
+            updated_at=datetime.utcnow()   # Objeto datetime
         )
         db.session.add(marketing_data)
         db.session.commit()

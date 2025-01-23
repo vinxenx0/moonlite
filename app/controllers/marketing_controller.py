@@ -9,6 +9,17 @@ from app import app
 @app.route('/admin/marketing')
 @login_required
 def marketing_dashboard():
+    breadcrumbs = [{'url': '/admin', 'text': 'Admin'}, {'url': '/admin/marketing', 'text': 'Marketing Dashboard'}]
+    
+    # Cálculo de métricas
+    stats = calculate_marketing_metrics()
+    
+    return render_template('admin/marketing_dashboard.html', breadcrumbs=breadcrumbs, stats=stats)
+
+
+@app.route('/admin/sql_marketing')
+@login_required
+def marketing_sql_dashboard():
     """Carga las métricas de marketing desde la base de datos o las calcula si no existen."""
     breadcrumbs = [{'url': '/admin', 'text': 'Admin'}, {'url': '/admin/marketing', 'text': 'Marketing Dashboard'}]
 

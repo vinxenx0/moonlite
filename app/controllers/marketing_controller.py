@@ -71,6 +71,11 @@ def calculate_marketing_metrics():
     # Customer Lifetime Value (CLV)
     avg_purchase_value = db.session.query(func.avg(Transaction.amount)).scalar() or 0
     avg_purchase_frequency = db.session.query(func.count(Transaction.id) / total_customers).scalar() or 0
+
+    # Convertir valores Decimal a float antes de los cálculos
+    avg_purchase_value = float(avg_purchase_value)
+    avg_purchase_frequency = float(avg_purchase_frequency)
+
     avg_relationship_duration = 12  # Suposición de relación promedio en meses
     stats['clv'] = avg_purchase_value * avg_purchase_frequency * avg_relationship_duration
 
@@ -81,14 +86,14 @@ def calculate_marketing_metrics():
 
     # MRR y ARR
     mrr = db.session.query(func.sum(Transaction.amount)).filter(Transaction.timestamp >= one_month_ago).scalar() or 0
-    stats['mrr'] = mrr
-    stats['arr'] = mrr * 12
+    stats['mrr'] = float(mrr)  # Convertir Decimal a float
+    stats['arr'] = stats['mrr'] * 12
 
     # NRR
     upsell_revenue = db.session.query(func.sum(Transaction.amount)).filter(Transaction.description.like('%Upgrade%')).scalar() or 0
-    stats['nrr'] = ((mrr + upsell_revenue - churned_customers) / mrr * 100) if mrr > 0 else 0
+    stats['nrr'] = ((stats['mrr'] + float(upsell_revenue) - churned_customers) / stats['mrr'] * 100) if stats['mrr'] > 0 else 0
 
     # Expansion Revenue Rate
-    stats['expansion_revenue_rate'] = (upsell_revenue / mrr * 100) if mrr > 0 else 0
+    stats['expansion_revenue_rate'] = (float(upsell_revenue) / stats['mrr'] * 100) if stats['mrr'] > 0 else 0
 
     return stats

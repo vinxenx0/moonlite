@@ -878,8 +878,8 @@ with app.app_context():
             expansion_revenue_rate=10.0,  # Ejemplo de Expansion Revenue Rate
             #created_at=datetime.datetime.utcnow,
             #updated_at=datetime.datetime.utcnow
-            created_at=datetime.utcnow(),  # Objeto datetime
-            updated_at=datetime.utcnow()   # Objeto datetime
+            created_at=datetime.datetime.utcnow(),
+            updated_at=datetime.datetime.utcnow()
         )
         db.session.add(marketing_data)
         db.session.commit()

@@ -8,7 +8,6 @@ from flask_login import LoginManager, current_user
 from flask_migrate import Migrate
 from flask_mail import Mail
 from flask_wtf.csrf import CSRFProtect
-from app.models.marketing_model import MarketingMetrics  
 from logging.handlers import RotatingFileHandler
 #from mailhog import Mailhog
 from itertools import groupby
@@ -823,6 +822,8 @@ from app.controllers import main_controller, user_controller, tools_controller, 
 from app.controllers.logs_controller import log_event
 from app.views import user_views, tools_views, logs_views, new_domain_views, new_seo_views, accesibility_views, usability_views  #seo_views #domain_tools
 from app.models.user_model import Users
+from app.models.marketing_model import MarketingMetrics  
+
 #from app.forms import LoginForm, ConfigForm
 
 # Comprobamos si la base de datos SQLite existe, y si no, la creamos

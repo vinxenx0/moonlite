@@ -4,6 +4,7 @@ from app.models.user_model import Users, Transaction
 from app.models.marketing_model import MarketingMetrics
 from datetime import datetime, timedelta
 from sqlalchemy import func
+from app import app
 
 @app.route('/admin/marketing')
 @login_required

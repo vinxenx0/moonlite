@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="container my-5">
-    <h1 class="text-center mb-4">Panel de Control de Marketing</h1>
+    <h1 class="text-center mb-4">Panel de Marketing</h1>
 
     <!-- Breadcrumbs -->
     <nav aria-label="breadcrumb">
@@ -15,65 +15,41 @@
         </ol>
     </nav>
 
-    <!-- KPIs en Cards con Descripciones -->
+    <!-- KPIs en Cards -->
     <div class="row g-4 mb-5">
-        <!-- Churn Rate -->
         <div class="col-md-4">
-            <div class="card shadow-sm border-danger">
+            <div class="card border-danger shadow-sm">
                 <div class="card-body">
                     <h5 class="card-title text-danger">Churn Rate</h5>
                     <p class="card-text display-5">{{ stats['churn_rate'] | round(2) }}%</p>
-                    <p class="text-muted">
-                        El Churn Rate mide el porcentaje de clientes que cancelan sus suscripciones.
-                        Un Churn Rate alto indica problemas de retención. 
-                    </p>
-                    {% if stats['churn_rate'] > 5 %}
-                    <span class="badge bg-danger">Crítico</span>
-                    {% elif stats['churn_rate'] > 2 %}
-                    <span class="badge bg-warning">Mejorar</span>
-                    {% else %}
-                    <span class="badge bg-success">Bueno</span>
-                    {% endif %}
                 </div>
             </div>
         </div>
-
-        <!-- CLV -->
         <div class="col-md-4">
-            <div class="card shadow-sm border-success">
+            <div class="card border-success shadow-sm">
                 <div class="card-body">
                     <h5 class="card-title text-success">Customer Lifetime Value (CLV)</h5>
                     <p class="card-text display-5">{{ stats['clv'] | round(2) }} USD</p>
-                    <p class="text-muted">
-                        El CLV mide cuánto valor genera un cliente a lo largo de su relación con tu SaaS.
-                        Aumentar el CLV incrementa la rentabilidad por cliente.
-                    </p>
                 </div>
             </div>
         </div>
-
-        <!-- CAC -->
         <div class="col-md-4">
-            <div class="card shadow-sm border-warning">
+            <div class="card border-warning shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title text-warning">Coste de Adquisición de Clientes (CAC)</h5>
+                    <h5 class="card-title text-warning">CAC</h5>
                     <p class="card-text display-5">{{ stats['cac'] | round(2) }} USD</p>
-                    <p class="text-muted">
-                        El CAC calcula cuánto cuesta adquirir un cliente. Es fundamental mantener un CAC menor que el CLV.
-                    </p>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Gráficos -->
-    <h2 class="mb-4">Visualización de Datos</h2>
     <div class="row g-4">
         <!-- Gráfico de Churn Rate -->
         <div class="col-md-6">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title">Distribución del Churn Rate</h5>
+                    <h5 class="card-title">Churn Rate</h5>
                     <canvas id="churnRateChart"></canvas>
                 </div>
             </div>
@@ -83,7 +59,7 @@
         <div class="col-md-6">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title">Ingresos Recurrentes (MRR vs ARR)</h5>
+                    <h5 class="card-title">MRR vs ARR</h5>
                     <canvas id="mrrArrChart"></canvas>
                 </div>
             </div>
@@ -105,32 +81,10 @@
         <div class="col-md-6">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title">Tasa de Expansión de Ingresos</h5>
+                    <h5 class="card-title">Expansion Revenue Rate</h5>
                     <canvas id="expansionRateChart"></canvas>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Recomendaciones -->
-    <h2 class="mt-5">Recomendaciones</h2>
-    <div class="card shadow-sm">
-        <div class="card-body">
-            {% if stats['churn_rate'] > 5 %}
-            <p class="text-danger">
-                <strong>Alerta:</strong> La tasa de cancelación es alta. Considera estrategias de retención como 
-                mejorar el onboarding o crear programas de lealtad.
-            </p>
-            {% endif %}
-            {% if stats['clv'] < stats['cac'] %}
-            <p class="text-warning">
-                <strong>Alerta:</strong> El CLV es menor al CAC. Es fundamental reducir costos de adquisición o 
-                aumentar el valor por cliente mediante upselling.
-            </p>
-            {% endif %}
-            <p class="text-success">
-                <strong>Tip:</strong> Sigue midiendo métricas como el MRR y el ARR para monitorear el crecimiento mensual y anual.
-            </p>
         </div>
     </div>
 </div>
@@ -144,9 +98,17 @@
         data: {
             labels: ['Clientes Activos', 'Clientes Perdidos'],
             datasets: [{
-                data: [{{ 100 - stats['churn_rate'] }}, {{ stats['churn_rate'] }}],
+                label: 'Churn Rate',
+                data: [
+                    {{ stats['churn_rate'] | round(2) }},
+                    100 - {{ stats['churn_rate'] | round(2) }}
+                ],
                 backgroundColor: ['#28a745', '#dc3545'],
+                hoverOffset: 4
             }]
+        },
+        options: {
+            responsive: true,
         }
     });
 
@@ -157,9 +119,13 @@
         data: {
             labels: ['MRR', 'ARR'],
             datasets: [{
-                data: [{{ stats['mrr'] }}, {{ stats['arr'] }}],
+                label: 'Ingresos',
+                data: [{{ stats['mrr'] | round(2) }}, {{ stats['arr'] | round(2) }}],
                 backgroundColor: ['#007bff', '#6610f2']
             }]
+        },
+        options: {
+            responsive: true,
         }
     });
 
@@ -168,26 +134,36 @@
     new Chart(nrrCtx, {
         type: 'pie',
         data: {
-            labels: ['Retención', 'Pérdida'],
+            labels: ['Retención Net Revenue', 'Pérdida'],
             datasets: [{
-                data: [{{ stats['nrr'] }}, 100 - {{ stats['nrr'] }}],
+                data: [
+                    {{ stats['nrr'] | round(2) }},
+                    100 - {{ stats['nrr'] | round(2) }}
+                ],
                 backgroundColor: ['#17a2b8', '#dc3545']
             }]
+        },
+        options: {
+            responsive: true,
         }
     });
 
-    // Gráfico de Tasa de Expansión
+    // Gráfico de Expansion Revenue Rate
     const expansionCtx = document.getElementById('expansionRateChart').getContext('2d');
     new Chart(expansionCtx, {
         type: 'line',
         data: {
             labels: ['Ingresos Totales', 'Ingresos de Expansión'],
             datasets: [{
-                data: [{{ stats['mrr'] }}, {{ stats['expansion_revenue_rate'] }}],
+                label: 'Expansion Revenue',
+                data: [100, {{ stats['expansion_revenue_rate'] | round(2) }}],
+                backgroundColor: '#ffc107',
                 borderColor: '#ffc107',
-                backgroundColor: 'rgba(255, 193, 7, 0.2)',
-                fill: true
+                fill: false
             }]
+        },
+        options: {
+            responsive: true,
         }
     });
 </script>

@@ -8,6 +8,7 @@ from flask_login import LoginManager, current_user
 from flask_migrate import Migrate
 from flask_mail import Mail
 from flask_wtf.csrf import CSRFProtect
+from app.models.marketing_model import MarketingMetrics  
 from logging.handlers import RotatingFileHandler
 #from mailhog import Mailhog
 from itertools import groupby
@@ -861,6 +862,22 @@ with app.app_context():
         new_admin.set_password('admin')
         db.session.add(new_admin)
         db.session.add(new_user)
+        db.session.commit()
+
+        # Insertar datos de marketing si no existen
+    if not MarketingMetrics.query.first():
+        marketing_data = MarketingMetrics(
+            churn_rate=5.0,  # Ejemplo de tasa de cancelación
+            clv=1500.0,  # Ejemplo de Customer Lifetime Value
+            cac=100.0,  # Ejemplo de Costo de Adquisición de Clientes
+            mrr=25000.0,  # Ejemplo de Monthly Recurring Revenue
+            arr=300000.0,  # Ejemplo de Annual Recurring Revenue
+            nrr=120.0,  # Ejemplo de Net Revenue Retention
+            expansion_revenue_rate=10.0,  # Ejemplo de Expansion Revenue Rate
+            created_at=datetime.utcnow(),
+            updated_at=datetime.utcnow()
+        )
+        db.session.add(marketing_data)
         db.session.commit()
 
 #@login_manager.user_loader

@@ -2,7 +2,6 @@ from flask import render_template, redirect, url_for
 from flask_login import login_required
 from app.models.user_model import Users, Transaction
 from app.models.marketing_model import MarketingMetrics
-from app import db
 from datetime import datetime, timedelta
 from sqlalchemy import func
 

@@ -28,6 +28,7 @@ def marketing_dashboard():
     users = Users.query.order_by(Users.registered_on.desc()).all()
     now = datetime.utcnow()
 
+    # Pasar timedelta al contexto
     return render_template(
         'admin/marketing_dashboard.html',
         breadcrumbs=breadcrumbs,
@@ -35,10 +36,9 @@ def marketing_dashboard():
         metrics_history=metrics_history,
         transactions=transactions,
         users=users,
-        now=now
+        now=now,
+        timedelta=timedelta  # Pasar timedelta aquí
     )
-
-
 
 
 @app.route('/admin/old_marketing')

@@ -13,6 +13,7 @@ from logging.handlers import RotatingFileHandler
 #from mailhog import Mailhog
 from itertools import groupby
 from operator import itemgetter
+from flask_apscheduler import APScheduler
 
 app = Flask(__name__)
 app.config.from_pyfile('../instance/config.py')
@@ -31,6 +32,22 @@ migrate = Migrate(app, db)
 mail = Mail(app)
 csrf = CSRFProtect(app)
 #mailhog = Mailhog()
+
+
+scheduler = APScheduler()
+
+# Inicia y configura el scheduler
+scheduler.init_app(app)
+scheduler.start()
+
+# Registra la tarea programada
+scheduler.add_job(
+        id='daily_metrics_job',
+        func=record_daily_metrics,
+        trigger='cron',
+        hour=0,  # Ejecuta a medianoche
+        minute=0
+)
 
 tools = [
     # Domains & Email
@@ -957,3 +974,21 @@ def not_found(error):
 @app.errorhandler(500)
 def internal_server_error(error):
     return render_template('error_pages/500.html', error=error), 500
+
+def record_daily_metrics():
+    """Función programada para registrar las métricas diarias."""
+    stats = marketing_controller.calculate_marketing_metrics()
+    # Guardar métricas en la base de datos
+    metric = MarketingMetrics(
+        churn_rate=stats['churn_rate'],
+        clv=stats['clv'],
+        cac=stats['cac'],
+        mrr=stats['mrr'],
+        arr=stats['arr'],
+        nrr=stats['nrr'],
+        expansion_revenue_rate=stats['expansion_revenue_rate'],
+    )
+    db.session.add(metric)
+    db.session.commit()
+    print(f"Daily metrics recorded at {datetime.utcnow()}")
+    

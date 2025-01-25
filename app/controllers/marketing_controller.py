@@ -31,7 +31,8 @@ def marketing_dashboard():
         transactions=transactions,
         users=users,
         metrics_history=metrics_history,  # Pasar el historial al template
-        now=now
+        now=now,
+        timedelta=timedelta
     )
 
 

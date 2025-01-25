@@ -67,13 +67,6 @@ def old_marketing_dashboard():
         timedelta=timedelta  # Pasar timedelta aquí
     )
 
-# app/controllers/marketing_controller.py
-
-from app.models.user_model import Users, Transaction
-from sqlalchemy import func
-from datetime import datetime, timedelta
-from app import db
-
 def calculate_marketing_metrics():
     """Calcula las métricas clave para el panel de marketing."""
     stats = {}
@@ -92,6 +85,11 @@ def calculate_marketing_metrics():
     # Customer Lifetime Value (CLV)
     avg_purchase_value = db.session.query(func.avg(Transaction.amount)).scalar() or 0
     avg_purchase_frequency = db.session.query(func.count(Transaction.id) / total_customers).scalar() or 0
+
+    # Convertir valores a float antes de realizar operaciones matemáticas
+    avg_purchase_value = float(avg_purchase_value)
+    avg_purchase_frequency = float(avg_purchase_frequency)
+
     stats['clv'] = avg_purchase_value * avg_purchase_frequency * 12  # 12 = relación promedio en meses
 
     # CAC
@@ -101,58 +99,16 @@ def calculate_marketing_metrics():
 
     # MRR y ARR
     mrr = db.session.query(func.sum(Transaction.amount)).filter(Transaction.timestamp >= one_month_ago).scalar() or 0
-    stats['mrr'] = float(mrr)
+    stats['mrr'] = float(mrr)  # Convertir a float
     stats['arr'] = stats['mrr'] * 12
 
     # NRR
     upsell_revenue = db.session.query(func.sum(Transaction.amount)).filter(Transaction.description.like('%Upgrade%')).scalar() or 0
-    stats['nrr'] = ((stats['mrr'] + float(upsell_revenue) - churned_customers) / stats['mrr'] * 100) if stats['mrr'] > 0 else 0
+    upsell_revenue = float(upsell_revenue)  # Convertir a float
+    stats['nrr'] = ((stats['mrr'] + upsell_revenue - churned_customers) / stats['mrr'] * 100) if stats['mrr'] > 0 else 0
 
     # Expansion Revenue Rate
-    stats['expansion_revenue_rate'] = (float(upsell_revenue) / stats['mrr'] * 100) if stats['mrr'] > 0 else 0
+    stats['expansion_revenue_rate'] = (upsell_revenue / stats['mrr'] * 100) if stats['mrr'] > 0 else 0
 
     return stats
-
-    """Calcula métricas clave de marketing y las devuelve como un diccionario."""
-    stats = {}
-    now = datetime.utcnow()  # Usar datetime.utcnow directamente
-    one_month_ago = now - timedelta(days=30)  # Usar timedelta
-
-    # Número de clientes
-    total_customers = Users.query.filter(Users.active == True).count()
-
-    # Número de cancelaciones
-    churned_customers = Users.query.filter(Users.active == False).count()
-
-    # Churn Rate
-    stats['churn_rate'] = (churned_customers / total_customers * 100) if total_customers > 0 else 0
-
-    # Customer Lifetime Value (CLV)
-    avg_purchase_value = db.session.query(func.avg(Transaction.amount)).scalar() or 0
-    avg_purchase_frequency = db.session.query(func.count(Transaction.id) / total_customers).scalar() or 0
-
-    # Convertir valores Decimal a float antes de los cálculos
-    avg_purchase_value = float(avg_purchase_value)
-    avg_purchase_frequency = float(avg_purchase_frequency)
-
-    avg_relationship_duration = 12  # Suposición de relación promedio en meses
-    stats['clv'] = avg_purchase_value * avg_purchase_frequency * avg_relationship_duration
-
-    # CAC
-    total_marketing_costs = 5000  # Valor de ejemplo
-    new_customers = Users.query.filter(Users.registered_on >= one_month_ago).count()
-    stats['cac'] = (total_marketing_costs / new_customers) if new_customers > 0 else 0
-
-    # MRR y ARR
-    mrr = db.session.query(func.sum(Transaction.amount)).filter(Transaction.timestamp >= one_month_ago).scalar() or 0
-    stats['mrr'] = float(mrr)  # Convertir Decimal a float
-    stats['arr'] = stats['mrr'] * 12
-
-    # NRR
-    upsell_revenue = db.session.query(func.sum(Transaction.amount)).filter(Transaction.description.like('%Upgrade%')).scalar() or 0
-    stats['nrr'] = ((stats['mrr'] + float(upsell_revenue) - churned_customers) / stats['mrr'] * 100) if stats['mrr'] > 0 else 0
-
-    # Expansion Revenue Rate
-    stats['expansion_revenue_rate'] = (float(upsell_revenue) / stats['mrr'] * 100) if stats['mrr'] > 0 else 0
-
-    return stats
+  

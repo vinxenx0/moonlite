@@ -16,19 +16,20 @@ class MarketingMetrics(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     def __repr__(self):
-        return f'<MarketingMetrics {self.created_at} - {self.id}>'
+        return f'<MarketingMetrics {self.id}>'
 
-    @staticmethod
-    def save_metrics(metrics):
-        """Guardar métricas calculadas en la base de datos."""
-        new_metrics = MarketingMetrics(
-            churn_rate=metrics['churn_rate'],
-            clv=metrics['clv'],
-            cac=metrics['cac'],
-            mrr=metrics['mrr'],
-            arr=metrics['arr'],
-            nrr=metrics['nrr'],
-            expansion_revenue_rate=metrics['expansion_revenue_rate'],
-        )
-        db.session.add(new_metrics)
-        db.session.commit()
+    def to_dict(self):
+        """Convierte el objeto en un diccionario serializable"""
+        return {
+            "id": self.id,
+            "churn_rate": self.churn_rate,
+            "clv": self.clv,
+            "cac": self.cac,
+            "mrr": self.mrr,
+            "arr": self.arr,
+            "nrr": self.nrr,
+            "expansion_revenue_rate": self.expansion_revenue_rate,
+            "created_at": self.created_at.isoformat(),  # Convertir datetime a string
+            "updated_at": self.updated_at.isoformat()   # Convertir datetime a string
+        }
+

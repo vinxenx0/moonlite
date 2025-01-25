@@ -20,25 +20,27 @@ def marketing_dashboard():
     if not latest_metrics or latest_metrics.created_at.date() < today:
         MarketingMetrics.save_metrics(stats)
 
-    # Obtener métricas históricas
-    metrics_history = MarketingMetrics.query.order_by(MarketingMetrics.created_at.asc()).all()
+    # Obtener métricas históricas y convertirlas a diccionarios
+    metrics_history = [
+        metric.to_dict() for metric in MarketingMetrics.query.order_by(MarketingMetrics.created_at.asc()).all()
+    ]
 
     # Datos granulares
     transactions = Transaction.query.order_by(Transaction.timestamp.desc()).all()
     users = Users.query.order_by(Users.registered_on.desc()).all()
     now = datetime.utcnow()
 
-    # Pasar timedelta al contexto
     return render_template(
         'admin/marketing_dashboard.html',
         breadcrumbs=breadcrumbs,
         stats=stats,
-        metrics_history=metrics_history,
+        metrics_history=metrics_history,  # Pasar la lista de diccionarios
         transactions=transactions,
         users=users,
-        now=now,
-        timedelta=timedelta  # Pasar timedelta aquí
+        timedelta = timedelta,
+        now=now
     )
+
 
 
 @app.route('/admin/old_marketing')

@@ -1,8 +1,8 @@
+from datetime import datetime, timedelta  # Importar solo lo necesario
 from flask import render_template, redirect, url_for
 from flask_login import login_required
 from app.models.user_model import Users, Transaction
 from app.models.marketing_model import MarketingMetrics
-import datetime
 from sqlalchemy import func
 from app import app, db
 
@@ -10,59 +10,66 @@ from app import app, db
 @login_required
 def marketing_dashboard():
     breadcrumbs = [{'url': '/admin', 'text': 'Admin'}, {'url': '/admin/marketing', 'text': 'Marketing Dashboard'}]
-    
-    # Cálculo de métricas
+
+    # Cálculo de métricas actuales
     stats = calculate_marketing_metrics()
-    
-    return render_template('admin/marketing_dashboard.html', breadcrumbs=breadcrumbs, stats=stats)
+
+    # Historial de métricas
+    metrics_history = [
+        metric.to_dict() for metric in MarketingMetrics.query.order_by(MarketingMetrics.created_at.asc()).all()
+    ]
+
+    # Datos granulares
+    transactions = Transaction.query.order_by(Transaction.timestamp.desc()).all()
+    users = Users.query.order_by(Users.registered_on.desc()).all()
+    now = datetime.utcnow()
+
+    return render_template(
+        'admin/marketing_dashboard.html',
+        breadcrumbs=breadcrumbs,
+        stats=stats,
+        transactions=transactions,
+        users=users,
+        metrics_history=metrics_history,  # Pasar el historial al template
+        now=now,
+        timedelta=timedelta
+    )
 
 
-@app.route('/admin/sql_marketing')
+@app.route('/admin/old_marketing')
 @login_required
-def marketing_sql_dashboard():
-    """Carga las métricas de marketing desde la base de datos o las calcula si no existen."""
+def old_marketing_dashboard():
     breadcrumbs = [{'url': '/admin', 'text': 'Admin'}, {'url': '/admin/marketing', 'text': 'Marketing Dashboard'}]
 
-    # Consultar métricas de marketing existentes
-    marketing_data = MarketingMetrics.query.first()
-    if not marketing_data:
-        # Si no existen datos, calcular y almacenar métricas iniciales
-        stats = calculate_marketing_metrics()
-        marketing_data = MarketingMetrics(
-            churn_rate=stats['churn_rate'],
-            clv=stats['clv'],
-            cac=stats['cac'],
-            mrr=stats['mrr'],
-            arr=stats['arr'],
-            nrr=stats['nrr'],
-            expansion_revenue_rate=stats['expansion_revenue_rate']
-        )
-        db.session.add(marketing_data)
-        db.session.commit()
-    else:
-        # Cargar métricas desde la base de datos
-        stats = {
-            'churn_rate': marketing_data.churn_rate,
-            'clv': marketing_data.clv,
-            'cac': marketing_data.cac,
-            'mrr': marketing_data.mrr,
-            'arr': marketing_data.arr,
-            'nrr': marketing_data.nrr,
-            'expansion_revenue_rate': marketing_data.expansion_revenue_rate
-        }
+    # Cálculo de métricas
+    stats = calculate_marketing_metrics()
 
-    return render_template('admin/marketing_dashboard.html', breadcrumbs=breadcrumbs, stats=stats)
+    # Datos granulares
+    transactions = Transaction.query.order_by(Transaction.timestamp.desc()).all()
+    users = Users.query.order_by(Users.registered_on.desc()).all()
+    now = datetime.utcnow()
+
+    # Pasar timedelta al contexto
+    return render_template(
+        'admin/marketing_dashboard.html',
+        breadcrumbs=breadcrumbs,
+        stats=stats,
+        transactions=transactions,
+        users=users,
+        now=now,
+        timedelta=timedelta  # Pasar timedelta aquí
+    )
 
 def calculate_marketing_metrics():
-    """Calcula métricas clave de marketing y las devuelve como un diccionario."""
+    """Calcula las métricas clave para el panel de marketing."""
     stats = {}
-    now = datetime.datetime.utcnow()
-    one_month_ago = now - datetime.timedelta(days=30)
+    now = datetime.utcnow()
+    one_month_ago = now - timedelta(days=30)
 
-    # Número de clientes
+    # Total de clientes
     total_customers = Users.query.filter(Users.active == True).count()
 
-    # Número de cancelaciones
+    # Total de cancelaciones
     churned_customers = Users.query.filter(Users.active == False).count()
 
     # Churn Rate
@@ -72,28 +79,29 @@ def calculate_marketing_metrics():
     avg_purchase_value = db.session.query(func.avg(Transaction.amount)).scalar() or 0
     avg_purchase_frequency = db.session.query(func.count(Transaction.id) / total_customers).scalar() or 0
 
-    # Convertir valores Decimal a float antes de los cálculos
+    # Convertir valores a float antes de realizar operaciones matemáticas
     avg_purchase_value = float(avg_purchase_value)
     avg_purchase_frequency = float(avg_purchase_frequency)
 
-    avg_relationship_duration = 12  # Suposición de relación promedio en meses
-    stats['clv'] = avg_purchase_value * avg_purchase_frequency * avg_relationship_duration
+    stats['clv'] = avg_purchase_value * avg_purchase_frequency * 12  # 12 = relación promedio en meses
 
     # CAC
-    total_marketing_costs = 5000  # Valor de ejemplo
+    total_marketing_costs = 5000  # Supuesto de marketing mensual
     new_customers = Users.query.filter(Users.registered_on >= one_month_ago).count()
     stats['cac'] = (total_marketing_costs / new_customers) if new_customers > 0 else 0
 
     # MRR y ARR
     mrr = db.session.query(func.sum(Transaction.amount)).filter(Transaction.timestamp >= one_month_ago).scalar() or 0
-    stats['mrr'] = float(mrr)  # Convertir Decimal a float
+    stats['mrr'] = float(mrr)  # Convertir a float
     stats['arr'] = stats['mrr'] * 12
 
     # NRR
     upsell_revenue = db.session.query(func.sum(Transaction.amount)).filter(Transaction.description.like('%Upgrade%')).scalar() or 0
-    stats['nrr'] = ((stats['mrr'] + float(upsell_revenue) - churned_customers) / stats['mrr'] * 100) if stats['mrr'] > 0 else 0
+    upsell_revenue = float(upsell_revenue)  # Convertir a float
+    stats['nrr'] = ((stats['mrr'] + upsell_revenue - churned_customers) / stats['mrr'] * 100) if stats['mrr'] > 0 else 0
 
     # Expansion Revenue Rate
-    stats['expansion_revenue_rate'] = (float(upsell_revenue) / stats['mrr'] * 100) if stats['mrr'] > 0 else 0
+    stats['expansion_revenue_rate'] = (upsell_revenue / stats['mrr'] * 100) if stats['mrr'] > 0 else 0
 
     return stats
+  

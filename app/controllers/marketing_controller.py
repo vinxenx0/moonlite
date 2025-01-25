@@ -6,17 +6,6 @@ import datetime
 from sqlalchemy import func
 from app import app, db
 
-@app.route('/admin/marketing')
-@login_required
-def marketing_dashboard():
-    breadcrumbs = [{'url': '/admin', 'text': 'Admin'}, {'url': '/admin/marketing', 'text': 'Marketing Dashboard'}]
-    
-    # Cálculo de métricas
-    stats = calculate_marketing_metrics()
-    
-    return render_template('admin/marketing_dashboard.html', breadcrumbs=breadcrumbs, stats=stats)
-
-
 @app.route('/admin/sql_marketing')
 @login_required
 def marketing_sql_dashboard():
@@ -52,6 +41,24 @@ def marketing_sql_dashboard():
         }
 
     return render_template('admin/marketing_dashboard.html', breadcrumbs=breadcrumbs, stats=stats)
+
+
+@app.route('/admin/marketing')
+@login_required
+def marketing_dashboard():
+    breadcrumbs = [{'url': '/admin', 'text': 'Admin'}, {'url': '/admin/marketing', 'text': 'Marketing Dashboard'}]
+
+    # Cálculo de métricas
+    stats = calculate_marketing_metrics()
+
+    # Datos granulares
+    transactions = Transaction.query.order_by(Transaction.timestamp.desc()).all()
+    users = Users.query.order_by(Users.registered_on.desc()).all()
+
+    return render_template('admin/marketing_dashboard.html', breadcrumbs=breadcrumbs, stats=stats, transactions=transactions, users=users)
+
+
+
 
 def calculate_marketing_metrics():
     """Calcula métricas clave de marketing y las devuelve como un diccionario."""

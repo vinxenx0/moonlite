@@ -54,8 +54,16 @@ def marketing_dashboard():
     # Datos granulares
     transactions = Transaction.query.order_by(Transaction.timestamp.desc()).all()
     users = Users.query.order_by(Users.registered_on.desc()).all()
+    now = datetime.datetime.utcnow()
 
-    return render_template('admin/marketing_dashboard.html', breadcrumbs=breadcrumbs, stats=stats, transactions=transactions, users=users)
+    return render_template(
+        'admin/marketing_dashboard.html',
+        breadcrumbs=breadcrumbs,
+        stats=stats,
+        transactions=transactions,
+        users=users,
+        now=now
+    )
 
 
 

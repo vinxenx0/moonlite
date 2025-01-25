@@ -78,75 +78,88 @@
         </div>
     </div>
 
-        <!-- Sección de Datos Granulares -->
-        <h2 class="mb-4">Datos Granulares</h2>
-        <div class="row g-4">
-            <!-- Transacciones -->
-            <div class="col-12">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">Historial de Transacciones</h5>
-                        <table id="transactionsTable" class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Usuario</th>
-                                    <th>Monto</th>
-                                    <th>Tipo</th>
-                                    <th>Descripción</th>
-                                    <th>Fecha</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for transaction in transactions %}
-                                <tr>
-                                    <td>{{ transaction.id }}</td>
-                                    <td>{{ transaction.user.username }}</td>
-                                    <td>{{ transaction.amount }}</td>
-                                    <td>{{ transaction.transaction_type }}</td>
-                                    <td>{{ transaction.description }}</td>
-                                    <td>{{ transaction.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-    
-            <!-- Altas y Bajas de Usuarios -->
-            <div class="col-12">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">Altas y Bajas de Usuarios</h5>
-                        <table id="usersTable" class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Nombre</th>
-                                    <th>Email</th>
-                                    <th>Plan</th>
-                                    <th>Activo</th>
-                                    <th>Registrado</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for user in users %}
-                                <tr>
-                                    <td>{{ user.id }}</td>
-                                    <td>{{ user.username }}</td>
-                                    <td>{{ user.email }}</td>
-                                    <td>{{ user.subscription_plan }}</td>
-                                    <td>{{ 'Sí' if user.active else 'No' }}</td>
-                                    <td>{{ user.registered_on.strftime('%Y-%m-%d') }}</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
+    <!-- Datos Granulares -->
+    <h2 class="mb-4">Datos Granulares</h2>
+    <div class="row g-4">
+        <!-- Transacciones -->
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Historial de Transacciones</h5>
+                    <table id="transactionsTable" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Usuario</th>
+                                <th>Monto</th>
+                                <th>Tipo</th>
+                                <th>Descripción</th>
+                                <th>Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for transaction in transactions %}
+                            <tr 
+                                {% if 'Free' in transaction.description %}
+                                class="table-warning"
+                                {% elif 'Upgrade' in transaction.description %}
+                                class="table-success"
+                                {% endif %}
+                            >
+                                <td>{{ transaction.id }}</td>
+                                <td>{{ transaction.user.username }}</td>
+                                <td>{{ transaction.amount }}</td>
+                                <td>{{ transaction.transaction_type }}</td>
+                                <td>{{ transaction.description }}</td>
+                                <td>{{ transaction.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+
+        <!-- Altas y Bajas de Usuarios -->
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Altas y Bajas de Usuarios</h5>
+                    <table id="usersTable" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Email</th>
+                                <th>Plan</th>
+                                <th>Activo</th>
+                                <th>Registrado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users %}
+                            <tr 
+                                {% if user.active and user.registered_on >= now - timedelta(days=7) %}
+                                class="table-success"
+                                {% elif not user.active %}
+                                class="table-danger"
+                                {% endif %}
+                            >
+                                <td>{{ user.id }}</td>
+                                <td>{{ user.username }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.subscription_plan }}</td>
+                                <td>{{ 'Sí' if user.active else 'No' }}</td>
+                                <td>{{ user.registered_on.strftime('%Y-%m-%d') }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Visualización de Datos -->
     <h2 class="mb-4">Visualización de Datos</h2>

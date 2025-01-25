@@ -1,5 +1,6 @@
 from app import db
-from datetime import datetime
+from datetime import datetime, timedelta
+
 
 class MarketingMetrics(db.Model):
     __tablename__ = 'marketing_metrics'
@@ -15,4 +16,19 @@ class MarketingMetrics(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     def __repr__(self):
-        return f'<MarketingMetrics {self.id}>'
+        return f'<MarketingMetrics {self.created_at} - {self.id}>'
+
+    @staticmethod
+    def save_metrics(metrics):
+        """Guardar métricas calculadas en la base de datos."""
+        new_metrics = MarketingMetrics(
+            churn_rate=metrics['churn_rate'],
+            clv=metrics['clv'],
+            cac=metrics['cac'],
+            mrr=metrics['mrr'],
+            arr=metrics['arr'],
+            nrr=metrics['nrr'],
+            expansion_revenue_rate=metrics['expansion_revenue_rate'],
+        )
+        db.session.add(new_metrics)
+        db.session.commit()

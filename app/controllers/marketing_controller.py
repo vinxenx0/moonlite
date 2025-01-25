@@ -6,48 +6,44 @@ from app.models.marketing_model import MarketingMetrics
 from sqlalchemy import func
 from app import app, db
 
-@app.route('/admin/sql_marketing')
-@login_required
-def marketing_sql_dashboard():
-    """Carga las métricas de marketing desde la base de datos o las calcula si no existen."""
-    breadcrumbs = [{'url': '/admin', 'text': 'Admin'}, {'url': '/admin/marketing', 'text': 'Marketing Dashboard'}]
-
-    # Consultar métricas de marketing existentes
-    marketing_data = MarketingMetrics.query.first()
-    if not marketing_data:
-        # Si no existen datos, calcular y almacenar métricas iniciales
-        stats = calculate_marketing_metrics()
-        marketing_data = MarketingMetrics(
-            churn_rate=stats['churn_rate'],
-            clv=stats['clv'],
-            cac=stats['cac'],
-            mrr=stats['mrr'],
-            arr=stats['arr'],
-            nrr=stats['nrr'],
-            expansion_revenue_rate=stats['expansion_revenue_rate']
-        )
-        db.session.add(marketing_data)
-        db.session.commit()
-    else:
-        # Cargar métricas desde la base de datos
-        stats = {
-            'churn_rate': marketing_data.churn_rate,
-            'clv': marketing_data.clv,
-            'cac': marketing_data.cac,
-            'mrr': marketing_data.mrr,
-            'arr': marketing_data.arr,
-            'nrr': marketing_data.nrr,
-            'expansion_revenue_rate': marketing_data.expansion_revenue_rate
-        }
-
-    return render_template('admin/marketing_dashboard.html', breadcrumbs=breadcrumbs, stats=stats)
-
-
-
-
-@app.route('/admin/marketing')
+@app.route('/admin/marketing', methods=['GET'])
 @login_required
 def marketing_dashboard():
+    breadcrumbs = [{'url': '/admin', 'text': 'Admin'}, {'url': '/admin/marketing', 'text': 'Marketing Dashboard'}]
+
+    # Cálculo de métricas
+    stats = calculate_marketing_metrics()
+
+    # Guardar métricas diarias si no existe un registro para hoy
+    today = datetime.utcnow().date()
+    latest_metrics = MarketingMetrics.query.order_by(MarketingMetrics.created_at.desc()).first()
+    if not latest_metrics or latest_metrics.created_at.date() < today:
+        MarketingMetrics.save_metrics(stats)
+
+    # Obtener métricas históricas
+    metrics_history = MarketingMetrics.query.order_by(MarketingMetrics.created_at.asc()).all()
+
+    # Datos granulares
+    transactions = Transaction.query.order_by(Transaction.timestamp.desc()).all()
+    users = Users.query.order_by(Users.registered_on.desc()).all()
+    now = datetime.utcnow()
+
+    return render_template(
+        'admin/marketing_dashboard.html',
+        breadcrumbs=breadcrumbs,
+        stats=stats,
+        metrics_history=metrics_history,
+        transactions=transactions,
+        users=users,
+        now=now
+    )
+
+
+
+
+@app.route('/admin/old_marketing')
+@login_required
+def old_marketing_dashboard():
     breadcrumbs = [{'url': '/admin', 'text': 'Admin'}, {'url': '/admin/marketing', 'text': 'Marketing Dashboard'}]
 
     # Cálculo de métricas

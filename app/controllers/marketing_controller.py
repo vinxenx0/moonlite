@@ -67,7 +67,52 @@ def old_marketing_dashboard():
         timedelta=timedelta  # Pasar timedelta aquí
     )
 
+# app/controllers/marketing_controller.py
+
+from app.models.user_model import Users, Transaction
+from sqlalchemy import func
+from datetime import datetime, timedelta
+from app import db
+
 def calculate_marketing_metrics():
+    """Calcula las métricas clave para el panel de marketing."""
+    stats = {}
+    now = datetime.utcnow()
+    one_month_ago = now - timedelta(days=30)
+
+    # Total de clientes
+    total_customers = Users.query.filter(Users.active == True).count()
+
+    # Total de cancelaciones
+    churned_customers = Users.query.filter(Users.active == False).count()
+
+    # Churn Rate
+    stats['churn_rate'] = (churned_customers / total_customers * 100) if total_customers > 0 else 0
+
+    # Customer Lifetime Value (CLV)
+    avg_purchase_value = db.session.query(func.avg(Transaction.amount)).scalar() or 0
+    avg_purchase_frequency = db.session.query(func.count(Transaction.id) / total_customers).scalar() or 0
+    stats['clv'] = avg_purchase_value * avg_purchase_frequency * 12  # 12 = relación promedio en meses
+
+    # CAC
+    total_marketing_costs = 5000  # Supuesto de marketing mensual
+    new_customers = Users.query.filter(Users.registered_on >= one_month_ago).count()
+    stats['cac'] = (total_marketing_costs / new_customers) if new_customers > 0 else 0
+
+    # MRR y ARR
+    mrr = db.session.query(func.sum(Transaction.amount)).filter(Transaction.timestamp >= one_month_ago).scalar() or 0
+    stats['mrr'] = float(mrr)
+    stats['arr'] = stats['mrr'] * 12
+
+    # NRR
+    upsell_revenue = db.session.query(func.sum(Transaction.amount)).filter(Transaction.description.like('%Upgrade%')).scalar() or 0
+    stats['nrr'] = ((stats['mrr'] + float(upsell_revenue) - churned_customers) / stats['mrr'] * 100) if stats['mrr'] > 0 else 0
+
+    # Expansion Revenue Rate
+    stats['expansion_revenue_rate'] = (float(upsell_revenue) / stats['mrr'] * 100) if stats['mrr'] > 0 else 0
+
+    return stats
+
     """Calcula métricas clave de marketing y las devuelve como un diccionario."""
     stats = {}
     now = datetime.utcnow()  # Usar datetime.utcnow directamente

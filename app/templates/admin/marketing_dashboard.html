@@ -162,35 +162,38 @@
     </div>
 
     <!-- Gráficos Históricos -->
-    <h2 class="mb-4">Evolución de los KPIs</h2>
-    <div class="row g-4">
-        <!-- Evolución del Churn Rate -->
-        <div class="col-md-6">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">Evolución del Churn Rate</h5>
-                    <canvas id="churnRateHistoryChart"></canvas>
-                    <p class="text-muted mt-3">
-                        Observa cómo ha evolucionado el porcentaje de clientes que cancelan sus suscripciones.
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Evolución del MRR y ARR -->
-        <div class="col-md-6">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">Evolución de MRR y ARR</h5>
-                    <canvas id="mrrArrHistoryChart"></canvas>
-                    <p class="text-muted mt-3">
-                        Analiza los ingresos recurrentes mensuales y anuales a lo largo del tiempo.
-                    </p>
-                </div>
-            </div>
-        </div>
+    <h2 class="mt-5">Evolución de KPIs</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Churn Rate</th>
+                    <th>CLV</th>
+                    <th>CAC</th>
+                    <th>MRR</th>
+                    <th>ARR</th>
+                    <th>NRR</th>
+                    <th>Expansión</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for metric in metrics_history %}
+                <tr>
+                    <td>{{ metric.created_at }}</td>
+                    <td>{{ metric.churn_rate | round(2) }}%</td>
+                    <td>{{ metric.clv | round(2) }} USD</td>
+                    <td>{{ metric.cac | round(2) }} USD</td>
+                    <td>{{ metric.mrr | round(2) }} USD</td>
+                    <td>{{ metric.arr | round(2) }} USD</td>
+                    <td>{{ metric.nrr | round(2) }}%</td>
+                    <td>{{ metric.expansion_revenue_rate | round(2) }}%</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
-
+    
 
 
     <!-- Visualización de Datos -->

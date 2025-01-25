@@ -6,21 +6,15 @@ from app.models.marketing_model import MarketingMetrics
 from sqlalchemy import func
 from app import app, db
 
-@app.route('/admin/marketing', methods=['GET'])
+@app.route('/admin/marketing')
 @login_required
 def marketing_dashboard():
     breadcrumbs = [{'url': '/admin', 'text': 'Admin'}, {'url': '/admin/marketing', 'text': 'Marketing Dashboard'}]
 
-    # Cálculo de métricas
+    # Cálculo de métricas actuales
     stats = calculate_marketing_metrics()
 
-    # Guardar métricas diarias si no existe un registro para hoy
-    today = datetime.utcnow().date()
-    latest_metrics = MarketingMetrics.query.order_by(MarketingMetrics.created_at.desc()).first()
-    if not latest_metrics or latest_metrics.created_at.date() < today:
-        MarketingMetrics.save_metrics(stats)
-
-    # Obtener métricas históricas y convertirlas a diccionarios
+    # Historial de métricas
     metrics_history = [
         metric.to_dict() for metric in MarketingMetrics.query.order_by(MarketingMetrics.created_at.asc()).all()
     ]
@@ -34,13 +28,11 @@ def marketing_dashboard():
         'admin/marketing_dashboard.html',
         breadcrumbs=breadcrumbs,
         stats=stats,
-        metrics_history=metrics_history,  # Pasar la lista de diccionarios
         transactions=transactions,
         users=users,
-        timedelta = timedelta,
+        metrics_history=metrics_history,  # Pasar el historial al template
         now=now
     )
-
 
 
 @app.route('/admin/old_marketing')

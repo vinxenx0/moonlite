@@ -1,5 +1,5 @@
 from app import db
-from datetime import datetime, timedelta
+from datetime import datetime
 
 class MarketingMetrics(db.Model):
     __tablename__ = 'marketing_metrics'
@@ -29,6 +29,20 @@ class MarketingMetrics(db.Model):
         db.session.add(metric)
         db.session.commit()
 
+    def to_dict(self):
+        """Convierte una instancia del modelo en un diccionario."""
+        return {
+            'id': self.id,
+            'churn_rate': self.churn_rate,
+            'clv': self.clv,
+            'cac': self.cac,
+            'mrr': self.mrr,
+            'arr': self.arr,
+            'nrr': self.nrr,
+            'expansion_revenue_rate': self.expansion_revenue_rate,
+            'created_at': self.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+            'updated_at': self.updated_at.strftime('%Y-%m-%d %H:%M:%S') if self.updated_at else None
+        }
+
     def __repr__(self):
         return f'<MarketingMetrics {self.id} - {self.created_at}>'
-

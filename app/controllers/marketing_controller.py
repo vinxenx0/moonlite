@@ -1,11 +1,10 @@
+from datetime import datetime, timedelta  # Importar solo lo necesario
 from flask import render_template, redirect, url_for
 from flask_login import login_required
 from app.models.user_model import Users, Transaction
 from app.models.marketing_model import MarketingMetrics
-import datetime
 from sqlalchemy import func
 from app import app, db
-from datetime import datetime, timedelta  # Importar timedelta
 
 @app.route('/admin/sql_marketing')
 @login_required
@@ -70,14 +69,11 @@ def marketing_dashboard():
         timedelta=timedelta  # Pasar timedelta aquí
     )
 
-
-
-
 def calculate_marketing_metrics():
     """Calcula métricas clave de marketing y las devuelve como un diccionario."""
     stats = {}
-    now = datetime.datetime.utcnow()
-    one_month_ago = now - datetime.timedelta(days=30)
+    now = datetime.utcnow()  # Usar datetime.utcnow directamente
+    one_month_ago = now - timedelta(days=30)  # Usar timedelta
 
     # Número de clientes
     total_customers = Users.query.filter(Users.active == True).count()

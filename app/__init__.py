@@ -15,6 +15,25 @@ from itertools import groupby
 from operator import itemgetter
 from flask_apscheduler import APScheduler
 
+
+def record_daily_metrics():
+    """Función programada para registrar las métricas diarias."""
+    stats = marketing_controller.calculate_marketing_metrics()
+    # Guardar métricas en la base de datos
+    metric = MarketingMetrics(
+        churn_rate=stats['churn_rate'],
+        clv=stats['clv'],
+        cac=stats['cac'],
+        mrr=stats['mrr'],
+        arr=stats['arr'],
+        nrr=stats['nrr'],
+        expansion_revenue_rate=stats['expansion_revenue_rate'],
+    )
+    db.session.add(metric)
+    db.session.commit()
+    print(f"Daily metrics recorded at {datetime.utcnow()}")
+    
+
 app = Flask(__name__)
 app.config.from_pyfile('../instance/config.py')
 
@@ -975,20 +994,3 @@ def not_found(error):
 def internal_server_error(error):
     return render_template('error_pages/500.html', error=error), 500
 
-def record_daily_metrics():
-    """Función programada para registrar las métricas diarias."""
-    stats = marketing_controller.calculate_marketing_metrics()
-    # Guardar métricas en la base de datos
-    metric = MarketingMetrics(
-        churn_rate=stats['churn_rate'],
-        clv=stats['clv'],
-        cac=stats['cac'],
-        mrr=stats['mrr'],
-        arr=stats['arr'],
-        nrr=stats['nrr'],
-        expansion_revenue_rate=stats['expansion_revenue_rate'],
-    )
-    db.session.add(metric)
-    db.session.commit()
-    print(f"Daily metrics recorded at {datetime.utcnow()}")
-    

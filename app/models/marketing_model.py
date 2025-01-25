@@ -1,7 +1,6 @@
 from app import db
 from datetime import datetime, timedelta
 
-
 class MarketingMetrics(db.Model):
     __tablename__ = 'marketing_metrics'
     id = db.Column(db.Integer, primary_key=True)
@@ -15,21 +14,21 @@ class MarketingMetrics(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    def __repr__(self):
-        return f'<MarketingMetrics {self.id}>'
+    @classmethod
+    def save_metrics(cls, stats):
+        """Guarda las métricas calculadas en la base de datos."""
+        metric = cls(
+            churn_rate=stats['churn_rate'],
+            clv=stats['clv'],
+            cac=stats['cac'],
+            mrr=stats['mrr'],
+            arr=stats['arr'],
+            nrr=stats['nrr'],
+            expansion_revenue_rate=stats['expansion_revenue_rate']
+        )
+        db.session.add(metric)
+        db.session.commit()
 
-    def to_dict(self):
-        """Convierte el objeto en un diccionario serializable"""
-        return {
-            "id": self.id,
-            "churn_rate": self.churn_rate,
-            "clv": self.clv,
-            "cac": self.cac,
-            "mrr": self.mrr,
-            "arr": self.arr,
-            "nrr": self.nrr,
-            "expansion_revenue_rate": self.expansion_revenue_rate,
-            "created_at": self.created_at.isoformat(),  # Convertir datetime a string
-            "updated_at": self.updated_at.isoformat()   # Convertir datetime a string
-        }
+    def __repr__(self):
+        return f'<MarketingMetrics {self.id} - {self.created_at}>'
 

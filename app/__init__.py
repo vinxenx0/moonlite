@@ -44,6 +44,8 @@ app.config['MAIL_USERNAME'] = 'vicente@ciberpunk.es'
 app.config['MAIL_PASSWORD'] = 'rt6K_22MHj'
 app.config['SECRET_KEY'] = 'your_secret_key'
 
+app.config['SCHEDULER_API_ENABLED'] = True
+
 app.config['PREFERRED_URL_SCHEME'] = 'https'  # Forzar https
 
 db = SQLAlchemy(app)

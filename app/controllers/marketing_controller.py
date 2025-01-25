@@ -5,6 +5,7 @@ from app.models.marketing_model import MarketingMetrics
 import datetime
 from sqlalchemy import func
 from app import app, db
+from datetime import datetime, timedelta  # Importar timedelta
 
 @app.route('/admin/sql_marketing')
 @login_required
@@ -43,6 +44,8 @@ def marketing_sql_dashboard():
     return render_template('admin/marketing_dashboard.html', breadcrumbs=breadcrumbs, stats=stats)
 
 
+
+
 @app.route('/admin/marketing')
 @login_required
 def marketing_dashboard():
@@ -54,15 +57,17 @@ def marketing_dashboard():
     # Datos granulares
     transactions = Transaction.query.order_by(Transaction.timestamp.desc()).all()
     users = Users.query.order_by(Users.registered_on.desc()).all()
-    now = datetime.datetime.utcnow()
+    now = datetime.utcnow()
 
+    # Pasar timedelta al contexto
     return render_template(
         'admin/marketing_dashboard.html',
         breadcrumbs=breadcrumbs,
         stats=stats,
         transactions=transactions,
         users=users,
-        now=now
+        now=now,
+        timedelta=timedelta  # Pasar timedelta aquí
     )
 
 

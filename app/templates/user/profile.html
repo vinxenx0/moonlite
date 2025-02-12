@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}User Profile{% endblock %}
+{% block title %}Perfil de suario{% endblock %}
 
 {% block content %}
 {% include 'inc/breadcrumbs.html' %}
@@ -10,48 +10,48 @@
         <div class="col-12 mb-4">
             <div class="card shadow-sm border-0">
                 <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
-                    <h2 class="h5 mb-0"><i class="bi bi-list"></i> Main Options</h2>
+                    <h2 class="h5 mb-0"><i class="bi bi-list"></i>Opciones</h2>
                 </div>
                 <div class="card-body">
                     <div class="row row-cols-2 row-cols-md-4 g-3 text-center">
                         <div class="col">
                             <a href="{{ url_for('profile') }}" class="btn btn-outline-primary w-100">
-                                <i class="bi bi-person"></i> My Profile
+                                <i class="bi bi-person"></i> Mi Perfil
                             </a>
                         </div>
                         <div class="col">
                             <a href="{{ url_for('edit_subscription') }}" class="btn btn-outline-info w-100">
-                                <i class="bi bi-journal-text"></i> Subscription
+                                <i class="bi bi-journal-text"></i> Subscripciones
                             </a>
                         </div>
                         <div class="col">
                             <a href="{{ url_for('transaction_history') }}" class="btn btn-outline-warning w-100">
-                                <i class="bi bi-currency-exchange"></i> Renewals
+                                <i class="bi bi-currency-exchange"></i> Renovacaiones
                             </a>
                         </div>
                         <div class="col">
                             <a href="{{ url_for('configuracion') }}" class="btn btn-outline-secondary w-100">
-                                <i class="bi bi-gear"></i> Settings
+                                <i class="bi bi-gear"></i> Configuración
                             </a>
                         </div>
                         <div class="col">
                             <a href="{{ url_for('change_password') }}" class="btn btn-outline-danger w-100">
-                                <i class="bi bi-shield-lock"></i> Security
+                                <i class="bi bi-shield-lock"></i> Seguridad
                             </a>
                         </div>
                         <div class="col">
                             <a href="{{ url_for('edit_payment_methods') }}" class="btn btn-outline-success w-100">
-                                <i class="bi bi-credit-card"></i> Payment Methods
+                                <i class="bi bi-credit-card"></i> Métodos de Pago
                             </a>
                         </div>
                         <div class="col">
                             <a href="#" class="btn btn-outline-warning w-100">
-                                <i class="bi bi-headset"></i> Support
+                                <i class="bi bi-headset"></i> Ayuda
                             </a>
                         </div>
                         <div class="col">
                             <a href="{{ url_for('logout') }}" class="btn btn-outline-dark w-100">
-                                <i class="bi bi-box-arrow-right"></i> Logout
+                                <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
                             </a>
                         </div>
                     </div>
@@ -66,18 +66,18 @@
                 <div class="card shadow-sm border-0">
                     <div class="card-header bg-primary text-white text-center">
                         <i class="bi bi-person-circle" style="font-size: 3rem;"></i>
-                        <h5 class="mt-2">Personal Information</h5>
+                        <h5 class="mt-2">Informacion Personal</h5>
                     </div>
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><strong>Username:</strong> {{ user.username }}</li>
+                            <li class="list-group-item"><strong>Usuario:</strong> {{ user.username }}</li>
                             <li class="list-group-item"><strong>Email:</strong> {{ user.email }}</li>
-                            <li class="list-group-item"><strong>Role:</strong> {{ user.role }}</li>
-                            <li class="list-group-item"><strong>Registered On:</strong> {{ user.registered_on.strftime('%Y-%m-%d') }}</li>
+                            <li class="list-group-item"><strong>Rol:</strong> {{ user.role }}</li>
+                            <li class="list-group-item"><strong>Registrado en:</strong> {{ user.registered_on.strftime('%Y-%m-%d') }}</li>
                             <li class="list-group-item">
-                                <strong>Active:</strong>
+                                <strong>Activo:</strong>
                                 {% if user.active %}
-                                <span class="badge bg-success">Yes</span>
+                                <span class="badge bg-success">Si</span>
                                 {% else %}
                                 <span class="badge bg-danger">No</span>
                                 {% endif %}
@@ -92,21 +92,21 @@
                 <div class="card shadow-sm border-0">
                     <div class="card-header bg-info text-white text-center">
                         <i class="bi bi-journal-text" style="font-size: 3rem;"></i>
-                        <h5 class="mt-2">Subscription</h5>
+                        <h5 class="mt-2">Subscripcion</h5>
                     </div>
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item"><strong>Plan:</strong> {{ user.subscription_plan }}</li>
-                            <li class="list-group-item"><strong>Currency:</strong> {{ user.subscription_currency }}</li>
-                            <li class="list-group-item"><strong>Frequency:</strong> {{ user.subscription_frequency }}</li>
+                            <li class="list-group-item"><strong>Moneda:</strong> {{ user.subscription_currency }}</li>
+                            <li class="list-group-item"><strong>Renovación:</strong> {{ user.subscription_frequency }}</li>
                             <li class="list-group-item">
-                                <strong>Expires On:</strong>
+                                <strong>Caduca el:</strong>
                                 {% if user.subscription_expiration %}
                                 {{ user.subscription_expiration.strftime('%Y-%m-%d') }}
                                 {% if user.is_subscription_active() %}
-                                <span class="badge bg-success">Active</span>
+                                <span class="badge bg-success">Activp</span>
                                 {% else %}
-                                <span class="badge bg-danger">Expired</span>
+                                <span class="badge bg-danger">Caducado</span>
                                 {% endif %}
                                 {% else %}
                                 No subscription
@@ -115,7 +115,7 @@
                         </ul>
                         <div class="mt-3 text-center">
                             <a href="{{ url_for('edit_subscription') }}" class="btn btn-info text-white">
-                                <i class="bi bi-pencil-square"></i> Edit Subscription
+                                <i class="bi bi-pencil-square"></i> Editar Subscripcion
                             </a>
                         </div>
                     </div>
@@ -127,16 +127,16 @@
                 <div class="card shadow-sm border-0">
                     <div class="card-header bg-secondary text-white text-center">
                         <i class="bi bi-credit-card" style="font-size: 3rem;"></i>
-                        <h5 class="mt-2">Payment Methods</h5>
+                        <h5 class="mt-2">Metodos de Pago</h5>
                     </div>
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><strong>Primary:</strong> {{ user.primary_payment.method if user.primary_payment else 'Not defined' }}</li>
-                            <li class="list-group-item"><strong>Secondary:</strong> {{ user.secondary_payment.method if user.secondary_payment else 'Not defined' }}</li>
+                            <li class="list-group-item"><strong>Primario:</strong> {{ user.primary_payment.method if user.primary_payment else 'Not defined' }}</li>
+                            <li class="list-group-item"><strong>Secundario:</strong> {{ user.secondary_payment.method if user.secondary_payment else 'Not defined' }}</li>
                         </ul>
                         <div class="mt-3 text-center">
                             <a href="#" class="btn btn-secondary text-white">
-                                <i class="bi bi-wallet2"></i> Manage Methods
+                                <i class="bi bi-wallet2"></i> Gestionar Metodos
                             </a>
                         </div>
                     </div>

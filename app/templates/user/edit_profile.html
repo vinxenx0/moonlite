@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Edit Profile{% endblock %}
+{% block title %}Editar Perfil{% endblock %}
 
 {% block content %}
 {% include 'inc/breadcrumbs.html' %}
@@ -37,7 +37,7 @@
         <div class="col-md-8 col-lg-6">
             <div class="card shadow-sm border-0">
                 <div class="card-header bg-primary text-white text-center py-4">
-                    <h2 class="h4"><i class="bi bi-person-circle"></i> Edit Profile</h2>
+                    <h2 class="h4"><i class="bi bi-person-circle"></i> Editar Perfil</h2>
                 </div>
                 <div class="card-body">
                     <form method="POST" novalidate>
@@ -46,7 +46,7 @@
                         <!-- Username -->
                         <div class="mb-3">
                             <label for="username" class="form-label">
-                                <i class="bi bi-person"></i> Username
+                                <i class="bi bi-person"></i> Usuario
                             </label>
                             {{ form.username(class="form-control", id="username", readonly=not can_edit) }}
                         </div>
@@ -62,7 +62,7 @@
                         <!-- Password -->
                         <div class="mb-3">
                             <label for="password" class="form-label">
-                                <i class="bi bi-lock"></i> Password
+                                <i class="bi bi-lock"></i> Contraseña
                             </label>
                             {{ form.password(class="form-control", id="password", readonly=not can_edit, placeholder="Enter new password") }}
                         </div>
@@ -70,7 +70,7 @@
                         <!-- Confirm Password -->
                         <div class="mb-3">
                             <label for="confirm_password" class="form-label">
-                                <i class="bi bi-lock-fill"></i> Confirm Password
+                                <i class="bi bi-lock-fill"></i> Confirmar contraseña
                             </label>
                             {{ form.confirm_password(class="form-control", id="confirm_password", readonly=not can_edit, placeholder="Re-enter new password") }}
                         </div>
@@ -79,7 +79,7 @@
                         <!-- Role -->
                         <div class="mb-3">
                             <label for="role" class="form-label">
-                                <i class="bi bi-briefcase"></i> Role
+                                <i class="bi bi-briefcase"></i> Rol
                             </label>
                             {{ form.role(class="form-control", id="role") }}
                         </div>
@@ -88,7 +88,7 @@
                         <div class="form-check mb-3">
                             <input type="checkbox" class="form-check-input" id="active" name="active" {% if form.active.data %}checked{% endif %}>
                             <label class="form-check-label" for="active">
-                                <i class="bi bi-check-circle"></i> Active
+                                <i class="bi bi-check-circle"></i> Activo
                             </label>
                         </div>
                         {% endif %}
@@ -96,13 +96,13 @@
                         <!-- Submit Button -->
                         <div class="d-grid">
                             <button type="submit" class="btn btn-primary">
-                                <i class="bi bi-save"></i> Save Changes
+                                <i class="bi bi-save"></i> Grabar Cambios
                             </button>
                         </div>
                     </form>
                 </div>
                 <div class="card-footer text-muted text-center small">
-                    <i class="bi bi-info-circle"></i> Fields marked with <i class="bi bi-lock"></i> are readonly.
+                    <i class="bi bi-info-circle"></i> Los campos con <i class="bi bi-lock"></i> no se pueden modificar.
                 </div>
                 
             </div>

@@ -16,22 +16,31 @@ from operator import itemgetter
 from flask_apscheduler import APScheduler
 
 
+
 def record_daily_metrics():
     """Función programada para registrar las métricas diarias."""
-    stats = marketing_controller.calculate_marketing_metrics()
-    # Guardar métricas en la base de datos
-    metric = MarketingMetrics(
-        churn_rate=stats['churn_rate'],
-        clv=stats['clv'],
-        cac=stats['cac'],
-        mrr=stats['mrr'],
-        arr=stats['arr'],
-        nrr=stats['nrr'],
-        expansion_revenue_rate=stats['expansion_revenue_rate'],
-    )
-    db.session.add(metric)
-    db.session.commit()
-    print(f"Daily metrics recorded at {datetime.utcnow()}")
+    from app.controllers import marketing_controller  # Importar dentro de la función para evitar dependencias circulares
+    from app.models import MarketingMetrics, db
+    from datetime import datetime
+
+    with app.app_context():  # Esto asegura que la función tenga acceso al contexto de Flask
+        stats = marketing_controller.calculate_marketing_metrics()
+
+        # Guardar métricas en la base de datos
+        metric = MarketingMetrics(
+            churn_rate=stats['churn_rate'],
+            clv=stats['clv'],
+            cac=stats['cac'],
+            mrr=stats['mrr'],
+            arr=stats['arr'],
+            nrr=stats['nrr'],
+            expansion_revenue_rate=stats['expansion_revenue_rate'],
+            created_at=datetime.utcnow()
+        )
+        db.session.add(metric)
+        db.session.commit()
+
+        print(f"✅ Daily metrics recorded at {datetime.utcnow()}")
     
 
 app = Flask(__name__)

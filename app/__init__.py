@@ -13,6 +13,35 @@ from logging.handlers import RotatingFileHandler
 #from mailhog import Mailhog
 from itertools import groupby
 from operator import itemgetter
+from flask_apscheduler import APScheduler
+
+
+
+def record_daily_metrics():
+    """Función programada para registrar las métricas diarias."""
+    from app.controllers import marketing_controller  # Importar dentro de la función para evitar dependencias circulares
+    from app.models import MarketingMetrics, db
+    from datetime import datetime
+
+    with app.app_context():  # Esto asegura que la función tenga acceso al contexto de Flask
+        stats = marketing_controller.calculate_marketing_metrics()
+
+        # Guardar métricas en la base de datos
+        metric = MarketingMetrics(
+            churn_rate=stats['churn_rate'],
+            clv=stats['clv'],
+            cac=stats['cac'],
+            mrr=stats['mrr'],
+            arr=stats['arr'],
+            nrr=stats['nrr'],
+            expansion_revenue_rate=stats['expansion_revenue_rate'],
+            created_at=datetime.utcnow()
+        )
+        db.session.add(metric)
+        db.session.commit()
+
+        print(f"✅ Daily metrics recorded at {datetime.utcnow()}")
+    
 
 app = Flask(__name__)
 app.config.from_pyfile('../instance/config.py')
@@ -24,6 +53,8 @@ app.config['MAIL_USERNAME'] = 'vicente@ciberpunk.es'
 app.config['MAIL_PASSWORD'] = 'rt6K_22MHj'
 app.config['SECRET_KEY'] = 'your_secret_key'
 
+app.config['SCHEDULER_API_ENABLED'] = True
+
 app.config['PREFERRED_URL_SCHEME'] = 'https'  # Forzar https
 
 db = SQLAlchemy(app)
@@ -31,6 +62,22 @@ migrate = Migrate(app, db)
 mail = Mail(app)
 csrf = CSRFProtect(app)
 #mailhog = Mailhog()
+
+
+scheduler = APScheduler()
+
+# Inicia y configura el scheduler
+scheduler.init_app(app)
+scheduler.start()
+
+# Registra la tarea programada
+scheduler.add_job(
+        id='daily_metrics_job',
+        func=record_daily_metrics,
+        trigger='cron',
+        hour=0,  # Ejecuta a medianoche
+        minute=0
+)
 
 tools = [
     # Domains & Email
@@ -957,3 +1004,4 @@ def not_found(error):
 @app.errorhandler(500)
 def internal_server_error(error):
     return render_template('error_pages/500.html', error=error), 500
+

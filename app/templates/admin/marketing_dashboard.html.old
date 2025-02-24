@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="text-center mb-4">Panel de Marketing</h1>
+
+    <!-- Breadcrumbs -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            {% for breadcrumb in breadcrumbs %}
+            <li class="breadcrumb-item">
+                <a href="{{ breadcrumb.url }}">{{ breadcrumb.text }}</a>
+            </li>
+            {% endfor %}
+        </ol>
+    </nav>
+
+    <!-- KPIs en Cards -->
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="card border-danger shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-danger">Churn Rate</h5>
+                    <p class="card-text display-5">{{ stats['churn_rate'] | round(2) }}%</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-success shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-success">Customer Lifetime Value (CLV)</h5>
+                    <p class="card-text display-5">{{ stats['clv'] | round(2) }} USD</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-warning shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-warning">CAC</h5>
+                    <p class="card-text display-5">{{ stats['cac'] | round(2) }} USD</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gráficos -->
+    <div class="row g-4">
+        <!-- Gráfico de Churn Rate -->
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Churn Rate</h5>
+                    <canvas id="churnRateChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gráfico de MRR y ARR -->
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">MRR vs ARR</h5>
+                    <canvas id="mrrArrChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mt-4">
+        <!-- Gráfico de NRR -->
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Net Revenue Retention (NRR)</h5>
+                    <canvas id="nrrChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gráfico de Expansion Revenue Rate -->
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Expansion Revenue Rate</h5>
+                    <canvas id="expansionRateChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts para Chart.js -->
+<script>
+    // Gráfico de Churn Rate
+    const churnRateCtx = document.getElementById('churnRateChart').getContext('2d');
+    new Chart(churnRateCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Clientes Activos', 'Clientes Perdidos'],
+            datasets: [{
+                label: 'Churn Rate',
+                data: [
+                    {{ stats['churn_rate'] | round(2) }},
+                    100 - {{ stats['churn_rate'] | round(2) }}
+                ],
+                backgroundColor: ['#28a745', '#dc3545'],
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            responsive: true,
+        }
+    });
+
+    // Gráfico de MRR y ARR
+    const mrrArrCtx = document.getElementById('mrrArrChart').getContext('2d');
+    new Chart(mrrArrCtx, {
+        type: 'bar',
+        data: {
+            labels: ['MRR', 'ARR'],
+            datasets: [{
+                label: 'Ingresos',
+                data: [{{ stats['mrr'] | round(2) }}, {{ stats['arr'] | round(2) }}],
+                backgroundColor: ['#007bff', '#6610f2']
+            }]
+        },
+        options: {
+            responsive: true,
+        }
+    });
+
+    // Gráfico de NRR
+    const nrrCtx = document.getElementById('nrrChart').getContext('2d');
+    new Chart(nrrCtx, {
+        type: 'pie',
+        data: {
+            labels: ['Retención Net Revenue', 'Pérdida'],
+            datasets: [{
+                data: [
+                    {{ stats['nrr'] | round(2) }},
+                    100 - {{ stats['nrr'] | round(2) }}
+                ],
+                backgroundColor: ['#17a2b8', '#dc3545']
+            }]
+        },
+        options: {
+            responsive: true,
+        }
+    });
+
+    // Gráfico de Expansion Revenue Rate
+    const expansionCtx = document.getElementById('expansionRateChart').getContext('2d');
+    new Chart(expansionCtx, {
+        type: 'line',
+        data: {
+            labels: ['Ingresos Totales', 'Ingresos de Expansión'],
+            datasets: [{
+                label: 'Expansion Revenue',
+                data: [100, {{ stats['expansion_revenue_rate'] | round(2) }}],
+                backgroundColor: '#ffc107',
+                borderColor: '#ffc107',
+                fill: false
+            }]
+        },
+        options: {
+            responsive: true,
+        }
+    });
+</script>
+{% endblock %}

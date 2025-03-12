@@ -33,7 +33,7 @@
 
     <!-- Tools by Category -->
     <section id="categories" class="mt-5">
-        <h2 class="text-center mb-4">Tool Categories</h2>
+        <h2 class="text-center mb-4">Toolkits</h2>
         <div class="row g-4">
             {% for category, subcategories in grouped_tools.items() %}
             <div class="col-lg-6 col-md-6 col-sm-12">
@@ -59,14 +59,18 @@
        <!-- CTA Section -->
        <section class="cta-section mt-5">
         <div class="container">
-            <h2 class="mb-4">Start Your Free Trial Now!</h2>
-            <p class="lead">Access all tools with a 7-day trial and discover the impact on your digital presence.</p>
-            <a href="#pricing" class="btn btn-light btn-lg">Start Free Trial</a>
+            <h2 class="mb-4">Optimiza tu proyecto con nuestras guias!</h2>
+            <p class="lead">Accede a manuales, videos y podcast para exprimir tu cuenta.</p>
+            <a href="#pricing" class="btn btn-light btn-lg">Consultar ahora!</a>
         </div>
     </section>
 
 
+    {% include "inc/suscriptions.html" %}
+
+
     {% include "user/dashboard.html" %}
+
 
     {% include "tools/most-used.html" %}
 
@@ -86,7 +90,7 @@
 
     <!-- Most Used Tools Section -->
     <section id="most-used-tools" class="mt-5">
-        <h2 class="text-center mb-4">Most Used Tools</h2>
+        <h2 class="text-center mb-4">Herramientas mas usadas</h2>
         <div class="row g-4">
             {% for tool in tools if tool.most_used %}
             <div class="col-lg-3 col-md-4 col-sm-6">
@@ -105,20 +109,21 @@
         </div>
     </section>
 
-    <!-- CTA Section -->
+    <!-- CTA Section 
     <section class="cta-section mb-5 mt-5">
         <div class="container">
             <h2 class="mb-4">Start Your Free Trial Now!</h2>
             <p class="lead">Access all tools with a 7-day trial and discover the impact on your digital presence.</p>
             <a href="#pricing" class="btn btn-light btn-lg">Start Free Trial</a>
         </div>
-    </section>
+    </section> -->
+
+    <!-- New Tools Section -->
+<!--{% include "tools/new-tools.html" %}-->
 
     <!--{% include "inc/featurettes.html" %}-->
 
 
-
-    {% include "inc/suscriptions.html" %}
 
 </div>
 <script>

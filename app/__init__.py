@@ -883,6 +883,7 @@ if not os.path.exists(database_path):
 # Crear la primera instancia de usuario si no existe
 with app.app_context():
     db.create_all()
+
     if not Users.query.first():
         new_user = Users(username='user',
                          email='user@user.com',

@@ -7,8 +7,8 @@
 <div class="container my-5">
     <!-- Hero Section -->
     <div class="hero-section text-center py-5">
-        <h1 class="text-white">Boost Your Rankings with SEO Tools</h1>
-        <p class="lead text-white-50">Analyze, optimize, and dominate search engine rankings with powerful SEO tools.</p>
+        <h1 class="text-white">Mejore su posicionamiento con herramientas SEO</h1>
+        <p class="lead text-white-50">Analice, optimice y domine las clasificaciones de los motores de búsqueda con potentes herramientas de SEO.</p>
         <a href="#tools-section" class="btn btn-lg btn-light mt-3">
             <i class="fas fa-chart-line"></i> Explore Tools
         </a>
@@ -17,7 +17,7 @@
 <!-- Subcategories with Statistics -->
 <section id="seo-subcategories" class="mt-5">
     <div class="container">
-        <h2 class="text-center mb-4">SEO Subcategories</h2>
+        <h2 class="text-center mb-4">SEO carpetas</h2>
         <div class="row g-4">
             {% set subcategories = {} %}
             {% for tool in tools if tool.category == "SEO" %}
@@ -44,7 +44,7 @@
                             <strong>{{ stats.new_tools }}</strong> newly added tools
                         </p>
                         <a href="/categories/seo/{{ subcategory|replace(' ', '-') }}" class="btn btn-primary btn-sm">
-                            View Tools <i class="fas fa-arrow-right"></i>
+                            Ver herramientas <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
     <!-- New or Updated Tools Section -->
     <section id="new-tools" class="mt-5">
         <div class="container">
-            <h2 class="text-center mb-4">New or Updated SEO Tools</h2>
+            <h2 class="text-center mb-4">Herramientas actualizadas</h2>
             <div class="row g-4">
                 {% for tool in tools if tool.category == "SEO" and tool.is_new %}
                 <div class="col-lg-3 col-md-4 col-sm-6">
@@ -81,7 +81,7 @@
     <!-- Most Used Tools Section -->
     <section id="most-used-tools" class="mt-5">
         <div class="container">
-            <h2 class="text-center mb-4">Most Used SEO Tools</h2>
+            <h2 class="text-center mb-4">Mas usadas</h2>
             <div class="row g-4">
                 {% for tool in tools if tool.category == "SEO" and tool.most_used %}
                 <div class="col-lg-3 col-md-4 col-sm-6">
@@ -91,7 +91,7 @@
                             <h5 class="card-title">{{ tool.name }}</h5>
                             <p class="card-text">{{ tool.description }}</p>
                             <a href="{{ tool.link }}" class="btn btn-primary btn-sm">
-                                Use Tool <i class="fas fa-arrow-right"></i>
+                                Usar <i class="fas fa-arrow-right"></i>
                             </a>
                         </div>
                     </div>
@@ -141,8 +141,8 @@
     <!-- CTA Section -->
     <section class="cta-section mt-5">
         <div class="container text-center">
-            <h2 class="mb-3">Optimize Your Website with SEO Tools!</h2>
-            <p class="lead">Take control of your SEO strategy and maximize your visibility.</p>
+            <h2 class="mb-3">¡Optimice su sitio web con herramientas SEO!</h2>
+            <p class="lead">Toma el control de tu estrategia SEO y maximiza tu visibilidad.</p>
             <a href="/signup" class="btn btn-lg btn-light">
                 <i class="fas fa-user-plus"></i> Sign Up for Free
             </a>

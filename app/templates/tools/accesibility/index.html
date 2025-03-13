@@ -11,9 +11,9 @@
     <!-- Hero Section -->
     <div class="hero-section text-center py-5">
         <h1 class="text-white">Accessibility & Usability</h1>
-        <p class="lead text-white-50">Streamline your workflows with powerful tools for domain analysis, email authentication, and DNS management.</p>
+        <p class="lead text-white-50">Optimice sus flujos de trabajo con potentes herramientas para el análisis de dominios, la autenticación de correo electrónico y la gestión de DNS.</p>
         <a href="#tools-section" class="btn btn-lg btn-light mt-3">
-            <i class="fas fa-envelope"></i> Explore Tools
+            <i class="fas fa-envelope"></i> Explorar herramientas
         </a>
     </div>
 
@@ -22,7 +22,7 @@
     <!-- Subcategories with Statistics -->
 <section id="seo-subcategories" class="mt-5">
     <div class="container">
-        <h2 class="text-center mb-4">Accessibility & Usability Subcategories</h2>
+        <h2 class="text-center mb-4">Subcategorías de Accesibilidad y Usabilidad</h2>
         <div class="row g-4">
             {% set subcategories = {} %}
             {% for tool in tools if tool.category == "Accessibility & Usability" %}
@@ -63,7 +63,7 @@
     <!-- New or Updated Tools Section -->
     <section id="new-tools" class="mt-5">
         <div class="container">
-            <h2 class="text-center mb-4">New or Updated Accessibility & Usability Tools</h2>
+            <h2 class="text-center mb-4">Herramientas de accesibilidad y usabilidad nuevas o actualizadas</h2>
             <div class="row g-4">
                 {% for tool in tools if tool.category == "Accessibility & Usability" and tool.is_new %}
                 <div class="col-lg-3 col-md-4 col-sm-6">
@@ -73,7 +73,7 @@
                             <h5 class="card-title">{{ tool.name }}</h5>
                             <p class="card-text">{{ tool.description }}</p>
                             <a href="{{ tool.link }}" class="btn btn-success btn-sm">
-                                Try Now <i class="fas fa-arrow-right"></i>
+                                Prueba Ahora <i class="fas fa-arrow-right"></i>
                             </a>
                         </div>
                     </div>
@@ -86,7 +86,7 @@
     <!-- Most Used Tools Section -->
     <section id="most-used-tools" class="mt-5">
         <div class="container">
-            <h2 class="text-center mb-4">Most Used Accessibility & Usability Tools</h2>
+            <h2 class="text-center mb-4">Herramientas de accesibilidad y usabilidad más utilizadas</h2>
             <div class="row g-4">
                 {% for tool in tools if tool.category == "Accessibility & Usability" and tool.most_used %}
                 <div class="col-lg-3 col-md-4 col-sm-6">
@@ -109,7 +109,7 @@
         <!-- Tools under each Subcategory -->
 <section id="subcategory-tools" class="mt-5">
     <div class="container">
-        <h2 class="text-center mb-4">Accessibility & Usability Tools by Subcategory</h2>
+        <h2 class="text-center mb-4">Herramientas de accesibilidad y usabilidad por subcategoría</h2>
         {% set tools_by_subcategory = {} %}
         {% for tool in tools if tool.category == "SEO" %}
             {% if tool.subcategory not in tools_by_subcategory %}
@@ -130,7 +130,7 @@
                             <h5 class="card-title">{{ tool.name }}</h5>
                             <p class="card-text">{{ tool.description }}</p>
                             <a href="{{ tool.link }}" class="btn btn-info btn-sm">
-                                Use Tool <i class="fas fa-arrow-right"></i>
+                                Usar <i class="fas fa-arrow-right"></i>
                             </a>
                         </div>
                     </div>
@@ -146,10 +146,10 @@
     <!-- CTA Section -->
     <section class="cta-section mt-5">
         <div class="container text-center">
-            <h2 class="mb-3">Get Started Today!</h2>
-            <p class="lead">Access all tools to optimize your digital presence.</p>
+            <h2 class="mb-3">¡Empiece hoy mismo!</h2>
+            <p class="lead">Accede a todas las herramientas para optimizar tu presencia digital.</p>
             <a href="/signup" class="btn btn-lg btn-light">
-                <i class="fas fa-user-plus"></i> Sign Up for Free
+                <i class="fas fa-user-plus"></i> Prueba Gratis
             </a>
         </div>
     </section>

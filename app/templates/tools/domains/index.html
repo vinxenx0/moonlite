@@ -7,11 +7,10 @@
 <div class="container my-5">
     <!-- Hero Section -->
     <div class="hero-section text-center py-5">
-        <h1 class="text-white">Optimize Your Domain & Email Management</h1>
-        <p class="lead text-white-50">Power up your workflows with tools for domain analysis, email authentication, and
-            DNS management.</p>
+        <h1 class="text-white">Optimice la gestión de su dominio y correo electrónico</h1>
+        <p class="lead text-white-50">Optimice sus flujos de trabajo con herramientas para el análisis de dominios, la autenticación de correo electrónico y la gestión de DNS.</p>
         <a href="#tools-section" class="btn btn-lg btn-light mt-3">
-            <i class="fas fa-envelope"></i> Explore Tools
+            <i class="fas fa-envelope"></i> Explorar Herramientas
         </a>
     </div>
 
@@ -19,7 +18,7 @@
     <!-- Subcategories with Statistics -->
     <section id="seo-subcategories" class="mt-5">
         <div class="container">
-            <h2 class="text-center mb-4">Domains & Email Subcategories</h2>
+            <h2 class="text-center mb-4">Dominios y subcategorías de correo electrónico</h2>
             <div class="row g-4">
                 {% set subcategories = {} %}
                 {% for tool in tools if tool.category == "Domains & Email" %}
@@ -64,7 +63,7 @@
     <!-- New or Updated Tools Section -->
     <section id="new-tools" class="mt-5">
         <div class="container">
-            <h2 class="text-center mb-4">New or Updated Tools</h2>
+            <h2 class="text-center mb-4">Herramientas nuevas o actualizadas</h2>
             <div class="row g-4">
                 {% for tool in tools if tool.category == "Domains & Email" and tool.is_new %}
                 <div class="col-lg-3 col-md-4 col-sm-6">
@@ -74,7 +73,7 @@
                             <h5 class="card-title">{{ tool.name }}</h5>
                             <p class="card-text">{{ tool.description }}</p>
                             <a href="{{ tool.link }}" class="btn btn-success btn-sm">
-                                Try Now <i class="fas fa-arrow-right"></i>
+                                Probar! <i class="fas fa-arrow-right"></i>
                             </a>
                         </div>
                     </div>
@@ -88,7 +87,7 @@
     <!-- Most Used Tools Section -->
     <section id="most-used-tools" class="mt-5">
         <div class="container">
-            <h2 class="text-center mb-4">Most Used Tools</h2>
+            <h2 class="text-center mb-4">Más populares</h2>
             <div class="row g-4">
                 {% for tool in tools if tool.category == "Domains & Email" and tool.most_used %}
                 <div class="col-lg-3 col-md-4 col-sm-6">
@@ -98,7 +97,7 @@
                             <h5 class="card-title">{{ tool.name }}</h5>
                             <p class="card-text">{{ tool.description }}</p>
                             <a href="{{ tool.link }}" class="btn btn-primary btn-sm">
-                                Use Tool <i class="fas fa-arrow-right"></i>
+                                Usar <i class="fas fa-arrow-right"></i>
                             </a>
                         </div>
                     </div>
@@ -112,7 +111,7 @@
     <!-- Tools under each Subcategory -->
     <section id="subcategory-tools" class="mt-5">
         <div class="container">
-            <h2 class="text-center mb-4">Tools by Subcategory</h2>
+            <h2 class="text-center mb-4">Subcategorias</h2>
             {% set tools_by_subcategory = {} %}
             {% for tool in tools if tool.category == "Domains & Email" %}
             {% if tool.subcategory not in tools_by_subcategory %}
@@ -148,11 +147,11 @@
     <!-- CTA Section -->
     <section class="cta-section mt-5">
         <div class="container text-center">
-            <h2 class="mb-3">Get Started with Domains & Email Tools!</h2>
-            <p class="lead">Unlock the full potential of your domains and email management with these powerful tools.
+            <h2 class="mb-3">¡Empiece a utilizar dominios y herramientas de correo electrónico!</h2>
+            <p class="lead">Libere todo el potencial de sus dominios y gestión de correo electrónico con estas potentes herramientas.
             </p>
             <a href="/signup" class="btn btn-lg btn-light">
-                <i class="fas fa-user-plus"></i> Sign Up for Free
+                <i class="fas fa-user-plus"></i> Regístrate Gratis
             </a>
         </div>
     </section>
@@ -160,7 +159,7 @@
     <!-- All Tools Section -->
     <section id="tools-section" class="mt-5">
         <div class="container">
-            <h2 class="text-center mb-4">All Tools in Domains & Email</h2>
+            <h2 class="text-center mb-4">Todas las herramientas en Dominios y correo electrónico</h2>
             <div class="row g-4">
                 {% for tool in tools if tool.category == "Domains & Email" %}
                 <div class="col-lg-3 col-md-4 col-sm-6">

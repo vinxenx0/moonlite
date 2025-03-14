@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="container my-5">
-    <h1 class="text-center mb-4">Panel de Marketing</h1>
+    <h1 class="text-center mb-4">Sistema de información de Marketing para SaaS</h1>
 
     <!-- Breadcrumbs -->
     <nav aria-label="breadcrumb">
@@ -15,42 +15,201 @@
         </ol>
     </nav>
 
-    <!-- KPIs en Cards -->
+    <!-- Recomendaciones -->
+    <h2 class="mb-4">Acciones Recomendadas</h2>
+    <div class="card shadow-sm mb-5">
+        <div class="card-body">
+            {% if stats['churn_rate'] > 5 %}
+            <p class="text-danger">
+                <strong>Alerta:</strong> La tasa de cancelación (Churn Rate) es alta. Considera mejorar el proceso de
+                <em>onboarding</em>, implementar un programa de lealtad o realizar encuestas de satisfacción para
+                reducir el riesgo de cancelación.
+            </p>
+            {% endif %}
+            {% if stats['clv'] < stats['cac'] %} <p class="text-warning">
+                <strong>Alerta:</strong> El Customer Lifetime Value (CLV) es menor que el Coste de Adquisición (CAC).
+                Esto significa que estás gastando más en adquirir clientes de lo que ellos generan. Enfócate en
+                estrategias de upselling o cross-selling.
+                </p>
+                {% endif %}
+                <p class="text-success">
+                    <strong>Tip:</strong> Aprovecha el crecimiento de tus métricas recurrentes como el MRR y ARR para
+                    evaluar oportunidades de expansión en nuevos mercados o lanzar campañas de marketing específicas.
+                </p>
+        </div>
+    </div>
+
+    <!-- KPIs en Cards con Descripciones -->
     <div class="row g-4 mb-5">
+        <!-- Churn Rate -->
         <div class="col-md-4">
-            <div class="card border-danger shadow-sm">
+            <div class="card shadow-sm border-danger">
                 <div class="card-body">
                     <h5 class="card-title text-danger">Churn Rate</h5>
                     <p class="card-text display-5">{{ stats['churn_rate'] | round(2) }}%</p>
+                    <p class="text-muted">
+                        El porcentaje de clientes que cancelan sus suscripciones. Tasa ideal: <strong>Menor al
+                            5%</strong>.
+                    </p>
                 </div>
             </div>
         </div>
+
+        <!-- CLV -->
         <div class="col-md-4">
-            <div class="card border-success shadow-sm">
+            <div class="card shadow-sm border-success">
                 <div class="card-body">
                     <h5 class="card-title text-success">Customer Lifetime Value (CLV)</h5>
-                    <p class="card-text display-5">{{ stats['clv'] | round(2) }} USD</p>
+                    <p class="card-text display-5">{{ stats['clv'] | round(2) }}€</p>
+                    <p class="text-muted">
+                        Representa el ingreso total generado por un cliente durante su tiempo como suscriptor.
+                    </p>
                 </div>
             </div>
         </div>
+
+        <!-- CAC -->
         <div class="col-md-4">
-            <div class="card border-warning shadow-sm">
+            <div class="card shadow-sm border-warning">
                 <div class="card-body">
-                    <h5 class="card-title text-warning">CAC</h5>
-                    <p class="card-text display-5">{{ stats['cac'] | round(2) }} USD</p>
+                    <h5 class="card-title text-warning">Coste de Adquisición de Clientes (CAC)</h5>
+                    <p class="card-text display-5">{{ stats['cac'] | round(2) }} €</p>
+                    <p class="text-muted">
+                        El coste promedio de adquirir un nuevo cliente. Mantén un CAC menor que el CLV.
+                    </p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Gráficos -->
+    <!-- Datos Granulares -->
+    <h2 class="mb-4">Datos Granulares</h2>
+    <div class="row g-4">
+        <!-- Transacciones -->
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Historial de Transacciones</h5>
+                    <table id="transactionsTable" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Usuario</th>
+                                <th>Monto</th>
+                                <th>Tipo</th>
+                                <th>Descripción</th>
+                                <th>Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for transaction in transactions %}
+                            <tr {% if 'Free' in transaction.description %} class="table-warning" {% elif 'Upgrade' in
+                                transaction.description %} class="table-success" {% endif %}>
+                                <td>{{ transaction.id }}</td>
+                                <td>{{ transaction.user.username }}</td>
+                                <td>{{ transaction.amount }}</td>
+                                <td>{{ transaction.transaction_type }}</td>
+                                <td>{{ transaction.description }}</td>
+                                <td>{{ transaction.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Altas y Bajas de Usuarios -->
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Altas y Bajas de Usuarios</h5>
+                    <table id="usersTable" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Email</th>
+                                <th>Plan</th>
+                                <th>Activo</th>
+                                <th>Registrado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users %}
+                            <tr {% if user.active and user.registered_on>= now - timedelta(days=7) %}
+                                class="table-success"
+                                {% elif not user.active %}
+                                class="table-danger"
+                                {% endif %}
+                                >
+                                <td>{{ user.id }}</td>
+                                <td>{{ user.username }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.subscription_plan }}</td>
+                                <td>{{ 'Sí' if user.active else 'No' }}</td>
+                                <td>{{ user.registered_on.strftime('%Y-%m-%d') }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gráficos Históricos -->
+    <h2 class="mt-5">Evolución de KPIs</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Churn Rate</th>
+                    <th>CLV</th>
+                    <th>CAC</th>
+                    <th>MRR</th>
+                    <th>ARR</th>
+                    <th>NRR</th>
+                    <th>Expansión</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for metric in metrics_history %}
+                <tr>
+                    <td>{{ metric.created_at }}</td>
+                    <td>{{ metric.churn_rate | round(2) }}%</td>
+                    <td>{{ metric.clv | round(2) }} €</td>
+                    <td>{{ metric.cac | round(2) }} €</td>
+                    <td>{{ metric.mrr | round(2) }} €</td>
+                    <td>{{ metric.arr | round(2) }} €</td>
+                    <td>{{ metric.nrr | round(2) }}%</td>
+                    <td>{{ metric.expansion_revenue_rate | round(2) }}%</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+
+    <!-- Visualización de Datos -->
+    <h2 class="mb-4">Visualización de Datos</h2>
     <div class="row g-4">
         <!-- Gráfico de Churn Rate -->
         <div class="col-md-6">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title">Churn Rate</h5>
+                    <h5 class="card-title">Distribución del Churn Rate</h5>
                     <canvas id="churnRateChart"></canvas>
+                    <p class="text-muted mt-3">
+                        Este gráfico muestra el porcentaje de clientes que permanecen activos frente a los que han
+                        cancelado su suscripción.
+                        Un churn alto puede significar problemas de retención.
+                    </p>
                 </div>
             </div>
         </div>
@@ -59,8 +218,12 @@
         <div class="col-md-6">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title">MRR vs ARR</h5>
+                    <h5 class="card-title">Ingresos Recurrentes (MRR vs ARR)</h5>
                     <canvas id="mrrArrChart"></canvas>
+                    <p class="text-muted mt-3">
+                        Compara los ingresos mensuales (MRR) con los anuales (ARR). Estos datos son útiles para predecir
+                        el crecimiento financiero.
+                    </p>
                 </div>
             </div>
         </div>
@@ -73,98 +236,200 @@
                 <div class="card-body">
                     <h5 class="card-title">Net Revenue Retention (NRR)</h5>
                     <canvas id="nrrChart"></canvas>
+                    <p class="text-muted mt-3">
+                        La retención neta mide el cambio en los ingresos tras considerar cancelaciones y
+                        actualizaciones.
+                        Una NRR alta indica clientes satisfechos y rentables.
+                    </p>
                 </div>
             </div>
         </div>
 
-        <!-- Gráfico de Expansion Revenue Rate -->
+        <!-- Gráfico de Tasa de Expansión -->
         <div class="col-md-6">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title">Expansion Revenue Rate</h5>
+                    <h5 class="card-title">Tasa de Expansión de Ingresos</h5>
                     <canvas id="expansionRateChart"></canvas>
+                    <p class="text-muted mt-3">
+                        Representa el crecimiento de ingresos de clientes existentes mediante actualizaciones y ventas
+                        cruzadas.
+                    </p>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Scripts para Chart.js -->
-<script>
-    // Gráfico de Churn Rate
-    const churnRateCtx = document.getElementById('churnRateChart').getContext('2d');
-    new Chart(churnRateCtx, {
-        type: 'doughnut',
-        data: {
-            labels: ['Clientes Activos', 'Clientes Perdidos'],
-            datasets: [{
-                label: 'Churn Rate',
-                data: [
-                    {{ stats['churn_rate'] | round(2) }},
-                    100 - {{ stats['churn_rate'] | round(2) }}
-                ],
-                backgroundColor: ['#28a745', '#dc3545'],
-                hoverOffset: 4
-            }]
-        },
-        options: {
-            responsive: true,
+    <!-- Gráficos Históricos -->
+    <h2 class="mb-4">Graficos Evolución de los KPIs</h2>
+    <div class="row g-4">
+        <!-- Evolución del Churn Rate -->
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Evolución del Churn Rate</h5>
+                    <canvas id="churnRateHistoryChart"></canvas>
+                    <p class="text-muted mt-3">
+                        Observa cómo ha evolucionado el porcentaje de clientes que cancelan sus suscripciones.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- Evolución del MRR y ARR -->
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Evolución de MRR y ARR</h5>
+                    <canvas id="mrrArrHistoryChart"></canvas>
+                    <p class="text-muted mt-3">
+                        Analiza los ingresos recurrentes mensuales y anuales a lo largo del tiempo.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts para Chart.js -->
+    <script>
+        // Gráfico de Churn Rate
+        const churnRateCtx = document.getElementById('churnRateChart').getContext('2d');
+        new Chart(churnRateCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Clientes Activos', 'Clientes Perdidos'],
+                datasets: [{
+                    data: [{{ 100 - stats['churn_rate'] }}, {{ stats['churn_rate'] }}],
+            backgroundColor: ['#28a745', '#dc3545'],
+        }]
         }
     });
 
-    // Gráfico de MRR y ARR
-    const mrrArrCtx = document.getElementById('mrrArrChart').getContext('2d');
-    new Chart(mrrArrCtx, {
-        type: 'bar',
-        data: {
-            labels: ['MRR', 'ARR'],
-            datasets: [{
-                label: 'Ingresos',
-                data: [{{ stats['mrr'] | round(2) }}, {{ stats['arr'] | round(2) }}],
-                backgroundColor: ['#007bff', '#6610f2']
-            }]
-        },
-        options: {
-            responsive: true,
+        // Gráfico de MRR y ARR
+        const mrrArrCtx = document.getElementById('mrrArrChart').getContext('2d');
+        new Chart(mrrArrCtx, {
+            type: 'bar',
+            data: {
+                labels: ['MRR', 'ARR'],
+                datasets: [{
+                    data: [{{ stats['mrr'] }}, {{ stats['arr'] }}],
+            backgroundColor: ['#007bff', '#6610f2']
+        }]
         }
     });
 
-    // Gráfico de NRR
-    const nrrCtx = document.getElementById('nrrChart').getContext('2d');
-    new Chart(nrrCtx, {
-        type: 'pie',
-        data: {
-            labels: ['Retención Net Revenue', 'Pérdida'],
-            datasets: [{
-                data: [
-                    {{ stats['nrr'] | round(2) }},
-                    100 - {{ stats['nrr'] | round(2) }}
-                ],
-                backgroundColor: ['#17a2b8', '#dc3545']
-            }]
-        },
-        options: {
-            responsive: true,
+        // Gráfico de NRR
+        const nrrCtx = document.getElementById('nrrChart').getContext('2d');
+        new Chart(nrrCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Retención', 'Pérdida'],
+                datasets: [{
+                    data: [{{ stats['nrr'] }}, 100 - {{ stats['nrr'] }}],
+            backgroundColor: ['#17a2b8', '#dc3545']
+        }]
         }
     });
 
-    // Gráfico de Expansion Revenue Rate
-    const expansionCtx = document.getElementById('expansionRateChart').getContext('2d');
-    new Chart(expansionCtx, {
-        type: 'line',
-        data: {
-            labels: ['Ingresos Totales', 'Ingresos de Expansión'],
-            datasets: [{
-                label: 'Expansion Revenue',
-                data: [100, {{ stats['expansion_revenue_rate'] | round(2) }}],
-                backgroundColor: '#ffc107',
-                borderColor: '#ffc107',
-                fill: false
-            }]
-        },
-        options: {
-            responsive: true,
+        // Gráfico de Tasa de Expansión
+        const expansionCtx = document.getElementById('expansionRateChart').getContext('2d');
+        new Chart(expansionCtx, {
+            type: 'line',
+            data: {
+                labels: ['Ingresos Totales', 'Ingresos de Expansión'],
+                datasets: [{
+                    data: [{{ stats['mrr'] }}, {{ stats['expansion_revenue_rate'] }}],
+            borderColor: '#ffc107',
+            backgroundColor: 'rgba(255, 193, 7, 0.2)',
+            fill: true
+        }]
         }
     });
-</script>
-{% endblock %}
+
+
+
+        // SimpleDataTables Scripts -->
+
+        document.addEventListener('DOMContentLoaded', function () {
+            new simpleDatatables.DataTable("#transactionsTable", {
+                labels: {
+                    placeholder: "Buscar transacciones...",
+                    perPage: "{select} entradas por página",
+                    noRows: "No se encontraron transacciones",
+                    info: "Mostrando {start} a {end} de {rows} entradas"
+                }
+            });
+
+            new simpleDatatables.DataTable("#usersTable", {
+                labels: {
+                    placeholder: "Buscar usuarios...",
+                    perPage: "{select} entradas por página",
+                    noRows: "No se encontraron usuarios",
+                    info: "Mostrando {start} a {end} de {rows} entradas"
+                }
+            });
+        });
+    </script>
+
+    <script>
+        // Extraer datos de historial de métricas
+        const metricsHistory = {{ metrics_history | tojson }};
+        const dates = metricsHistory.map(metric => new Date(metric.created_at).toLocaleDateString());
+        const churnRates = metricsHistory.map(metric => metric.churn_rate);
+        const mrrValues = metricsHistory.map(metric => metric.mrr);
+        const arrValues = metricsHistory.map(metric => metric.arr);
+
+        // Gráfico de la evolución del Churn Rate
+        const churnRateHistoryCtx = document.getElementById('churnRateHistoryChart').getContext('2d');
+        new Chart(churnRateHistoryCtx, {
+            type: 'line',
+            data: {
+                labels: dates,
+                datasets: [{
+                    label: 'Churn Rate (%)',
+                    data: churnRates,
+                    borderColor: '#dc3545',
+                    backgroundColor: 'rgba(220, 53, 69, 0.2)',
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        // Gráfico de la evolución de MRR y ARR
+        const mrrArrHistoryCtx = document.getElementById('mrrArrHistoryChart').getContext('2d');
+        new Chart(mrrArrHistoryCtx, {
+            type: 'line',
+            data: {
+                labels: dates,
+                datasets: [
+                    {
+                        label: 'MRR',
+                        data: mrrValues,
+                        borderColor: '#007bff',
+                        backgroundColor: 'rgba(0, 123, 255, 0.2)',
+                        fill: true
+                    },
+                    {
+                        label: 'ARR',
+                        data: arrValues,
+                        borderColor: '#6610f2',
+                        backgroundColor: 'rgba(102, 16, 242, 0.2)',
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    </script>
+
+    {% endblock %}

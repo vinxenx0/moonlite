@@ -13,7 +13,7 @@ sudo apt-get install mariadb-server mariadb-client -y
 --- creacion del usuario
 sudo useradd -m -s /bin/bash -G sudo moonlite
 
--- crear entorno
+-- crear entorno  
 
 git clone https://github.com/vinxenx0/moonlite
 

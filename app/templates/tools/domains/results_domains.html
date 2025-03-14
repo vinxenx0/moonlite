@@ -206,6 +206,7 @@
 
 {% include 'tools/quick_form.html' %}
 
+{% include "inc/suscriptions.html" %}
 
 {% if results %}
 
@@ -231,8 +232,8 @@
 <!-- Dashboard Header -->
 <div class="row dashboard-header">
     <div class="col text-center">
-        <h3>Analytics Dashboard<br />{{title}}</h3>
-        <p class="lead">A comprehensive view of your data metrics</p>
+        <h3>Resultados<br />{{title}}</h3>
+        <p class="lead">Una vista completa de tus métricas</p>
     </div>
 </div>
 
@@ -276,19 +277,23 @@
 </div>
 
 
+
+{% if not current_user.subscription_plan or current_user.subscription_plan == 'Free' or not current_user.is_subscription_active() %}
 <div id="report" class="container-fluid position-relative mb-5 mt-4">
-    {% if not current_user.subscription_plan or current_user.subscription_plan == 'Free' or not current_user.is_subscription_active() %}
-    <!-- Overlay to blur content for free or no subscription -->
+<!-- Overlay to blur content for free or no subscription -->
     <div class="overlay">
         <div class="text-center">
             <i class="fas fa-lock fa-3x mb-3"></i>
-            <h3>You need to upgrade your plan to access this feature.</h3>
-            {% include "inc/suscriptions.html" %}
+            <h3>Necesitas actualizar tu plan para acceder a esta función.
+                <div class="d-flex justify-content-center">
+                    <a href="#pricing" class="btn btn-primary btn-lg btn-cta me-3">Empezar Gratis</a>
+                    <a href="#online-test" class="btn btn-secondary btn-lg me-3">Probar Ahora</a>
+                </div>
+            </h3>
+           
         </div>
        
     </div>
-    {% endif %}
-
     <div class="accordion" id="resultsAccordion">
         {% for key, value in results.items() %}
         <div class="accordion-item">
@@ -441,11 +446,163 @@
     {% include 'tools/buzz_report.html' %}
 
 </div>
+{% else %}
+<div id="report-unlock" class="container-fluid position-relative mb-5 mt-4">
 
-<!-- Add this CSS to handle the overlay and blur effect -->
-<style>
-  
-</style>
+    <div class="accordion" id="resultsAccordion">
+        {% for key, value in results.items() %}
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-{{key}}">
+                <button class="accordion-button collapsed {% if results[key] %}bg-success{% else %}bg-danger{% endif %}"
+                    type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{key}}" aria-expanded="false"
+                    aria-controls="collapse-{{key}}">
+                    <div class="row w-100">
+                        <div class="col-md-4">
+                            <strong>{{key.replace('_', ' ').title()}}:</strong>
+                        </div>
+                        <div class="col-md-4">
+                            {% if value is boolean %}
+                            {% if value %}
+                            <span class="badge bg-success"><i class="fas fa-check"></i> True</span>
+                            {% else %}
+                            <span class="badge bg-danger"><i class="fas fa-times"></i> False</span>
+                            {% endif %}
+                            {% else %}
+                            {{value}}
+                            {% endif %}
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <i class="fas fa-info-circle"></i> More Info
+                        </div>
+                    </div>
+                </button>
+            </h2>
+            <div id="collapse-{{key}}" class="accordion-collapse collapse" aria-labelledby="heading-{{key}}"
+                data-bs-parent="#resultsAccordion">
+                <div class="accordion-body">
+                    <p>Additional information about {{key.replace('_', ' ').title()}}.</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        // JavaScript to handle Expand All/Collapse All functionality
+        document.getElementById('expandAll').addEventListener('click', function () {
+            var accordions = document.querySelectorAll('.accordion-collapse');
+            accordions.forEach(function (accordion) {
+                var bsCollapse = new bootstrap.Collapse(accordion, {
+                    toggle: false
+                });
+                bsCollapse.show();
+            });
+        });
+
+        document.getElementById('collapseAll').addEventListener('click', function () {
+            var accordions = document.querySelectorAll('.accordion-collapse');
+            accordions.forEach(function (accordion) {
+                var bsCollapse = new bootstrap.Collapse(accordion, {
+                    toggle: false
+                });
+                bsCollapse.hide();
+            });
+        });
+    </script>
+
+    <!-- Charts Section -->
+    <div class="row">
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Total Checks</h5>
+                    <canvas id="totalChecksChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Duration</h5>
+                    <canvas id="durationChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Valid Results</h5>
+                    <canvas id="validResultsChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Danger Percentage</h5>
+                    <canvas id="dangerPercentageChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Additional Chart 1</h5>
+                    <canvas id="additionalChart1"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Additional Chart 2</h5>
+                    <canvas id="additionalChart2"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Summary Section -->
+    <div class="row text-center mt-4">
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Checks</h5>
+                    <span class="badge bg-info">{{total_checks}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Duration</h5>
+                    <span class="badge bg-info">{{duration}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Success Checks</h5>
+                    <span class="badge bg-success">{{success_count}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Danger Checks</h5>
+                    <span class="badge bg-danger">{{danger_percentage}}%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'tools/buzz_report.html' %}
+
+
+</div>
+{% endif %}
 
 
 <script>
@@ -819,6 +976,8 @@
 
 
 {% endif %}
+
+{% include 'inc/guias.html' %}
 
 {% include 'tools/help_modal.html' %}
 

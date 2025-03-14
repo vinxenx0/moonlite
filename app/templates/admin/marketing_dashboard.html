@@ -60,7 +60,7 @@
             <div class="card shadow-sm border-success">
                 <div class="card-body">
                     <h5 class="card-title text-success">Customer Lifetime Value (CLV)</h5>
-                    <p class="card-text display-5">{{ stats['clv'] | round(2) }} USD</p>
+                    <p class="card-text display-5">{{ stats['clv'] | round(2) }}€</p>
                     <p class="text-muted">
                         Representa el ingreso total generado por un cliente durante su tiempo como suscriptor.
                     </p>
@@ -73,7 +73,7 @@
             <div class="card shadow-sm border-warning">
                 <div class="card-body">
                     <h5 class="card-title text-warning">Coste de Adquisición de Clientes (CAC)</h5>
-                    <p class="card-text display-5">{{ stats['cac'] | round(2) }} USD</p>
+                    <p class="card-text display-5">{{ stats['cac'] | round(2) }} €</p>
                     <p class="text-muted">
                         El coste promedio de adquirir un nuevo cliente. Mantén un CAC menor que el CLV.
                     </p>
@@ -180,10 +180,10 @@
                 <tr>
                     <td>{{ metric.created_at }}</td>
                     <td>{{ metric.churn_rate | round(2) }}%</td>
-                    <td>{{ metric.clv | round(2) }} USD</td>
-                    <td>{{ metric.cac | round(2) }} USD</td>
-                    <td>{{ metric.mrr | round(2) }} USD</td>
-                    <td>{{ metric.arr | round(2) }} USD</td>
+                    <td>{{ metric.clv | round(2) }} €</td>
+                    <td>{{ metric.cac | round(2) }} €</td>
+                    <td>{{ metric.mrr | round(2) }} €</td>
+                    <td>{{ metric.arr | round(2) }} €</td>
                     <td>{{ metric.nrr | round(2) }}%</td>
                     <td>{{ metric.expansion_revenue_rate | round(2) }}%</td>
                 </tr>

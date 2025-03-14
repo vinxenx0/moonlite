@@ -920,7 +920,7 @@ with app.app_context():
             churn_rate=5.0,  # Ejemplo de tasa de cancelación
             clv=1500.0,  # Ejemplo de Customer Lifetime Value
             cac=100.0,  # Ejemplo de Costo de Adquisición de Clientes
-            mrr=25000.0,  # Ejemplo de Monthly Recurring Revenue
+            mrr=2.0,  # Ejemplo de Monthly Recurring Revenue
             arr=300000.0,  # Ejemplo de Annual Recurring Revenue
             nrr=120.0,  # Ejemplo de Net Revenue Retention
             expansion_revenue_rate=10.0,  # Ejemplo de Expansion Revenue Rate
